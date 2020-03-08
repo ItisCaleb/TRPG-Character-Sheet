@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
+    <title>角卡創建</title>
+    <link href="/public/Style.css" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body style="margin:0;background-color:#E0E0E0">
+  <nav>
+    <div class="topic">TRPG角卡創建</div>
+    <li class="menu btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
+    <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <div class="submenu">
+      <button class="subbtn btn">登入</button>
+      <button class="subbtn btn">註冊</button>
+    </div>
+    <script src="/public/Main.js" charset="UTF-8"></script>
+  </nav>
+  <div class="content">
+    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
+    <p class="content-decribe"style="text-align: center;line-height:30px ;">這是一個可以建置自動化TRPG角色卡的工具<br>
+      你可以在這邊使用此工具來快速幫助你建立角色卡<br>
+      目前只支援龍與地下城DND5E以及克蘇魯的召喚COC 6th
+    </p>
+  </div>
+</body>
+</html>
