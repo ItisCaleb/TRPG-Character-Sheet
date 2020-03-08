@@ -21,5 +21,6 @@ A project for the TRPG player and GM who suffering from managing character sheet
         
 ## Using
 
-- Apache
+- Docker
+- Nodejs
 - MacOS
