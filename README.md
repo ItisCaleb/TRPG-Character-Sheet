@@ -23,4 +23,3 @@ A project for the TRPG player and GM who suffering from managing character sheet
 
 - Apache
 - MacOS
-    
