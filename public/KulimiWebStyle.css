@@ -14,6 +14,10 @@ h3 {
     text-align: -webkit-right;
 }
 
+li {
+    font-size: 35px;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
