@@ -2,59 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Page Not Found</title>
+    <title>角卡創建</title>
+    <link href="/public/Style.css" rel="stylesheet" type="text/css" media="all"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-
-        * {
-            line-height: 1.2;
-            margin: 0;
-        }
-
-        html {
-            color: #888;
-            display: table;
-            font-family: sans-serif;
-            height: 100%;
-            text-align: center;
-            width: 100%;
-        }
-
-        body {
-            display: table-cell;
-            vertical-align: middle;
-            margin: 2em auto;
-        }
-
-        h1 {
-            color: #555;
-            font-size: 2em;
-            font-weight: 400;
-        }
-
-        p {
-            margin: 0 auto;
-            width: 280px;
-        }
-
-        @media only screen and (max-width: 280px) {
-
-            body, p {
-                width: 95%;
-            }
-
-            h1 {
-                font-size: 1.5em;
-                margin: 0 0 0.3em;
-            }
-
-        }
-
-    </style>
 </head>
-<body>
-    <h1>Page Not Found</h1>
-    <p>Sorry, but the page you were trying to view does not exist.</p>
+<body style="margin:0;background-color:#E0E0E0">
+<nav>
+    <div class="topic">TRPG角卡創建</div>
+    <li class="menu btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
+    <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <div class="submenu">
+        <button class="subbtn btn">登入</button>
+        <button class="subbtn btn">註冊</button>
+    </div>
+    <script src="/public/Main.js" charset="UTF-8"></script>
+</nav>
+<div class="content">
+    <h1 class="error-title" style="text-align: center;line-height:40px;color: #555;font-size:2em ">404 Error</h1>
+    <p class="error-content" style="text-align: center;line-height:30px;color:lightgrey ">This Page doesn't exist</p>
+</div>
 </body>
 </html>
 <!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->
