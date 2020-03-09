@@ -11,7 +11,7 @@ const vhost = require('./node_modules/vhost');
 var webapp = connect();
 
 
-app.use(vhost('trpg.kulimi.cnmc.tw', webapp));
+app.use(vhost('trpg.kulimi.cnmc.tw', indexRoute));
 
 app.set('view engine','ejs');
 dotenv.config();
