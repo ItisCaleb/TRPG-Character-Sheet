@@ -1,5 +1,6 @@
 .flex-container {
     display: flex;
+    flex-direction: row;
 }
 
 * {
@@ -32,6 +33,7 @@ header {
     display: -webkit-flex;
     display: flex;
 }
+
 
 /* Container for flexboxes */
 section {
@@ -77,8 +79,13 @@ footer {
 @media (max-width: 600px) {
     section {
         -webkit-flex-direction: column;
-        flex-direction: column;
+        flex-direction: row;
     }
+}
+
+
+.flex {
+    flex-direction: row;
 }
 
 .topic {
@@ -95,6 +102,22 @@ footer {
     font-size: 140px;
 }
 
+.btn {
+    flex: None;
+    float: left;
+    display: flex;
+    border: 4px solid white;
+    padding: 5px;
+    flex-direction: row;
+    font-size: 25px;
+    margin: 10px;
+}
+
+.btnlit {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+}
 
 html {
     background-image: url("https://github.com/Xialai-Kulimi/Nakaka/blob/master/Bigwallpaper.png?raw=true");
