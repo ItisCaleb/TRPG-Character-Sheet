@@ -1,4 +1,5 @@
 const express = require("express");
+const connect = require("./node_modules/connect");
 const app = express();
 const dotenv =  require("dotenv");
 const mongoose = require("mongoose");
@@ -41,5 +42,5 @@ app.use(function(err, req, res, next) {
     res.render('404');
 });
 
-const port=process.env.PORT || 3000;
-app.listen(port, ()=> console.log("Server Start"));
+// const port=process.env.PORT || 3000;
+app.listen(3000);
