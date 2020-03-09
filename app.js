@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
-const vhost = require('vhost');
+const vhost = require('./node_modules/vhost');
 
 
 function handler(req, res, next) {
