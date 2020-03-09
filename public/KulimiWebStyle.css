@@ -1,0 +1,103 @@
+.flex-container {
+    display: flex;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: -webkit-left;
+}
+
+h3 {
+    text-align: -webkit-right;
+}
+
+li {
+    font-size: 35px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: rgba(38, 38, 38, 0.6);
+    padding: 10px;
+    /* text-align: -webkit-left; */
+    font-size: 70px;
+    color: white;
+    display: -webkit-flex;
+    display: flex;
+}
+
+/* Container for flexboxes */
+section {
+    display: -webkit-flex;
+    display: flex;
+}
+
+/* Style the navigation menu */
+nav {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    background: rgba(175,175,175,0.6);
+    padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style the content */
+article {
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    font-size: 24px;
+}
+
+/* Style the footer */
+footer {
+    background-color: rgba(38, 38, 38, 0.6);
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+
+/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    section {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+}
+
+.topic {
+    display: flex;
+    align-items: center;
+}
+
+.topic2 {
+    flex-grow: 2;
+    align-items: flex-end;
+}
+
+.topic1 {
+    font-size: 140px;
+}
+
+
+html {
+    background-image: url("https://github.com/Xialai-Kulimi/Nakaka/blob/master/Bigwallpaper.png?raw=true");
+    background-attachment: fixed;
+    background-size: cover;
+}
