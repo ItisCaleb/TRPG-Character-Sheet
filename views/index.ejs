@@ -4,7 +4,7 @@
     <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
     <title>角卡創建</title>
-    <link href="/public/Style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/Main.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
   <nav>
@@ -13,8 +13,8 @@
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
     <div class="submenu">
-      <button class="subbtn btn">登入</button>
-      <button class="subbtn btn">註冊</button>
+      <button class="subbtn btn" onclick="redirect('/login')">登入</button>
+      <button class="subbtn btn" onclick="redirect('/register')">註冊</button>
     </div>
     <script src="/public/Main.js" charset="UTF-8"></script>
   </nav>
