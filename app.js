@@ -5,6 +5,16 @@ const mongoose = require("mongoose");
 
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
+const vhost = require('vhost');
+
+
+function handler(req, res, next) {
+    console.log(req.vhost);
+    res.send( 'your request site: ' + req.vhost.hostname)
+}
+
+
+app.use(vhost('trpg.kulimi.cnmc.tw', handler));
 
 app.set('view engine','ejs');
 dotenv.config();
