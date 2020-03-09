@@ -7,13 +7,10 @@ const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const vhost = require('./node_modules/vhost');
 
+var webapp = connect();
 
-function handler(req, res, next) {
-    console.log(req.vhost);
-    res.send( 'your request site: ' + req.vhost.hostname)
-}
 
-app.use(vhost('trpg.kulimi.cnmc.tw', handler));
+app.use(vhost('trpg.kulimi.cnmc.tw', webapp));
 
 app.set('view engine','ejs');
 dotenv.config();
