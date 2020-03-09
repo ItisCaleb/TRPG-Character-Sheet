@@ -1,5 +1,5 @@
 const express = require("express");
-const connect = require("connect");
+const connect = require("./node_modules/connect");
 const app = express();
 const dotenv =  require("dotenv");
 const mongoose = require("mongoose");
