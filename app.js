@@ -13,7 +13,6 @@ function handler(req, res, next) {
     res.send( 'your request site: ' + req.vhost.hostname)
 }
 
-
 app.use(vhost('trpg.kulimi.cnmc.tw', handler));
 
 app.set('view engine','ejs');
