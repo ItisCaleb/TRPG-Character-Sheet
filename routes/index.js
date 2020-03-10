@@ -8,10 +8,16 @@ router.get("/",function (req,res) {
         content:info.news
     });
 });
+router.get("/create",function (req,res) {
+    res.render('index',{
+        title:info.title[1],
+        content:info.create
+    });
+});
 //render about page
 router.get("/about",function (req,res) {
     res.render('index',{
-        title:info.title[1],
+        title:info.title[2],
         content:info.info
     });
 });
