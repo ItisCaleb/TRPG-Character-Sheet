@@ -19,15 +19,15 @@
     </div>
     <script src="/public/Main.js" charset="UTF-8"></script>
 </nav>
-<form class="content">
+<form class="content" action="/register" method="post">
         <h1 class="title">註冊</h1>
         <div class="table">
-            <label class="table-bar"><b>使用者暱稱</b></label><br>
-            <input type="text" placeholder="輸入暱稱" name="name" required><br>
-            <label class="table-bar"><b>電子郵件</b></label><br>
-            <input type="email" placeholder="輸入電子郵件" name="email" required><br>
-            <label class="table-bar"><b>密碼</b></label><br>
-            <input type="password" placeholder="輸入密碼" name="password" required><br>
+            <label class="table-bar" for="name"><b>使用者暱稱</b></label><br>
+            <input type="text" placeholder="輸入暱稱" name="name" id="name" required><br>
+            <label class="table-bar" for="email"><b>電子郵件</b></label><br>
+            <input type="text" placeholder="輸入電子郵件" name="email" id="email" required><br>
+            <label class="table-bar" for="password"><b>密碼</b></label><br>
+            <input type="text" placeholder="輸入密碼" name="password" id="password" required><br>
             <button class="check-btn" type="submit">註冊</button>
         </div>
 </form>

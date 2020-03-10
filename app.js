@@ -1,8 +1,8 @@
 const express = require("express");
-const connect = require("./node_modules/connect");
 const app = express();
 const dotenv =  require("dotenv");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
@@ -21,6 +21,8 @@ mongoose.connect(process.env.DB_CONNECT,
 //middleware
 app.use(express.json());
 app.use('/public', express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 //routemiddleware
 app.use("/api/user", authRoute);
 app.use('/',indexRoute);
@@ -35,11 +37,10 @@ app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-
     // render the error page
     res.status(err.status || 500);
     res.render('404');
 });
 
-// const port=process.env.PORT || 3000;
-app.listen(3000);
+const port=process.env.PORT || 3000;
+app.listen(port,()=>console.log("Server Start on port:"+port));

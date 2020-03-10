@@ -4,15 +4,20 @@ const User = require("../model/User");
 router.post("/register", async (req,res) => {
     const user = new User({
         name: req.body.name,
-        password:req.body.password,
+        email: req.body.email,
+        password: req.body.password,
     });
-    try{
-        const savedUser = await user.save();
-        res.send(savedUser);
-    }catch(err){
-        res.status(400).send(err);
-    }
-
+    User.findOne({name: user.name}, function (err, data) {
+        if (data) {
+            console.log('已被註冊');
+        } else {
+            User.create(user, function (err, data) {
+                if (err) throw err;
+                console.log('註冊成功');
+                res.redirect('/');
+            });
+        }
+    });
 });
 
 
