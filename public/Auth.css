@@ -1,0 +1,20 @@
+.title{
+    vertical-align: middle;text-align: center;
+}
+.table-bar{
+    margin: 8px;
+}
+input[type=text],input[type=password],input[type=email]{
+    width: 40%;padding: 12px 20px;margin:8px;display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.check-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 8px;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+}
