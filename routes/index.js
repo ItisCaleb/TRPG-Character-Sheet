@@ -3,14 +3,14 @@ const info =require('../public/info');
 
 router.get("/",function (req,res) {
     res.render('index',{
-        title:"首頁",
-        content:"施工中"
+        title:info.title[0],
+        content:info.news
     });
 });
 router.get("/about",function (req,res) {
     res.render('index',{
-        title:"關於",
-        content:"這裡要放介紹"
+        title:info.title[1],
+        content:info.info
     });
 });
 router.get("/register",function (req,res) {
