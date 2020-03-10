@@ -12,8 +12,8 @@ router.post("/register", async (req,res) => {
     //check if user is already register
     const userExist = await User.findOne({name:req.body.name});
     const emailExist = await User.findOne({email:req.body.email});
-    if (userExist) return res.status(400).send('此暱稱已存在');
-    if (emailExist) return  res.status(400).send('此電子郵件已存在');
+    if (userExist) return res.status(400).redirect('/signup').res.send('此暱稱已存在');
+    if (emailExist) return  res.status(400).redirect('/signup').res.send('此電子郵件已存在');
     //create new user
     const user = new User({
         name: req.body.name,
@@ -23,6 +23,7 @@ router.post("/register", async (req,res) => {
     try{
         const savedUser = await user.save();
         res.send(savedUser);
+        res.redirect('/login');
         res.send("註冊成功");
     }catch (err) {
         res.status(400).send(err);
