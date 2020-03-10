@@ -31,7 +31,6 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-    for(var i in req) console.log(i);
     console.log('there will be some error');
     // set locals, only providing error in development
     res.locals.message = err.message;

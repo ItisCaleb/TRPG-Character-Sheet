@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const info =require('../info');
+const info =require('../public/info');
 
 router.get("/",function (req,res) {
     res.render('index',{
