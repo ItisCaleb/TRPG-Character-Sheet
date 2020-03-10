@@ -6,6 +6,10 @@ const  userSchema = new mongoose.Schema({
        required:true,
        min:6
    },
+   email:{
+       type:String,
+       required:true
+    },
    password:{
        type:String,
        required: true,

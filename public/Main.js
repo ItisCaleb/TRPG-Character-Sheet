@@ -1,5 +1,6 @@
 var btn =document.querySelectorAll('.btn');
 
+//button move
 for(let i=0;i<btn.length;i++){
   btn[i].addEventListener('mouseover',function()
   {
@@ -13,7 +14,7 @@ for(let l=0;l<btn.length;l++) {
     btn[l].style.borderBottomColor='';
   },true);
 }
-
+//redirect function
 function redirect(n) {
   window.location.href=n;
 }
