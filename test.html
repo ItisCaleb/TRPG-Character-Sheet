@@ -11,6 +11,25 @@
         }
     </style>
     <script type="application/javascript">
+        function getCursorPosition(e)
+        {
+            var posx = 0;
+            var posy = 0;
+            if (!e) var e = window.event;
+            if (e.pageX || e.pageY)     {
+                posx = e.pageX- document.documentElement.scrollLeft- document.body.scrollLeft;
+                posy = e.pageY- document.documentElement.scrollTop- document.body.scrollTop;
+            }
+            else if (e.clientX || e.clientY)     {//for fucking IE
+                posx = e.clientX ;//+ document.body.scrollLeft+ document.documentElement.scrollLeft;
+                posy = e.clientY ;//+ document.body.scrollTop + document.documentElement.scrollTop;
+
+//如果想取得目前的捲動值 就把後面的註解拿掉
+            }
+
+            return [posx,posy];//posx posy就是游標的X,Y值了
+        }
+
         function draw() {
             var canvas = document.getElementById("canvas");
             var body = document.body,
@@ -34,7 +53,7 @@
                 ctx.fillRect (0, 0, width, height);
 
                 ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                ctx.fillRect (30, 30, 55, 50);
+                ctx.fillRect (getCursorPosition(html)[0], getCursorPosition(html)[0], 55, 50);
             }
         }
     </script>
