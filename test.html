@@ -11,26 +11,7 @@
         }
     </style>
     <script type="application/javascript">
-        function getCursorPosition(e)
-        {
-            var posx = 0;
-            var posy = 0;
-            if (!e) var e = window.event;
-            if (e.pageX || e.pageY)     {
-                posx = e.pageX- document.documentElement.scrollLeft- document.body.scrollLeft;
-                posy = e.pageY- document.documentElement.scrollTop- document.body.scrollTop;
-            }
-            else if (e.clientX || e.clientY)     {//for fucking IE
-                posx = e.clientX ;//+ document.body.scrollLeft+ document.documentElement.scrollLeft;
-                posy = e.clientY ;//+ document.body.scrollTop + document.documentElement.scrollTop;
-
-//如果想取得目前的捲動值 就把後面的註解拿掉
-            }
-
-            return [posx,posy];//posx posy就是游標的X,Y值了
-        }
-
-        function draw() {
+        function game() {
             var canvas = document.getElementById("canvas");
             var body = document.body,
                 html = document.documentElement;
@@ -42,23 +23,83 @@
                 html.clientWidth, html.scrollWidth, html.offsetWidth );
             // body.css("overflow", "hidden");
 
-            alert(height);
+
+            var ball = {
+                x: 100,
+                y: 100,
+                vx: 5,
+                vy: 1,
+                radius: 25,
+                color: 'blue',
+                draw: function() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            };
+
+
+            function clear() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                ctx.fillRect(0,0,canvas.width,canvas.height);
+            }
+
+            function draw() {
+                clear();
+                ball.draw();
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
+                    ball.vy = -ball.vy;
+                }
+                if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
+                    ball.vx = -ball.vx;
+                }
+
+            }
+
+
             if (canvas.getContext) {
                 var ctx = canvas.getContext("2d");
 
                 ctx.canvas.height = height;
                 ctx.canvas.width = width;
 
-                ctx.fillStyle = "rgb(200,0,0)";
+                ctx.fillStyle = "rgb(0,0,0)";
                 ctx.fillRect (0, 0, width, height);
 
-                ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-                ctx.fillRect (getCursorPosition(html)[0], getCursorPosition(html)[0], 55, 50);
+                ctx.fillStyle = "rgba(255,255,255,0.5)";
+                ctx.fillRect (10, 10, 55, 50);
             }
+
+            canvas.addEventListener('mousemove', function(e) {
+                clear();
+                ball.x = e.clientX;
+                ball.y = e.clientY;
+                console.log("mouse location:", e.clientX, e.clientY);
+
+
+                ball.draw();
+
+            });
+
+            canvas.addEventListener('mouseout', function(e) {
+                clear();
+            });
+
+            canvas.addEventListener('click', function(e) {
+                clear();
+            });
+
         }
+
+
     </script>
 </head>
-<body onload="draw();">
+<body onload="game();">
 <canvas id="canvas"></canvas>
 </body>
 </html>
