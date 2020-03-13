@@ -21,7 +21,14 @@
 
             var width = Math.max( body.scrollWidth, body.offsetWidth,
                 html.clientWidth, html.scrollWidth, html.offsetWidth );
+
+            var ctx = canvas.getContext("2d");
             // body.css("overflow", "hidden");
+            ctx.canvas.height = height;
+            ctx.canvas.width = width;  // Setting canvas size
+
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillRect (0, 0, width, height);
 
 
             var ball = {
@@ -42,7 +49,7 @@
 
 
             function clear() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                ctx.fillStyle = 'rgba(0, 0, 0, 1)';  // set background color
                 ctx.fillRect(0,0,canvas.width,canvas.height);
             }
 
@@ -58,31 +65,33 @@
                 if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
                     ball.vx = -ball.vx;
                 }
-
+                raf = window.requestAnimationFrame(draw);
             }
-
-
-            if (canvas.getContext) {
-                var ctx = canvas.getContext("2d");
-
-                ctx.canvas.height = height;
-                ctx.canvas.width = width;
-
-                ctx.fillStyle = "rgb(0,0,0)";
-                ctx.fillRect (0, 0, width, height);
-
-                ctx.fillStyle = "rgba(255,255,255,0.5)";
-                ctx.fillRect (10, 10, 55, 50);
+            function keyDown(e) {
+                var keycode = e.which;
+                var realkey = String.fromCharCode(e.which);
+                // alert(keycode);
+                if (keycode === 65){
+                    clear();
+                    ball.vx = ball.vx * 0.1;
+                    draw();
+                }
+                if (keycode === 68){
+                    clear();
+                    ball.vx += 0.1;
+                    draw();
+                }
             }
+            document.onkeydown = keyDown;
 
             canvas.addEventListener('mousemove', function(e) {
-                clear();
-                ball.x = e.clientX;
-                ball.y = e.clientY;
-                console.log("mouse location:", e.clientX, e.clientY);
+                // clear();
+                // ball.x = e.clientX;
+                // ball.y = e.clientY;
+                // console.log("mouse location:", e.clientX, e.clientY);
 
 
-                ball.draw();
+                // ball.draw();
 
             });
 
@@ -90,8 +99,16 @@
                 clear();
             });
 
+            canvas.addEventListener('mouseover', function(e) {
+                raf = window.requestAnimationFrame(draw);
+            });
+
+
             canvas.addEventListener('click', function(e) {
                 clear();
+                ball.x = e.clientX;
+                ball.y = e.clientY;
+                ball.draw()
             });
 
         }
