@@ -3,3 +3,4 @@
 *.xml
 *.iml
 #hide .env
+.env
