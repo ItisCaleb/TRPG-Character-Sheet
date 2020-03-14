@@ -79,16 +79,17 @@
 
                 ctx.fillStyle = "rgba(255,255,255,0.5)";
                 ctx.fillRect (10, 10, 55, 50);
+
             }
 
             canvas.addEventListener('mousemove', function(e) {
-                clear();
+                /* clear();
                 ball.x = e.clientX;
                 ball.y = e.clientY;
                 console.log("mouse location:", e.clientX, e.clientY);
 
 
-                ball.draw();
+                ball.draw(); */
 
             });
 
@@ -97,6 +98,12 @@
             });
             canvas.addEventListener('click', function(e) {
                 clear();
+                ball.x = e.clientX;
+                ball.y = e.clientY;
+                console.log("mouse location:", e.clientX, e.clientY);
+
+
+                ball.draw();
             });
 
         }
