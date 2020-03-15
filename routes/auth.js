@@ -9,7 +9,7 @@ const {registerValidation,loginValidation} = require("../validation");
 router.post("/register", async (req,res) => {
     //validate register infomation
     const {error}= registerValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+    if(error) return res.status(400).redirect('/signup').send(error.details[0].message);
 
     //check if user is already register
     const userExist = await User.findOne({name:req.body.name});
@@ -40,13 +40,13 @@ router.post("/register", async (req,res) => {
 router.post('/userlogin',async (req,res)=>{
     //validate login infomation
         const {error}= loginValidation(req.body);
-        if(error) return res.status(400).send(error.details[0].message);
+        if(error) return res.status(400).redirect('/login').send(error.details[0].message);
     //check if user exist
     const user = await User.findOne({email:req.body.email});
-    if (!user) return  res.status(400).send('電子郵件錯誤').redirect('/login');
+    if (!user) return  res.status(400).redirect('/login').send('電子郵件錯誤');
     //check password
     const validPass = await bcrypt.compare(req.body.password,user.password);
-    if(!validPass) return res.status(400).send('密碼錯誤').redirect('/login');
+    if(!validPass) return res.status(400).redirect('/login').send('密碼錯誤');
     //create jwt login token
     const token=jwt.sign({_id:user._id},process.env.JWT_SECRET);
     res.cookie('auth-token',token).redirect("/");
