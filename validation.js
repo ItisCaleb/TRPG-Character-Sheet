@@ -1,6 +1,7 @@
 //Validation information
 const Joi = require('joi');
 
+
 const registerValidation = data=>{
     const schema = {
         name: Joi.string()
@@ -15,6 +16,8 @@ const registerValidation = data=>{
     };
     return Joi.validate(data,schema);
 };
+
+
 const loginValidation = data=>{
     const schema = {
         email: Joi.string()
@@ -26,5 +29,7 @@ const loginValidation = data=>{
     };
     return Joi.validate(data,schema);
 };
+
+
 module.exports.registerValidation =registerValidation;
 module.exports.loginValidation =loginValidation;
