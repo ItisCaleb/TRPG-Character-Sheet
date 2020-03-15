@@ -4,8 +4,9 @@
     <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
     <title>角卡創建</title>
-    <link href="/public/Main.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/public/Auth.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="../public/js/jquery-3.4.1.min.js"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
@@ -17,7 +18,7 @@
         <button class="subbtn btn" style="background-color: lightgrey" onclick="redirect('/login')">登入</button>
         <button class="subbtn btn" onclick="redirect('/signup')">註冊</button>
     </div>
-    <script src="/public/Main.js" charset="UTF-8"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
 <form class="content" action="../api/user/userlogin" method="post">
     <h1 class="title">登入</h1>

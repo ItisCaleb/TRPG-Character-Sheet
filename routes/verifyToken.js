@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-function auth(req,res,next) {
+module.exports = function(req,res,next) {
     const token=req.header('auth-token');
     if(!token) return res.status(401).send('拒絕登入');
     try{
@@ -8,7 +8,6 @@ function auth(req,res,next) {
         req.user = verified;
         next();
     }catch (err) {
-        res.status(400).send('錯誤的憑證')
-
+        res.status(400).send('錯誤的憑證');
     }
-}
+};

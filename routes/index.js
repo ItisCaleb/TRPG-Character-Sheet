@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const info =require('../public/info');
+const info = require('../public/info');
+const verify = require('./verifyToken');
 
 //render main page
 router.get("/",function (req,res) {
@@ -8,7 +9,7 @@ router.get("/",function (req,res) {
         content:info.news
     });
 });
-router.get("/create",function (req,res) {
+router.get("/create",function (req,res,next) {
     res.render('index',{
         title:info.title[1],
         content:info.create

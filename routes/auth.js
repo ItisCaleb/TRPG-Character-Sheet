@@ -43,13 +43,13 @@ router.post('/userlogin',async (req,res)=>{
         if(error) return res.status(400).send(error.details[0].message);
     //check if user exist
     const user = await User.findOne({email:req.body.email});
-    if (!user) return  res.status(400).send('電子郵件錯誤');
+    if (!user) return  res.status(400).send('電子郵件錯誤').redirect('/login');
     //check password
     const validPass = await bcrypt.compare(req.body.password,user.password);
-    if(!validPass) return res.status(400).send('密碼錯誤');
+    if(!validPass) return res.status(400).send('密碼錯誤').redirect('/login');
     //create jwt login token
     const token=jwt.sign({_id:user._id},process.env.JWT_SECRET);
-    res.header('auth-token',token).send(token);
+    res.header('auth-token',token).redirect("/");
 });
 
 module.exports=router;

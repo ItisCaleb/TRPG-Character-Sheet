@@ -3,6 +3,7 @@ const app = express();
 const dotenv =  require("dotenv");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
@@ -21,6 +22,7 @@ mongoose.connect(process.env.DB_CONNECT,
 //middleware
 app.use(express.json());
 app.use('/public', express.static(__dirname + '/public'));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 //routemiddleware

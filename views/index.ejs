@@ -4,19 +4,22 @@
     <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
     <title>角卡創建</title>
-    <link href="/public/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="../public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
   <nav>
     <div class="topic">TRPG角卡創建</div>
-    <li class="menu btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
     <div class="submenu">
-      <button class="subbtn btn" onclick="redirect('/login')">登入</button>
-      <button class="subbtn btn" onclick="redirect('/signup')">註冊</button>
+      <button class="subbtn btn validation" onclick="redirect('/login')">登入</button>
+      <button class="subbtn btn validation" onclick="redirect('/signup')">註冊</button>
+      <button class="exit subbtn btn" onclick="redirect('/')">登出</button>
     </div>
-    <script src="/public/Main.js" charset="UTF-8"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
   </nav>
   <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
