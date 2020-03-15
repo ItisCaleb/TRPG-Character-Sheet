@@ -14,19 +14,19 @@ app.set('view engine', 'ejs');
 dotenv.config();
 
 
-//connect Database
+// connect Database
 mongoose.connect(process.env.DB_CONNECT,
     {useNewUrlParser: true, useUnifiedTopology: true}, () => console.log("DB Started"));
 
 
-//middleware
+// middleware
 app.use(express.json());
 app.use('/public', express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-//route middle ware
+// route middleware
 app.use("/api/user", authRoute);
 app.use('/', indexRoute);
 
