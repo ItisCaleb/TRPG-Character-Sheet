@@ -49,7 +49,7 @@ router.post('/userlogin',async (req,res)=>{
     if(!validPass) return res.status(400).redirect('/login').send('密碼錯誤');
     //create jwt login token
     const token=jwt.sign({_id:user._id},process.env.JWT_SECRET);
-    res.cookie('auth-token',token).redirect("/");
+    res.cookie('auth_token',token).redirect("/");
 });
 
 module.exports=router;

@@ -9,7 +9,7 @@ router.get("/",function (req,res) {
         content:info.news
     });
 });
-router.get("/create",function (req,res,next) {
+router.get("/create",verify,function (req,res) {
     res.render('index',{
         title:info.title[1],
         content:info.create

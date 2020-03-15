@@ -5,10 +5,10 @@ $(document).ready(function () {
         }, function () {
             $(this).css({"color": "", "borderBottomColor": ""})
         });
-        if (document.cookie.indexOf("auth-token")>=0){
+        if (document.cookie.indexOf("auth_token")>=0){
             $('.subbtn.btn.validation').hide();
             $('.exit').click(function () {
-                Cookies.remove('auth-token');
+                Cookies.remove('auth_token');
             });
         }else{
             $('.exit').hide();
