@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-//routemiddleware
+//route middle ware
 app.use("/api/user", authRoute);
 app.use('/', indexRoute);
 
