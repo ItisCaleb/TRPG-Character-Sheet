@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const info = require('../public/info');
+const User = require('../model/User');
+const jwtDecode = require('jwt-decode');
 const verify = require('./verifyToken');
 
 //render main page
@@ -29,6 +31,13 @@ router.get("/signup",function (req,res) {
 //render login page
 router.get("/login",function (req,res) {
     res.render('login');
+});
+//render user page
+router.get("/user",verify,function (req,res) {
+    const userinfo = jwtDecode(req.cookies.auth_token);
+    res.render('user',{
+        title:userinfo.name
+    });
 });
 
 

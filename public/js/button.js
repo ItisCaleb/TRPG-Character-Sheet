@@ -12,6 +12,7 @@ $(document).ready(function () {
             });
         }else{
             $('.exit').hide();
+            $('.user').hide();
         }
 });
 function redirect(n) {

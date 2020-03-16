@@ -1,17 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
     <title>角卡創建</title>
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
     <div class="topic">TRPG角卡創建</div>
-    <li class="menu btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
     <div class="submenu">
@@ -23,9 +23,10 @@
     <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
 <div class="content">
-    <h1 class="error-title" style="text-align: center;line-height:40px;color: #555;font-size:2em ">404 Error</h1>
-    <p class="error-content" style="text-align: center;line-height:30px;color:lightgrey ">This Page doesn't exist</p>
+    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
+    <p class="content-decribe" style="text-align: center;line-height:30px ;">
+        這邊應該顯示個人主頁
+    </p>
 </div>
 </body>
 </html>
-<!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->
