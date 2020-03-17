@@ -5,14 +5,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-
+//import routes
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const vhost = require('./node_modules/vhost');
 
 
 app.use(vhost('trpg.kulimi.cnmc.tw', indexRoute));
-
+//set view engine
 app.set('view engine', 'ejs');
 dotenv.config();
 

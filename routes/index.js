@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const info = require('../public/info');
-const User = require('../model/User');
 const jwtDecode = require('jwt-decode');
-const verify = require('./verifyToken');
+const verify = require('../public/js/verifyToken');
 
 //render main page
 router.get("/",function (req,res) {
@@ -11,6 +10,7 @@ router.get("/",function (req,res) {
         content:info.news
     });
 });
+//render create page and check if the user is already login
 router.get("/create",verify,function (req,res) {
     res.render('index',{
         title:info.title[1],
@@ -32,7 +32,7 @@ router.get("/signup",function (req,res) {
 router.get("/login",function (req,res) {
     res.render('login');
 });
-//render user page
+//render user page and check if the user is already login
 router.get("/user",verify,function (req,res) {
     const userinfo = jwtDecode(req.cookies.auth_token);
     res.render('user',{

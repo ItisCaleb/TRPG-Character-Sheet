@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../model/User");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {registerValidation,loginValidation} = require("../validation");
+const {registerValidation,loginValidation} = require("../public/js/validation");
 
 
 //send register information to db
@@ -36,6 +36,7 @@ router.post("/register", async (req,res) => {
         res.status(400).send(err);
     }
 });
+
 //Login
 router.post('/userlogin',async (req,res)=>{
     //validate login infomation
