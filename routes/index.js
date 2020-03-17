@@ -36,7 +36,7 @@ router.get("/login",function (req,res) {
 router.get("/user",verify,function (req,res) {
     const userinfo = jwtDecode(req.cookies.auth_token);
     res.render('user',{
-        title:userinfo.name
+        title:userinfo.name + info.title[3]
     });
 });
 

@@ -25,7 +25,7 @@
   <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
-        <%=content%>
+        <%-content.replace(/\r\n/g,"<br />")%>
     </p>
   </div>
 </body>
