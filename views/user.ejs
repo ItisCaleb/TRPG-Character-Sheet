@@ -14,11 +14,10 @@
     <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility:hidden">管理員貼文</li>
     <div class="submenu">
-        <button class="subbtn btn validation" onclick="redirect('/login')">登入</button>
-        <button class="subbtn btn validation" onclick="redirect('/signup')">註冊</button>
-        <button class="user subbtn btn" onclick="redirect('/user')">個人主頁</button>
-        <button class="exit subbtn btn" onclick="redirect('/')">登出</button>
+        <button class="subbtn btn" id="user">個人主頁</button>
+        <button class="subbtn btn" id="exit">登出</button>
     </div>
     <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
@@ -27,6 +26,10 @@
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
         這邊應該顯示個人主頁
     </p>
+</div>
+<div class="push"></div>
+<div class="footer">
+    Copyright © 2020 ItisCaleb. All rights reserved.
 </div>
 </body>
 </html>

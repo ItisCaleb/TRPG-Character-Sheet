@@ -7,6 +7,8 @@
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
@@ -14,11 +16,11 @@
     <li class="menu btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
     <div class="submenu">
-        <button class="subbtn btn" style="background-color: lightgrey" onclick="redirect('/login')">登入</button>
-        <button class="subbtn btn" onclick="redirect('/signup')">註冊</button>
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-    <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
 <form class="content" action="../api/user/userlogin" method="post">
     <h1 class="title">登入</h1>
@@ -33,5 +35,9 @@
         <button class="check-btn" type="submit">登入</button>
     </div>
 </form>
+<div class="push"></div>
+<div class="footer">
+    Copyright © 2020 ItisCaleb. All rights reserved.
+</div>
 </body>
 </html>

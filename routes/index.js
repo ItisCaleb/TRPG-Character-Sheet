@@ -39,6 +39,14 @@ router.get("/user",verify,function (req,res) {
         title:userinfo.name + info.title[3]
     });
 });
+router.get('/adminpost',verify,function (req,res) {
+    if(jwtDecode(req.cookies.auth_token).name===process.env.ADMIN){
+            res.render('admin');
+        }else{
+            res.cookie('ValidValue','非管理員憑證');
+            res.redirect('/');
+        }
+});
 
 
 module.exports=router;

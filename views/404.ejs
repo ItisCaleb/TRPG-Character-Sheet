@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
@@ -14,17 +15,19 @@
     <li class="menu btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
     <div class="submenu">
-        <button class="subbtn btn validation" onclick="redirect('/login')">登入</button>
-        <button class="subbtn btn validation" onclick="redirect('/signup')">註冊</button>
-        <button class="user subbtn btn" onclick="redirect('/user')">個人主頁</button>
-        <button class="exit subbtn btn" onclick="redirect('/')">登出</button>
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup">註冊</button>
     </div>
-    <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
 <div class="content">
     <h1 class="error-title" style="text-align: center;line-height:40px;color: #555;font-size:2em ">404 Error</h1>
     <p class="error-content" style="text-align: center;line-height:30px;color:lightgrey ">This Page doesn't exist</p>
+</div>
+<div class="push"></div>
+<div class="footer">
+    Copyright © 2020 ItisCaleb. All rights reserved.
 </div>
 </body>
 </html>

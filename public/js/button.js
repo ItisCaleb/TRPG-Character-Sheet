@@ -5,18 +5,33 @@ $(document).ready(function () {
         }, function () {
             $(this).css({"color": "", "borderBottomColor": ""})
         });
-        if (document.cookie.indexOf("auth_token")>=0){
-            $('.subbtn.btn.validation').hide();
-            $('.exit').click(function () {
-                Cookies.remove('auth_token');
+        if (document.cookie.indexOf("auth_token")>=0) {
+            $('#login').attr('id','user').text('個人主頁');
+            $('#signup').attr('id','exit').text('登出');
+            $('#user').click(function () {
+                redirect('/user')
             });
-        }else{
-            $('.exit').hide();
-            $('.user').hide();
+            $('#exit').click(function () {
+                Cookies.remove('auth_token','');
+                Cookies.remove('admin','');
+                redirect('/');
+        })}else {
+            $('#login').click(function () {
+                redirect('/login');
+            });
+            $('#signup').click(function () {
+                redirect('/signup')
+            });
         }
+        if(document.cookie.indexOf('admin')>=0 && Cookies.get('admin')==='True' )
+            $('.adminpost').css({'visibility':'visible'});
+        if(document.cookie.indexOf('ValidValue')>=0){
+            alert(Cookies.get('ValidValue'));
+            Cookies.remove('ValidValue');
+            }
 });
-function redirect(n) {
-  window.location.href=n;
+function redirect(URL) {
+  window.location.href=URL;
 }
 
 
