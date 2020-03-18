@@ -50,7 +50,7 @@ router.post('/userlogin',async (req,res)=>{
     if(!validPass) return res.status(400).cookie('ValidValue','密碼錯誤').redirect('/login');
     //create jwt login token
     const token=jwt.sign({_id:user._id,name:user.name,email:user.email},process.env.JWT_SECRET);
-    if (jwtDecode(token) === process.env.ADMIN) res.cookie('admin','True');
+    if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin','True');
     res.cookie('auth_token',token).redirect("/");
 });
 
