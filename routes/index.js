@@ -36,7 +36,8 @@ router.get("/login",function (req,res) {
 router.get("/user",verify,function (req,res) {
     const userinfo = jwtDecode(req.cookies.auth_token);
     res.render('user',{
-        title:userinfo.name + info.title[3]
+        title:userinfo.name + info.title[3],
+        email:userinfo.email
     });
 });
 router.get('/adminpost',verify,function (req,res) {
@@ -46,6 +47,9 @@ router.get('/adminpost',verify,function (req,res) {
             res.cookie('ValidValue','非管理員憑證');
             res.redirect('/');
         }
+});
+router.get('/create-session',verify,function (req,res) {
+    res.render('trpg_session');
 });
 
 

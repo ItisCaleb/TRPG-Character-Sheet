@@ -19,7 +19,7 @@ nav>.submenu{
   float:right;margin:0;
 }
 nav>.submenu>.subbtn{
-  font-size:15px;line-height:1.5 ;text-align: right;margin-right:10px;background-color: transparent;
+  font-size:15px;line-height:1.5;margin-right:10px;background-color: transparent;
   border:1px solid #E0E0E0;display:inline;border-radius:4px;padding: 4px 10px;margin-top:10px;cursor: pointer;
 
 }
@@ -28,10 +28,15 @@ nav>.submenu>.subbtn{
   width:1000px;margin-left:auto;margin-right:auto;border-width:2px;padding-bottom:100px;
 }
 .footer{
-  color: white;background:black ;vertical-align: center;height:22px;text-align: center;padding-top:7px;
+  color: white;background:black ;height:22px;text-align: center;padding-top:7px;
 }
 .push{
   height: 700px;
+}
+#create-team{
+  font-size:15px;line-height:1.5;margin-right:10px;background-color:transparent;
+  border:1px solid #E0E0E0;display:inline;border-radius:4px;padding: 4px 10px;
+  margin-top:10px;cursor: pointer;
 }
 button:hover {
   opacity: 0.8;
