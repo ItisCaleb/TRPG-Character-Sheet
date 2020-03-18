@@ -5,32 +5,31 @@
     <meta charset="UTF-8">
     <title>角卡創建</title>
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
     <div class="topic">TRPG角卡創建</div>
-    <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
-    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility:hidden">管理員貼文</li>
+    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
     <div class="submenu">
-        <button class="subbtn btn" id="user">個人主頁</button>
-        <button class="subbtn btn" id="exit">登出</button>
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-    <script src="/public/js/button.js" charset="UTF-8"></script>
 </nav>
-<div class="content">
-    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-    <div class="content-decribe" style="text-align: center;line-height:30px ;">
-        這邊應該顯示個人主頁
-    <div>電子郵件/帳號:<%=email%></div>
-    <div style="text-align: center">
-        <button class="btn" id="create-team" onclick="redirect('/create-session')">創建跑團群組</button>
+<form class="content" >
+    <h1 class="title">創建團務</h1>
+    <div class="table">
+        <label class="table-bar" for="name"><b>輸入團務名稱</b></label><br>
+        <input type="text" placeholder="輸入名稱" name="name" id="name" required><br>
+        <button class="check-btn" type="submit">創建</button>
     </div>
-    </div>
-</div>
+</form>
 <div class="push"></div>
 <div class="footer">
     Copyright © 2020 ItisCaleb. All rights reserved.
