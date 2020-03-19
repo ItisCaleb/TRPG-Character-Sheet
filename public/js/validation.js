@@ -2,7 +2,7 @@
 const Joi = require('joi');
 
 //check if register information is correct
-const registerValidation = data=>{
+const registerValidation = data => {
     const schema = {
         name: Joi.string()
             .min(4)
@@ -16,11 +16,11 @@ const registerValidation = data=>{
             .max(15)
             .required()
     };
-    return Joi.validate(data,schema);
+    return Joi.validate(data, schema);
 };
 
 //check if log in information is correct
-const loginValidation = data=>{
+const loginValidation = data => {
     const schema = {
         email: Joi.string()
             .required()
@@ -44,10 +44,14 @@ const sessionValidation = data=>{
             .max(15)
             .required()
     };
-    return Joi.validate(data,schema);
+    return Joi.validate(data, schema);
 };
+
 
 
 module.exports.registerValidation =registerValidation;
 module.exports.loginValidation =loginValidation;
 module.exports.sessionValidation =sessionValidation;
+
+
+
