@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 //import routes
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
+const TRPGSessionRoute = require('./routes/TRPGSession');
 //const sheetRoute = require('/routes/sheet');
 const vhost = require('./node_modules/vhost');
 
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // route middleware
 app.use("/api/user", authRoute);
+app.use('/api',TRPGSessionRoute);
 app.use('/', indexRoute);
 //app.use('/api/sheet',sheetRoute);
 

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+//check if the user is using correct token
 module.exports = function(req,res,next) {
     const token=req.cookies.auth_token;
     if(!token) return res.status(401).cookie('ValidValue','請先登入').redirect('/');

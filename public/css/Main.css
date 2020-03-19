@@ -33,7 +33,7 @@ nav>.submenu>.subbtn{
 .push{
   height: 700px;
 }
-#create-team{
+.session{
   font-size:15px;line-height:1.5;margin-right:10px;background-color:transparent;
   border:1px solid #E0E0E0;display:inline;border-radius:4px;padding: 4px 10px;
   margin-top:10px;cursor: pointer;

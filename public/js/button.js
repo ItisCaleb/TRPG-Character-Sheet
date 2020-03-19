@@ -34,7 +34,15 @@ $(document).ready(function () {
             alert(Cookies.get('ValidValue'));
             Cookies.remove('ValidValue');
             }
-});
+        $(".check-btn").click(function() {
+            const regExp = /,/;
+            const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\].<>/?~!@#￥……&*()——|{}【】‘;:”“'。,、?%]");
+            const result = text.match(pattern);
+            if (!result) {
+                alert("含有特殊字元")
+            }
+        });
+    });
 //redirect URL function
 function redirect(URL) {
   window.location.href=URL;

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const info = require('../public/info');
 const jwtDecode = require('jwt-decode');
 const verify = require('../public/js/verifyToken');
+const findSession = require('../public/js/findSession');
 
 //render main page
 router.get("/",function (req,res) {
@@ -48,8 +49,14 @@ router.get('/adminpost',verify,function (req,res) {
             res.redirect('/');
         }
 });
-router.get('/create-session',verify,function (req,res) {
-    res.render('trpg_session');
+router.get('/createsession',verify,function (req,res) {
+    res.render('trpg_session_create');
+});
+router.get('/trpgsession',verify,function (req,res) {
+    res.render('trpg_session',{
+        title:info.title[4],
+        content:'test'
+    });
 });
 
 
