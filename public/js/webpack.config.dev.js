@@ -31,14 +31,14 @@ module.exports = {
     },
     module: {
         rule: [
-        {
-            test: /\.{js|jsx}$/,
-            exclude: /node_module/,
-            use: ["babel-loader"]
-        },
-        {
-            test: /(\.css)&/,
-            use: ["style-loader", "css-loader"]
-        }
+            {
+                test: /\.{js|jsx}$/,
+                exclude: /node_module/,
+                use: ["babel-loader"]
+            },
+            {
+                test: /(\.css)&/,
+                use: ["style-loader", "css-loader"]
+            }
         ]
     }; 
