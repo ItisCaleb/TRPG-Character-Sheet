@@ -2,7 +2,7 @@
 const Joi = require('joi');
 
 
-const registerValidation = data=>{
+const registerValidation = data => {
     const schema = {
         name: Joi.string()
             .min(6)
@@ -14,11 +14,11 @@ const registerValidation = data=>{
             .min(6)
             .required()
     };
-    return Joi.validate(data,schema);
+    return Joi.validate(data, schema);
 };
 
 
-const loginValidation = data=>{
+const loginValidation = data => {
     const schema = {
         email: Joi.string()
             .required()
@@ -27,9 +27,9 @@ const loginValidation = data=>{
             .min(6)
             .required()
     };
-    return Joi.validate(data,schema);
+    return Joi.validate(data, schema);
 };
 
 
-module.exports.registerValidation =registerValidation;
-module.exports.loginValidation =loginValidation;
+module.exports.registerValidation = registerValidation;
+module.exports.loginValidation = loginValidation;
