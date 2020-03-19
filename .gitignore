@@ -4,3 +4,4 @@
 *.iml
 #hide .env
 .env
+views/index.html
