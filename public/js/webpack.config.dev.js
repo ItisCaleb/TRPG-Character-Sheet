@@ -11,7 +11,7 @@ module.exports = {
     entiry: './src/index',
     onutput: {
         path: path.resolve(__dirname, "build"),
-        publicPath: '/'
+        publicPath: '/',
         filename: 'bunble.js'
     },
     devServer: {
@@ -19,12 +19,12 @@ module.exports = {
         overlay: true,
         historyApiFallback: true,
         disableHostCheck: true,
-        headers: {"Access-Control-Allow-Origin": "*"}
+        headers: {"Access-Control-Allow-Origin": "*"},
         https: false
     },
     plugins: {
         new HtmlWebpakPlugin({
-            template: "src/index.html"
+            template: "src/index.html",
             favicon: "src/favicon.ico"
         })
 
@@ -41,4 +41,4 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             }
         ]
-    }; 
+    };
