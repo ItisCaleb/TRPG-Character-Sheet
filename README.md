@@ -18,9 +18,14 @@ A project for the TRPG player and GM who suffering from managing character sheet
                 - sheets2
         - user2
         - user3
-        
+    - System
+        - Dungeon and Dragon
+        - Call of Cthulu
+        - Sword World
+        - ......
 ## Using
 
 - Docker
 - Nodejs
+- MongoDB
 - MacOS
