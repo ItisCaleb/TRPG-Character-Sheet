@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const http = require('http').createServer(app);
+const io = require("socket.io")(http);
 
 //import routes
 const indexRoute = require("./routes/index");
@@ -43,6 +45,7 @@ app.use(function (req, res, next) {
 });
 
 
+
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
@@ -53,7 +56,14 @@ app.use(function (err, req, res, next) {
     res.render('404');
 });
 
+io.on('connection',function (socket) {
+    console.log('a user connected');
+    socket.on('disconnect',function () {
+        console.log('user disconnected');
+    })
+});
 
 // start server
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("Server Start on port:" + port));
+http.listen(port, () => console.log("Server Start on port:" + port));
+

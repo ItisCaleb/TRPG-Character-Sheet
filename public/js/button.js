@@ -1,5 +1,6 @@
 document.write("");
 $(document).ready(function () {
+
         //when hover on button, change their color
         $(".btn").hover(function () {
             $(this).css({"color": "#46A3FF", "borderBottomColor": "#46A3FF"})
@@ -42,7 +43,9 @@ $(document).ready(function () {
                 alert("含有特殊字元")
             }
         });
+
     });
+const socket = io('localhost:3000');
 //redirect URL function
 function redirect(URL) {
   window.location.href=URL;
