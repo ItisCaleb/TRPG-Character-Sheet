@@ -52,7 +52,7 @@ router.get('/adminpost', verify, function (req, res) {
 router.get('/createsession',verify,function (req,res) {
     res.render('trpg_session_create');
 });
-router.get('/trpgsession',verify,function (req,res) {
+router.get('/trpgsession',verify,findSession,function (req,res) {
     res.render('trpg_session', {
         title: info.title[4],
         content: 'test'

@@ -14,7 +14,7 @@ router.post('/TRPGSession',async function (req,res) {
     const session = new Session({
        name:req.body.name,
        password:req.body.password,
-       gm:gm
+       gm:gm.name
     });
     try{
         await session.save();

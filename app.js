@@ -13,7 +13,7 @@ const TRPGSessionRoute = require('./routes/TRPGSession');
 const vhost = require('./node_modules/vhost');
 
 
-app.use(vhost('trpg.kulimi.cnmc.tw', indexRoute));
+
 //set view engine
 app.set('view engine', 'ejs');
 dotenv.config();
