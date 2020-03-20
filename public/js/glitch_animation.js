@@ -11,10 +11,10 @@ const random_char_list = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQR
 setInterval(tick, 30);
 
 
-const domContainer = document.querySelector('#animation2');
+const domContainer = document.querySelector('#glitch_animation');
 
-var msg1 = "The new website is now on live!";
-var msg2 = "It's so great that the website is working.";
+var msg1 = "非常抱歉，但是這裡沒有這個東西喔！";
+var msg2 = "這裡真的甚麼都沒有！";
 
 
 function getRandomStr(i) {
