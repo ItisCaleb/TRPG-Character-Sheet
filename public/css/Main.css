@@ -8,6 +8,11 @@
     padding: 10px;
 }
 
+section {
+    display: -webkit-flex;
+    display: flex;
+}
+
 nav {
     background-color: white;
     height: 50px;
