@@ -10,34 +10,36 @@
     <script src="/public/js/button.js" charset="UTF-8"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0">
-<nav>
-    <div class="topic">TRPG角卡創建</div>
-    <li class="menu btn" onclick="redirect('/')">首頁</li>
-    <li class="menu btn" onclick="redirect('/create')">角卡創建</li>
-    <li class="menu btn" onclick="redirect('/about')">關於</li>
-    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
-    <div class="submenu">
-        <button class="subbtn btn validation" id="login">登入</button>
-        <button class="subbtn btn validation" id="signup">註冊</button>
-    </div>
-</nav>
-<div class="content" style="display: flex;justify-content: center;align-items: center;min-height: 100%;">
-    <section>
-        <!--<div class="push"></div>-->
-        <div style="display: flex;align-self: center;padding: 100px;align-items: center;justify-content: center">
-            <h1 class="error-title" style="margin: 50px;line-height:40px;color: #555;font-size:4em ">404 Error</h1>
-            <p class="error-content" style="margin: 50px;line-height:30px;color:black;font-size: 2em">
-                非常抱歉，但是這裡沒有這個東西喔！</p>
+<div id="wrapper">
+    <nav>
+        <div class="topic">TRPG角卡創建</div>
+        <li class="menu btn" onclick="redirect('/')">首頁</li>
+        <li class="menu btn" onclick="redirect('/create')">角卡創建</li>
+        <li class="menu btn" onclick="redirect('/about')">關於</li>
+        <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
+        <div class="submenu">
+            <button class="subbtn btn validation" id="login">登入</button>
+            <button class="subbtn btn validation" id="signup">註冊</button>
         </div>
-        <!--<div class="push"></div>-->
-    </section>
+    </nav>
+    <div class="content" style="display: flex;justify-content: center;align-items: center;min-height: 100%;">
+        <section>
+            <!--<div class="push"></div>-->
+            <div style="display: flex;align-self: center;padding: 100px;align-items: center;justify-content: center">
+                <h1 class="error-title" style="margin: 50px;line-height:40px;color: #555;font-size:4em ">404 Error</h1>
+                <p class="error-content" style="margin: 50px;line-height:30px;color:black;font-size: 2em">
+                    非常抱歉，但是這裡沒有這個東西喔！</p>
+            </div>
+            <!--<div class="push"></div>-->
+        </section>
 
-</div>
+    </div>
 
-<div id="little_pusher" style="height: 100px"></div>
+    <div id="little_pusher" style="height: 100px"></div>
 
-<div class="footer">
-    Copyright © 2020 ItisCaleb. All rights reserved.
+    <div class="footer" style="width: 100%;position: absolute;bottom: 0;">
+        Copyright © 2020 ItisCaleb. All rights reserved.
+    </div>
 </div>
 </body>
 </html>

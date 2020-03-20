@@ -84,6 +84,7 @@ nav > .submenu > .subbtn {
 .push {
     height: 700px;
 }
+
 .session {
     font-size: 15px;
     line-height: 1.5;
@@ -96,6 +97,7 @@ nav > .submenu > .subbtn {
     margin-top: 10px;
     cursor: pointer;
 }
+
 #create-team {
     font-size: 15px;
     line-height: 1.5;
@@ -107,7 +109,11 @@ nav > .submenu > .subbtn {
     padding: 4px 10px;
     margin-top: 10px;
     cursor: pointer;
+}
 
+#wrapper {
+    min-height: 100%;
+    position: relative;
 }
 
 button:hover {
