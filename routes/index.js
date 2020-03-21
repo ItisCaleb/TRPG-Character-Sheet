@@ -45,8 +45,8 @@ router.get('/adminpost', verify, function (req, res) {
     if (jwtDecode(req.cookies.auth_token).name === process.env.ADMIN) {
         res.render('admin');
     } else {
-        res.cookie('ValidValue', '非管理員憑證');
         res.redirect('/');
+        req.app.io.emit('alert','非管理員憑證');
     }
 });
 router.get('/createsession',verify,function (req,res) {
@@ -55,7 +55,6 @@ router.get('/createsession',verify,function (req,res) {
 router.get('/trpgsession',verify,findSession,function (req,res) {
     res.render('trpg_session', {
         title: info.title[4],
-        content: 'test'
     });
 });
 module.exports = router;

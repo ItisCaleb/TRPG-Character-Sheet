@@ -1,6 +1,12 @@
 document.write("");
 $(document).ready(function () {
-
+        const socket = io('localhost:3000');
+        socket.on('alert',function (data) {
+            alert(data);
+        });
+        socket.on('SessionFind',function (msg) {
+            $('.content-decribe').append('<div>'+msg+'</div>');
+        });
         //when hover on button, change their color
         $(".btn").hover(function () {
             $(this).css({"color": "#46A3FF", "borderBottomColor": "#46A3FF"})
@@ -31,10 +37,6 @@ $(document).ready(function () {
         if(document.cookie.indexOf('admin')>=0 && Cookies.get('admin')==='True' )
             $('.adminpost').css({'visibility':'visible'});
         //alert message when user use invalid format to sign up and log in
-        if(document.cookie.indexOf('ValidValue')>=0){
-            alert(Cookies.get('ValidValue'));
-            Cookies.remove('ValidValue');
-            }
         $(".check-btn").click(function() {
             const regExp = /,/;
             const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\].<>/?~!@#￥……&*()——|{}【】‘;:”“'。,、?%]");
@@ -45,7 +47,6 @@ $(document).ready(function () {
         });
 
     });
-const socket = io('localhost:3000');
 //redirect URL function
 function redirect(URL) {
   window.location.href=URL;

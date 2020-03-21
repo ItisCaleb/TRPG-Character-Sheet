@@ -3,7 +3,6 @@ const path = require('path');
 const HtmlWebpakPlugin = require('html-webpack-plugin');
 
 process.env.NODE_ENV = 'development';
-
 module.exports = {
     mode: 'development',
     target: 'web',
@@ -41,4 +40,4 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             }
         ]
-    };
+    }};

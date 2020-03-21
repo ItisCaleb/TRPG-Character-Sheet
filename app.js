@@ -6,13 +6,17 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const http = require('http').createServer(app);
 const io = require("socket.io")(http);
+app.io = io;
+//share socket.io to other modules
 
 //import routes
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
 //const sheetRoute = require('/routes/sheet');
+
 const vhost = require('./node_modules/vhost');
+
 
 
 
@@ -57,7 +61,6 @@ app.use(function (err, req, res, next) {
 });
 
 io.on('connection',function (socket) {
-    console.log('a user connected');
 });
 
 // start server

@@ -1,15 +1,15 @@
 const Session = require('../../model/Session');
-const User = require("../../model/User");
 const jwtDecode = require('jwt-decode');
 //check if user has its own session
 module.exports = async function (req,res,next) {
     const gm_name = jwtDecode(req.cookies.auth_token).name;
-    const gm =  await Session.find({gm: gm_name});
-    if (!gm) {
-        console.log('你還沒創建任何團務');
+    const SessionFind = await Session.findOne({gm:gm_name});
+    const AllSession =  await Session.findOne({gm:gm_name});
+    if (!SessionFind) {
+        req.app.io.emit('SessionFind','你還沒創建任何團務');
         next();
  }else{
-        console.log(gm);
+        req.app.io.emit('SessionFind',AllSession.name);
         next();
     }
 };
