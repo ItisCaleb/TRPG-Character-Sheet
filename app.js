@@ -65,5 +65,5 @@ io.on('connection',function (socket) {
 
 // start server
 const port = process.env.PORT || 3000;
-http.listen(port,() => console.log("Server Start on port:" + port));
+http.listen(port,'kulimi.cnmc.tw',() => console.log("Server Start on port:" + port));
 
