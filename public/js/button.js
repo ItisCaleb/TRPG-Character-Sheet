@@ -5,7 +5,7 @@ $(document).ready(function () {
             alert(data);
         });
         socket.on('SessionFind',function (msg) {
-            $('.content-decribe').append('<div>'+msg+'</div>');
+            $('#session').append('<div>'+msg+'</div>');
         });
         //when hover on button, change their color
         $(".btn").hover(function () {

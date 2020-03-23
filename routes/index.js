@@ -56,5 +56,6 @@ router.get('/trpgsession',verify,findSession,function (req,res) {
     res.render('trpg_session', {
         title: info.title[4],
     });
+
 });
 module.exports = router;

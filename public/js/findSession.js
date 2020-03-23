@@ -4,12 +4,19 @@ const jwtDecode = require('jwt-decode');
 module.exports = async function (req,res,next) {
     const gm_name = jwtDecode(req.cookies.auth_token).name;
     const SessionFind = await Session.findOne({gm:gm_name});
-    const AllSession =  await Session.findOne({gm:gm_name});
+    const cursor =  await Session.find({ gm: {$in:[gm_name]} });
+
     if (!SessionFind) {
-        req.app.io.emit('SessionFind','你還沒創建任何團務');
+        setTimeout(function () {
+            req.app.io.emit('SessionFind', '你還沒創建團務');
+        }, 1000);
         next();
  }else{
-        req.app.io.emit('SessionFind',AllSession.name);
+        cursor.forEach(function (Session) {
+            setTimeout(function () {
+                req.app.io.emit('SessionFind', Session.name);
+            }, 500);
+        });
         next();
     }
 };
