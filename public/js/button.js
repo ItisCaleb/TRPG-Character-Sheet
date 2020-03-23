@@ -1,6 +1,6 @@
 document.write("");
 $(document).ready(function () {
-        const socket = io('http://kulimi.cnmc.tw:3000');
+        const socket = io('http://localhost:3000');
         socket.on('alert',function (data) {
             alert(data);
         });

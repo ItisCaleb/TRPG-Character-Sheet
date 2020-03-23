@@ -65,6 +65,5 @@ io.on('connection',function (socket) {
 
 // start server
 const port = process.env.PORT || 3000;
-const ip = process.env.IP || 'localhost';
-http.listen(port,ip, () => console.log("Server Start on port:" + port));
+http.listen(port, () => console.log("Server Start on port:" + port));
 
