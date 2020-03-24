@@ -35,7 +35,7 @@ router.post('/TRPGJoinSession',async function (req,res) {
     if (req.body.password !== session.password ) return res.status(400).redirect('/joinsession'),req.app.io.emit('alert', '密碼錯誤');
     if (playerExist) return res.status(400).redirect('/joinsession'),req.app.io.emit('alert','你已加入此團務');
     try{
-        Session.update({name:req.body.name},{$addToSet:{player:user}});
+        await Session.update({name:req.body.name},{$addToSet:{player:user}});
         req.app.io.emit('alert',req.body.name + '加入成功'+' GM:'+session.gm);
         res.redirect('/trpgsession');
     }catch (err) {
