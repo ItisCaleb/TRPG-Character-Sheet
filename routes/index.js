@@ -52,10 +52,12 @@ router.get('/adminpost', verify, function (req, res) {
 router.get('/createsession',verify,function (req,res) {
     res.render('trpg_session_create');
 });
+router.get('/joinsession',verify,function (req,res) {
+    res.render('trpg_session_join');
+});
 router.get('/trpgsession',verify,findSession,function (req,res) {
     res.render('trpg_session', {
         title: info.title[4],
     });
-
 });
 module.exports = router;

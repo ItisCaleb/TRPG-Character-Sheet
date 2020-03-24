@@ -23,8 +23,9 @@
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
 </nav>
-<form class="content" action="../api/TRPGSession" method="post" >
+<form class="content" action="../api/TRPGCreateSession" method="post" >
     <h1 class="title">創建團務</h1>
+    <button class="btn session" onclick="redirect('/trpgsession')"style="float:right;margin-right: 100px">團務</button>
     <div class="table">
         <label class="table-bar" for="name"><b>輸入團務名稱</b></label><br>
         <input type="text" placeholder="輸入名稱" name="name" id="name" required><br>

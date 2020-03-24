@@ -14,7 +14,7 @@ module.exports = async function (req,res,next) {
  }else{
         cursor.forEach(function (Session) {
             setTimeout(function () {
-                req.app.io.emit('SessionFind', Session.name);
+                req.app.io.emit('SessionFind', Session.name +"      GM:" +Session.gm);
             }, 150);
         });
         next();
