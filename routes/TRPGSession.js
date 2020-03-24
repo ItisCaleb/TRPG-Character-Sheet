@@ -32,8 +32,7 @@ router.post('/TRPGJoinSession',async function (req,res) {
     if (!session) return res.status(400).redirect('/joinsession'),req.app.io.emit('alert','此團務不存在');
     if (req.body.password !== session.password ) return res.status(400).redirect('/joinsession'),req.app.io.emit('alert', '密碼錯誤');
     try{
-        console.log(session.name + '加入成功'+' GM:'+session.gm);
-        //req.app.io.emit('alert',req.body.name + '加入成功'+' GM:'+Session_name.gm);
+        req.app.io.emit('alert',req.body.name + '加入成功'+' GM:'+Session_name.gm);
         res.redirect('/trpgsession');
     }catch (err) {
         res.status(400).send(err);
