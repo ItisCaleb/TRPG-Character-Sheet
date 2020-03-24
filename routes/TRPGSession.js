@@ -3,13 +3,13 @@ const Session = require('../model/Session');
 const User = require("../model/User");
 const jwtDecode = require('jwt-decode');
 const {sessionValidation} = require("../public/js/validation");
-const user = jwtDecode(req.cookies.auth_token).name;
+
 router.post('/TRPGCreateSession',async function (req,res) {
     const {error}= sessionValidation(req.body);
     if(error) return res.status(400).redirect('/createsession'),req.app.io.emit('alert',error.details[0].message);
     const sessionExist = await Session.findOne({name:req.body.name});
     if (sessionExist) return res.status(400).redirect('/createsession'),req.app.io.emit('alert','此名稱已存在');
-
+    const user = jwtDecode(req.cookies.auth_token).name;
     const gm = await User.findOne({name:user});
     const session = new Session({
        name:req.body.name,
@@ -27,6 +27,7 @@ router.post('/TRPGCreateSession',async function (req,res) {
 });
 router.post('/TRPGJoinSession',async function (req,res) {
     const {error}= sessionValidation(req.body);
+    const user = jwtDecode(req.cookies.auth_token).name;
     if(error) return res.status(400).redirect('/joinsession'),req.app.io.emit('alert',error.details[0].message);
     const session= await Session.findOne({name:req.body.name});
     const playerExist = await Session.findOne({name:req.body.name,player:{$in:[user]}});
