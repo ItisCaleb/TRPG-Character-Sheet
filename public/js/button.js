@@ -1,12 +1,6 @@
 document.write("");
 $(document).ready(function () {
-        const socket = io('kulimi.cnmc.tw:3000');
-        socket.on('alert',function (data) {
-            alert(data);
-        });
-        socket.on('SessionFind',function (msg) {
-            $('#session').append('<div>'+msg+'</div>');
-        });
+
         //when hover on button, change their color
         $(".btn").hover(function () {
             $(this).css({"color": "#46A3FF", "borderBottomColor": "#46A3FF"})
