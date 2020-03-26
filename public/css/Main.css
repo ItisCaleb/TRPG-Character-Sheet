@@ -79,12 +79,16 @@ nav > .submenu > .subbtn {
     text-align: center;
     padding-top: 7px;
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    // position: absolute;
+    // bottom: 0;
 }
 
 .push {
     height: 700px;
+}
+
+.new_pusher {
+    height: 100%;
 }
 
 .session {
