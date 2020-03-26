@@ -60,22 +60,26 @@ router.get('/trpgsession',verify,async function (req,res) {
     const gm_name = jwtDecode(req.cookies.auth_token).name;
     const SessionFind = await Session.findOne({gm:gm_name});
     const cursor =  await Session.find({ gm: {$in:[gm_name]} });
-    const session = [];
-    const gm =[];
+    const session = {name:[],gm:[],url:[]};
     if (!SessionFind) {
-            session.push('你還沒創建團務');
+            session.name.push('你還沒創建團務');
     }else {
         cursor.forEach(function (Session) {
-            session.push(Session.name);
-            gm.push(Session.gm);
+            session.name.push(Session.name);
+            session.gm.push(Session.gm);
+            session.url.push(Session.id)
         });
     }
 
     res.render('trpg_session', {
         title: info.title[4],
-        content:session,
-        gm:gm
+        content:session.name,
+        gm:session.gm,
+        url:session.url
     });
+});
+router.get('/trpgsession/:id',function (req,res) {
+    res.render('admin')
 });
 
 

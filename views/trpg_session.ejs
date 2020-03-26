@@ -31,10 +31,15 @@
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
     </div>
     <div style="text-align: center">
+        <% if (content[0] =='你還沒創建團務' ) { %>
+            <div><%=content[0]%></div>
+        <% }else{ %>
         <% for(var i=0;i<content.length;i++) { %>
-        <div><%= content[i] %>  ----GM: <%= gm[i] %></div>
-            <% } %>
-        <br>
+            <div style="display: inline"><%= content[i] %>  ----GM: <%= gm[i] %></div>
+            <button class="btn session" onclick="redirect('/trpgsession/<%= url[i] %>')">進入</button><br>
+        <% } %>
+        <%}%>
+
         <button class="btn session" onclick="redirect('/joinsession')">加入一個群組</button>
         <button class="btn session"  onclick="redirect('/createsession')">創建跑團群組</button>
     </div>
