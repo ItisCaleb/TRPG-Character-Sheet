@@ -37,7 +37,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-
 // route middleware
 app.use("/api/user", authRoute);
 app.use('/api',TRPGSessionRoute);
@@ -47,8 +46,6 @@ app.use('/', indexRoute);
 app.use(function (req, res, next) {
     next(createError(404));
 });
-
-
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -60,6 +57,7 @@ app.use(function (err, req, res, next) {
     res.render('404');
 });
 
+//start socket.io connection
 io.on('connection',function (socket) {
 });
 

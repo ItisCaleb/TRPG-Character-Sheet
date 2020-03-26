@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
+    <title>角卡創建</title>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="../public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
+    <script src="/public/js/socket.js" charset="UTF-8"></script>
+
+</head>
+<body style="margin:0;background-color:#E0E0E0">
+
+<nav>
+    <div class="topic">TRPG角卡創建</div>
+    <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
+    <li class="menu btn" onclick="redirect('/create')" >角卡創建</li>
+    <li class="menu btn" onclick="redirect('/about')">關於</li>
+    <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
+    <div class="submenu">
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup" >註冊</button>
+    </div>
+
+</nav>
+<div class="content">
+    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
+    <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+    </div>
+    <div style="text-align: center">
+            <% if (content[1] == null ) { %>
+                <%  content.push('你還沒有玩家') %>
+        <% }%>
+        <div>gm:<%=content[0]%></div>
+        player:
+            <% for(var i=1;i<content.length;i++) { %>
+                <div style="display: inline"><%= content[i] %></div>
+        <% }%>
+        <br>
+    <button class="btn session" onclick="redirect('/api/delete/<%=url%>')"><%=dismiss%></button>
+    </div>
+</div>
+
+
+<div class="footer">
+    Copyright © 2020 ItisCaleb. All rights reserved.
+</div>
+</body>
+</html>
