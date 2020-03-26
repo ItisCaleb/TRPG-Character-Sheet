@@ -8,6 +8,8 @@
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/button.js" charset="UTF-8"></script>
+    <script src="/public/js/socket.js" charset="UTF-8"></script>
 
 </head>
 <body style="margin:0;background-color:#E0E0E0">
@@ -29,11 +31,15 @@
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
     </div>
     <div style="text-align: center">
+        <% for(var i=0;i<content.length;i++) { %>
+        <div><%= content[i] %>  ----GM: <%= gm[i] %></div>
+            <% } %>
+        <br>
         <button class="btn session" onclick="redirect('/joinsession')">加入一個群組</button>
         <button class="btn session"  onclick="redirect('/createsession')">創建跑團群組</button>
     </div>
 </div>
-<script src="/public/js/button.js" charset="UTF-8"></script>
+
 
 <div class="footer">
     Copyright © 2020 ItisCaleb. All rights reserved.

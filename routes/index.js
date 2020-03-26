@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const info = require('../public/info');
+const Session = require('../model/Session');
 const jwtDecode = require('jwt-decode');
 const verify = require('../public/js/verifyToken');
-const findSession = require('../public/js/findSession');
+
 
 //render main page
 router.get("/", function (req, res) {
@@ -55,9 +56,28 @@ router.get('/createsession',verify,function (req,res) {
 router.get('/joinsession',verify,function (req,res) {
     res.render('trpg_session_join');
 });
-router.get('/trpgsession',verify,findSession,function (req,res) {
+router.get('/trpgsession',verify,async function (req,res) {
+    const gm_name = jwtDecode(req.cookies.auth_token).name;
+    const SessionFind = await Session.findOne({gm:gm_name});
+    const cursor =  await Session.find({ gm: {$in:[gm_name]} });
+    const session = [];
+    const gm =[];
+    if (!SessionFind) {
+            session.push('你還沒創建團務');
+    }else {
+        cursor.forEach(function (Session) {
+            session.push(Session.name);
+            gm.push(Session.gm);
+        });
+    }
+
     res.render('trpg_session', {
         title: info.title[4],
+        content:session,
+        gm:gm
     });
 });
+
+
+
 module.exports = router;
