@@ -17,7 +17,7 @@ router.get("/", function (req, res) {
 
 //render create page and check if the user is already login
 router.get("/create", verify, function (req, res) {
-    res.render('index', {
+    res.render('edit_character_sheet', {
         title: info.title[1],
         content: info.create
     });
