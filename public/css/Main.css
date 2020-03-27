@@ -20,6 +20,11 @@ nav {
     box-shadow: 0 0 4px grey;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 nav > .topic {
     flex: none;
     font-size: 35px;
