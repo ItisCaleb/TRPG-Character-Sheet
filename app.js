@@ -1,4 +1,4 @@
- const express = require("express");
+const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -16,8 +16,6 @@ const TRPGSessionRoute = require('./routes/TRPGSession');
 //const sheetRoute = require('/routes/sheet');
 
 const vhost = require('./node_modules/vhost');
-
-
 
 
 //set view engine
@@ -39,7 +37,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // route middleware
 app.use("/api/user", authRoute);
-app.use('/api',TRPGSessionRoute);
+app.use('/api', TRPGSessionRoute);
 app.use('/', indexRoute);
 //app.use('/api/sheet',sheetRoute);
 
@@ -58,7 +56,7 @@ app.use(function (err, req, res, next) {
 });
 
 //start socket.io connection
-io.on('connection',function (socket) {
+io.on('connection', function (socket) {
 });
 
 // start server
