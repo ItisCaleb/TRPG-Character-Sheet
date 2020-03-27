@@ -23,7 +23,7 @@ nav {
 body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
 }
 
 nav > .topic {
@@ -95,6 +95,7 @@ nav > .submenu > .subbtn {
 
 .new_pusher {
     height: 100%;
+    flex-grow: 5;
 }
 
 .session {
