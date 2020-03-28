@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const  DNDSchema = new mongoose.Schema({
+const  DND5eSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -22,4 +22,4 @@ const  DNDSchema = new mongoose.Schema({
     exp:String
 });
 
-module.exports = mongoose.model("DND",DNDSchema);
+module.exports = mongoose.model("DND5e",DND5eSchema);

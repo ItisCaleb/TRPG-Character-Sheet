@@ -64,12 +64,12 @@ router.post('/TRPGJoinSession',async function (req,res) {
 //leave or dismiss a session if you are the gm
 router.get('/delete/:id',async function (req,res) {
     const session = await Session.findOne({_id:req.params.id});
-    if(session.gm === jwtDecode(req.cookies.auth_token)){
+    if(session.gm === jwtDecode(req.cookies.auth_token).name){
         req.app.io.emit('alert',session.name+'已被刪除');
         await Session.deleteOne({_id:req.params.id});
         res.redirect('/trpgsession');
     }else {
-        await Session.update({_id:req.params.id},{$pop:{player:1}})
+        await Session.updateOne({_id:req.params.id},{$pop:{player:1}});
         req.app.io.emit('alert','已離開'+session.name);
         res.redirect('/trpgsession');
     }
