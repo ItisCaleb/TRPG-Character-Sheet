@@ -60,16 +60,6 @@ router.get('/adminpost', verify, function (req, res) {
     }
 });
 
-//render session create page
-router.get('/createsession',verify,function (req,res) {
-    res.render('trpg_session_create');
-});
-
-//render session join page
-router.get('/joinsession',verify,function (req,res) {
-    res.render('trpg_session_join');
-});
-
 //render session page
 router.get('/trpgsession',verify,async function (req,res) {
     const name = jwtDecode(req.cookies.auth_token).name;
@@ -77,7 +67,7 @@ router.get('/trpgsession',verify,async function (req,res) {
     const cursor =  await Session.find({ player: {$in:[name]} });
     const session = {name:[],gm:[],url:[]};
     if (!SessionFind) {
-            session.name.push('你還沒創建團務');
+        session.name.push('你還沒創建團務');
     }else {
         cursor.forEach(function (Session) {
             session.name.push(Session.name);
@@ -94,22 +84,51 @@ router.get('/trpgsession',verify,async function (req,res) {
     });
 });
 
+
 //render the specific session page
 router.get('/trpgsession/:id',verify, async function (req,res) {
-    const session = await Session.findOne({_id:req.params.id});
-    const dismiss = {option:'',url:req.params.id};
-    if(session.gm === jwtDecode(req.cookies.auth_token).name)
-        dismiss.option='解散';
-    else
-        dismiss.option='離開';
-    res.render('trpg_session_show',{
-        title:'團務名稱：'+session.name,
-        content:session.player,
-        dismiss:dismiss.option,
-        url:dismiss.url
-    })
+    const url=req.params.id;
+    //render session join page
+    if (url === 'join') return res.render('trpg_session_join');
+    //render session create page
+    else if (url === 'create') return res.render('trpg_session_create');
+    else {
+        try {
+            const session = await Session.findOne({_id: url});
+            const dismiss = {option: '', url: url};
+            if (session.gm === jwtDecode(req.cookies.auth_token).name)
+                dismiss.option = '解散';
+            else
+                dismiss.option = '離開';
+            res.render('trpg_session_show', {
+                title: '團務名稱：' + session.name,
+                content: session.player,
+                dismiss: dismiss.option,
+                url: dismiss.url
+            })
+        } catch (err) {
+            res.status(404).render('404')
+
+        }
+    }
 });
 
-
+router.get('/charactersheet',verify,async function (req,res) {
+    const sheet={name:[],system:[],url:[]};
+    sheet.name.push('你還沒創建角卡');
+    res.render('trpg_sheet',{
+        title:info.title[5],
+        content:sheet.name,
+        system:sheet.system,
+        url:sheet.url
+    });
+});
+router.get('/charactersheet/:id',verify,async function (req,res) {
+    const url = req.params.id;
+    if(url==='create') return res.render('trpg_sheet_create',{
+       title:'創建角色卡',
+       content:'創建你的角色卡'
+    });
+});
 
 module.exports = router;

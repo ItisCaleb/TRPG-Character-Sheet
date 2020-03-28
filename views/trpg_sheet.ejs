@@ -10,8 +10,10 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/button.js" charset="UTF-8"></script>
     <script src="/public/js/socket.js" charset="UTF-8"></script>
+
 </head>
 <body style="margin:0;background-color:#E0E0E0">
+
 <nav>
     <div class="topic">TRPG角卡創建</div>
     <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
@@ -20,24 +22,29 @@
     <li class="menu btn logged_in" onclick="redirect('/charactersheet')"style="visibility: hidden">角色卡管理</li>
     <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
     <div class="submenu">
-        <button class="subbtn btn" id="user">個人主頁</button>
-        <button class="subbtn btn" id="exit">登出</button>
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
 
 </nav>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-    <div class="content-decribe" style="text-align: center;line-height:30px ;">
-        這邊應該顯示個人主頁
-    <div>電子郵件/帳號:<%=email%></div>
-    <div style="text-align: center">
-
+    <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
     </div>
+    <div style="text-align: center">
+        <% if (content[0] =='你還沒創建角卡' ) { %>
+            <div><%=content[0]%></div>
+        <% }else{ %>
+        <% for(var i=0;i<content.length;i++) { %>
+            <div style="display: inline"><%= content[i] %> -----系統: %></div>
+            <button class="btn session" onclick="redirect('/charactersheet/<%= url[i] %>')">檢閱</button><br>
+        <% } %>
+        <%}%>
+        <button class="btn session"  onclick="redirect('/charactersheet/create')">創建角色卡</button>
     </div>
 </div>
 
 <div class="new_pusher"></div>
-
 <div class="footer">
     Copyright © 2020 ItisCaleb. All rights reserved.
 </div>

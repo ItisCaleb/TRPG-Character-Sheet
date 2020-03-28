@@ -30,6 +30,8 @@ $(document).ready(function () {
         //if user is admin, show admin post button
         if(document.cookie.indexOf('admin')>=0 && Cookies.get('admin')==='True' )
             $('.adminpost').css({'visibility':'visible'});
+        if(document.cookie.indexOf('auth_token')>=0 )
+            $('.logged_in').css({'visibility':'visible'});
         //alert message when user use invalid format to sign up and log in
         $(".check-btn").click(function() {
             const regExp = /,/;
