@@ -10,21 +10,6 @@ const COC7thInfoSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    author:{
-        type:String,
-        required:true
-    },
-    stat:{
-        type:String,
-        required:true
-    },
-    skill:{
-        type:String,
-        required:true
-    }
-
-});
-const COC7thStatSchema = new mongoose.Schema({
     class:{
         type:String,
         required: true
@@ -45,6 +30,22 @@ const COC7thStatSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    author:{
+        type:String,
+        required:true
+    },
+    stat:{
+        type:String,
+        required:true
+    },
+    skill:{
+        type:String,
+        required:true
+    }
+
+});
+const COC7thStatSchema = new mongoose.Schema({
+
     hp:{
         type:Array,
         required:true
@@ -106,8 +107,29 @@ const COC7thStatSchema = new mongoose.Schema({
     }
 
 });
+const COC7thStorySchema = new mongoose.Schema({
+    description:{
+        type:String,
+        max:1024
+    },
+    belief:String,
+    significant_people:String,
+    meaningful_location:String,
+    treasured_possession:String,
+    trait:String,
+    injuries:Array,
+    mania:Array,
+    magic:Array,
+    encounter:Array,
+    fellow_investigator:Array
+});
 const COC7thSkillSchema = new mongoose.Schema({});
-const COC7thStorySchema = new mongoose.Schema({});
-const COC7thEquipSchema = new mongoose.Schema({});
-module.exports = mongoose.model("COC7th",COC7thInfoSchema);
-module.exports = mongoose.model("COC7th",COC7thStatSchema);
+const COC7thEquipSchema = new mongoose.Schema({
+    equip:Array,
+    cash:String,
+    weapon:Array
+});
+module.exports = mongoose.model("COC7th_Info",COC7thInfoSchema);
+module.exports = mongoose.model("COC7th_Stat",COC7thStatSchema);
+module.exports = mongoose.model("COC7th_Story",COC7thStorySchema);
+module.exports = mongoose.model("COC7th_Equip",COC7thEquipSchema);
