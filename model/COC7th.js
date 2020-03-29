@@ -45,7 +45,10 @@ const COC7thInfoSchema = new mongoose.Schema({
 
 });
 const COC7thStatSchema = new mongoose.Schema({
-
+    sheet:{
+        type:String,
+        required:true
+    },
     hp:{
         type:Array,
         required:true
@@ -108,6 +111,7 @@ const COC7thStatSchema = new mongoose.Schema({
 
 });
 const COC7thStorySchema = new mongoose.Schema({
+    sheet: String,
     description:{
         type:String,
         max:1024
@@ -125,6 +129,7 @@ const COC7thStorySchema = new mongoose.Schema({
 });
 const COC7thSkillSchema = new mongoose.Schema({});
 const COC7thEquipSchema = new mongoose.Schema({
+    sheet:String,
     equip:Array,
     cash:String,
     weapon:Array
