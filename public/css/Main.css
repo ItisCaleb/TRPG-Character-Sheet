@@ -24,6 +24,11 @@ body {
     display: flex;
     flex-direction: column;
     // justify-content: space-between;
+    height: 100%;  // For the footer.
+}
+
+html {
+    height: 100%;  // For the Footer.
 }
 
 nav > .topic {
