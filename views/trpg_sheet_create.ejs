@@ -17,8 +17,8 @@
     <div class="topic">TRPG角卡創建</div>
     <li class="menu btn" id="btn" onclick="redirect('/')">首頁</li>
     <li class="menu btn" onclick="redirect('/about')">關於</li>
-    <li class="menu btn logged_in" onclick="redirect('/trpgsession')"style="visibility: hidden">團務</li>
-    <li class="menu btn logged_in" onclick="redirect('/charactersheet')"style="visibility: hidden">角色卡管理</li>
+    <li class="menu btn logged_in" onclick="redirect('/trpgsession')" style="visibility: hidden">團務</li>
+    <li class="menu btn logged_in" onclick="redirect('/charactersheet')" style="visibility: hidden">角色卡管理</li>
     <li class="menu btn adminpost" onclick="redirect('/adminpost')" style="visibility: hidden">管理員貼文</li>
     <div class="submenu">
         <button class="subbtn btn validation" id="login">登入</button>
@@ -27,17 +27,133 @@
 </nav>
 <div class="content">
 
-        <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
+    <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
-        <%- content.replace(/\r\n/g, "<br />") %>
-
+        <%- content.replace(/\r\n/g, "<br/>") %>
+        框內文字為範例角色卡
     </p>
+    <div>
+        <section style="margin: 50px">
+            <div class="sheet_creat_div">
+                <div>
+                    <p>調查員基本資料：</p>
+                    <section>
+                        <div class="sheet_input_div">
+                            姓名：<input placeholder="島田 半藏"></input><br>
+                            職業：<input placeholder="職業殺手、傭兵"></input><br>
+                            年齡：<input placeholder="38"></input><br>
+                            性別：<input placeholder="男"></input><br>
+                        </div>
+                        <div class="sheet_input_div">
+                            玩家暱稱：<input placeholder="最強小雞，朋友很多"></input><br>
+                            現居地：<input placeholder="直布羅陀"></input><br>
+                            出生地：<input placeholder="日本，花村"></input><br>
+
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+
+            <div class="sheet_creat_div" style="width: 50%">
+                <div>
+                    <p>角色形容：</p>
+                    <textarea placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea>
+                </div>
+
+            </div>
+
+        </section>
+        <div style="margin: 50px">
+            <div class="sheet_creat_div">
+                <p>調查員當前狀態：</p>
+                <section>
+                    <div class="sheet_input_div">
+                        HP： <input placeholder="16" size="2"/>/<input placeholder="16" size="2"/><br>
+                        SAN：<input placeholder="41" size="2"/>/<input placeholder="99" size="2"/><br>
+                        MP： <input placeholder="7" size="2"/>/<input placeholder="7" size="2"><br>
+                        LUK：<input placeholder="69" size="2"/>/<input placeholder="99" size="2"/><br>
+                    </div>
+                    <div class="sheet_input_div" style="width: 50%">
+                        傷害加成與體格（DB & Build）：<input placeholder="+1d4 與 +1"/><br>
+                        機動力：<input placeholder="7"/><br>
+                        負傷狀態：<input placeholder="無" type="checkbox"/><br>
+                        瘋狂狀態：<input placeholder="無" type="checkbox"><br>
+                    </div>
+                </section>
+            </div>
+            <div class="sheet_creat_div">
+
+                <section>
+                    <div class="sheet_input_div2">
+                        <p>調查員基本屬性：</p>
+                        ＳＴＲ（力量）：<input placeholder="50" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＣＯＮ（體質）：<input placeholder="80" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＤＥＸ（敏捷）：<input placeholder="40" size="2"/>調整值：<input placeholder="0" size="2"><br>
+                        ＡＰＰ（外貌）：<input placeholder="90" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＰＯＷ（意志）：<input placeholder="40" size="2"/>調整值：<input placeholder="-4" size="2"/><br>
+                        ＳＩＺ（體型）：<input placeholder="85" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＩＮＴ（智力）：<input placeholder="65" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＥＤＵ（教育）：<input placeholder="45" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+
+                    </div>
+
+                    <div class="" style="width: 50%">
+                        <p>調查員經歷：</p>
+                        思念與信念：<textarea placeholder="「榮耀伴隨死亡而來，但隨榮耀而來的是無止盡的贖罪。」"></textarea><br>
+                        重要之人：<textarea placeholder="親弟弟 源氏"></textarea><br>
+                        意義非凡之地：<textarea placeholder="日本，花村"></textarea><br>
+                        寶貴之物：<textarea placeholder="暴風弓"></textarea><br>
+                        特點：<textarea
+                                placeholder="半藏的弓箭具備有不同的功能，既可以偵測敵情，也可以分散成數股箭矢攻擊多個敵人。他還可以攀爬牆壁，從高處攻擊敵人，或是召喚巨大的巨龍之魂衝擊敵人。 "></textarea><br>
+
+                    </div>
+                </section>
+            </div>
+            <div class="sheet_creat_div">
+                <section>
+                    <div class="sheet_input_div2">
+                        <p>調查員基本屬性：</p>
+                        ＳＴＲ（力量）：<input placeholder="50" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＣＯＮ（體質）：<input placeholder="80" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＤＥＸ（敏捷）：<input placeholder="40" size="2"/>調整值：<input placeholder="0" size="2"><br>
+                        ＡＰＰ（外貌）：<input placeholder="90" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＰＯＷ（意志）：<input placeholder="40" size="2"/>調整值：<input placeholder="-4" size="2"/><br>
+                        ＳＩＺ（體型）：<input placeholder="85" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＩＮＴ（智力）：<input placeholder="65" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＥＤＵ（教育）：<input placeholder="45" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+
+                    </div>
+                    <div class="" style="width: 50%">
+                        <p>調查員背景：</p>
+                        神話相信者：<input placeholder="否" size="40"/><br>
+                        創傷與傷疤：<input placeholder="曾經以為自己殺死了自己的親弟弟。" size="40"/><br>
+                        第三類接觸：<input placeholder="自己召喚的神龍" size="40"/><br>
+                        恐懼與狂熱：<input placeholder="" size="40"/><br>
+                        魔法書與咒文：<input placeholder="竜が我が敵を喰らう！" size="40"/><br>
+                    </div>
+                </section>
+            </div>
+            <div class="sheet_creat_div">
+                <section>
+                    <div class="" style="width: 50%">
+                        <p>調查員個人描述：</p>
+                        <textarea cols="30" id="" name="personal_story"
+                                  placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。島田家的歷史可以追溯到幾個世紀之前，這個刺客組織經年累月在累積實力，讓他們有能力建立一個龐大的犯罪帝國，經由軍火和非法物品的交易獲得龐大的利益。半藏身為領袖的長子，始終負有繼承父親、統治島田組這片江山的使命。所以半藏從小受到嚴密訓練，而他也在訓練中展現出了天生的領導能力和戰術策略天份。不僅如此，半藏在實戰方面也有傑出表現，他在武術、劍術，和弓術上的造詣也是相當不凡。在父親去世之後，族中長老指示半藏去說服桀傲不馴的弟弟，要弟弟回來幫忙打理島田組的這片江山。但是他的弟弟拒絕接受這個提議，於是半藏被迫親手殺了他。這件事讓半藏哀莫大於心死，決心拒絕繼承父親的事業，同時脫離組織，並且放棄他一路艱辛得來的成果。現在半藏周遊列國，只為了讓他的戰士技藝更臻完美，冀望能藉此獲得只屬於他自己的榮耀，擺脫那些不斷糾纏他的往事。"
+                                  rows="10"></textarea>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
 
 </div>
 
-<div class="new_pusher"></div>
+
 <div class="footer">
     Copyright © 2020 ItisCaleb. All rights reserved.
 </div>
+
+
 </body>
 </html>

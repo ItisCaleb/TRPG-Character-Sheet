@@ -23,12 +23,14 @@ nav {
 body {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
-    height: 100%;  // For the footer.
+/ / justify-content: space-between;
+    height: 100%;
+/ / For the footer .
 }
 
 html {
-    height: 100%;  // For the Footer.
+    height: 100%;
+/ / For the Footer .
 }
 
 nav > .topic {
@@ -74,7 +76,7 @@ nav > .submenu > .subbtn {
 .content {
     background-color: white;
     margin-top: 25px;
-    margin-bottom: -100px;
+    margin-bottom: 100px;
     min-height: auto;
     width: 1000px;
     margin-left: auto;
@@ -90,8 +92,8 @@ nav > .submenu > .subbtn {
     text-align: center;
     padding-top: 7px;
     width: 100%;
-    // position: absolute;
-    // bottom: 0;
+/ / position: absolute;
+/ / bottom: 0;
 }
 
 .push {
@@ -114,6 +116,21 @@ nav > .submenu > .subbtn {
     padding: 4px 10px;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.sheet_creat_div {
+// margin: 50px;
+    width: 100%;
+// border: 2px solid black;
+    padding: 20px;
+}
+
+.sheet_input_div {
+    margin-right:60px;
+}
+
+.sheet_input_div2 {
+    margin-right:120px;
 }
 
 #wrapper {
