@@ -38,7 +38,7 @@
         <div>gm:<%=content[0]%></div>
         player:
             <% for(var i=1;i<content.length;i++) { %>
-                <div style="display: inline"><%= content[i] %></div>
+                <div style="display: inline"><%= content[i] %></div><br>
         <% }%>
         <br>
     <button class="btn session" onclick="redirect('/api/delete/<%=url%>')"><%=dismiss%></button>

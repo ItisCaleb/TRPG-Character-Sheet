@@ -46,12 +46,24 @@ const sessionValidation = data=>{
     };
     return Joi.validate(data, schema);
 };
-
+const passwordValidation = data =>{
+  const schema= {
+    old_password:Joi.string()
+        .required()
+        .min(6)
+        .max(15),
+    new_password:Joi.string()
+        .required()
+        .min(6)
+        .max(15)
+  };
+  return Joi.validate(data,schema);
+};
 
 
 module.exports.registerValidation =registerValidation;
 module.exports.loginValidation =loginValidation;
 module.exports.sessionValidation =sessionValidation;
-
+module.exports.passwordValidation =passwordValidation;
 
 

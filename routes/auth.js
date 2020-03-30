@@ -3,7 +3,7 @@ const User = require("../model/User");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
-const {registerValidation, loginValidation} = require("../public/js/validation");
+const {registerValidation, loginValidation, passwordValidation} = require("../public/js/validation");
 
 
 //send register information to db
@@ -11,9 +11,6 @@ router.post("/register", async (req, res) => {
     //validate register infomation
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).redirect('/signup') , req.app.io.emit('alert',error.details[0].message);
-
-
-
 
     //check if user is already register
     const userExist = await User.findOne({name: req.body.name});
@@ -36,7 +33,7 @@ router.post("/register", async (req, res) => {
         res.redirect('/login');
         req.app.io.emit('alert','註冊成功');
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err).redirect('/register');
     }
 });
 
@@ -55,6 +52,21 @@ router.post('/userlogin', async (req, res) => {
     const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
     if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
     res.cookie('auth_token', token).redirect("/");
+});
+
+//change password
+router.post('/password', async (req,res)=>{
+    const {error} = passwordValidation(req.body);
+    const username=jwtDecode(req.cookies.auth_token).name;
+    if (error) return res.status(400).redirect('/user'),req.app.io.emit('alert',error.details[0].message);
+    const user = await User.findOne({name:username});
+    const validPass = await bcrypt.compare(req.body.old_password,user.password);
+    if (!validPass) return res.status(400).redirect('/user'),req.app.io.emit('alert', '舊密碼錯誤');
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.new_password, salt);
+    await User.updateOne({name:username},{$set:{password:hashPassword}});
+    res.redirect('/user');
+    req.app.io.emit('alert','你成功修改了密碼');
 });
 
 module.exports = router;

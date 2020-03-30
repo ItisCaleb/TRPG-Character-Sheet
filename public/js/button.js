@@ -7,6 +7,12 @@ $(document).ready(function () {
         }, function () {
             $(this).css({"color": "", "borderBottomColor": ""})
         });
+        $('#change_password').click(function () {
+            $('#password_input').css({'visibility':'visible'});
+        });
+        $('#cancel_password').click(function () {
+            $('#password_input').css({'visibility':'hidden'});
+        });
         //if user is already logged in, switch login and sign in button to user page and log out button
         if (document.cookie.indexOf("auth_token")>=0) {
             $('#login').attr('id','user').text('個人主頁');
