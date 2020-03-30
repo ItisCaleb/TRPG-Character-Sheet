@@ -31,7 +31,15 @@
         這邊應該顯示個人主頁
     <div>電子郵件/帳號:<%=email%></div>
     <div style="text-align: center">
-
+        <button class="btn session" id="change_password">修改密碼</button>
+        <form id="password_input" action="../api/user/password" method="post" style="visibility: hidden">
+            <label class="table-bar" for="email"><b>輸入舊密碼</b></label><br>
+            <input type="password" placeholder="輸入舊密碼" name="old_password" id="old_password" required><br>
+            <label class="table-bar" for="password"><b>輸入新密碼</b></label><br>
+            <input type="password" placeholder="輸入新密碼" name="new_password" id="new_password" required><br>
+            <button class="btn session" type="submit">確認</button>
+            <button class="btn session" id="cancel_password">取消</button>
+        </form>
     </div>
     </div>
 </div>
