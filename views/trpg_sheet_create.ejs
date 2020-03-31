@@ -11,6 +11,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/js/button.js" charset="UTF-8"></script>
     <script src="/public/js/socket.js" charset="UTF-8"></script>
+    <script src="/public/js/COC7th.js" charset="UTF-8"></script>
 </head>
 <body style="margin:0;background-color:#E0E0E0;height: 100%">
 
@@ -70,13 +71,13 @@
                 <p>調查員當前狀態：</p>
                 <section>
                     <div class="sheet_input_div">
-                        HP： <input placeholder="16" size="2"/>/<input placeholder="16" size="2"/><br>
-                        SAN：<input placeholder="41" size="2"/>/<input placeholder="99" size="2"/><br>
-                        MP： <input placeholder="7" size="2"/>/<input placeholder="7" size="2"><br>
-                        LUK：<input placeholder="69" size="2"/>/<input placeholder="99" size="2"/><br>
+                        HP： <input  size="2"/>/<p id="hp" class="chara"></p> <br>
+                        SAN：<input  size="2"/>/<input  size="2"/><br>
+                        MP： <input  size="2"/>/<p id="mp" class="chara"></p><br>
+                        LUK：<input  size="2"/>/<input  size="2"/><br>
                     </div>
                     <div class="sheet_input_div" style="width: 50%">
-                        傷害加成與體格（DB & Build）：<input placeholder="+1d4 與 +1"/><br>
+                        傷害加成與體格(DB & Build)：<input placeholder="+1d4 與 +1"/><br>
                         機動力：<input placeholder="7"/><br>
                         負傷狀態：<input placeholder="無" type="checkbox"/><br>
                         瘋狂狀態：<input placeholder="無" type="checkbox"><br>
@@ -88,14 +89,14 @@
                 <section>
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
-                        ＳＴＲ（力量）：<input placeholder="50" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＣＯＮ（體質）：<input placeholder="80" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＤＥＸ（敏捷）：<input placeholder="40" size="2"/>調整值：<input placeholder="0" size="2"><br>
-                        ＡＰＰ（外貌）：<input placeholder="90" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＰＯＷ（意志）：<input placeholder="40" size="2"/>調整值：<input placeholder="-4" size="2"/><br>
-                        ＳＩＺ（體型）：<input placeholder="85" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＩＮＴ（智力）：<input placeholder="65" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＥＤＵ（教育）：<input placeholder="45" size="2"/>調整值：<input placeholder="0" size="2"/><br>
+                        ＳＴＲ(力量)：<input type="number" step="5" min="0" max="100" value="0" id="str-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="str-adj" class="attr" value="0" size="2"/>總值:<p id="str" class="chara"></p><br>
+                        ＣＯＮ(體質)：<input type="number" step="5" min="0" max="100" value="0" id="con-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="con-adj" class="attr" value="0" size="2"/>總值:<p id="con" class="chara"></p><br>
+                        ＤＥＸ(敏捷)：<input type="number" step="5" min="0" max="100" value="0" id="dex-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="dex-adj" class="attr" value="0" size="2"/>總值:<p id="dex" class="chara"></p><br>
+                        ＡＰＰ(外貌)：<input type="number" step="5" min="0" max="100" value="0" id="app-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="app-adj" class="attr" value="0" size="2"/>總值:<p id="app" class="chara"></p><br>
+                        ＰＯＷ(意志)：<input type="number" step="5" min="0" max="100" value="0" id="pow-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="pow-adj" class="attr" value="0" size="2"/>總值:<p id="pow" class="chara"></p><br>
+                        ＳＩＺ(體型)：<input type="number" step="5" min="0" max="100" value="0" id="siz-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="siz-adj" class="attr" value="0" size="2"/>總值:<p id="siz" class="chara"></p><br>
+                        ＩＮＴ(智力)：<input type="number" step="5" min="0" max="100" value="0" id="int-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="int-adj" class="attr" value="0" size="2"/>總值:<p id="int" class="chara"></p><br>
+                        ＥＤＵ(教育)：<input type="number" step="5" min="0" max="100" value="0" id="edu-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="edu-adj" class="attr" value="0" size="2"/>總值:<p id="edu" class="chara"></p><br>
 
                     </div>
 
@@ -113,18 +114,6 @@
             </div>
             <div class="sheet_creat_div">
                 <section>
-                    <div class="sheet_input_div2">
-                        <p>調查員基本屬性：</p>
-                        ＳＴＲ（力量）：<input placeholder="50" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＣＯＮ（體質）：<input placeholder="80" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＤＥＸ（敏捷）：<input placeholder="40" size="2"/>調整值：<input placeholder="0" size="2"><br>
-                        ＡＰＰ（外貌）：<input placeholder="90" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＰＯＷ（意志）：<input placeholder="40" size="2"/>調整值：<input placeholder="-4" size="2"/><br>
-                        ＳＩＺ（體型）：<input placeholder="85" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＩＮＴ（智力）：<input placeholder="65" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-                        ＥＤＵ（教育）：<input placeholder="45" size="2"/>調整值：<input placeholder="0" size="2"/><br>
-
-                    </div>
                     <div class="" style="width: 50%">
                         <p>調查員背景：</p>
                         神話相信者：<input placeholder="否" size="40"/><br>
@@ -133,10 +122,6 @@
                         恐懼與狂熱：<input placeholder="" size="40"/><br>
                         魔法書與咒文：<input placeholder="竜が我が敵を喰らう！" size="40"/><br>
                     </div>
-                </section>
-            </div>
-            <div class="sheet_creat_div">
-                <section>
                     <div class="" style="width: 50%">
                         <p>調查員個人描述：</p>
                         <textarea cols="30" id="" name="personal_story"
@@ -165,49 +150,56 @@
                                 <td>成長</td>
                             </tr>
                             <tr>
-                                <td>會計(Accounting)(初始：5)</td>
-                                <td></td>
+                                <td>會計(Accounting)</td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>估價(Appraise)(初始：5)</td>
-                                <td></td>
+                                <td>人類學(Anthropology)</td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>考古學(Archaeology)(初始：5)</td>
-                                <td></td>
+                                <td>估價(Appraise)</td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>魅惑(Charm)(初始：5) <br></td>
-                                <td></td>
+                                <td>考古學(Archaeology)</td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>攀爬(Climb)(初始：5) <br></td>
-                                <td></td>
+                                <td>魅惑(Charm) <br></td>
+                                <td>15</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>電腦使用(Computer Use)(初始：5) <br></td>
-                                <td></td>
+                                <td>攀爬(Climb) <br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>信用評級(Credit Rating)(初始：5) <br></td>
+                                <td>電腦使用(Computer Use) <br></td>
+                                <td>5</td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+                            </tr>
+                            <tr>
+                                <td>信用評級(Credit Rating) <br></td>
                                 <td></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -215,106 +207,114 @@
 
                             </tr>
                             <tr>
-                                <td>克蘇魯神話(Cthulhu Mythos)(初始：5)<br></td>
-                                <td></td>
+                                <td>克蘇魯神話(Cthulhu Mythos)<br></td>
+                                <td>0</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>喬裝(Disguise)(初始：5) <br></td>
-                                <td></td>
+                                <td>喬裝(Disguise) <br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>閃避(Dodge)(初始：5) <br></td>
+                                <td>閃避(Dodge) <br></td>
                                 <td></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>自動車駕駛(Drive Auto)(初始：5)<br></td>
-                                <td></td>
+                                <td>自動車駕駛(Drive Auto)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>電器維修(Electrical Repair)(初始：5) <br></td>
-                                <td></td>
+                                <td>電器維修(Electrical Repair) <br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>話術(Fast-Talk)(初始：5)<br></td>
-                                <td></td>
+                                <td>電子學(Electronics) <br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>急救(First Aid)(初始：5) <br></td>
-                                <td></td>
+                                <td>話術(Fast-Talk)<br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>歷史(History)(初始：5) <br></td>
-                                <td></td>
+                                <td>急救(First Aid) <br></td>
+                                <td>30</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>威嚇(Intimidate)(初始：5) <br></td>
-                                <td></td>
+                                <td>歷史(History) <br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
 
                             </tr>
                             <tr>
-                                <td>跳躍(Jump)(初始：5) <br></td>
-                                <td></td>
+                                <td>威嚇(Intimidate) <br></td>
+                                <td>15</td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+
+                            </tr>
+                            <tr>
+                                <td>跳躍(Jump) <br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>法律(Law)(初始：5)<br></td>
-                                <td></td>
+                                <td>法律(Law)<br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>圖書館使用(Library Use)(初始：5)<br></td>
-                                <td></td>
+                                <td>圖書館使用(Library Use)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>聆聽(Listen)(初始：5)<br></td>
-                                <td></td>
+                                <td>聆聽(Listen)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>鎖匠(Locksmith)(初始：5)<br></td>
-                                <td></td>
+                                <td>鎖匠(Locksmith)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -334,154 +334,154 @@
                                 <td>成長</td>
                             </tr>
                             <tr>
-                                <td>機器維修(Mechanical)(初始：5)<br></td>
-                                <td></td>
+                                <td>機器維修(Mechanical)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td> 醫學(Medicine)(初始：5)<br></td>
-                                <td></td>
+                                <td> 醫學(Medicine)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>自然學(Natural World)(初始：5)<br></td>
-                                <td></td>
+                                <td>自然學(Natural World)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td> 導航(Navigate)(初始：5)<br></td>
-                                <td></td>
+                                <td>導航(Navigate)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>神祕學(Occult)(初始：5)<br></td>
-                                <td></td>
+                                <td>神祕學(Occult)<br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>操縱重型機器(Operate Heavy Machinery)(初始：5)<br></td>
-                                <td></td>
+                                <td>操縱重型機器(Operate Heavy Machinery)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>說服(Persude)(初始：5)<br></td>
-                                <td></td>
+                                <td>說服(Persude)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>心理分析(Psychoanalysis)(初始：5)<br></td>
-                                <td></td>
+                                <td>心理分析(Psychoanalysis)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>心理學(Psychology)(初始：5)<br></td>
-                                <td></td>
+                                <td>心理學(Psychology)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td> 騎術(Ride)(初始：5)</td>
-                                <td></td>
+                                <td>騎術(Ride)</td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>巧手(Sleight of Hand)(初始：5)<br></td>
-                                <td></td>
+                                <td>巧手(Sleight of Hand)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>偵查(Spot Hidden)(初始：5)<br></td>
-                                <td></td>
+                                <td>偵查(Spot Hidden)<br></td>
+                                <td>25</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>隱密行動(Stealth)(初始：5)<br></td>
-                                <td></td>
+                                <td>隱密行動(Stealth)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>游泳(Swim)(初始：5)<br></td>
-                                <td></td>
+                                <td>游泳(Swim)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>投擲(Throw)(初始：5)<br></td>
-                                <td></td>
+                                <td>投擲(Throw)<br></td>
+                                <td>20</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>追蹤(Track)(初始：5)<br></td>
-                                <td></td>
+                                <td>追蹤(Track)<br></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td> 動物馴養(Animal Handling)(初始：5)<br></td>
-                                <td></td>
+                                <td> 動物馴養(Animal Handling)<br></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>炮術(Artillery)(初始：5)<br></td>
-                                <td></td>
+                                <td>炮術(Artillery)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>爆破(Demolitions)(初始：5)<br></td>
-                                <td></td>
+                                <td>爆破(Demolitions)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>潛水(Diving)(初始：5)<br></td>
-                                <td></td>
+                                <td>潛水(Diving)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>催眠(Hypnosis)(初始：5)<br></td>
-                                <td></td>
+                                <td>催眠(Hypnosis)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr><tr>
-                                <td>讀唇(Read Lips)(初始：5)<br></td>
-                                <td></td>
+                                <td>讀唇(Read Lips)<br></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -502,7 +502,7 @@
                                 <td>成長</td>
                             </tr>
                             <tr>
-                                <td>專業駕駛(Pilot)(初始：5)<br></td>
+                                <td>專業駕駛(Pilot)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
                                 <td><input placeholder="自定義" size="20"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -510,32 +510,32 @@
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td> 求生(Survival)(初始：5)<br></td>
+                                <td> 求生(Survival)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>10</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>藝術與工藝(Art and Craft)(初始：5)<br></td>
+                                <td>藝術與工藝(Art and Craft)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>藝術與工藝(Art and Craft)(初始：5)<br></td>
+                                <td>藝術與工藝(Art and Craft)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>5</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
                             <tr>
-                                <td>藝術與工藝(Art and Craft)(初始：5)<br></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>藝術與工藝(Art and Craft)<br></td>
+                                <td>5</td>
                                 <td><input placeholder="自定義" size="20"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -592,7 +592,7 @@
                             <tr>
                                 <td>他國語言(Language (Other))<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -600,7 +600,7 @@
                             <tr>
                                 <td>他國語言(Language (Other))<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -608,7 +608,7 @@
                             <tr>
                                 <td>他國語言(Language (Other))<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -648,7 +648,7 @@
                             <tr>
                                 <td>偏門學問(Lore)(初始：1)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -656,7 +656,7 @@
                             <tr>
                                 <td>偏門學問(Lore)(初始：1)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
-                                <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
@@ -664,18 +664,19 @@
                             <tr>
                                 <td>偏門學問(Lore)(初始：1)<br></td>
                                 <td><input placeholder="自定義" size="20"/></td>
+                                <td>1</td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+                                <td><input placeholder="0" size="2"/></td>
+                            </tr>
+                            <tr>
+                                <td><input placeholder="自定義技能" size="20"/></td>
+                                <td><input placeholder="自定義" size="20"/></td>
                                 <td><input placeholder="自定義" size="20"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                                 <td><input placeholder="0" size="2"/></td>
                             </tr>
-                            <td><input placeholder="自定義技能" size="20"/></td>
-                            <td><input placeholder="自定義" size="20"/></td>
-                            <td><input placeholder="自定義" size="20"/></td>
-                            <td><input placeholder="0" size="2"/></td>
-                            <td><input placeholder="0" size="2"/></td>
-                            <td><input placeholder="0" size="2"/></td>
-                            <tr>
                         </table>
                     </div>
                 </div>
@@ -693,14 +694,6 @@
                             });
                         </script>
 
-                    <!--<div class="" style="width: 50%">
-                        <p>調查員背景：</p>
-                        神話相信者：<input placeholder="否" size="40"/><br>
-                        創傷與傷疤：<input placeholder="曾經以為自己殺死了自己的親弟弟。" size="40"/><br>
-                        第三類接觸：<input placeholder="自己召喚的神龍" size="40"/><br>
-                        恐懼與狂熱：<input placeholder="" size="40"/><br>
-                        魔法書與咒文：<input placeholder="竜が我が敵を喰らう！" size="40"/><br>
-                    </div>-->
                 </section>
             </div>
         </div>

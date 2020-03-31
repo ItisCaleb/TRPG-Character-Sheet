@@ -16,6 +16,9 @@
 .sheet_input_div3 {
     margin-right:20px;
 }
+.chara{
+    display: inline;
+}
 #tab_demo{ width:900px;}
 #tab_demo > ul{ display:block; margin:0;list-style:none;}
 .tab_title{list-style:none;}
