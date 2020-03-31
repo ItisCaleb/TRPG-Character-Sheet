@@ -1,0 +1,26 @@
+.sheet_creat_div {
+// margin: 50px;
+    width: 100%;
+// border: 2px solid black;
+    padding: 20px;
+}
+
+.sheet_input_div {
+    margin-right:60px;
+}
+
+.sheet_input_div2 {
+    margin-right:120px;
+}
+
+.sheet_input_div3 {
+    margin-right:20px;
+}
+#tab_demo{ width:900px;}
+#tab_demo > ul{ display:block; margin:0;list-style:none;}
+.tab_title{list-style:none;}
+#tab_demo > ul > li{ display: inline-block; vertical-align: bottom; margin:0 -1px -1px 0 ; border:1px solid #BCBCBC; height:25px; line-height:25px; background:#cdcdcd;padding:0 15px;list-style:none; box-sizing:border-box;}
+#tab_demo >  ul > li a{ color:#000; text-decoration:none;}
+#tab_demo > ul > li.active{ border-bottom:1px solid #fff; background:#fff;}
+#tab_demo > .tab{ clear:both; color:#000; border:1px #BCBCBC solid;}
+.tab{ padding:15px;}

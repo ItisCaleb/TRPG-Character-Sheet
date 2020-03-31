@@ -78,7 +78,7 @@ nav > .submenu > .subbtn {
     margin-top: 25px;
     margin-bottom: 100px;
     min-height: auto;
-    width: 1000px;
+    width: 1100px;
     margin-left: auto;
     margin-right: auto;
     border-width: 2px;
@@ -116,25 +116,6 @@ nav > .submenu > .subbtn {
     padding: 4px 10px;
     margin-top: 10px;
     cursor: pointer;
-}
-
-.sheet_creat_div {
-// margin: 50px;
-    width: 100%;
-// border: 2px solid black;
-    padding: 20px;
-}
-
-.sheet_input_div {
-    margin-right:60px;
-}
-
-.sheet_input_div2 {
-    margin-right:120px;
-}
-
-.sheet_input_div3 {
-    margin-right:20px;
 }
 
 #wrapper {
