@@ -76,39 +76,10 @@ const COC7thStatSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    str:{
-        type:Number,
-        required:true
-    },
-    con:{
-        type:Number,
-        required:true
-    },
-    dex:{
-        type:Number,
-        required:true
-    },
-    app:{
-        type:Number,
-        required:true
-    },
-    pow:{
-        type:Number,
-        required:true
-    },
-    siz:{
-        type:Number,
-        required:true
-    },
-    int:{
-        type:Number,
-        required:true
-    },
-    edu:{
+    characteristic:{
         type:Number,
         required:true
     }
-
 });
 const COC7thStorySchema = new mongoose.Schema({
     sheet: String,
