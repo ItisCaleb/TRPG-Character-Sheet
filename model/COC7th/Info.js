@@ -1,111 +1,43 @@
 const mongoose = require("mongoose");
 
 const COC7thInfoSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        min:1
+    name: {
+        type: String,
+        required: true,
+        min: 1
     },
     player_name: {
         type: String,
-        required:true
-    },
-    class:{
-        type:String,
         required: true
     },
-    age:{
-        type:String,
-        required:true
+    class: {
+        type: String,
+        required: true
     },
-    sex:{
-        type:String,
-        required:true
+    age: {
+        type: String,
+        required: true
     },
-    residence:{
-        type:String,
-        required:true
+    sex: {
+        type: String,
+        required: true
+    },
+    residence: {
+        type: String,
+        required: true
     },
     birthplace: {
         type: String,
         required: true
     },
-    author:{
-        type:String,
-        required:true
-    },
-    stat:{
-        type:String,
-        required:true
-    },
-    skill:{
-        type:String,
-        required:true
+    author: {
+        type: String,
+        required: true
     }
+    //stat: {type: String, required: true},
+    //skill: {type: String, required: true}
+});
 
-});
-const COC7thStatSchema = new mongoose.Schema({
-    sheet:{
-        type:String,
-        required:true
-    },
-    hp:{
-        type:Array,
-        required:true
-    },
-    san:{
-        type:Array,
-        required:true
-    },
-    mp:{
-        type:Array,
-        required:true
-    },
-    luk:{
-        type:Array,
-        required:true
-    },
-    db:Number,
-    build:Number,
-    mov:Number,
-    insane_status:{
-        type:String,
-        required:true
-    },
-    injured_status:{
-        type:String,
-        required:true
-    },
-    characteristic:{
-        type:Number,
-        required:true
-    }
-});
-const COC7thStorySchema = new mongoose.Schema({
-    sheet: String,
-    description:{
-        type:String,
-        max:1024
-    },
-    belief:String,
-    significant_people:String,
-    meaningful_location:String,
-    treasured_possession:String,
-    trait:String,
-    injuries:Array,
-    mania:Array,
-    magic:Array,
-    encounter:Array,
-    fellow_investigator:Array
-});
-const COC7thSkillSchema = new mongoose.Schema({});
-const COC7thEquipSchema = new mongoose.Schema({
-    sheet:String,
-    equip:Array,
-    cash:String,
-    weapon:Array
-});
+
+
 module.exports = mongoose.model("COC7th_Info",COC7thInfoSchema);
-module.exports = mongoose.model("COC7th_Stat",COC7thStatSchema);
-module.exports = mongoose.model("COC7th_Story",COC7thStorySchema);
-module.exports = mongoose.model("COC7th_Equip",COC7thEquipSchema);

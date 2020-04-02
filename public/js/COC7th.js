@@ -14,17 +14,17 @@ $(document).ready(function () {
         $('#edu').text(sum_up($('#edu-bas').val(),$('#edu-adj').val()));
         $('#hp').text(Math.floor(sum_up($('#con').text(),$('#siz').text())/10) );
         $('#mp').text(sum_up($('#pow').text(),0)/5);
-    },1);
+    },0);
     setInterval(function () {
         $('.attr').each(function () {
             if ($(this).val()>100){
                 $(this).val(100);
             }
-            if ($(this).val()==='' || $(this).val()=== String){
+            if ($(this).val()==='' || ($(this).val()=== String && $(this).val() !== '-' )){
                 $(this).val(0);
             }
             if ($(this).val()<-50)
                 $(this).val(-50);
         }) ;
-    },1)
+    },0)
 });
