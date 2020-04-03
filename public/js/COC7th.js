@@ -1,5 +1,6 @@
 document.write();
 $(document).ready(function () {
+    const socket = io('http://localhost:3000');
     function sum_up(bas,adj){
         return parseInt(bas,10) + parseInt(adj,10)
     }
@@ -41,6 +42,7 @@ $(document).ready(function () {
             $('#build').text(Math.floor((((str+siz)-205)/80)+2)+'d6 & '+Math.floor((((str+siz)-205)/80)+3));
 
     },0);
+    var sheet = {};
     setInterval(function () {
         $('.attr-add').each(function () {
             if ($(this).val()>100)
@@ -70,7 +72,6 @@ $(document).ready(function () {
             $('#san').val($('#san-max').text());
         if(parseInt($('#luk').val())>parseInt($('#luk-max').text()))
             $('#luk').val($('#luk-max').val());
-
         $('.total').each(function () {
             $(this).text(function () {
                 var sum = 0;
@@ -80,6 +81,30 @@ $(document).ready(function () {
                 sum += parseInt($(this).siblings('.base').text()) ;
                 return sum
             });
+
+            var name = $(this).siblings('.name').text();
+            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ){
+                sheet[name] = [];
+                $(this).siblings().find('.base-input').each(function () {
+                    sheet[name].push(parseInt($(this).val())) ;
+                });
+            }
+            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
+                delete sheet[name];
         });
-    },0)
+    },0);
+    $('#myform').submit(function (e) {
+        e.preventDefault();
+        var skill = $(this).serializeArray();
+        skill.push({name:'skill',value:sheet});
+        console.log(skill);
+
+        $.ajax({
+            url: $(this).attr("action"),
+            type: 'POST',
+            data:skill,
+            dataType:'json'
+        });
+
+    })
 });

@@ -13,7 +13,7 @@ app.io = io;
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
-//const sheetRoute = require('/routes/sheet');
+const sheetRoute = require('./routes/sheet');
 
 const vhost = require('./node_modules/vhost');
 
@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use("/api/user", authRoute);
 app.use('/api', TRPGSessionRoute);
 app.use('/', indexRoute);
-//app.use('/api/sheet',sheetRoute);
+app.use('/api/sheet',sheetRoute);
 
 app.use(function (req, res, next) {
     next(createError(404));
@@ -56,7 +56,9 @@ app.use(function (err, req, res, next) {
 });
 
 //start socket.io connection
+io.sockets.setMaxListeners(0);
 io.on('connection', function (socket) {
+
 });
 
 // start server

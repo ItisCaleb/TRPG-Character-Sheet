@@ -6,34 +6,15 @@ const COC7thInfoSchema = new mongoose.Schema({
         required: true,
         min: 1
     },
-    player_name: {
-        type: String,
-        required: true
-    },
-    class: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: String,
-        required: true
-    },
-    sex: {
-        type: String,
-        required: true
-    },
-    residence: {
-        type: String,
-        required: true
-    },
-    birthplace: {
-        type: String,
-        required: true
-    },
-    author: {
-        type: String,
-        required: true
-    }
+    player_name:String,
+    class:String,
+    age:String,
+    sex:String,
+    residence: String,
+    birthplace: String,
+    author:String,
+    skill:Array
+
     //stat: {type: String, required: true},
     //skill: {type: String, required: true}
 });

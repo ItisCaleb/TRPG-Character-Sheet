@@ -127,7 +127,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
     const url = req.params.id;
     if(url==='create') return res.render('trpg_sheet_create',{
        title:'創建角色卡',
-       content:'創建你的角色卡'
+       content:'創建你的角色卡',
+       player:jwtDecode(req.cookies.auth_token).name
     });
 });
 

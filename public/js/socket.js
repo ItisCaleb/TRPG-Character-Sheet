@@ -5,5 +5,4 @@ $(document).ready(function () {
     socket.on('alert',function (data) {
         alert(data);
     });
-
 });
