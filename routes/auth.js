@@ -8,15 +8,17 @@ const {registerValidation, loginValidation, passwordValidation} = require("../pu
 
 //send register information to db
 router.post("/register", async (req, res) => {
+    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+
     //validate register infomation
     const {error} = registerValidation(req.body);
-    if (error) return res.status(400).redirect('/signup') , req.app.io.emit('alert',error.details[0].message);
+    if (error) return res.status(400).redirect('/signup') , socket.emit('alert',error.details[0].message);
 
     //check if user is already register
     const userExist = await User.findOne({name: req.body.name});
     const emailExist = await User.findOne({email: req.body.email});
-    if (userExist) return res.status(400).redirect('/signup'),req.app.io.emit('alert','暱稱已存在');
-    if (emailExist) return res.status(400).redirect('/signup'),req.app.io.emit('alert','電子郵件已存在');
+    if (userExist) return res.status(400).redirect('/signup') , socket.emit('alert','暱稱已存在');
+    if (emailExist) return res.status(400).redirect('/signup') , socket.emit('alert','電子郵件已存在');
 
     //Hash password
     const salt = await bcrypt.genSalt(10);
@@ -31,7 +33,7 @@ router.post("/register", async (req, res) => {
     try {
         await user.save();
         res.redirect('/login');
-        req.app.io.emit('alert','註冊成功');
+        socket.emit('alert','註冊成功');
     } catch (err) {
         res.status(400).send(err).redirect('/register');
     }

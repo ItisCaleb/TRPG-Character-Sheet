@@ -48,10 +48,6 @@ $(document).ready(function () {
             alert("含有特殊字元")
         }
     });
-    $('#myform').submit(function (e) {
-        e.preventDefault();
-        $.post($(this).attr('action'),$(this).serializeArray());
-    });
 });
 //redirect URL function
 function redirect(URL) {
