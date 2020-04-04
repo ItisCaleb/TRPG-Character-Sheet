@@ -1,6 +1,6 @@
 document.write();
 $(document).ready(function () {
-    const socket = io('http://localhost:3000');
+    //const socket = io('http://localhost:3000');
     function sum_up(bas,adj){
         return parseInt(bas,10) + parseInt(adj,10)
     }
