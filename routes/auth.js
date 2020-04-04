@@ -8,7 +8,7 @@ const {registerValidation, loginValidation, passwordValidation} = require("../pu
 
 //send register information to db
 router.post("/register", async (req, res) => {
-    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+    const socket = req.app.io.socket.connected[req.cookies.io] ;
 
     //validate register infomation
     const {error} = registerValidation(req.body);
