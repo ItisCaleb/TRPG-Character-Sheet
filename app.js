@@ -58,7 +58,7 @@ app.use(function (err, req, res, next) {
 //start socket.io connection
 io.sockets.setMaxListeners(0);
 io.on('connection', function (socket) {
-
+    socket.send(socket.id);
 });
 
 // start server
