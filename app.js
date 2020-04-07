@@ -60,7 +60,6 @@ io.sockets.setMaxListeners(0);
 io.on('connection', function (socket) {
     socket.send(socket.id);
     socket.on('disconnect',function () {
-        console.info(`Client gone [id=${socket.id}]`);
     })
 });
 

@@ -42,36 +42,54 @@ $(document).ready(function () {
             $('#build').text(Math.floor((((str+siz)-205)/80)+2)+'d6 & '+Math.floor((((str+siz)-205)/80)+3));
 
     },0);
-    var sheet = {};
+    var skill = {};
+    var stat = [];
     setInterval(function () {
         $('.attr-add').each(function () {
-            if ($(this).val()>100)
-                $(this).val(100);
+            if ($(this).val()>99)
+                $(this).val(99);
             if ($(this).val() === '' || $(this).val() === String )
                 $(this).val(0);
             if ($(this).val()<-50)
                 $(this).val(-50);
         });
         $('.attr').each(function () {
-            if ($(this).val()>100)
-                $(this).val(100);
+            if ($(this).val()>99)
+                $(this).val(99);
             if ($(this).val() === '' || $(this).val() === String )
                 $(this).val(0);
             if ($(this).val()<0)
                 $(this).val(0);
         });
         $('.skill').each(function () {
+            if ($(this).val()>99)
+                $(this).val(99);
             if ($(this).val() === '' || $(this).val() === String )
                 $(this).val(0);
+            if ($(this).val()<0)
+                $(this).val(0);
         });
-        if(parseInt($('#hp').val())>parseInt($('#hp-max').text()))
+        if(parseInt($('#hp').val())>parseInt($('#hp-max').text()) || parseInt($('#hp').val())<0)
             $('#hp').val($('#hp-max').text());
-        if(parseInt($('#mp').val())>parseInt($('#mp-max').text()))
+        if(parseInt($('#mp').val())>parseInt($('#mp-max').text()) || parseInt($('#mp').val())<0)
             $('#mp').val($('#mp-max').text());
-        if(parseInt($('#san').val())>parseInt($('#san-max').text()))
+        if(parseInt($('#san').val())>parseInt($('#san-max').text()) )
             $('#san').val($('#san-max').text());
-        if(parseInt($('#luk').val())>parseInt($('#luk-max').text()))
-            $('#luk').val($('#luk-max').val());
+        if(parseInt($('#luk').val())>99 || parseInt($('#luk').val())<0)
+            $('#luk').val(99);
+        stat = [];
+        $('.chara').each(function () {
+            if (parseInt($(this).text())<0) {
+                $(this).siblings('.attr-add').val(function () {
+                    return parseInt($(this).val()) + 1
+                });
+            }
+
+            $(this).siblings('.stat').each(function () {
+                stat.push(parseInt($(this).val()));
+            });
+        });
+
         $('.total').each(function () {
             $(this).text(function () {
                 var sum = 0;
@@ -84,25 +102,28 @@ $(document).ready(function () {
 
             var name = $(this).siblings('.name').text();
             if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ){
-                sheet[name] = [];
+                skill[name] = [];
                 $(this).siblings().find('.base-input').each(function () {
-                    sheet[name].push(parseInt($(this).val())) ;
+                    skill[name].push(parseInt($(this).val())) ;
                 });
             }
             if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
-                delete sheet[name];
+                delete skill[name];
         });
     },0);
     $('#myform').submit(function (e) {
         e.preventDefault();
-        var skill = $(this).serializeArray();
-        skill.push({name:'skill',value:sheet});
-        console.log(skill);
 
+        var sheet = $(this).serializeArray();
+
+        console.log(sheet);
+        sheet.push({name:'skill',value:skill});
+        sheet.push({name:'stat',value:stat});
         $.ajax({
             url: $(this).attr("action"),
             type: 'POST',
-            data:skill,
+            contentType: 'application/json; charset=UTF-8',
+            data:JSON.stringify(sheet) ,
             dataType:'json'
         });
 

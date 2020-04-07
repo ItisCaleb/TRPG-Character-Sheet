@@ -8,33 +8,52 @@ const COC7thSkill = require('../model/COC7th/Skill');
 
 router.post('/COC7th', async (req, res) => {
     const user = jwtDecode(req.cookies.auth_token)._id;
-    //create new sheet
-    const sheet = new COC7thInfo({
-        name:req.body.name,
-        class:req.body.class,
-        age:req.body.age,
-        sex:req.body.sex,
-        player_name: req.body.player,
-        residence:req.body.residence,
-        birthplace:req.body.birthplace,
-        skill: req.body.skill,
+    var csheet = req.body;
+    //save new sheet
+    /*const sheet = new COC7thInfo({
+        name:csheet[0].value,
+        class:csheet[1].value,
+        age:csheet[2].value,
+        sex:csheet[3].value,
+        player_name: csheet[4].value,
+        residence:csheet[5].value,
+        birthplace:csheet[6].value,
         author:user
     });
     try{
-        //req.app.io.emit('alert',req.body.name + '創建成功'+' GM:'+user);
-        res.send(await sheet.save());
+       await sheet.save();
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create')
+    }*/
+
+    //transform skill from object to array
+    var skill = [{}];
+    for (var i=0;i<Object.keys(csheet[11].value).length;i++){
+        var name = Object.keys(csheet[11].value)[i];
+        skill[i] = {name :name,number:Object.values(csheet[11].value)[i]};
     }
-    console.log(req.body);
-    //const skill =req.body.sheet;
-    //     //try {
-    //    await skill.save();
-    //}catch (err) {
-    //    res.status(400).send(err);
-    //    res.redirect('/charactersheet/create')
-    //}
+    console.log(skill);
+    //save skill
+    /*const cskill = new COC7thSkill({
+        _id:sheet._id,
+        skill:skill
+    });
+    const stat = new COC7thStat({
+        _id:sheet._id,
+        hp:csheet[7].value,
+        san:csheet[8].value,
+        mp:csheet[9].value,
+        luk:csheet[10].value,
+        characteristic:csheet[12].value
+    });
+    try{
+        await stat.save();
+        await cskill.save();
+    }catch (err) {
+        res.status(400).send(err);
+        res.redirect('/charactersheet/create');
+    }*/
 });
 
 module.exports = router;

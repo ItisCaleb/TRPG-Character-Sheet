@@ -72,10 +72,10 @@
                 <p>調查員當前狀態：</p>
                 <section>
                     <div class="sheet_input_div">
-                        HP： <input id="hp"  class="skill" type="number" min="0" max="40" size="2"/>/<p id="hp-max"  class="chara"></p> <br>
-                        SAN：<input id="san" class="skill" type="number" min="0" max="99" size="2"/>/<p id="san-max" class="chara"></p><br>
-                        MP： <input id="mp"  class="skill" type="number" min="0" max="40" size="2"/>/<p id="mp-max"  class="chara"></p><br>
-                        LUK：<input id="luk" class="skill" type="number" min="0" max="99" size="2"/>/<input type="number" min="0" max="99" size="2"/><br>
+                        HP： <input id="hp" name="hp" class="skill" type="number" min="0" max="40" size="2"/>/<p id="hp-max" class="chara"></p> <br>
+                        SAN：<input id="san" name="san" class="skill" type="number" min="0" max="99" size="2"/>/<p id="san-max" class="chara"></p><br>
+                        MP： <input id="mp" name="mp" class="skill" type="number" min="0" max="40" size="2"/>/<p id="mp-max"  class="chara"></p><br>
+                        LUK：<input id="luk" name="luk" class="skill luk" type="number" min="0" max="99" size="2"/>/<p class="chara">99</p><br>
                     </div>
                     <div class="sheet_input_div" style="width: 50%">
                         傷害加成與體格(DB & Build)：<p class="chara" id="build"></p><br>
@@ -90,14 +90,14 @@
                 <section>
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
-                        ＳＴＲ(力量)：<input type="number" step="5" min="0" max="100" value="0" id="str-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="str-adj" class="attr-add" value="0" size="2"/>總值:<p id="str" class="chara attr"></p><br>
-                        ＣＯＮ(體質)：<input type="number" step="5" min="0" max="100" value="0" id="con-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="con-adj" class="attr-add" value="0" size="2"/>總值:<p id="con" class="chara attr"></p><br>
-                        ＤＥＸ(敏捷)：<input type="number" step="5" min="0" max="100" value="0" id="dex-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="dex-adj" class="attr-add" value="0" size="2"/>總值:<p id="dex" class="chara attr"></p><br>
-                        ＡＰＰ(外貌)：<input type="number" step="5" min="0" max="100" value="0" id="app-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="app-adj" class="attr-add" value="0" size="2"/>總值:<p id="app" class="chara attr"></p><br>
-                        ＰＯＷ(意志)：<input type="number" step="5" min="0" max="100" value="0" id="pow-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="pow-adj" class="attr-add" value="0" size="2"/>總值:<p id="pow" class="chara attr"></p><br>
-                        ＳＩＺ(體型)：<input type="number" step="5" min="0" max="100" value="0" id="siz-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="siz-adj" class="attr-add" value="0" size="2"/>總值:<p id="siz" class="chara attr"></p><br>
-                        ＩＮＴ(智力)：<input type="number" step="5" min="0" max="100" value="0" id="int-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="int-adj" class="attr-add" value="0" size="2"/>總值:<p id="int" class="chara attr"></p><br>
-                        ＥＤＵ(教育)：<input type="number" step="5" min="0" max="100" value="0" id="edu-bas" class="attr" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="edu-adj" class="attr-add" value="0" size="2"/>總值:<p id="edu" class="chara attr"></p><br>
+                        <div>ＳＴＲ(力量)：<input type="number" step="5" min="0" max="100" value="0" id="str-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="str-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="str" class="chara attr"></p></div>
+                        <div>ＣＯＮ(體質)：<input type="number" step="5" min="0" max="100" value="0" id="con-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="con-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="con" class="chara attr"></p></div>
+                        <div>ＤＥＸ(敏捷)：<input type="number" step="5" min="0" max="100" value="0" id="dex-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="dex-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="dex" class="chara attr"></p></div>
+                        <div>ＡＰＰ(外貌)：<input type="number" step="5" min="0" max="100" value="0" id="app-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="app-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="app" class="chara attr"></p></div>
+                        <div>ＰＯＷ(意志)：<input type="number" step="5" min="0" max="100" value="0" id="pow-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="pow-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="pow" class="chara attr"></p></div>
+                        <div>ＳＩＺ(體型)：<input type="number" step="5" min="0" max="100" value="0" id="siz-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="siz-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="siz" class="chara attr"></p></div>
+                        <div>ＩＮＴ(智力)：<input type="number" step="5" min="0" max="100" value="0" id="int-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="int-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="int" class="chara attr"></p></div>
+                        <div>ＥＤＵ(教育)：<input type="number" step="5" min="0" max="100" value="0" id="edu-bas" class="attr stat" size="2"/>調整值：<input type="number" step="5" min="-50" max="100" id="edu-adj" class="attr-add stat" value="0" size="2"/>總值:<p id="edu" class="chara attr"></p></div>
 
                     </div>
                     <div class="" style="width: 50%">
