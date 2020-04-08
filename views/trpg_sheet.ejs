@@ -36,7 +36,7 @@
             <div><%=content[0]%></div>
         <% }else{ %>
         <% for(var i=0;i<content.length;i++) { %>
-            <div style="display: inline"><%= content[i] %> -----系統: %></div>
+            <div style="display: inline"><%= content[i] %> -----系統:<%=system[i] %></div>
             <button class="btn session" onclick="redirect('/charactersheet/<%= url[i] %>')">檢閱</button><br>
         <% } %>
         <%}%>

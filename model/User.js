@@ -17,6 +17,10 @@ const  userSchema = new mongoose.Schema({
        min:6,
        max:15
    },
+   sheet_number:{
+      type:Number,
+      required:true
+   } ,
    date:{
        type:Date,
        default:Date.now()

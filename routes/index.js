@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const info = require('../public/info');
 const Session = require('../model/Session');
+const Sheet = require('../model/Info');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
@@ -72,7 +73,7 @@ router.get('/trpgsession',verify,async function (req,res) {
         cursor.forEach(function (Session) {
             session.name.push(Session.name);
             session.gm.push(Session.gm);
-            session.url.push(Session.id)
+            session.url.push(Session._id)
         });
     }
 
@@ -114,8 +115,19 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
 });
 
 router.get('/charactersheet',verify,async function (req,res) {
+    const id = jwtDecode(req.cookies.auth_token)._id;
+    const SheetFind = await Sheet.findOne({author:id});
+    const cursor =  await Sheet.find({author: {$in:[id]} });
     const sheet={name:[],system:[],url:[]};
-    sheet.name.push('你還沒創建角卡');
+    if (!SheetFind) {
+        sheet.name.push('你還沒創建角卡');
+    }else {
+        cursor.forEach(function (Sheet) {
+            sheet.name.push(Sheet.name);
+            sheet.system.push(Sheet.system);
+            sheet.url.push(Sheet._id)
+        });
+    }
     res.render('trpg_sheet',{
         title:info.title[5],
         content:sheet.name,
@@ -125,11 +137,21 @@ router.get('/charactersheet',verify,async function (req,res) {
 });
 router.get('/charactersheet/:id',verify,async function (req,res) {
     const url = req.params.id;
-    if(url==='create') return res.render('trpg_sheet_create',{
-       title:'創建角色卡',
-       content:'創建你的角色卡',
-       player:jwtDecode(req.cookies.auth_token).name
+    const SheetFind = await Sheet.findOne({_id:url});
+    if(url==='create') {
+        res.render('COC7th_create', {
+            title: '創建角色卡',
+            content: '創建你的角色卡',
+            player: jwtDecode(req.cookies.auth_token).name
+        });
+    }
+    if (SheetFind.system==="COC7th"){
+        res.render('COC7th_show',{
+            title:'編輯角色卡',
+            content:'編輯你的角色卡',
+            player:jwtDecode(req.cookies.auth_token).name
+        })
+    }
     });
-});
 
 module.exports = router;

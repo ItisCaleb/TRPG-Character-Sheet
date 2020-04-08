@@ -1,10 +1,14 @@
 document.write();
 $(document).ready(function () {
-    //const socket = io('http://localhost:3000');
+    //sum up function
     function sum_up(bas,adj){
         return parseInt(bas,10) + parseInt(adj,10)
     }
+
+    //repeat
     setInterval(function () {
+
+        //calculate the sum of the stat
         var str = parseInt(($('#str').text(sum_up($('#str-bas').val(),$('#str-adj').val()))).text());
         var con = parseInt(($('#con').text(sum_up($('#con-bas').val(),$('#con-adj').val()))).text());
         var dex = parseInt(($('#dex').text(sum_up($('#dex-bas').val(),$('#dex-adj').val()))).text());
@@ -16,14 +20,20 @@ $(document).ready(function () {
         $('#hp-max').text(Math.floor(sum_up(con,siz)/10));
         $('#mp-max').text(Math.floor(pow/5));
         $('#san-max').text(sum_up(99,-$('#san-minus').text()));
+
+        //calculate the origin value of these specific skills
         $('#dodge').text(Math.floor(dex/2));
         $('#mother-language').text(edu);
+
+        //calculate mov value
         if(dex < siz || str < siz)
             $('#mov').text('7');
         if(dex >= siz || str >= siz)
             $('#mov').text('8');
         if(dex > siz && str > siz)
             $('#mov').text('9');
+
+        //calculate db and build value
         if(str + siz < 2)
             $('#build').text('請填寫完整屬性');
         if(str + siz >= 2 && str + siz <= 64)
@@ -42,9 +52,13 @@ $(document).ready(function () {
             $('#build').text(Math.floor((((str+siz)-205)/80)+2)+'d6 & '+Math.floor((((str+siz)-205)/80)+3));
 
     },0);
+
+    //declare skill as an object and stat as an array
     var skill = {};
     var stat = [];
     setInterval(function () {
+
+        //maker sure stat's and skill's value won't pass the limit
         $('.attr-add').each(function () {
             if ($(this).val()>99)
                 $(this).val(99);
@@ -77,20 +91,26 @@ $(document).ready(function () {
             $('#san').val($('#san-max').text());
         if(parseInt($('#luk').val())>99 || parseInt($('#luk').val())<0)
             $('#luk').val(99);
+
+        //push the stat's value to array
         stat = [];
         $('.chara').each(function () {
+            //make sure the total value of stat won't below 0
             if (parseInt($(this).text())<0) {
                 $(this).siblings('.attr-add').val(function () {
                     return parseInt($(this).val()) + 1
                 });
             }
-
+            //push the stat's value to array
             $(this).siblings('.stat').each(function () {
                 stat.push(parseInt($(this).val()));
             });
         });
 
+        //push the skill's value to object
         $('.total').each(function () {
+
+            //calculate the sum of skill's value
             $(this).text(function () {
                 var sum = 0;
                 $(this).siblings().find('.base-input').each(function () {
@@ -99,18 +119,23 @@ $(document).ready(function () {
                 sum += parseInt($(this).siblings('.base').text()) ;
                 return sum
             });
-
+            //push the active skill's value to object
             var name = $(this).siblings('.name').text();
-            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ){
+            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ) {
                 skill[name] = [];
                 $(this).siblings().find('.base-input').each(function () {
-                    skill[name].push(parseInt($(this).val())) ;
+                    skill[name].push(parseInt($(this).val()));
+                });
+                $(this).siblings().find('.custom').each(function () {
+                    skill[name].push($(this).val());
                 });
             }
             if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
                 delete skill[name];
         });
     },0);
+
+    //add stat's and skill's value to the form
     $('#myform').submit(function (e) {
         e.preventDefault();
 

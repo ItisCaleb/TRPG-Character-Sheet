@@ -9,10 +9,11 @@ const COC7thStorySchema = new mongoose.Schema({
     meaningful_location:String,
     treasured_possession:String,
     trait:String,
-    injuries:Array,
-    mania:Array,
-    magic:Array,
-    encounter:Array,
+    myth:String,
+    injuries:String,
+    mania:String,
+    magic:String,
+    encounter:String,
     fellow_investigator:Array
 });
 
