@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const jwtDecode = require('jwt-decode');
+const verify = require('../public/js/verifyToken');
 const User = require('../model/User');
 const COC7thInfo = require('../model/Info');
 const COC7thStat = require('../model/COC7th/Stat');
@@ -82,6 +83,25 @@ router.post('/COC7th', async (req, res) => {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
     }
+});
+
+router.get('/COC7th/json/:id',verify,async function (req,res) {
+    const url = req.params.id;
+    var sheet = {};
+    const info = await COC7thInfo.findOne({_id:url}).lean();
+    const skill = await COC7thSkill.findOne({_id:url}).lean();
+    const stat = await COC7thStat.findOne({_id:url}).lean();
+    const story = await COC7thStory.findOne({_id:url}).lean();
+    const equip = await COC7thEquip.findOne({_id:url}).lean();
+
+    sheet.info = info ;
+    sheet.skill = skill ;
+    sheet.stat = stat ;
+    sheet.story = story ;
+    sheet.equip = equip ;
+    console.log(JSON.stringify(sheet));
+    await res.json(JSON.stringify(sheet));
+
 });
 
 module.exports = router;

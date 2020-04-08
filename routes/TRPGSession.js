@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Session = require('../model/Session');
 const User = require("../model/User");
 const jwtDecode = require('jwt-decode');
+const verify = require('../public/js/verifyToken');
 const {sessionValidation} = require("../public/js/validation");
 
 //create a session
@@ -66,7 +67,7 @@ router.post('/TRPGJoinSession',async function (req,res) {
 });
 
 //leave or dismiss a session if you are the gm
-router.get('/delete/:id',async function (req,res) {
+router.get('/delete/:id',verify, async function (req,res) {
     const socket = req.app.io.sockets.connected[req.cookies.io] ;
 
     const user=jwtDecode(req.cookies.auth_token).name;

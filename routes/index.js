@@ -137,7 +137,6 @@ router.get('/charactersheet',verify,async function (req,res) {
 });
 router.get('/charactersheet/:id',verify,async function (req,res) {
     const url = req.params.id;
-    const SheetFind = await Sheet.findOne({_id:url});
     if(url==='create') {
         res.render('COC7th_create', {
             title: '創建角色卡',
@@ -145,13 +144,16 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
             player: jwtDecode(req.cookies.auth_token).name
         });
     }
-    if (SheetFind.system==="COC7th"){
+    const sheet = await Sheet.findOne({_id:url});
+
+    if (sheet.system==="COC7th"){
         res.render('COC7th_show',{
             title:'編輯角色卡',
-            content:'編輯你的角色卡',
-            player:jwtDecode(req.cookies.auth_token).name
-        })
+            player:sheet.player_name,
+            id:url
+        });
     }
     });
+
 
 module.exports = router;
