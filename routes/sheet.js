@@ -116,6 +116,7 @@ router.get('/delete/:id',verify,async function (req,res) {
         await COC7thStory.deleteOne({_id: req.params.id});
         await COC7thSkill.deleteOne({_id: req.params.id});
         await COC7thEquip.deleteOne({_id: req.params.id});
+        res.redirect('/charactersheet');
     }
     /*}else {
         await Session.updateOne({_id:req.params.id},{$pull:{player:user}});

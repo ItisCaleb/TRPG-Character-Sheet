@@ -58,6 +58,8 @@ $(document).ready(function () {
         }
     },0)
     $('#delete').click(function () {
-        $.get('../api/sheet/delete/'+ id,redirect('/charactersheet'))
+        $.get('../api/sheet/delete/'+ id,setTimeout(function(){
+            redirect('/charactersheet')
+        },5 ))
     })
 });
