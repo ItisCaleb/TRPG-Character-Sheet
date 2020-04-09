@@ -149,6 +149,7 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data:JSON.stringify(sheet) ,
+            success:redirect('/charactersheet'),
             dataType:'json'
         });
 

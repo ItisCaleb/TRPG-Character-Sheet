@@ -5,6 +5,7 @@ const COC7thStorySchema = new mongoose.Schema({
         max:1024
     },
     belief:String,
+    role_description:String,
     significant_people:String,
     meaningful_location:String,
     treasured_possession:String,
