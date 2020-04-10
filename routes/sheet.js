@@ -81,6 +81,7 @@ router.post('/COC7th', async (req, res) => {
         await stat.save();
         await story.save();
         await equip.save();
+        await User.updateOne({_id:id},{$inc:{sheet_number:1}})
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
@@ -104,6 +105,67 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
     await res.json(JSON.stringify(sheet));
 
 });
+router.post('/COC7th/edit/:id',verify,async function(req,res) {
+    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+    const id = jwtDecode(req.cookies.auth_token)._id
+    var csheet = req.body;
+    try{
+        await Info.replaceOne({_id:req.params.id},{
+            name:csheet[0].value,
+            class:csheet[1].value,
+            age:csheet[2].value,
+            sex:csheet[3].value,
+            player_name: csheet[4].value,
+            residence:csheet[5].value,
+            birthplace:csheet[6].value,
+            system:"COC7th",
+            author:id
+        });
+    }catch (err) {
+        res.status(400).send(err);
+    }
+    //transform skill from object to array
+    var cskill = [{}];
+    for (var i=0;i<Object.keys(csheet[28].value).length;i++){
+        var name = Object.keys(csheet[28].value)[i];
+        cskill[i] = {name :name,number:Object.values(csheet[28].value)[i]};
+    }
+
+    try{
+        await COC7thSkill.replaceOne({_id:req.params.id}, {skill:cskill});
+        await COC7thStory.replaceOne({_id:req.params.id},{
+            role_description:csheet[7].value,
+            belief:csheet[14].value,
+            significant_people:csheet[15].value,
+            meaningful_location:csheet[16].value,
+            treasured_possession:csheet[17].value,
+            trait:csheet[18].value,
+            myth:csheet[19].value,
+            injuries:csheet[20].value,
+            encounter:csheet[21].value,
+            mania:csheet[22].value,
+            magic:csheet[23].value,
+            description:csheet[24].value
+        });
+        await COC7thEquip.replaceOne({_id:req.params.id}, {
+            equip:csheet[25].value,
+            cash:csheet[26].value,
+            weapon:csheet[27].value
+        });
+        await COC7thStat.replaceOne({_id:req.params.id}, {
+            hp:csheet[8].value,
+            san:csheet[9].value,
+            mp:csheet[10].value,
+            luk:csheet[11].value,
+            injured_status:csheet[12].value,
+            insane_status:csheet[13].value,
+            characteristic:csheet[29].value
+        });
+    }catch (err) {
+        res.status(400).send(err);
+        res.redirect('/charactersheet/create');
+    }
+})
 router.get('/delete/:id',verify,async function (req,res) {
     const socket = req.app.io.sockets.connected[req.cookies.io] ;
 
@@ -116,13 +178,9 @@ router.get('/delete/:id',verify,async function (req,res) {
         await COC7thStory.deleteOne({_id: req.params.id});
         await COC7thSkill.deleteOne({_id: req.params.id});
         await COC7thEquip.deleteOne({_id: req.params.id});
+        await User.updateOne({_id:user},{$inc:{sheet_number:-1}})
         res.redirect('/charactersheet');
     }
-    /*}else {
-        await Session.updateOne({_id:req.params.id},{$pull:{player:user}});
-        socket.emit('alert','已離開'+session.name);
-        res.redirect('/trpgsession');
-    }*/
 })
 
 module.exports = router;

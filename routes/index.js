@@ -2,6 +2,7 @@ const router = require('express').Router();
 const info = require('../public/info');
 const Session = require('../model/Session');
 const Sheet = require('../model/Info');
+const User = require('../model/User');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
@@ -136,23 +137,39 @@ router.get('/charactersheet',verify,async function (req,res) {
     });
 });
 router.get('/charactersheet/:id',verify,async function (req,res) {
-    const url = req.params.id;
-    if(url==='create') return res.render('COC7th_create', {
-        title: '創建角色卡',
-        content: '創建你的角色卡',
-        player: jwtDecode(req.cookies.auth_token).name
-    });
+    const user = jwtDecode(req.cookies.auth_token);
+    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+    const sheetNumber = await User.findOne({_id: user._id})
+    if (req.params.id === 'create'){
+        if(sheetNumber.sheet_number < 20){
+            res.render('COC7th_create', {
+                title: '創建角色卡',
+                content: '創建你的角色卡',
+                player: user.name
+            });
+        }
+        if(sheetNumber.sheet_number >= 20){
+            socket.emit('alert','你的角色卡已達上限')
+            res.redirect('/charactersheet')
+        }
+    }else {
+        const sheet = await Sheet.findOne({_id:req.params.id});
 
-
-    const sheet = await Sheet.findOne({_id:url});
-
-    if (sheet.system==="COC7th"){
-        res.render('COC7th_show',{
-            title:'編輯角色卡',
-            id:url
-        });
+        if (sheet.system==="COC7th"){
+            res.render('COC7th_show',{
+                title:'編輯角色卡',
+                id:req.params.id
+            });
+        }
     }
-    });
+
+
+
+
+});
+
+
+
 
 
 module.exports = router;
