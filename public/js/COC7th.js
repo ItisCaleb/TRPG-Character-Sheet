@@ -134,7 +134,12 @@ $(document).ready(function () {
                 delete skill[name];
         });
     },0);
-
+    $('.dice').click(function () {
+        $(this).siblings('.attr').val(getRandom(3,18)*5)
+    })
+    function getRandom(min,max){
+        return Math.floor(Math.random()*(max-min+1))+min;
+    };
     //add stat's and skill's value to the form
     $('#myform').submit(function (e) {
         e.preventDefault();

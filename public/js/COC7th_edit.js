@@ -44,6 +44,11 @@ $(document).ready(function () {
                                 $(this).siblings().find('.base-input').each(function (index) {
                                     $(this).val(sheet.skill.skill[i].number[index])
                                 })
+                                if (sheet.skill.skill[i].number.length === 4){
+                                    $(this).siblings().find('.custom').each(function () {
+                                        $(this).val(sheet.skill.skill[i].number[3])
+                                    })
+                                }
                             }
                         })
                     }
