@@ -20,7 +20,7 @@
     display: inline;
 }
 
-ul { /* 取消ul預設的內縮及樣式 */
+ul { /* 取消ul預設的內縮及樣式 很重要，不可以拿掉，不然屬性旁邊的"+"會亂掉*/
     margin: 0;
     padding: 0;
     list-style: none;
@@ -47,7 +47,7 @@ ul.plus_menu a {
 }
 
 ul.plus_menu a:hover { /* 滑鼠滑入按鈕變色*/
-    background-color: #767676;
+    background-color: #000000;
     color: #fff;
 }
 
