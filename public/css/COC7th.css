@@ -19,6 +19,59 @@
 .chara{
     display: inline;
 }
+
+ul { /* 取消ul預設的內縮及樣式 */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.plus_menu {
+    border: 1px solid;
+    display: inline-block;
+}
+
+ul.plus_menu li {
+    position: relative;
+    white-space: nowrap;
+    border-right: 1px solid;
+}
+
+ul.plus_menu a {
+    background-color: #fff;
+    color: #333;
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+
+}
+
+ul.plus_menu a:hover { /* 滑鼠滑入按鈕變色*/
+    background-color: #767676;
+    color: #fff;
+}
+
+
+ul.plus_menu ul {
+    border: 1px solid;
+    position: absolute;
+}
+
+
+ul.plus_menu ul ul { /*第三層以後的選單出現位置與第二層不同*/
+    z-index: 999;
+    top: 10px;
+    left: 90%;
+}
+
+ul.plus_menu ul { /*隱藏次選單*/
+    display: none;
+}
+
+ul.plus_menu li:hover > ul { /* 滑鼠滑入展開次選單*/
+    display: block;
+}
+
 #tab_demo{ width:900px;}
 #tab_demo > ul{ display:block; margin:0;list-style:none;}
 .tab_title{list-style:none;}
