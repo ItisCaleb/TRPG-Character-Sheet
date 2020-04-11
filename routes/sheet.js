@@ -110,7 +110,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     const id = jwtDecode(req.cookies.auth_token)._id
     var csheet = req.body;
     try{
-        await Info.replaceOne({_id:req.params.id},{
+        await Info.updateOne({_id:req.params.id},{
             name:csheet[0].value,
             class:csheet[1].value,
             age:csheet[2].value,
@@ -118,8 +118,6 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             player_name: csheet[4].value,
             residence:csheet[5].value,
             birthplace:csheet[6].value,
-            system:"COC7th",
-            author:id
         });
     }catch (err) {
         res.status(400).send(err);
@@ -132,8 +130,8 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     }
 
     try{
-        await COC7thSkill.replaceOne({_id:req.params.id}, {skill:cskill});
-        await COC7thStory.replaceOne({_id:req.params.id},{
+        await COC7thSkill.updateOne({_id:req.params.id}, {$set:{skill:cskill}});
+        await COC7thStory.updateOne({_id:req.params.id},{$set:{
             role_description:csheet[7].value,
             belief:csheet[14].value,
             significant_people:csheet[15].value,
@@ -146,13 +144,13 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             mania:csheet[22].value,
             magic:csheet[23].value,
             description:csheet[24].value
-        });
-        await COC7thEquip.replaceOne({_id:req.params.id}, {
+        }});
+        await COC7thEquip.updateOne({_id:req.params.id},{$set: {
             equip:csheet[25].value,
             cash:csheet[26].value,
             weapon:csheet[27].value
-        });
-        await COC7thStat.replaceOne({_id:req.params.id}, {
+        }});
+        await COC7thStat.updateOne({_id:req.params.id},{$set: {
             hp:csheet[8].value,
             san:csheet[9].value,
             mp:csheet[10].value,
@@ -160,7 +158,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             injured_status:csheet[12].value,
             insane_status:csheet[13].value,
             characteristic:csheet[29].value
-        });
+        }});
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
