@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const http = require('http').createServer(app);
-const io = require("socket.io")(http);
-app.io = io;
+
 //share socket.io to other modules
 
 //import routes
@@ -55,13 +54,6 @@ app.use(function (err, req, res, next) {
     res.render('404');
 });
 
-//start socket.io connection
-io.sockets.setMaxListeners(0);
-io.on('connection', function (socket) {
-    socket.send(socket.id);
-    socket.on('disconnect',function () {
-    })
-});
 
 // start server
 const port = process.env.PORT || 3000;

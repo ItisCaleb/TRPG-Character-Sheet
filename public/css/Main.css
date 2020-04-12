@@ -58,6 +58,29 @@ nav > .submenu {
     float: right;
     margin: 0;
 }
+.message {
+    font-size: 12px;
+    position: fixed;
+    z-index: 1010;
+    width: 100%;
+    top: 16px;
+    left: 0;
+    pointer-events: none;
+}
+.message-alert{
+    padding: 8px;
+    text-align: center;
+    transition: height .3s ease-in-out,padding .3s ease-in-out;
+}
+.message-custom-content{
+    display: inline-block;
+    pointer-events: all;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+    background: #fff;
+    position: relative;
+}
 
 nav > .submenu > .subbtn {
     font-size: 15px;

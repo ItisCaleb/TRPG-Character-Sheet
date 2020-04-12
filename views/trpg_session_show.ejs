@@ -7,9 +7,9 @@
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+
     <script src="/public/js/button.js" charset="UTF-8"></script>
-    <script src="/public/js/socket.js" charset="UTF-8"></script>
+
 
 </head>
 <body style="margin:0;background-color:#E0E0E0">
@@ -25,6 +25,7 @@
         <button class="subbtn btn validation" id="login" >登入</button>
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
+    <div class="message" style="top: 24px;"></div>
 
 </nav>
 <div class="content">
@@ -41,10 +42,28 @@
                 <div style="display: inline"><%= content[i] %></div><br>
         <% }%>
         <br>
-    <button class="btn session" onclick="redirect('/api/delete/<%=url%>')"><%=dismiss%></button>
+    <button id="delete" class="btn session"><%=dismiss%></button>
     </div>
 </div>
+<script>
+    $('#delete').click(function (e) {
+        e.preventDefault();
 
+        $.ajax({
+            url: '../api/delete/<%=url%>',
+            type: 'GET',
+            success:function(data){
+                message(data)
+                setTimeout(function(){
+                    redirect('/trpgsession')
+                },1000)
+            },
+            error:function(data){
+                message(data.responseText)
+            },
+        });
+    })
+</script>
 <div class="new_pusher"></div>
 <div class="footer">
     Copyright © 2020 ItisCaleb & Kulimi. All rights reserved.

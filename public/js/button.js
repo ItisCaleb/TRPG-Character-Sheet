@@ -40,18 +40,32 @@ $(document).ready(function () {
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').css({'visibility': 'visible'});
     //alert message when user use invalid format to sign up and log in
-    $(".check-btn").click(function () {
-        const regExp = /,/;
-        const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\].<>/?~!@#￥……&*()——|{}【】‘;:”“'。,、?%]");
-        const result = text.match(pattern);
-        if (!result) {
-            alert("含有特殊字元")
-        }
-    });
+
 });
 //redirect URL function
 function redirect(URL) {
   window.location.href=URL;
 }
-
+function check() {
+    const regExp = /,/;
+    var text = $("input").val();
+    const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\].<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
+    const result = text.match(pattern);
+    if (result) {
+        message("含有特殊字元")
+        return true
+    }else{
+        return false
+    }
+}
+function message(data) {
+    $('.message').append('<div class="message-alert" style="height: 50px;">\n' +
+        '                    <div class="message-custom-content message-success">\n' +
+        '                        <span>'+data+'</span>\n' +
+        '                    </div>\n' +
+        '                </div>')
+    setTimeout(function () {
+        $('.message-alert').remove();
+    },1500)
+}
 

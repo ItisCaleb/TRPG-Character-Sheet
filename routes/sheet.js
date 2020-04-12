@@ -11,7 +11,7 @@ const COC7thSkill = require('../model/COC7th/Skill');
 router.post('/COC7th', async (req, res) => {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
-    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+
     if (user.sheet_number >= 20 ) return socket.emit('alert','角色卡已達上限');
     var csheet = req.body;
     //save new sheet
@@ -35,13 +35,14 @@ router.post('/COC7th', async (req, res) => {
 
     //transform skill from object to array
     var cskill = [{}];
-    for (var i=0;i<Object.keys(csheet[28].value).length;i++){
-        var name = Object.keys(csheet[28].value)[i];
-        cskill[i] = {name :name,number:Object.values(csheet[28].value)[i]};
+    for (var i=0;i<Object.keys(csheet[29].value).length;i++){
+        var name = Object.keys(csheet[29].value)[i];
+        cskill[i] = {name :name,number:Object.values(csheet[29].value)[i]};
     }
     //save skill
     const skill = new COC7thSkill({
         _id:sheet._id,
+        class_feature:csheet[28].value,
         skill:cskill
     });
     const stat = new COC7thStat({
@@ -52,7 +53,7 @@ router.post('/COC7th', async (req, res) => {
         luk:csheet[11].value,
         injured_status:csheet[12].value,
         insane_status:csheet[13].value,
-        characteristic:csheet[29].value
+        characteristic:csheet[30].value
     });
     const story = new COC7thStory({
         _id:sheet._id,
@@ -76,12 +77,12 @@ router.post('/COC7th', async (req, res) => {
         weapon:csheet[27].value
     });
     try{
-        socket.emit('alert','已創建角色卡');
         await skill.save();
         await stat.save();
         await story.save();
         await equip.save();
         await User.updateOne({_id:id},{$inc:{sheet_number:1}})
+        res.send('角色卡創建成功');
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
@@ -106,7 +107,7 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
 
 });
 router.post('/COC7th/edit/:id',verify,async function(req,res) {
-    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+
     const id = jwtDecode(req.cookies.auth_token)._id
     var csheet = req.body;
     try{
@@ -124,13 +125,16 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     }
     //transform skill from object to array
     var cskill = [{}];
-    for (var i=0;i<Object.keys(csheet[28].value).length;i++){
-        var name = Object.keys(csheet[28].value)[i];
-        cskill[i] = {name :name,number:Object.values(csheet[28].value)[i]};
+    for (var i=0;i<Object.keys(csheet[29].value).length;i++){
+        var name = Object.keys(csheet[29].value)[i];
+        cskill[i] = {name :name,number:Object.values(csheet[29].value)[i]};
     }
 
     try{
-        await COC7thSkill.updateOne({_id:req.params.id}, {$set:{skill:cskill}});
+        await COC7thSkill.updateOne({_id:req.params.id}, {$set:{
+            class_feature:csheet[28].value,
+            skill:cskill
+        }});
         await COC7thStory.updateOne({_id:req.params.id},{$set:{
             role_description:csheet[7].value,
             belief:csheet[14].value,
@@ -157,7 +161,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             luk:csheet[11].value,
             injured_status:csheet[12].value,
             insane_status:csheet[13].value,
-            characteristic:csheet[29].value
+            characteristic:csheet[30].value
         }});
     }catch (err) {
         res.status(400).send(err);
@@ -165,19 +169,18 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     }
 })
 router.get('/delete/:id',verify,async function (req,res) {
-    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+
 
     const user=jwtDecode(req.cookies.auth_token)._id;
     const info = await Info.findOne({_id:req.params.id});
     if(info.author === user) {
-        socket.emit('alert','已刪除角色卡');
         await Info.deleteOne({_id: req.params.id});
         await COC7thStat.deleteOne({_id: req.params.id});
         await COC7thStory.deleteOne({_id: req.params.id});
         await COC7thSkill.deleteOne({_id: req.params.id});
         await COC7thEquip.deleteOne({_id: req.params.id});
         await User.updateOne({_id:user},{$inc:{sheet_number:-1}})
-        res.redirect('/charactersheet');
+        res.send('已刪除角色卡')
     }
 })
 

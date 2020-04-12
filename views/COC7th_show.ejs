@@ -8,8 +8,6 @@
     <link href="/public/css/COC7th.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/public/js/socket.js"></script>
     <script src="/public/js/button.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th_edit.js" charset="UTF-8"></script>
@@ -27,6 +25,7 @@
         <button class="subbtn btn validation" id="login">登入</button>
         <button class="subbtn btn validation" id="signup">註冊</button>
     </div>
+    <div class="message" style="top: 24px;"></div>
 </nav>
 <script>
 
@@ -163,16 +162,16 @@
                             </tr>
                             <tr>
                                 <td colspan="1">職業特徵：
-                                    <select  name="class-feature">
+                                    <select  name="class-feature" class='class-feature'>
                                         <option>EDU</option>
                                         <option>EDU+STR</option>
                                         <option>EDU+DEX</option>
-                                        <option>EDU+POW</option>
+                                        <option>EDU+APP</option>
                                         <option>EDU+POW</option>
                                     </select>
                                 </td>
-                                <td colspan="2">剩餘職業點數：</td>
-                                <td colspan="2">剩餘興趣點數：</td>
+                                <td colspan="2" class="class-point">剩餘職業點數：</td>
+                                <td colspan="2" class="interest-point">剩餘興趣點數：</td>
                             </tr>
                             <tr>
                                 <td>技能名稱</td>
@@ -185,83 +184,92 @@
                             <tr>
                                 <td class="name">會計(Accounting)</td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
-                            <tr>
                                 <td class="name">人類學(Anthropology)</td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">估價(Appraise)</td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">考古學(Archaeology)</td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name" >魅惑(Charm) <br></td>
                                 <td class="base base-skill">15</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">攀爬(Climb) <br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">電腦使用(Computer Use) <br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">信用評級(Credit Rating) <br></td>
                                 <td class="base-skill" style="display:none">-1</td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">克蘇魯神話(Cthulhu Mythos)<br></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td id="san-minus" class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">喬裝(Disguise) <br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
@@ -269,112 +277,125 @@
                                 <td class="name">閃避(Dodge) <br></td>
                                 <td class="base-skill" style="display:none">-1</td>
                                 <td class="base" id="dodge">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">自動車駕駛(Drive Auto)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">電器維修(Electrical Repair) <br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">電子學(Electronics) <br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">話術(Fast-Talk)<br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">急救(First Aid) <br></td>
                                 <td class="base base-skill">30</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">歷史(History) <br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">威嚇(Intimidate) <br></td>
                                 <td class="base base-skill">15</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
 
                             </tr>
                             <tr>
                                 <td class="name">跳躍(Jump) <br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">法律(Law)<br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">圖書館使用(Library Use)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">聆聽(Listen)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">鎖匠(Locksmith)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                         </table>
@@ -386,16 +407,16 @@
                             </tr>
                             <tr>
                                 <td colspan="1">職業特徵：
-                                    <select  name="class-feature">
+                                    <select  class='class-feature'>
                                         <option>EDU</option>
                                         <option>EDU+STR</option>
                                         <option>EDU+DEX</option>
-                                        <option>EDU+POW</option>
+                                        <option>EDU+APP</option>
                                         <option>EDU+POW</option>
                                     </select>
                                 </td>
-                                <td colspan="2">剩餘職業點數：</td>
-                                <td colspan="2">剩餘興趣點數：</td>
+                                <td colspan="2" class="class-point">剩餘職業點數：</td>
+                                <td colspan="2" class="interest-point">剩餘興趣點數：</td>
                             </tr>
                             <tr>
                                 <td>技能名稱</td>
@@ -408,176 +429,198 @@
                             <tr>
                                 <td class="name">機器維修(Mechanical)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">醫學(Medicine)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">自然學(Natural World)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">導航(Navigate)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">神祕學(Occult)<br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">操縱重型機器(Operate Heavy Machinery)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">說服(Persude)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">心理分析(Psychoanalysis)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">心理學(Psychology)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">騎術(Ride)</td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">巧手(Sleight of Hand)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">偵查(Spot Hidden)<br></td>
                                 <td class="base base-skill">25</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">隱密行動(Stealth)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">游泳(Swim)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">投擲(Throw)<br></td>
                                 <td class="base base-skill">20</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">追蹤(Track)<br></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">動物馴養(Animal Handling)<br></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">炮術(Artillery)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">爆破(Demolitions)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">潛水(Diving)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">催眠(Hypnosis)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr><tr>
                                 <td class="name">讀唇(Read Lips)<br></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                         </table>
@@ -589,16 +632,16 @@
                             </tr>
                             <tr>
                                 <td colspan="1">職業特徵：
-                                    <select  name="class-feature">
+                                    <select  class='class-feature'>
                                         <option>EDU</option>
                                         <option>EDU+STR</option>
                                         <option>EDU+DEX</option>
-                                        <option>EDU+POW</option>
+                                        <option>EDU+APP</option>
                                         <option>EDU+POW</option>
                                     </select>
                                 </td>
-                                <td colspan="2">剩餘職業點數：</td>
-                                <td colspan="2">剩餘興趣點數：</td>
+                                <td colspan="2" class="class-point">剩餘職業點數：</td>
+                                <td colspan="2" class="interest-point">剩餘興趣點數：</td>
                             </tr>
                             <tr>
                                 <td>技能名稱</td>
@@ -613,126 +656,140 @@
                                 <td class="name">專業駕駛(Pilot)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">求生(Survival)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">10</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">藝術與工藝(Art and Craft)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">藝術與工藝(Art and Craft)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">藝術與工藝(Art and Craft)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">5</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td>戰鬥(Fighting)<br></td>
                                 <td class="name">鬥毆</td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">戰鬥(Fighting)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">戰鬥(Fighting)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">火器(Firearms)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">火器(Firearms)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">火器(Firearms)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">他國語言(Language (Other))<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">他國語言(Language (Other))<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">他國語言(Language (Other))<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
@@ -740,72 +797,80 @@
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base-skill" style="display:none">-1</td>
                                 <td id="mother-language" class="base"></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">科學(Science)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">科學(Science)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">科學(Science)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">偏門學問(Lore)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">偏門學問(Lore)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td class="name">偏門學問(Lore)<br></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">1</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                             <tr>
                                 <td><input placeholder="自定義技能" size="20"/></td>
                                 <td><input class="custom" placeholder="自定義" size="20"/></td>
                                 <td class="base base-skill">0</td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
-                                <td><input type="number" max="100" min="0" class="skill base-input" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input class" size="2"/></td>
+                                <td><input type="number" max="100" min="0" class="skill base-input interest " size="2"/></td>
                                 <td><input type="number" max="100" min="-50" class="skill base-input"  size="2"/></td>
+
                                 <td class="total"></td>
                             </tr>
                         </table>

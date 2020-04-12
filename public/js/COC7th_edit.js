@@ -38,6 +38,7 @@ $(document).ready(function () {
                     $('.story').each(function (index) {
                         $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
                     })
+                    $('.class-feature').val(sheet.skill.class_feature)
                     for (let i=0;i<Object.keys(sheet.skill.skill).length;i++){
                         $('.name').each(function () {
                             if ($(this).text()===sheet.skill.skill[i].name){
@@ -108,8 +109,12 @@ $(document).ready(function () {
     },10000)
 
     $('#delete').click(function () {
-        $.get('../api/sheet/delete/'+ id,setTimeout(function(){
-            redirect('/charactersheet')
-        },5))
+        $.get('../api/sheet/delete/'+ id,
+            function(data){
+                message(data)
+                setTimeout(function(){
+                    redirect('/charactersheet')
+                },500)
+        })
     })
 });

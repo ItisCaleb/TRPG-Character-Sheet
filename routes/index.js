@@ -138,7 +138,7 @@ router.get('/charactersheet',verify,async function (req,res) {
 });
 router.get('/charactersheet/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
-    const socket = req.app.io.sockets.connected[req.cookies.io] ;
+
     const sheetNumber = await User.findOne({_id: user._id})
     if (req.params.id === 'create'){
         if(sheetNumber.sheet_number < 20){

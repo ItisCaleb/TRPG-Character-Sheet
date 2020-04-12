@@ -20,7 +20,31 @@ $(document).ready(function () {
         $('#hp-max').text(Math.floor(sum_up(con,siz)/10));
         $('#mp-max').text(Math.floor(pow/5));
         $('#san-max').text(sum_up(99,-$('#san-minus').text()));
-
+        var class_feature=$('.class-feature').val()
+        $('.class-point').text(function () {
+            var sum
+            if(class_feature==='EDU')
+                sum=4*(edu);
+            if(class_feature==='EDU+STR')
+                sum=2*(edu+str);
+            if(class_feature==='EDU+DEX')
+                sum=2*(edu+dex);
+            if(class_feature==='EDU+APP')
+                sum=2*(edu+app);
+            if(class_feature==='EDU+POW')
+                sum=2*(edu+pow);
+            $('.class').each(function () {
+                sum-=$(this).val()
+            })
+            return '剩餘職業點數：'+sum
+        })
+        $('.interest-point').text(function () {
+            var sum = int*2
+            $('.interest').each(function () {
+                sum-=$(this).val()
+            })
+            return '剩餘興趣點數：'+sum
+        })
         //calculate the origin value of these specific skills
         $('#dodge').text(Math.floor(dex/2));
         $('#mother-language').text(edu);
@@ -57,6 +81,10 @@ $(document).ready(function () {
     var skill = {};
     var stat = [];
     setInterval(function () {
+
+        $('.class-feature').change(function () {
+            $('.class-feature').val($(this).val())
+        })
 
         //maker sure stat's and skill's value won't pass the limit
         $('.attr-add').each(function () {
@@ -146,7 +174,7 @@ $(document).ready(function () {
 
         var sheet = $(this).serializeArray();
 
-        console.log(sheet);
+
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
         $.ajax({
@@ -154,11 +182,13 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data:JSON.stringify(sheet) ,
-            success:setTimeout(function(){
-                redirect('/charactersheet')
-            },1000),
-            dataType:'json'
-        });
+            success:function(data){
+                message(data)
+                setTimeout(function(){
+                    redirect('/charactersheet')
+                },1000)
+            },
 
+        });
     })
 });

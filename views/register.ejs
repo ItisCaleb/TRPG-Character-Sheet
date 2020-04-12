@@ -8,9 +8,9 @@
     <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+
     <script src="/public/js/button.js" charset="UTF-8"></script>
-    <script src="/public/js/socket.js" charset="UTF-8"></script>
+
 </head>
 <body style="margin:0;background-color:#E0E0E0">
 <nav>
@@ -36,7 +36,29 @@
         <input type="password" placeholder="輸入密碼" name="password" id="password" required><br>
         <button class="check-btn"  type="submit">註冊</button>
     </div>
+    <div class="message" style="top: 24px;"></div>
 </form>
+<script>
+    $('.content').submit(function (e) {
+        e.preventDefault();
+        if (!check()) {
+            $.ajax({
+                url: $(this).attr("action"),
+                type: 'POST',
+                data: $(this).serializeArray(),
+                success: function (data) {
+                    message(data)
+                    setTimeout(function () {
+                        redirect('/login')
+                    }, 1000)
+                },
+                error: function (data) {
+                    message(data.responseText)
+                },
+            });
+        }
+    })
+</script>
 <div class="new_pusher"></div>
 <div class="footer">
     Copyright © 2020 ItisCaleb & Kulimi. All rights reserved.
