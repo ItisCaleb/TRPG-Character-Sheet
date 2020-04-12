@@ -69,3 +69,10 @@ function message(data) {
     }, 1500)
 }
 
+function ask_question(question, choose_1, choose_2) {
+    $('.message').append('<div class="message_div"><div class="message-alert"><p>' + question + '</p><section><a class="ask_question_choose" href="#">'+ choose_1 +'</a>'+'<a class="ask_question_choose" href="#">'+ choose_2 +'</a>'+'</section></div></div>');
+    setTimeout(function () {
+        $('.message-alert').remove();
+    }, 1500)
+}
+

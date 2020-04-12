@@ -70,11 +70,12 @@ nav > .submenu {
     height: 100%;
     justify-content: center;
     text-align: center;
+    background-color: white;
 }
 
 .message-alert{
     border: black 10px solid;
-    padding: 50px;
+    padding: 20px;
     margin: 30%;
     font-size: 72px;
     z-index: 10;
@@ -88,6 +89,13 @@ nav > .submenu {
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
     background: #fff;
     position: relative;
+}
+
+.ask_question_choose:hover {
+    text-decoration: underline;
+}
+.ask_question_choose:visited {
+    color: black;
 }
 
 nav > .submenu > .subbtn {
