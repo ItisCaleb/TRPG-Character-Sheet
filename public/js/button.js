@@ -54,8 +54,8 @@ function check() {
     const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
     const result = text.match(pattern);
     if (result) {
-        console.log(text)
-        message("含有特殊字元")
+        console.log(text);
+        message("含有特殊字元");
         return true
     } else {
         return false
@@ -63,7 +63,7 @@ function check() {
 }
 
 function message(data) {
-    $('.message').append('<p class="message-alert">' + data + '</p>')
+    $('.message').append('<div class="message_div"><p class="message-alert">' + data + '</p></div>');
     setTimeout(function () {
         $('.message-alert').remove();
     }, 1500)
