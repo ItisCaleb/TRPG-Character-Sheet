@@ -50,10 +50,11 @@ function redirect(URL) {
 
 function check() {
     const regExp = /,/;
-    var text = $("input").val();
-    const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\].<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
+    var text = $(".input").val();
+    const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
     const result = text.match(pattern);
     if (result) {
+        console.log(text)
         message("含有特殊字元")
         return true
     } else {
