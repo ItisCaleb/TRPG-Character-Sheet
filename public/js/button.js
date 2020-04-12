@@ -63,11 +63,7 @@ function check() {
 }
 
 function message(data) {
-    $('.message').append('<div class="message-alert" style="height: 50px;">\n' +
-        '                    <div class="message-custom-content message-success">\n' +
-        '                        <span>' + data + '</span>\n' +
-        '                    </div>\n' +
-        '                </div>')
+    $('.message').append('<p class="message-alert">' + data + '</p>')
     setTimeout(function () {
         $('.message-alert').remove();
     }, 1500)
