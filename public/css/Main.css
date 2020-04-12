@@ -70,7 +70,7 @@ nav > .submenu {
     height: 100%;
     justify-content: center;
     text-align: center;
-    background-color: white;
+
 }
 
 .message-alert{
@@ -79,6 +79,7 @@ nav > .submenu {
     margin: 30%;
     font-size: 72px;
     z-index: 10;
+    background-color: white;
 }
 
 .message-custom-content{
