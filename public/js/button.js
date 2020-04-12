@@ -42,10 +42,12 @@ $(document).ready(function () {
     //alert message when user use invalid format to sign up and log in
 
 });
+
 //redirect URL function
 function redirect(URL) {
-  window.location.href=URL;
+    window.location.href = URL;
 }
+
 function check() {
     const regExp = /,/;
     var text = $("input").val();
@@ -54,18 +56,19 @@ function check() {
     if (result) {
         message("含有特殊字元")
         return true
-    }else{
+    } else {
         return false
     }
 }
+
 function message(data) {
     $('.message').append('<div class="message-alert" style="height: 50px;">\n' +
         '                    <div class="message-custom-content message-success">\n' +
-        '                        <span>'+data+'</span>\n' +
+        '                        <span>' + data + '</span>\n' +
         '                    </div>\n' +
         '                </div>')
     setTimeout(function () {
         $('.message-alert').remove();
-    },1500)
+    }, 1500)
 }
 
