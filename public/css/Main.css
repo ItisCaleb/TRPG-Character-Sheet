@@ -60,23 +60,20 @@ nav > .submenu {
 }
 .message {
     display: flex;
-    font-size: 12px;
+    flex-direction: column;
     position: fixed;
-    z-index: 1010;
     width: 100%;
     height: 100%;
     justify-content: center;
-    /*top: 16px;
-    left: 0;*/
-    pointer-events: none;
+    text-align: center;
 }
 .message-alert{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    /*transition: height .3s ease-in-out,padding .3s ease-in-out;*/
+    border: black 10px solid;
+    padding: 50px;
+    margin: 30%;
+    font-size: 72px;
 }
+
 .message-custom-content{
     display: inline-block;
     pointer-events: all;
