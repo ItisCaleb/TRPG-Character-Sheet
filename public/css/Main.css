@@ -59,18 +59,14 @@ nav > .submenu {
     margin: 0;
 }
 .message {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-}
-
-.message_div {
     display: flex;
     flex-direction: column;
+    position: fixed;
     width: 100%;
     height: 100%;
     justify-content: center;
     text-align: center;
+    z-index: -1;
 }
 
 .message-alert{
@@ -78,6 +74,7 @@ nav > .submenu {
     padding: 50px;
     margin: 30%;
     font-size: 72px;
+    z-index: 10;
 }
 
 .message-custom-content{
