@@ -12,7 +12,7 @@ router.post('/COC7th', async (req, res) => {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
 
-    if (user.sheet_number >= 20 ) return socket.emit('alert','角色卡已達上限');
+    if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     var csheet = req.body;
     //save new sheet
     const sheet = new Info({
@@ -165,7 +165,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
         }});
     }catch (err) {
         res.status(400).send(err);
-        res.redirect('/charactersheet/create');
+        res.redirect('/charactersheet');
     }
 })
 router.get('/delete/:id',verify,async function (req,res) {
@@ -181,7 +181,7 @@ router.get('/delete/:id',verify,async function (req,res) {
         await COC7thEquip.deleteOne({_id: req.params.id});
         await User.updateOne({_id:user},{$inc:{sheet_number:-1}})
         res.send('已刪除角色卡')
-    }
+    }else return res.send('你並無權限修改此角色卡')
 })
 
 module.exports = router;

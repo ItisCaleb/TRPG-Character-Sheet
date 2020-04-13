@@ -62,7 +62,7 @@ nav > .submenu {
 
 }
 
-.message_div {
+.message-div {
     display: flex;
     flex-direction: column;
     position: fixed;

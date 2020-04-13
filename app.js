@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const http = require('http').createServer(app);
 
-//share socket.io to other modules
 
 //import routes
 const indexRoute = require("./routes/index");
