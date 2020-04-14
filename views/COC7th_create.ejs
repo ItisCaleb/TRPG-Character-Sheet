@@ -3,7 +3,7 @@
 <head>
     <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
-    <title>角卡創建</title>
+    <title>TRPG Character Sheet Maker</title>
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="/public/css/COC7th.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/jquery-3.4.1.min.js"></script>
@@ -42,15 +42,15 @@
                         <p>調查員基本資料：</p>
                         <section>
                             <div class="sheet_input_div">
-                                姓名：<input name="name" placeholder="島田 半藏"><br>
-                                職業：<input name="class" placeholder="職業殺手、傭兵"><br>
-                                年齡：<input name="age" type="number" placeholder="38"><br>
-                                性別：<input name="sex" placeholder="男"><br>
+                               <label>姓名：<input name="name" placeholder="島田 半藏"></label><br>
+                               <label>職業：<input name="class" placeholder="職業殺手、傭兵"></label> <br>
+                               <label>年齡：<input name="age" type="number" placeholder="38"></label><br>
+                               <label>性別：<input name="sex" placeholder="男"></label><br>
                             </div>
                             <div class="sheet_input_div">
-                                玩家暱稱：<input name="player" value="<%= player %>" placeholder="最強小雞，朋友很多"><br>
-                                現居地：<input name="residence" placeholder="直布羅陀"><br>
-                                出生地：<input name="birthplace" placeholder="日本，花村"><br>
+                                <label>玩家暱稱：<input name="player" value="<%= player %>" placeholder="最強小雞，朋友很多"></label><br>
+                                <label>現居地：<input name="residence" placeholder="直布羅陀"></label><br>
+                                <label>出生地：<input name="birthplace" placeholder="日本，花村"></label><br>
                             </div>
                         </section>
                     </div>
@@ -59,8 +59,8 @@
 
                 <div class="sheet_creat_div" style="width: 50%">
                     <div>
-                        <p>角色形容：</p>
-                        <textarea name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea>
+                        <label>角色形容：
+                        <textarea name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea></label>
                     </div>
 
                 </div>
@@ -71,30 +71,30 @@
                     <p>調查員當前狀態：</p>
                     <section>
                         <div class="sheet_input_div">
-                            HP： <input id="hp" name="hp" class="skill" type="number" min="0" max="40" size="2"/>/<p
+                            <label>HP： <input id="hp" name="hp" class="skill" type="number" min="0" max="40" size="2"/></label>/<p
                                     id="hp-max" class="chara"></p> <br>
-                            SAN：<input id="san" name="san" class="skill" type="number" min="0" max="99" size="2"/>/<p
+                            <label>SAN：<input id="san" name="san" class="skill" type="number" min="0" max="99" size="2"/></label>/<p
                                     id="san-max" class="chara"></p><br>
-                            MP： <input id="mp" name="mp" class="skill" type="number" min="0" max="40" size="2"/>/<p
+                            <label>MP： <input id="mp" name="mp" class="skill" type="number" min="0" max="40" size="2"/></label>/<p
                                     id="mp-max" class="chara"></p><br>
-                            LUK：<input id="luk" name="luk" class="attr skill luk" type="number" min="0" max="99" size="2"/><input type="button" class='dice' style="background-image:url('http://kulimi.cnmc.tw:3000/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">/
+                            <label>LUK：<input id="luk" name="luk" class="attr skill luk" type="number" min="0" max="99" size="2"/><input type="button" class='dice' style="background-image:url('http://kulimi.cnmc.tw:3000/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;"></label>/
                             <p class="chara">99</p><br>
                         </div>
                         <div class="sheet_input_div" style="width: 50%">
                             傷害加成與體格(DB & Build)：<p class="chara" id="build"></p><br>
                             機動力(MOV)：<p id="mov" class="chara"></p><br>
-                            負傷狀態：<select name="injury">
+                            <label> 負傷狀態：<select name="injury">
                                 <option>無</option>
                                 <option>重傷</option>
                                 <option>瀕死</option>
                                 <option>暫時穩定</option>
-                            </select><br>
-                            瘋狂狀態：<select name="madness">
+                            </select></label><br>
+                            <label>瘋狂狀態：<select name="madness">
                                 <option>無</option>
                                 <option>臨時瘋狂</option>
                                 <option>不定性瘋狂</option>
                                 <option>潛在瘋狂</option>
-                            </select><br>
+                            </select></label><br>
                         </div>
                     </section>
                 </div>

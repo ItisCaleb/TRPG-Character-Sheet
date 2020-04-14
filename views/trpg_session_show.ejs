@@ -3,7 +3,7 @@
 <head>
     <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
-    <title>角卡創建</title>
+    <title>TRPG Character Sheet Maker</title>
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
@@ -25,14 +25,22 @@
         <button class="subbtn btn validation" id="login" >登入</button>
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-    <div id="upload-window" style="top: 24px;" >
-        <div id="upload-window-box" style="display: none"></div>
-    </div>
+
     <div class="message" style="top: 24px;"></div>
 </nav>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-
+    <form id="upload-sheet-form">
+    <div id="upload-window" style="top: 24px;display: none" >
+        <div>
+            <% for(var j=0;j<sheet_name.length;j++) { %>
+                <label style="display: inline"><%= sheet_name[j] %> 系統:<%=system[j]%><input type="checkbox" name="upload" style="display: inline" value="<%=sheet_id[j]%>"></label><br>
+            <% }%>
+            <button type="submit" id="upload-check">上傳</button>
+            <button id="upload-disable">取消</button>
+        </div>
+    </div>
+    </form>
     <div style="text-align: center">
             <% if (content[1] == null ) { %>
                 <%  content.push('你還沒有玩家') %>
@@ -50,7 +58,27 @@
 </div>
 <script>
     $('#upload').click(function () {
-        $('#upload-window-box').css('display','inline-block');
+        $('#upload-window').css('display','block');
+    })
+    $('#upload-disable').click(function () {
+        $('#upload-window').css('display','none');
+    })
+    $('#upload-sheet-form').submit(function (e) {
+        e.preventDefault();
+        console.log($(this).serializeArray())
+        /*$.ajax({
+            url: '../api/delete/<%=url%>',
+            type: 'GET',
+            success:function(data){
+                message(data)
+                setTimeout(function(){
+                    redirect('/trpgsession')
+                },1000)
+            },
+            error:function(data){
+                message(data.responseText)
+            },
+        });*/
     })
     $('#delete').click(function (e) {
         e.preventDefault();

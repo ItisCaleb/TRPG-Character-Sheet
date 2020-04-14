@@ -90,7 +90,7 @@ router.get('/trpgsession',verify,async function (req,res) {
 router.get('/trpgsession/:id',verify, async function (req,res) {
     const username=jwtDecode(req.cookies.auth_token)
     const url=req.params.id;
-    const sheet={name:[],system:[]}
+    const sheet={name:[],system:[],sheet_id:[]}
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
@@ -104,6 +104,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 sheets.forEach(function (info) {
                     sheet.name.push(info.name);
                     sheet.system.push(info.system);
+                    sheet.sheet_id.push(info._id);
                 })
             }
             else{
@@ -121,7 +122,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 dismiss: dismiss.option,
                 url: dismiss.url,
                 sheet_name:sheet.name,
-                system:sheet.system
+                system:sheet.system,
+                sheet_id:sheet.sheet_id
             })
         } catch (err) {
             res.status(404).render('404')
