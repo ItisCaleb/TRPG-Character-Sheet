@@ -1,5 +1,8 @@
 document.write();
 $(document).ready(function () {
+    var url = $(location).attr('href')
+    var array = url.split('/');
+    var id = array[array.length-1];
     var skill = {}
     var stat = []
     setInterval(function () {
@@ -51,7 +54,7 @@ $(document).ready(function () {
                 message(data)
                 setTimeout(function(){
                     redirect('/charactersheet')
-                },500)
+                },1000)
         })
     })
 });

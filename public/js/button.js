@@ -66,7 +66,17 @@ function message(data) {
     $('.message').append('<div class="message-div"><p class="message-alert">' + data + '</p></div>');
     setTimeout(function () {
         $('.message-div').remove();
-    }, 1500)
+    }, 1000)
+}
+function get(URL) {
+    $.ajax({
+        url: URL,
+        type: 'GET',
+        success: redirect(URL),
+        error: function (data) {
+            message(data.responseText)
+        },
+    });
 }
 
 function ask_question(question, choose_1, choose_2) {

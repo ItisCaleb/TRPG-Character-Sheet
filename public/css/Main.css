@@ -98,6 +98,15 @@ nav > .submenu {
 .ask_question_choose:visited {
     color: black;
 }
+#upload-window-box{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+}
 
 nav > .submenu > .subbtn {
     font-size: 15px;

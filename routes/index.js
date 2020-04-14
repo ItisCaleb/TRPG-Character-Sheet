@@ -57,8 +57,7 @@ router.get('/adminpost', verify, function (req, res) {
     if (jwtDecode(req.cookies.auth_token).name === process.env.ADMIN) {
         res.render('admin');
     } else {
-        res.redirect('/');
-        req.app.io.emit('alert','非管理員憑證');
+        res.render('404');
     }
 });
 
@@ -89,16 +88,30 @@ router.get('/trpgsession',verify,async function (req,res) {
 
 //render the specific session page
 router.get('/trpgsession/:id',verify, async function (req,res) {
+    const username=jwtDecode(req.cookies.auth_token)
     const url=req.params.id;
+    const sheet={name:[],system:[]}
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
-    else if (url === 'create') return res.render('trpg_session_create');
-    else {
+    if (url === 'create') return res.render('trpg_session_create');
+    if (url !=='join'|| url !== 'create') {
         try {
             const session = await Session.findOne({_id: url});
+            const user = await User.findOne({name:username.name})
+            if (user.sheet_number>=1){
+                const sheets = await  Sheet.find({author:user._id})
+                sheets.forEach(function (info) {
+                    sheet.name.push(info.name);
+                    sheet.system.push(info.system);
+                })
+            }
+            else{
+                sheet.name.push('你還未擁有任何角色卡');
+            }
+
             const dismiss = {option: '', url: url};
-            if (session.gm === jwtDecode(req.cookies.auth_token).name)
+            if (session.gm === username.name)
                 dismiss.option = '解散';
             else
                 dismiss.option = '離開';
@@ -106,7 +119,9 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 title: '團務名稱：' + session.name,
                 content: session.player,
                 dismiss: dismiss.option,
-                url: dismiss.url
+                url: dismiss.url,
+                sheet_name:sheet.name,
+                system:sheet.system
             })
         } catch (err) {
             res.status(404).render('404')
