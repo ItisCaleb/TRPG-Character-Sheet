@@ -136,6 +136,7 @@ router.get('/charactersheet',verify,async function (req,res) {
         url:sheet.url
     });
 });
+
 router.get('/charactersheet/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
 
@@ -149,26 +150,30 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
             });
         }
         if(sheetNumber.sheet_number >= 20){
-            res.redirect('/charactersheet')
+            res.redirect('/charactersheet').send('你的角色卡已經達到上限')
         }
     }else {
-        const sheet = await Sheet.findOne({_id:req.params.id});
-
-        if (sheet.system==="COC7th"){
-            res.render('COC7th_edit',{
-                title:'編輯角色卡',
-                id:req.params.id
-            });
+        try{
+            const sheet = await Sheet.findOne({_id:req.params.id});
+            if (sheet.system==="COC7th"){
+                if(sheet.author===user._id) {
+                    res.render('COC7th_edit', {
+                        title: '編輯角色卡',
+                        id: req.params.id
+                    });
+                }
+                if(sheet.author!==user._id){
+                    res.render('COC7th_show',{
+                        title:'檢視角色卡',
+                        id:req.params.id
+                    })
+                }
+            }
+        }catch (err) {
+            res.status(404).render('404');
         }
     }
-
-
-
-
 });
-
-
-
 
 
 module.exports = router;
