@@ -30,17 +30,34 @@
 </nav>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-    <form id="upload-sheet-form">
+
     <div id="upload-window" style="top: 24px;display: none" >
-        <div>
-            <% for(var j=0;j<sheet_name.length;j++) { %>
-                <label style="display: inline"><%= sheet_name[j] %> 系統:<%=system[j]%><input type="checkbox" name="upload" style="display: inline" value="<%=sheet_id[j]%>"></label><br>
-            <% }%>
-            <button type="submit" id="upload-check">上傳</button>
+            <form id="upload-sheet-form">
+            <% if (status !== '你擁有的角卡都已上傳' && status !== '你還未擁有任何角色卡') { %>
+                <% for(var j=0;j<sheet_name.length;j++) { %>
+                    <label style="display: inline"><%= sheet_name[j] %> 系統:<%=system[j]%><input type="checkbox" name="upload" style="display: inline" value="<%=sheet_id[j]%>"></label><br>
+                <% } %>
+                <button type="submit" id="upload-check">上傳</button>
+            <% } %>
+            <% if (status == '你擁有的角卡都已上傳' || status == '你還未擁有任何角色卡') {%>
+                    <p style="display: inline" ><%=status %></p>
+            <% } %>
+            </form>
             <button id="upload-disable">取消</button>
-        </div>
     </div>
-    </form>
+    <div id="sheet-window" style="top:24px;display: none">
+        <% if (status == '你擁有的角卡都已上傳' && status !== '你還未擁有任何角色卡') { %>
+            <% for(var k=0;k<sheet_name.length;k++) { %>
+                <p style="display: inline"><%= sheet_name[k] %> 系統:<%=system[k]%></p>
+                <button style="display: inline-block" onclick=get("/charactersheet/<%=sheet_id[k]%>")>檢閱</button><br>
+            <% } %>
+        <% } %>
+        <% if (status == '你還未擁有任何角色卡') {%>
+            <p style="display: inline" >你還未上傳任何角色卡</p>
+        <% } %>
+           <button id="sheet-disable">關閉</button>
+    </div>
+
     <div style="text-align: center">
             <% if (content[1] == null ) { %>
                 <%  content.push('你還沒有玩家') %>
@@ -53,38 +70,47 @@
         <br>
     <button id="delete" class="btn session"><%=dismiss%></button>
     <button id="upload" class="btn session">上傳角卡</button>
+    <button id="sheet-show" class="btn session">檢閱角卡</button>
 
     </div>
 </div>
 <script>
     $('#upload').click(function () {
         $('#upload-window').css('display','block');
+        $('#sheet-window').css('display','none');
+    })
+    $('#sheet-show').click(function () {
+        $('#sheet-window').css('display','block');
+        $('#upload-window').css('display','none');
+    })
+    $('#sheet-disable').click(function () {
+
     })
     $('#upload-disable').click(function () {
         $('#upload-window').css('display','none');
     })
     $('#upload-sheet-form').submit(function (e) {
         e.preventDefault();
-        console.log($(this).serializeArray())
-        /*$.ajax({
-            url: '../api/delete/<%=url%>',
-            type: 'GET',
+        $.ajax({
+            url: '../api/session/sheet_upload/<%=url%>',
+            type: 'POST',
+            data:$(this).serializeArray(),
             success:function(data){
                 message(data)
                 setTimeout(function(){
-                    redirect('/trpgsession')
+                    redirect('/trpgsession/<%=url%>')
                 },1000)
             },
             error:function(data){
                 message(data.responseText)
             },
-        });*/
+        });
     })
     $('#delete').click(function (e) {
         e.preventDefault();
 
         $.ajax({
-            url: '../api/delete/<%=url%>',
+            url: '../api/session/delete/<%=url%>',
             type: 'GET',
             success:function(data){
                 message(data)

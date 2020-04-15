@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // route middleware
 app.use("/api/user", authRoute);
-app.use('/api', TRPGSessionRoute);
+app.use('/api/session', TRPGSessionRoute);
 app.use('/', indexRoute);
 app.use('/api/sheet',sheetRoute);
 

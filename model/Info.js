@@ -13,7 +13,8 @@ const COC7thInfoSchema = new mongoose.Schema({
     residence: String,
     birthplace: String,
     author:String,
-    system:String
+    system:String,
+    session:Array
 });
 /*const DND5eInfoSchema = new mongoose.Schema({
     name: {

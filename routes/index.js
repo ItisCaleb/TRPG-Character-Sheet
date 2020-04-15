@@ -90,7 +90,7 @@ router.get('/trpgsession',verify,async function (req,res) {
 router.get('/trpgsession/:id',verify, async function (req,res) {
     const username=jwtDecode(req.cookies.auth_token)
     const url=req.params.id;
-    const sheet={name:[],system:[],sheet_id:[]}
+    const sheet={name:[],system:[],sheet_id:[],status:''}
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
@@ -101,14 +101,27 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             const user = await User.findOne({name:username.name})
             if (user.sheet_number>=1){
                 const sheets = await  Sheet.find({author:user._id})
-                sheets.forEach(function (info) {
-                    sheet.name.push(info.name);
-                    sheet.system.push(info.system);
-                    sheet.sheet_id.push(info._id);
-                })
+                for (const info of sheets) {
+                    var sheetExist = await Session.findOne({player:{$elemMatch:{$in:[info._id]}}})
+                    console.log(sheetExist);
+                    if (!sheetExist) {
+                        sheet.name.push(info.name);
+                        sheet.system.push(info.system);
+                        sheet.sheet_id.push(info._id);
+                    }
+                }
+
+                if(sheet.name.length===0) {
+                    sheet.status = '你擁有的角卡都已上傳';
+                    sheets.forEach(function (info) {
+                        sheet.name.push(info.name);
+                        sheet.system.push(info.system);
+                        sheet.sheet_id.push(info._id);
+                    })
+                }
             }
             else{
-                sheet.name.push('你還未擁有任何角色卡');
+                sheet.status = '你還未擁有任何角色卡';
             }
 
             const dismiss = {option: '', url: url};
@@ -123,7 +136,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 url: dismiss.url,
                 sheet_name:sheet.name,
                 system:sheet.system,
-                sheet_id:sheet.sheet_id
+                sheet_id:sheet.sheet_id,
+                status:sheet.status
             })
         } catch (err) {
             res.status(404).render('404')

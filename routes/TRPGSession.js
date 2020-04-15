@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const Session = require('../model/Session');
 const User = require("../model/User");
+const Info = require('../model/Info')
 const jwtDecode = require('jwt-decode');
 const verify = require('../public/js/verifyToken');
 const {sessionValidation} = require("../public/js/validation");
 
 //create a session
-router.post('/TRPGCreateSession',async function (req,res) {
+router.post('/TRPGCreateSession',verify, async function (req,res) {
 
 
 
@@ -39,7 +40,7 @@ router.post('/TRPGCreateSession',async function (req,res) {
     }
 });
 //join a session
-router.post('/TRPGJoinSession',async function (req,res) {
+router.post('/TRPGJoinSession',verify, async function (req,res) {
 
     //check if the format is correct
     const {error}= sessionValidation(req.body);
@@ -65,16 +66,38 @@ router.post('/TRPGJoinSession',async function (req,res) {
     }
 });
 
+router.post('/sheet_upload/:id',verify,function (req,res) {
+
+    const user=jwtDecode(req.cookies.auth_token).name;
+    const sheet=req.body.upload
+    try {
+        sheet.forEach(async function (info) {
+            await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: info}});
+            await Info.updateOne({_id: info}, {$addToSet: {session: req.params.id}});
+        })
+        res.send('上傳成功');
+    }catch (err) {
+        res.status(404).send('上傳角卡失敗');
+    }
+
+})
+
 //leave or dismiss a session if you are the gm
 router.get('/delete/:id',verify, async function (req,res) {
 
-
     const user=jwtDecode(req.cookies.auth_token).name;
     const session = await Session.findOne({_id:req.params.id});
+    const sheet = await Info.find({session:req.params.id})
     if(session.gm === user){
+        for (const info of sheet) {
+            await Info.updateOne({_id:info._id},{$pull:{session:req.params.id}})
+        }
         await Session.deleteOne({_id:req.params.id});
         res.send(session.name+'已被解散');
     }else {
+        for (const info of sheet) {
+            await Info.updateOne({_id:info._id},{$pull:{session:req.params.id}})
+        }
         await Session.updateOne({_id:req.params.id},{$pull:{player:user}});
         res.send('已離開'+session.name);
     }
