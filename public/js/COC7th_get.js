@@ -18,6 +18,7 @@ $(document).ready(function () {
                     }
                     delete sheet.info.system;
                     delete sheet.info.author;
+                    delete sheet.info.session;
                     var stat = sheet.stat.characteristic
                     var fellow = sheet.story.fellow_investigator
                     delete sheet.story.fellow_investigator

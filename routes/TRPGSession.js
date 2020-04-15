@@ -66,16 +66,23 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
     }
 });
 
-router.post('/sheet_upload/:id',verify,function (req,res) {
+router.post('/sheet_upload/:id',verify,async function (req,res) {
 
     const user=jwtDecode(req.cookies.auth_token).name;
     const sheet=req.body.upload
     try {
-        sheet.forEach(async function (info) {
-            await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: info}});
-            await Info.updateOne({_id: info}, {$addToSet: {session: req.params.id}});
-        })
-        res.send('上傳成功');
+        if(Array.isArray(sheet)) {
+            for (const info of sheet) {
+                await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: info}});
+                await Info.updateOne({_id: info}, {$addToSet: {session: req.params.id}});
+            }
+            res.send('上傳成功');
+        }
+        if(!(Array.isArray(sheet))){
+            await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: sheet}});
+            await Info.updateOne({_id: sheet}, {$addToSet: {session: req.params.id}});
+            res.send('上傳成功');
+        }
     }catch (err) {
         res.status(404).send('上傳角卡失敗');
     }
@@ -85,20 +92,22 @@ router.post('/sheet_upload/:id',verify,function (req,res) {
 //leave or dismiss a session if you are the gm
 router.get('/delete/:id',verify, async function (req,res) {
 
-    const user=jwtDecode(req.cookies.auth_token).name;
+    const user=jwtDecode(req.cookies.auth_token);
     const session = await Session.findOne({_id:req.params.id});
-    const sheet = await Info.find({session:req.params.id})
-    if(session.gm === user){
+    const sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}}})
+    const user_sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}},author:user._id})
+    if(session.gm === user.name){
         for (const info of sheet) {
             await Info.updateOne({_id:info._id},{$pull:{session:req.params.id}})
         }
         await Session.deleteOne({_id:req.params.id});
         res.send(session.name+'已被解散');
     }else {
-        for (const info of sheet) {
-            await Info.updateOne({_id:info._id},{$pull:{session:req.params.id}})
+        for (const info of user_sheet) {
+            await Info.updateOne({_id:info._id,author:user._id},{$pull:{session:req.params.id}})
+            await Session.updateOne({_id:req.params.id},{$pull:{sheet:info._id}});
         }
-        await Session.updateOne({_id:req.params.id},{$pull:{player:user}});
+        await Session.updateOne({_id:req.params.id},{$pull:{player:user.name}});
         res.send('已離開'+session.name);
     }
 });

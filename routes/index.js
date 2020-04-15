@@ -90,40 +90,60 @@ router.get('/trpgsession',verify,async function (req,res) {
 router.get('/trpgsession/:id',verify, async function (req,res) {
     const username=jwtDecode(req.cookies.auth_token)
     const url=req.params.id;
-    const sheet={name:[],system:[],sheet_id:[],status:''}
+    const UserSheet={name:[],system:[],sheet_id:[],status:''}
+    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:''}
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
     if (url === 'create') return res.render('trpg_session_create');
     if (url !=='join'|| url !== 'create') {
         try {
+
+            //find current session
             const session = await Session.findOne({_id: url});
+
+            //find current user info
             const user = await User.findOne({name:username.name})
-            if (user.sheet_number>=1){
-                const sheets = await  Sheet.find({author:user._id})
+
+            //check if user has sheet
+            if (user.sheet_number>=1) {
+
+                //find all the sheet that user has
+                const sheets = await Sheet.find({author:user._id})
+
+                //check if the sheets are already upload to the session
                 for (const info of sheets) {
-                    var sheetExist = await Session.findOne({player:{$elemMatch:{$in:[info._id]}}})
-                    console.log(sheetExist);
+                    var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}}})
+
+                    //if not, show those sheet that doesn't upload to the session
                     if (!sheetExist) {
-                        sheet.name.push(info.name);
-                        sheet.system.push(info.system);
-                        sheet.sheet_id.push(info._id);
+                        UserSheet.name.push(info.name);
+                        UserSheet.system.push(info.system);
+                        UserSheet.sheet_id.push(info._id);
                     }
                 }
 
-                if(sheet.name.length===0) {
-                    sheet.status = '你擁有的角卡都已上傳';
-                    sheets.forEach(function (info) {
-                        sheet.name.push(info.name);
-                        sheet.system.push(info.system);
-                        sheet.sheet_id.push(info._id);
-                    })
+                //check if the user had already upload all the sheet
+                if(UserSheet.name.length===0) {
+                    UserSheet.status = '你擁有的角卡都已上傳';
                 }
-            }
-            else{
-                sheet.status = '你還未擁有任何角色卡';
+            }else{
+                UserSheet.status = '你還未擁有任何角色卡';
             }
 
+            //check if the session has any sheet on it
+            if (session.sheet.length>=1){
+                for (const data of session.sheet) {
+                    var sheet = await Sheet.findOne({_id:data})
+                    var player = await User.findOne({_id:sheet.author})
+                    SessionSheet.name.push(sheet.name);
+                    SessionSheet.system.push(sheet.system);
+                    SessionSheet.sheet_id.push(sheet._id);
+                    SessionSheet.player.push(player.name);
+                }
+            }else{
+                SessionSheet.status='看來還沒有人上傳角卡'
+            }
             const dismiss = {option: '', url: url};
             if (session.gm === username.name)
                 dismiss.option = '解散';
@@ -134,10 +154,15 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 content: session.player,
                 dismiss: dismiss.option,
                 url: dismiss.url,
-                sheet_name:sheet.name,
-                system:sheet.system,
-                sheet_id:sheet.sheet_id,
-                status:sheet.status
+                user_sheet_name:UserSheet.name,
+                user_system:UserSheet.system,
+                user_sheet_id:UserSheet.sheet_id,
+                user_status:UserSheet.status,
+                session_sheet_name:SessionSheet.name,
+                session_system:SessionSheet.system,
+                session_sheet_id:SessionSheet.sheet_id,
+                session_status:SessionSheet.status,
+                session_sheet_player:SessionSheet.player
             })
         } catch (err) {
             res.status(404).render('404')

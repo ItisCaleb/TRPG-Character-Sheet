@@ -34,6 +34,8 @@
         <input class="input" type="email" placeholder="輸入電子郵件" name="email" id="email" required><br>
         <label class="table-bar" for="password"><b>密碼</b></label><br>
         <input class="input" type="password" placeholder="輸入密碼" name="password" id="password" required><br>
+        <label class="table-bar" for="password"><b>再次輸入密碼</b></label><br>
+        <input class="input" type="password" placeholder="再次輸入密碼" name="repassword" id="repassword" required><br>
         <button class="check-btn"  type="submit">註冊</button>
     </div>
     <div class="message" style="top: 24px;"></div>
@@ -42,20 +44,25 @@
     $('.content').submit(function (e) {
         e.preventDefault();
         if (!check()) {
-            $.ajax({
-                url: $(this).attr("action"),
-                type: 'POST',
-                data: $(this).serializeArray(),
-                success: function (data) {
-                    message(data)
-                    setTimeout(function () {
-                        redirect('/login')
-                    }, 1000)
-                },
-                error: function (data) {
-                    message(data.responseText)
-                },
-            });
+            if($('#password').val() !== $('#repassword').val()){
+                message('重新輸入密碼有誤')
+            }
+            if ($('#password').val() === $('#repassword').val()) {
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: 'POST',
+                    data: $(this).serializeArray(),
+                    success: function (data) {
+                        message(data)
+                        setTimeout(function () {
+                            redirect('/login')
+                        }, 1000)
+                    },
+                    error: function (data) {
+                        message(data.responseText)
+                    },
+                });
+            }
         }
     })
 </script>
