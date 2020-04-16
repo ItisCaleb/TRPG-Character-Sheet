@@ -9,7 +9,7 @@ const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
 
-router.post('/COC7th', async (req, res) => {
+router.post('/COC7th', verify, async (req, res) => {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
 
@@ -18,12 +18,7 @@ router.post('/COC7th', async (req, res) => {
     //save new sheet
     const sheet = new Info({
         name:Csheet[0].value,
-        class:Csheet[1].value,
-        age:Csheet[2].value,
-        sex:Csheet[3].value,
         player_name: Csheet[4].value,
-        residence:Csheet[5].value,
-        birthplace:Csheet[6].value,
         system:"COC7th",
         author:id
     });
@@ -58,6 +53,11 @@ router.post('/COC7th', async (req, res) => {
     });
     const story = new COC7thStory({
         _id:sheet._id,
+        class:Csheet[1].value,
+        age:Csheet[2].value,
+        sex:Csheet[3].value,
+        residence:Csheet[5].value,
+        birthplace:Csheet[6].value,
         role_description:Csheet[7].value,
         belief:Csheet[14].value,
         significant_people:Csheet[15].value,
@@ -114,12 +114,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     try{
         await Info.updateOne({_id:req.params.id},{
             name:csheet[0].value,
-            class:csheet[1].value,
-            age:csheet[2].value,
-            sex:csheet[3].value,
-            player_name: csheet[4].value,
-            residence:csheet[5].value,
-            birthplace:csheet[6].value,
+            player_name: csheet[4].value
         });
     }catch (err) {
         res.status(400).send(err);
@@ -137,6 +132,11 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             skill:cskill
         }});
         await COC7thStory.updateOne({_id:req.params.id},{$set:{
+            class:csheet[1].value,
+            age:csheet[2].value,
+            sex:csheet[3].value,
+            residence:csheet[5].value,
+            birthplace:csheet[6].value,
             role_description:csheet[7].value,
             belief:csheet[14].value,
             significant_people:csheet[15].value,

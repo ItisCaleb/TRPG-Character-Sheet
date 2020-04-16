@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const COC7thStorySchema = new mongoose.Schema({
+    class:String,
+    age:String,
+    sex:String,
+    residence: String,
+    birthplace: String,
     description:{
         type:String,
         max:1024

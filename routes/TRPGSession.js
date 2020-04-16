@@ -71,17 +71,20 @@ router.post('/sheet_upload/:id',verify,async function (req,res) {
     const user=jwtDecode(req.cookies.auth_token).name;
     const sheet=req.body.upload
     try {
-        if(Array.isArray(sheet)) {
+        if(Array.isArray(sheet) && sheet !== undefined) {
             for (const info of sheet) {
                 await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: info}});
                 await Info.updateOne({_id: info}, {$addToSet: {session: req.params.id}});
             }
             res.send('上傳成功');
         }
-        if(!(Array.isArray(sheet))){
+        if(!(Array.isArray(sheet)) && sheet !== undefined){
             await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: sheet}});
             await Info.updateOne({_id: sheet}, {$addToSet: {session: req.params.id}});
             res.send('上傳成功');
+        }
+        if(sheet === undefined){
+            res.status(400).send('請選擇角卡上傳');
         }
     }catch (err) {
         res.status(404).send('上傳角卡失敗');
