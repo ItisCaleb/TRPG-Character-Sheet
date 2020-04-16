@@ -11,7 +11,7 @@
     <script src="/public/js/button.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
 </head>
-<body style="margin:0;background-color:#E0E0E0;height: 100%">
+<body id="page" style="margin:0;background-color:#E0E0E0;height: 100%" >
 
 <nav>
     <div class="topic">TRPG角卡創建</div>
@@ -60,7 +60,7 @@
                 <div class="sheet_creat_div" style="width: 50%">
                     <div>
                         <label>角色形容：
-                        <textarea name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea></label>
+                        <textarea style="height: 200px;width: 490px;resize: none" name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea></label>
                     </div>
 
                 </div>
@@ -104,31 +104,17 @@
                         <div class="sheet_input_div2">
                             <p>調查員基本屬性：</p>
                             <div><input type="button" class='dice' style="background-image:url('http://kulimi.cnmc.tw:3000/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                <ul class="plus_menu">
-                                    <li><a href="#">+</a>
-                                        <ul>
-                                            <li><a href="#">+1</a>
-                                            </li>
-                                            <li><a href="#">+5</a>
-                                            </li>
-                                            <li><a href="#">+20</a>
-                                            </li>
-                                            <li><a href="#">-20</a>
-                                            </li>
-                                            <li><a href="#">-5</a>
-                                            </li>
-                                            <li><a href="#">-1</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
+                                <input type="button" class="plus_menu">
+                                ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
                                                 class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                        max="100" id="str-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/>總值:<p id="str"
                                                                                                        class="chara attr"></p>
                             </div>
-                            <div><input type="button" class='dice' style="background-image:url('http://kulimi.cnmc.tw:3000/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
+                            <div><input type="button" class='dice' style="background-image:url('http://kulimi.cnmc.tw:3000/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
+                                <input type="button" class="plus_menu">
+                                ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
                                                 class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                        max="100" id="con-adj"
                                                                                        class="attr-add stat" value="0"
@@ -180,13 +166,13 @@
 
                         </div>
                         <div class="" style="width: 50%">
-                            <p>調查員經歷：</p>
-                            思念與信念：<textarea name="belief" placeholder="「榮耀伴隨死亡而來，但隨榮耀而來的是無止盡的贖罪。」"></textarea><br>
-                            重要之人：<textarea name="significant_people" placeholder="親弟弟 源氏"></textarea><br>
-                            意義非凡之地：<textarea name="meaningful_location" placeholder="日本，花村"></textarea><br>
-                            寶貴之物：<textarea name="treasured_possession" placeholder="暴風弓"></textarea><br>
-                            特點：<textarea name="trait"
-                                         placeholder="半藏的弓箭具備有不同的功能，既可以偵測敵情，也可以分散成數股箭矢攻擊多個敵人。他還可以攀爬牆壁，從高處攻擊敵人，或是召喚巨大的巨龍之魂衝擊敵人。 "></textarea><br>
+                            <p>調查員經歷：</p><br>
+                            <label> 思念與信念：<textarea name="belief" placeholder="「榮耀伴隨死亡而來，但隨榮耀而來的是無止盡的贖罪。」"></textarea></label><br>
+                            <label> 重要之人：<textarea name="significant_people" placeholder="親弟弟 源氏"></textarea></label><br>
+                            <label> 意義非凡之地：<textarea name="meaningful_location" placeholder="日本，花村"></textarea></label><br>
+                            <label> 寶貴之物：<textarea name="treasured_possession" placeholder="暴風弓"></textarea></label><br>
+                            <label> 特點：<textarea name="trait"
+                                         placeholder="半藏的弓箭具備有不同的功能，既可以偵測敵情，也可以分散成數股箭矢攻擊多個敵人。他還可以攀爬牆壁，從高處攻擊敵人，或是召喚巨大的巨龍之魂衝擊敵人。 "></textarea></label><br>
 
                         </div>
                     </section>

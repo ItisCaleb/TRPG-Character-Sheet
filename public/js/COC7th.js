@@ -167,7 +167,8 @@ $(document).ready(function () {
     })
     function getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
-    };
+    }
+
     //add stat's and skill's value to the form
     $('#myform').submit(function (e) {
         e.preventDefault();

@@ -27,7 +27,7 @@ router.get("/create", verify, function (req, res) {
 
 //render about page
 router.get("/about", function (req, res) {
-    res.render('index', {
+    res.render('about', {
         title: info.title[2],
         content: info.info
     });
