@@ -90,6 +90,7 @@ nav > .submenu {
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
     background: #fff;
     position: relative;
+    
 }
 
 .ask_question_choose:hover {
@@ -98,6 +99,46 @@ nav > .submenu {
 .ask_question_choose:visited {
     color: black;
 }
+
+@keyframes message-div-in{
+    0%{
+        border:2px rgba(204, 204, 204, 0) solid;
+        border-radius:10px;
+        /*width:360px;
+        height:60px;*/
+        background-color: rgba(255, 255, 255, 0);
+    }
+    50%{
+        border:2px #ccc solid;
+        border-radius:10px;
+        /*width:360px;
+        height:60px;*/
+        background-color: rgba(255, 255, 255, 1);
+    }
+    100%{
+        border:2px #ccc solid;
+        border-radius:10px;
+        /*width:360px;
+        height:60px;*/
+        background-color: rgba(255, 255, 255, 1);
+    }
+}
+
+@keyframes message-content-in{
+    0%{
+        color: #ffffff;
+        border-bottom: 10px #ffffff solid;
+    }
+    50%{
+        color: black;
+        border-bottom: 10px #27fdff solid;
+    }
+    100%{
+        color: black;
+        border-bottom: 10px #27fdff solid;
+    }
+}
+
 #upload-window-box{
     display: flex;
     flex-direction: column;
