@@ -25,38 +25,53 @@
         <button class="subbtn btn validation" id="login" >登入</button>
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-
-    <div class="message" style="top: 24px;"></div>
+    <div class="message" style="top:24px"></div>
+    <div id="upload-window" class="message" style="top: 24px;display: none">
+        <div class="message-div">
+            <div class="message-alert">上傳角色卡
+                <p class="message-content">
+                    <form id="upload-sheet-form">
+                        <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
+                            <% for(var j=0;j<user_sheet_name.length;j++) { %>
+                                <label style="display: inline;font-size: 14px" ><%= user_sheet_name[j] %> 系統:<%=user_system[j]%><input type="checkbox" name="upload" style="display: inline" value="<%=user_sheet_id[j]%>"></label><br>
+                            <% } %>
+                        <% } %>
+                        <% if (user_status == '你擁有的角卡都已上傳' || user_status == '你還未擁有任何角色卡') {%>
+                <p style="display: inline" ><%=user_status %></p>
+                <% } %>
+                </form>
+                </p>
+                <span style="width: 100%;display: inline">
+                    <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
+                       <button  type="submit" id="upload-check">上傳</button>
+                    <% } %>
+                    <button id="upload-disable">取消</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="sheet-window" class="message" style="top:24px;display: none">
+        <div class="message-div">
+            <div class="message-alert">檢閱角色卡
+                <p class="message-content">
+        <% if (session_status !='看來還沒有人上傳角卡') { %>
+            <% for(var k=0;k<session_sheet_name.length;k++) { %>
+                <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%><button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button></p>
+                <br>
+            <% } %>
+        <% } %>
+        <% if (session_status =='看來還沒有人上傳角卡') {%>
+        <p style="display: inline" ><%=session_status%></p><br>
+        <% } %>
+                </p>
+        <button id="sheet-disable">關閉</button>
+            </div>
+        </div>
+    </div>
 </nav>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
 
-    <div id="upload-window" style="top: 24px;display: none" >
-            <form id="upload-sheet-form">
-            <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
-                <% for(var j=0;j<user_sheet_name.length;j++) { %>
-                    <label style="display: inline"><%= user_sheet_name[j] %> 系統:<%=user_system[j]%><input type="checkbox" name="upload" style="display: inline" value="<%=user_sheet_id[j]%>"></label><br>
-                <% } %>
-                <button type="submit" id="upload-check">上傳</button>
-            <% } %>
-            <% if (user_status == '你擁有的角卡都已上傳' || user_status == '你還未擁有任何角色卡') {%>
-                    <p style="display: inline" ><%=user_status %></p>
-            <% } %>
-            </form>
-            <button id="upload-disable">取消</button>
-    </div>
-    <div id="sheet-window" style="top:24px;display: none">
-        <% if (session_status !='看來還沒有人上傳角卡') { %>
-            <% for(var k=0;k<session_sheet_name.length;k++) { %>
-                <p style="display: inline"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%></p>
-                <button style="display: inline-block" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button><br>
-            <% } %>
-        <% } %>
-        <% if (session_status =='看來還沒有人上傳角卡') {%>
-            <p style="display: inline" ><%=session_status%></p><br>
-        <% } %>
-           <button id="sheet-disable">關閉</button>
-    </div>
 
     <div style="text-align: center">
             <% if (content[1] == null ) { %>

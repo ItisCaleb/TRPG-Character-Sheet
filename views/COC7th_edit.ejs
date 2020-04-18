@@ -27,6 +27,19 @@
         <button class="subbtn btn validation" id="signup">註冊</button>
     </div>
     <div class="message" style="top: 24px;"></div>
+    <div id="delete-window" class="message" style="top:24px;display: none">
+        <div class="message-div">
+            <div class="message-alert">刪除角色卡
+                <p class="message-content">
+                    你確定要刪除嗎?
+                </p>
+                <span style="display: inline">
+                    <button id="delete">確認</button>
+                    <button id="delete-disable">關閉</button>
+                </span>
+            </div>
+        </div>
+    </div>
 </nav>
 <script>
 
@@ -36,7 +49,8 @@
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <div id="url" style="display: none"><%=id%></div>
     <div>
-        <button id="delete">delete</button>
+        <button id="delete-check">delete</button>
+
         <form id="myform" method="post" action="../api/sheet/COC7th">
             <section style="margin: 50px">
             <div class="sheet_creat_div">

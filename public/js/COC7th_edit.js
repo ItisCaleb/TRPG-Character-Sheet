@@ -48,7 +48,14 @@ $(document).ready(function () {
 
     },10000)
 
+    $('#delete-check').click(function () {
+        $('#delete-window').css('display','block');
+    });
+    $('#delete-disable').click(function () {
+        $('#delete-window').css('display','none');
+    });
     $('#delete').click(function () {
+        $('#delete-window').css('display','none');
         $.get('../api/sheet/delete/'+ id,
             function(data){
                 message(data)
