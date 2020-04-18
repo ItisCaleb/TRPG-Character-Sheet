@@ -84,8 +84,8 @@ nav > .submenu {
     background-color: #ffffff;
     padding: 20px;
     top: 60px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-right: 30%;
+    margin-left: 30%;
     width: 30%;
     font-size: 32px;
     animation-name: message-div-in;
