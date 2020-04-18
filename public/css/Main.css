@@ -90,7 +90,7 @@ nav > .submenu {
     font-size: 32px;
     animation-name: message-div-in;
     animation-iteration-count: 1;
-    animation-duration: 2s;
+    animation-duration: 1s;
     z-index: 1010;
 }
 
@@ -104,7 +104,7 @@ nav > .submenu {
     word-wrap: break-word;
     animation-name: message-content-in;
     animation-iteration-count: 1;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 
 .message-line {
@@ -115,7 +115,7 @@ nav > .submenu {
     margin-bottom: 5%;
     animation-name: message-line-in;
     animation-iteration-count: 1;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 
 @keyframes message-div-in {
