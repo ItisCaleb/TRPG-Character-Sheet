@@ -86,6 +86,7 @@ nav > .submenu {
     top: 0;
     left: 50%;
     right: 50%;
+    width: 30%;
     font-size: 32px;
     animation-name: message-div-in;
     animation-iteration-count: 1;
