@@ -79,10 +79,15 @@ function get(URL) {
     });
 }
 
-function ask_question(question, choose_1, choose_2) {
-    $('.message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
-    setTimeout(function () {
-        $('.message-alert').remove();
-    }, 1500)
-}
+$(document).mouseup(function (e)
+{
+
+    var container = $(".pop");
+
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        container.hide();
+    }
+});
 

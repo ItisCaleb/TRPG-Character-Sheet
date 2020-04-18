@@ -26,7 +26,7 @@
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
     <div class="message" style="top:24px"></div>
-    <div id="upload-window" class="message" style="top: 24px;display: none">
+    <div id="upload-window" class="message pop" style="top: 24px;display: none">
         <div class="message-div">
             <div class="message-alert">上傳角色卡
                 <p class="message-content">
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div id="sheet-window" class="message" style="top:24px;display: none">
+    <div id="sheet-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert">檢閱角色卡
                 <p class="message-content">
@@ -65,6 +65,19 @@
         <% } %>
                 </p>
         <button id="sheet-disable">關閉</button>
+            </div>
+        </div>
+    </div>
+    <div id="delete-window" class="message pop" style="top:24px;display: none">
+        <div class="message-div">
+            <div class="message-alert">刪除團務
+                <p class="message-content">
+                    你確定要刪除嗎?
+                </p>
+                <span style="display: inline">
+                    <button id="delete">確認</button>
+                    <button id="delete-disable">關閉</button>
+                </span>
             </div>
         </div>
     </div>
@@ -83,7 +96,7 @@
                 <div style="display: inline"><%= content[i] %></div><br>
         <% }%>
         <br>
-    <button id="delete" class="btn session"><%=dismiss%></button>
+    <button id="delete-check" class="btn session"><%=dismiss%></button>
     <button id="upload" class="btn session">上傳角卡</button>
     <button id="sheet-show" class="btn session">檢閱角卡</button>
 
@@ -92,11 +105,15 @@
 <script>
     $('#upload').click(function () {
         $('#upload-window').css('display','block');
-        $('#sheet-window').css('display','none');
     })
     $('#sheet-show').click(function () {
         $('#sheet-window').css('display','block');
-        $('#upload-window').css('display','none');
+    })
+    $('#delete-check').click(function () {
+        $('#delete-window').css('display','block');
+    })
+    $('#delete-disable').click(function () {
+        $('#delete-window').css('display','none');
     })
     $('#sheet-disable').click(function () {
         $('#sheet-window').css('display','none');
@@ -123,7 +140,7 @@
     })
     $('#delete').click(function (e) {
         e.preventDefault();
-
+        $('#delete-window').css('display','none');
         $.ajax({
             url: '../api/session/delete/<%=url%>',
             type: 'GET',
