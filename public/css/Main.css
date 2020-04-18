@@ -80,7 +80,8 @@ nav > .submenu {
     position: relative;
     background-color: #ffffff;
     padding: 20px;
-    margin: 0% 30% 30%;
+    top: 0;
+    left: 50%;
     font-size: 32px;
     animation-name: message-div-in;
     animation-iteration-count: 1;
@@ -114,11 +115,11 @@ nav > .submenu {
 
 @keyframes message-div-in {
     0% {
-        margin-top: -50%;
+        top: -20%;
     }
 
     100% {
-        margin-top: -0%;
+        top: 0;
     }
 }
 
