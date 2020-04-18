@@ -76,6 +76,7 @@ nav > .submenu {
 .message-alert {
     border: 2px #ccc solid;
     border-radius: 10px;
+    flex-direction: column;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -119,7 +120,7 @@ nav > .submenu {
         margin-top: -50%;
     }
 
-    50% {
+    100% {
         margin-top: -0%;
     }
 }
@@ -129,7 +130,7 @@ nav > .submenu {
         color: #ffffff;
     / / border-bottom: 10 px #ffffff solid;
     }
-    50% {
+    100% {
         color: black;
     / / border-bottom: 10 px #27fdff solid;
     }
@@ -144,11 +145,11 @@ nav > .submenu {
         background-color: rgba(0, 0, 0, 0);
         width: 0%;
     }
-    50% {
+    100% {
         background-color: rgb(39, 253, 255);
         width: 100%;
     }
-    80% {
+    100% {
         background-color: rgb(39, 253, 255);
         width: 100%;
     }
