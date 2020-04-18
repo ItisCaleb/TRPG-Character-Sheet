@@ -63,13 +63,10 @@ nav > .submenu {
 }
 
 .message_div {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
+
     width: 100%;
     height: 100%;
-    justify-content: center;
-    text-align: center;
+
     background-color: rgb(255, 255, 255);
 }
 
