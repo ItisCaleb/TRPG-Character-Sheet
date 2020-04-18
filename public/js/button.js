@@ -66,7 +66,7 @@ function message(data) {
     $('.message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
     setTimeout(function () {
         $('.message-div').remove();
-    }, 1000)
+    }, 3000)
 }
 function get(URL) {
     $.ajax({
