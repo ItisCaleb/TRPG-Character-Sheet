@@ -5,8 +5,7 @@ module.exports = function (req, res, next) {
     const token = req.cookies.auth_token;
     if (!token) return res.status(401).render('401');
     try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified;
+        req.user = jwt.verify(token, process.env.JWT_SECRET);
         next();
     } catch (err) {
         res.status(400).render('404');

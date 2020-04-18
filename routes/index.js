@@ -35,11 +35,15 @@ router.get("/about", function (req, res) {
 
 //render sign up page
 router.get("/signup", function (req, res) {
+    const token = req.cookies.auth_token;
+    if (token) return res.redirect('/');
     res.render('register');
 });
 
 //render login page
 router.get("/login", function (req, res) {
+    const token = req.cookies.auth_token;
+    if (token) return res.redirect('/');
     res.render('login');
 });
 
@@ -88,10 +92,10 @@ router.get('/trpgsession',verify,async function (req,res) {
 
 //render the specific session page
 router.get('/trpgsession/:id',verify, async function (req,res) {
-    const username=jwtDecode(req.cookies.auth_token)
+    const username=jwtDecode(req.cookies.auth_token);
     const url=req.params.id;
-    const UserSheet={name:[],system:[],sheet_id:[],status:''}
-    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:''}
+    const UserSheet={name:[],system:[],sheet_id:[],status:''};
+    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:''};
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
@@ -103,17 +107,18 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             const session = await Session.findOne({_id: url});
 
             //find current user info
-            const user = await User.findOne({name:username.name})
-
+            const user = await User.findOne({name:username.name});
+            const userExist = await Session.findOne({player:{$elemMatch:{$in:[username.name]}},_id:url});
+            if(!userExist) return res.status(404).render('404');
             //check if user has sheet
             if (user.sheet_number>=1) {
 
                 //find all the sheet that user has
-                const sheets = await Sheet.find({author:user._id})
+                const sheets = await Sheet.find({author:user._id});
 
                 //check if the sheets are already upload to the session
                 for (const info of sheets) {
-                    var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}}})
+                    var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}}});
 
                     //if not, show those sheet that doesn't upload to the session
                     if (!sheetExist) {
@@ -134,8 +139,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             //check if the session has any sheet on it
             if (session.sheet.length>=1){
                 for (const data of session.sheet) {
-                    var sheet = await Sheet.findOne({_id:data})
-                    var player = await User.findOne({_id:sheet.author})
+                    var sheet = await Sheet.findOne({_id:data});
+                    var player = await User.findOne({_id:sheet.author});
                     SessionSheet.name.push(sheet.name);
                     SessionSheet.system.push(sheet.system);
                     SessionSheet.sheet_id.push(sheet._id);
@@ -196,7 +201,7 @@ router.get('/charactersheet',verify,async function (req,res) {
 router.get('/charactersheet/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
 
-    const sheetNumber = await User.findOne({_id: user._id})
+    const sheetNumber = await User.findOne({_id: user._id});
     if (req.params.id === 'create'){
         if(sheetNumber.sheet_number < 20){
             res.render('COC7th_create', {

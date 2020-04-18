@@ -59,7 +59,7 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
 
     if (playerExist) return res.status(400).send('你已加入此團務');
     try{
-        await Session.update({name:req.body.name},{$addToSet:{player:user}});
+        await Session.updateOne({name:req.body.name},{$addToSet:{player:user}});
         res.send(req.body.name + '加入成功'+' GM:'+session.gm);
     }catch (err) {
         res.status(400).send(err);
