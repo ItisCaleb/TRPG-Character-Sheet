@@ -63,7 +63,7 @@ nav > .submenu {
 }
 
 .message_div {
-
+    position: fixed;
     width: 100%;
     height: 100%;
 
@@ -73,11 +73,14 @@ nav > .submenu {
 .message-alert {
     border: 2px #ccc solid;
     border-radius: 10px;
-    flex-direction: column;
     display: flex;
+
+    flex-direction: column;
     justify-content: center;
+
     text-align: center;
-    position: relative;
+    position: fixed;
+
     background-color: #ffffff;
     padding: 20px;
     top: 0;
