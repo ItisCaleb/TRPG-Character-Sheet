@@ -76,6 +76,9 @@ nav > .submenu {
 .message-alert {
     border: 2px #ccc solid;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
     position: relative;
     background-color: #ffffff;
     padding: 20px;
