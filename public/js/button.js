@@ -63,7 +63,7 @@ function check() {
 }
 
 function message(data) {
-    $('.message').append('<div class="message-div"><p class="message-alert">' + data + '</p></div>');
+    $('.message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
     setTimeout(function () {
         $('.message-div').remove();
     }, 1000)
@@ -80,7 +80,7 @@ function get(URL) {
 }
 
 function ask_question(question, choose_1, choose_2) {
-    $('.message').append('<div class="message_div"><div class="message-alert"><p>' + question + '</p><section><a class="ask_question_choose" href="#">'+ choose_1 +'</a>'+'<a class="ask_question_choose" href="#">'+ choose_2 +'</a>'+'</section></div></div>');
+    $('.message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
     setTimeout(function () {
         $('.message-alert').remove();
     }, 1500)
