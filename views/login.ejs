@@ -8,8 +8,8 @@
     <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
     <script src="/public/js/button.js" charset="UTF-8"></script>
+    <script src="/public/js/auth.js " charset="UTF-8"></script>
 
 </head>
 <body style="margin:0;background-color:#E0E0E0">
@@ -26,21 +26,27 @@
     </div>
     <div class="message" style="top: 24px;"></div>
 </nav>
-<form class="content" action="../api/user/userlogin" method="post">
+<div class="content" >
     <h1 class="title">登入</h1>
-    <div class="table">
-        <label class="table-bar" for="email"><b>電子郵件</b></label><br>
-        <input class="input" type="email" placeholder="輸入電子郵件" name="email" id="email" required><br>
-        <label class="table-bar" for="password"><b>密碼</b></label><br>
-        <input class="input" type="password" placeholder="輸入密碼" name="password" id="password" required><br>
-        <label>
-            <input type="checkbox" checked="checked">
-        </label>記住我<br>
+    <div id="form-box">
+    <form class="table" action="../api/user/userlogin" method="post" >
+        <label class="input">
+            <input class="input-box" type="email" placeholder="輸入電子郵件" name="email" id="email" required >
+            <span class="check"></span>
+        </label>
+        <label class="input">
+            <input class="input-box" type="password" placeholder="輸入密碼" name="password" id="password" required>
+            <span class="check"></span>
+        </label>
+            <label class="remember">
+                <input type="checkbox" checked="checked">記住我
+            </label><br>
         <button class="check-btn" type="submit">登入</button>
+    </form>
     </div>
-</form>
+</div>
 <script>
-    $('.content').submit(function (e) {
+    $('.table').submit(function (e) {
         e.preventDefault();
         if (!check()) {
             $.ajax({

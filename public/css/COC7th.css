@@ -19,8 +19,14 @@
 .chara{
     display: inline;
 }
-
-
+td{
+    padding: 0;
+}
+td > input{
+    border: 0;
+    height: 25px;
+}
+.custom
 
 
 

@@ -32,7 +32,7 @@ $(document).ready(function () {
             if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
                 delete skill[name];
         });
-    })
+    });
     setInterval(function () {
         var sheet = $('#myform').serializeArray();
 

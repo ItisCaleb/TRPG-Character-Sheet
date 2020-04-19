@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap');
+
+
 
 .head {
     background-color: antiquewhite;
@@ -29,13 +32,18 @@ body {
 }
 
 html {
+    font-family: 'Noto Sans TC', sans-serif;
     height: 100%;
 / / For the Footer .
+}
+button{
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 nav > .topic {
     flex: none;
     font-size: 35px;
+    font-weight: bold;
     line-height: 45px;
     text-indent: 35px;
     float: left;

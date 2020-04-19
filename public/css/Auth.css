@@ -4,10 +4,45 @@
 .table-bar{
     margin: 8px;
 }
-input[type=text],input[type=password],input[type=email]{
-    width: 40%;padding: 12px 20px;margin:8px;display: inline-block;
-    border: 1px solid #ccc;
+.input{
+    height: 100%;
+    width: 100%;padding: 35px 16px 8px;margin:8px;display: inline-block;outline: none;
+    font-size:18px ;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ccc;
     box-sizing: border-box;
+}
+.input-box{
+    float: left;
+    width: 70%;display: inline-block;outline: none;
+    font-size:18px ;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+    border-bottom-width: 0;
+    box-sizing: border-box;
+}
+#form-box{
+    width: 40%;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin: 12px auto 0;
+}
+.table{
+    padding: 10px;
+
+}
+.remember{
+    padding: 10px;
+    float: left;
+    line-height: 19px;
+    font-size: 14px;
+    cursor: pointer;
 }
 .check-btn {
     background-color: #4CAF50;
@@ -16,5 +51,5 @@ input[type=text],input[type=password],input[type=email]{
     margin: 8px 8px;
     border: none;
     cursor: pointer;
-    width: 40%;
+    width: 100%;
 }

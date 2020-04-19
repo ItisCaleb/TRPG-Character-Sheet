@@ -1,12 +1,15 @@
 document.write("");
 $(document).ready(function () {
-
+    var url = $(location).attr('href');
+    var array = url.split('/');
+    var id = array[array.length-1];
     //when hover on button, change their color
     $(".btn").hover(function () {
         $(this).css({"color": "#46A3FF", "borderBottomColor": "#46A3FF"})
     }, function () {
         $(this).css({"color": "", "borderBottomColor": ""})
     });
+
     $('#change_password').click(function () {
         $('#password_input').css({'visibility': 'visible'});
     });
@@ -40,6 +43,22 @@ $(document).ready(function () {
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').css({'visibility': 'visible'});
     //alert message when user use invalid format to sign up and log in
+    setInterval(function () {
+        $('.input').each(function () {
+            const input = $(this).find('.input-box');
+            if(input.val().length===0){
+                input.focus(function (e) {
+                    $(this).parent('.input').css("borderBottomColor", "#46A3FF");
+                });
+                input.blur(function () {
+                    $(this).parent('.input').css("borderBottomColor", "#ccc");
+                });
+            }
+            if(input.val().length >=1 && id !=='login' && id !=='signup'){
+                $(this).css("borderBottomColor", "#46A3FF");
+            }
+        });
+    },0)
 
 });
 
@@ -54,7 +73,6 @@ function check() {
     const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
     const result = text.match(pattern);
     if (result) {
-        console.log(text);
         message("含有特殊字元");
         return true
     } else {

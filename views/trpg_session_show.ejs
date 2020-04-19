@@ -29,7 +29,7 @@
     <div id="upload-window" class="message pop" style="top: 24px;display: none">
         <div class="message-div">
             <div class="message-alert">上傳角色卡
-                <p class="message-content">
+                <div class="message-content">
                     <form id="upload-sheet-form">
                         <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
                             <% for(var j=0;j<user_sheet_name.length;j++) { %>
@@ -40,7 +40,7 @@
                 <p style="display: inline" ><%=user_status %></p>
                 <% } %>
                 </form>
-                </p>
+                </div>
                 <span style="width: 100%;display: inline">
                     <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
                        <button  type="submit" id="upload-check">上傳</button>
@@ -91,7 +91,8 @@
                 <%  content.push('你還沒有玩家') %>
         <% }%>
         <div>gm:<%=content[0]%></div>
-        player:
+        密碼: <%=password%> <br>
+        玩家:
             <% for(var i=1;i<content.length;i++) { %>
                 <div style="display: inline"><%= content[i] %></div><br>
         <% }%>

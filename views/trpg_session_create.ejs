@@ -25,17 +25,22 @@
     </div>
     <div class="message" style="top: 24px;"></div>
 </nav>
-<form class="content" action="../api/session/TRPGCreateSession" method="post" >
+<div class="content" >
     <h1 class="title">創建團務</h1>
-    <button class="btn session" onclick="redirect('/trpgsession')"style="float:right;margin-right: 100px">團務</button>
-    <div class="table">
-        <label class="table-bar" for="name"><b>輸入團務名稱</b></label><br>
-        <input type="text" placeholder="輸入團務名稱" name="name" id="name" required><br>
-        <label class="table-bar" for="password"><b>輸入密碼</b></label><br>
-        <input type="password" placeholder="輸入密碼" name="password" id="password" required><br>
-        <button class="check-btn" type="submit">創建</button>
+    <div id="form-box">
+        <form class="table" action="../api/session/TRPGCreateSession" method="post" >
+            <label class="input">
+                <input class="input-box" type="text" placeholder="輸入要創建的團務名稱" name="name" id="name" required>
+            </label>
+            <label class="input">
+                <input class="input-box" type="password" placeholder="輸入密碼" name="password" id="password" required>
+            </label>
+            <button class="check-btn" type="submit">創建</button>
+        </form>
     </div>
-</form>
+    <button class="btn session" onclick="redirect('/trpgsession')"style="float:right;margin-right: 100px">團務</button>
+</div>
+
 <script>
     $('.content').submit(function (e) {
         e.preventDefault();

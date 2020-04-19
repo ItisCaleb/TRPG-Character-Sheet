@@ -1,7 +1,7 @@
 document.write('');
 $(document).ready(function () {
     var sheet={};
-    var url = $(location).attr('href')
+    var url = $(location).attr('href');
     var array = url.split('/');
     var id = array[array.length-1];
     setInterval(function () {
@@ -19,33 +19,33 @@ $(document).ready(function () {
                     delete sheet.info.system;
                     delete sheet.info.author;
                     delete sheet.info.session;
-                    var stat = sheet.stat.characteristic
-                    var fellow = sheet.story.fellow_investigator
-                    delete sheet.story.fellow_investigator
-                    delete sheet.stat.characteristic
-                    console.log(sheet)
+                    var stat = sheet.stat.characteristic;
+                    var fellow = sheet.story.fellow_investigator;
+                    delete sheet.story.fellow_investigator;
+                    delete sheet.stat.characteristic;
+                    console.log(sheet);
                     $('.info').each(function (index) {
                         $(this).val(sheet.info[Object.keys(sheet.info)[index]]);
-                    })
+                    });
                     $('.equip').each(function (index) {
                         $(this).val(sheet.equip[Object.keys(sheet.equip)[index]]);
-                    })
+                    });
                     $('.stat').each(function (index) {
                         $(this).val(stat[index]);
-                    })
+                    });
                     $('.status').each(function (index) {
                         $(this).val(sheet.stat[Object.keys(sheet.stat)[index]]);
-                    })
+                    });
                     $('.story').each(function (index) {
                         $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
-                    })
-                    $('.class-feature').val(sheet.skill.class_feature)
+                    });
+                    $('.class-feature').val(sheet.skill.class_feature);
                     for (let i=0;i<Object.keys(sheet.skill.skill).length;i++){
                         $('.name').each(function () {
                             if ($(this).text()===sheet.skill.skill[i].name){
                                 $(this).siblings().find('.base-input').each(function (index) {
                                     $(this).val(sheet.skill.skill[i].number[index])
-                                })
+                                });
                                 if (sheet.skill.skill[i].number.length === 4){
                                     $(this).siblings().find('.custom').each(function () {
                                         $(this).val(sheet.skill.skill[i].number[3])
@@ -60,8 +60,8 @@ $(document).ready(function () {
                     redirect('/charactersheet')
                 },
                 dataType:'json'
-            })
+            });
             $('#url').remove();
         }
     },0)
-})
+});

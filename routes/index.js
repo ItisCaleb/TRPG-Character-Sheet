@@ -157,6 +157,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             res.render('trpg_session_show', {
                 title: '團務名稱：' + session.name,
                 content: session.player,
+                password:session.password,
                 dismiss: dismiss.option,
                 url: dismiss.url,
                 user_sheet_name:UserSheet.name,
