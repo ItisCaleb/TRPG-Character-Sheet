@@ -194,7 +194,7 @@ nav > .submenu > .subbtn {
 .content {
     background-color: white;
     margin-top: 25px;
-    margin-bottom: 100px;
+    /*margin-bottom: 100px;*/
     min-height: auto;
     width: 1100px;
     margin-left: auto;
