@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap');
 
 
-
 .head {
     background-color: antiquewhite;
     color: black;
@@ -28,7 +27,8 @@ body {
     flex-direction: column;
 / / justify-content: space-between;
     height: 100%;
-/ / For the footer .
+/ / For the footer .;
+    background-color: #E0E0E0
 }
 
 html {
@@ -36,7 +36,8 @@ html {
     height: 100%;
 / / For the Footer .
 }
-button{
+
+button {
     font-family: 'Noto Sans TC', sans-serif;
 }
 
@@ -66,8 +67,9 @@ nav > .submenu {
     float: right;
     margin: 0;
 }
-.message {
 
+.message {
+    top: 24px;
 }
 
 .message_div {
@@ -166,7 +168,7 @@ nav > .submenu {
     }
 }
 
-#upload-window-box{
+#upload-window-box {
     display: flex;
     flex-direction: column;
     position: fixed;
