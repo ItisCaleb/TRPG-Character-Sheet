@@ -194,6 +194,10 @@ nav > .submenu > .subbtn {
 }
 
 .content {
+    display: flex;
+
+    flex-direction: column;
+
     background-color: white;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -203,7 +207,7 @@ nav > .submenu > .subbtn {
     margin-right: auto;
     border-width: 2px;
     padding-bottom: 25px;
-    display: flex;
+
     justify-content: center;
     align-items: center;
     /*min-height: 100%;*/
