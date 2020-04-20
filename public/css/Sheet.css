@@ -35,13 +35,13 @@
     color: white;*/
 }
 
-.systems-choose:hover{
+.systems-title-tile:hover{
     animation-name: choose-mouse-hover;
     animation-iteration-count: 1;
     animation-duration: 1s;
 }
 
-.systems-choose:not(:hover){
+.systems-title-tile:not(:hover){
     animation-name: choose-mouse-leave;
     animation-iteration-count: 1;
     animation-duration: 1s;
