@@ -117,13 +117,23 @@ nav > .submenu {
     animation-duration: 1s;
 }
 
-.message-line {
+.good-message-line {
     height: 5px;
     top: 1px;
     background-color: rgb(76, 175, 80);
     width: 100%;
     margin-bottom: 5%;
-    animation-name: message-line-in;
+    animation-name: good-message-line-in;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+.bad-message-line {
+    height: 5px;
+    top: 1px;
+    background-color: rgb(232, 15, 15);
+    width: 100%;
+    margin-bottom: 5%;
+    animation-name: bad-message-line-in;
     animation-iteration-count: 1;
     animation-duration: 1s;
 }
@@ -153,7 +163,7 @@ nav > .submenu {
     }
 }
 
-@keyframes message-line-in {
+@keyframes good-message-line-in {
     0% {
         background-color: rgba(0, 0, 0, 0);
         width: 0;
@@ -164,6 +174,20 @@ nav > .submenu {
     }
     100% {
         background-color: rgb(76, 175, 80);
+        width: 100%;
+    }
+}
+@keyframes bad-message-line-in {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+        width: 0;
+    }
+    100% {
+        background-color: rgb(232, 15, 15);
+        width: 100%;
+    }
+    100% {
+        background-color: rgb(232, 15, 15);
         width: 100%;
     }
 }

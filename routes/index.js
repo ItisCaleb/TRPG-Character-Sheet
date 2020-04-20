@@ -219,6 +219,7 @@ router.get('/charactersheet/create/:id',verify,async function (req,res) {
 });
 
 router.get('/charactersheet/:id',verify,async function (req,res) {
+    const user = jwtDecode(req.cookies.auth_token);
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
             if (sheet.system==="COC7th"){

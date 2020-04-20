@@ -25,7 +25,7 @@
         <button class="subbtn btn validation" id="login" >登入</button>
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-    <div class="message"></div>
+    <div class="alert-message"></div>
     <div id="upload-window" class="message pop" style="top: 24px;display: none">
         <div class="message-div">
             <div class="message-alert">上傳角色卡
@@ -129,13 +129,13 @@
             type: 'POST',
             data:$(this).serializeArray(),
             success:function(data){
-                message(data)
+                good_message(data)
                 setTimeout(function(){
                     redirect('/trpgsession/<%=url%>')
                 },1000)
             },
             error:function(data){
-                message(data.responseText)
+                bad_message(data.responseText)
             },
         });
     })
@@ -146,13 +146,13 @@
             url: '../api/session/delete/<%=url%>',
             type: 'GET',
             success:function(data){
-                message(data)
+                good_message(data)
                 setTimeout(function(){
                     redirect('/trpgsession')
                 },1000)
             },
             error:function(data){
-                message(data.responseText)
+                bad_message(data.responseText)
             },
         });
     })

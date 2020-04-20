@@ -179,12 +179,12 @@ $(document).ready(function () {
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
         $.ajax({
-            url: $(this).attr("action"),
+            url: "../../api/sheet/COC7th",
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data:JSON.stringify(sheet) ,
             success:function(data){
-                message(data)
+                good_message(data)
                 setTimeout(function(){
                     redirect('/charactersheet')
                 },1000)

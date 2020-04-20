@@ -58,7 +58,7 @@ $(document).ready(function () {
         $('#delete-window').css('display','none');
         $.get('../api/sheet/delete/'+ id,
             function(data){
-                message(data)
+                good_message(data)
                 setTimeout(function(){
                     redirect('/charactersheet')
                 },1000)

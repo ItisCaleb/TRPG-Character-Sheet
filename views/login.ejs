@@ -27,7 +27,7 @@
 
     <div class="alert-message" style="top: 24px;"></div>
 
-    <div class="message"></div>
+
 
 </nav>
 <div class="content" >
@@ -59,13 +59,13 @@
                 type: 'POST',
                 data: $(this).serializeArray(),
                 success: function (data) {
-                    message(data)
+                    good_message(data)
                     setTimeout(function () {
                         redirect('/')
                     }, 1000)
                 },
                 error: function (data) {
-                    message(data.responseText)
+                    bad_message(data.responseText)
                 },
             });
         }

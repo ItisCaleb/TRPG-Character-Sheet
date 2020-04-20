@@ -27,7 +27,7 @@
 
     <div class="alert-message" style="top: 24px;"></div>
 
-    <div class="message"></div>
+
 
 </nav>
 <div class="content" >
@@ -61,7 +61,7 @@
         e.preventDefault();
         if (!check()) {
             if($('#password').val() !== $('#repassword').val()){
-                message('重新輸入密碼有誤')
+                bad_message('重新輸入密碼有誤')
             }
             if ($('#password').val() === $('#repassword').val()) {
                 $.ajax({
@@ -69,13 +69,13 @@
                     type: 'POST',
                     data: $(this).serializeArray(),
                     success: function (data) {
-                        message(data)
+                        good_message(data)
                         setTimeout(function () {
                             redirect('/login')
                         }, 1000)
                     },
                     error: function (data) {
-                        message(data.responseText)
+                        bad_message(data.responseText)
                     },
                 });
             }
