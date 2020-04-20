@@ -38,13 +38,13 @@
 .systems-title-tile:hover{
     animation-name: choose-mouse-hover;
     animation-iteration-count: 1;
-    animation-duration: 0.5s;
+    animation-duration: 0.1s;
 }
 
 .systems-title-tile:not(:hover){
     animation-name: choose-mouse-leave;
     animation-iteration-count: 1;
-    animation-duration: 0.5s;
+    animation-duration: 0.1s;
 }
 
 @keyframes choose-mouse-hover {
