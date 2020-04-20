@@ -203,6 +203,10 @@ nav > .submenu > .subbtn {
     margin-right: auto;
     border-width: 2px;
     padding-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*min-height: 100%;*/
 }
 
 .footer {
