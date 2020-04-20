@@ -16,6 +16,12 @@
     padding: 3px 25px;
     cursor:pointer;
 }
+
+.systems-title-tile:hover{
+    background: #46A3FF;
+    color: white;
+}
+
 .systems-picture{
     width: 100%;
 }
@@ -25,8 +31,8 @@
     text-align: right;
 }
 .systems-choose{
-    background: #46A3FF;
-    color: white;
+    /*background: #46A3FF;
+    color: white;*/
 }
 
 .systems-choose:hover{
@@ -43,8 +49,8 @@
 
 @keyframes choose-mouse-hover {
     0% {
-        /*background-color: rgba(0, 0, 0, 0);
-        width: 0;*/
+        background: #ffffff;
+        color: #000000;
     }
     100% {
         background: #46A3FF;
@@ -54,11 +60,11 @@
 
 @keyframes choose-mouse-leave {
     0% {
-        /*background: #46A3FF;
-        color: white;*/
+        background: #46A3FF;
+        color: white;
     }
     100% {
-        background-color: rgba(0, 0, 0, 0);
-        width: 0;
+        background: #ffffff;
+        color: #000000;
     }
 }
