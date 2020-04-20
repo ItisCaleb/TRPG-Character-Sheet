@@ -25,6 +25,40 @@
     text-align: right;
 }
 .systems-choose{
-    background: #46A3FF;
-    color: white;
+    /*background: #46A3FF;*/
+    /*color: white;*/
+}
+
+.systems-choose:hover{
+    animation-name: choose-mouse-hover;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+
+.systems-choose:not(:hover){
+    animation-name: choose-mouse-leave;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+}
+
+@keyframes choose-mouse-hover {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+        width: 0;
+    }
+    100% {
+        background: #46A3FF;
+        color: white;
+    }
+}
+
+@keyframes choose-mouse-leave {
+    0% {
+        background: #46A3FF;
+        color: white;
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+        width: 0;
+    }
 }
