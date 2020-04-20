@@ -120,7 +120,7 @@ nav > .submenu {
 .message-line {
     height: 5px;
     top: 1px;
-    background-color: rgb(39, 253, 255);
+    background-color: rgb(76, 175, 80);
     width: 100%;
     margin-bottom: 5%;
     animation-name: message-line-in;
@@ -159,11 +159,11 @@ nav > .submenu {
         width: 0;
     }
     100% {
-        background-color: rgb(39, 253, 255);
+        background-color: rgb(76, 175, 80);
         width: 100%;
     }
     100% {
-        background-color: rgb(39, 253, 255);
+        background-color: rgb(76, 175, 80);
         width: 100%;
     }
 }
