@@ -61,7 +61,7 @@ router.get('/adminpost', verify, function (req, res) {
     if (jwtDecode(req.cookies.auth_token).name === process.env.ADMIN) {
         res.render('admin');
     } else {
-        res.render('404');
+        res.status(400).render('404');
     }
 });
 
@@ -191,30 +191,34 @@ router.get('/charactersheet',verify,async function (req,res) {
             sheet.url.push(Sheet._id)
         });
     }
-    res.render('trpg_sheet',{
+    res.render('trpg_sheet ',{
         title:info.title[5],
         content:sheet.name,
         system:sheet.system,
         url:sheet.url
     });
 });
-
-router.get('/charactersheet/:id',verify,async function (req,res) {
+router.get('/charactersheet/create/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
 
     const sheetNumber = await User.findOne({_id: user._id});
-    if (req.params.id === 'create'){
-        if(sheetNumber.sheet_number < 20){
-            res.render('COC7th_create', {
-                title: '創建角色卡',
-                content: '創建你的角色卡',
-                player: user.name
-            });
-        }
-        if(sheetNumber.sheet_number >= 20){
-            res.redirect('/charactersheet').send('你的角色卡已經達到上限')
-        }
-    }else {
+        if (sheetNumber.sheet_number < 20) {
+            res.status(200);
+            if (req.params.id === 'COC7th') {
+                res.render('COC7th_create', {
+                    title: '創建角色卡',
+                    content: '創建你的角色卡',
+                    player: user.name
+                });
+            } else {
+                res.render('404');
+            }
+
+        } else res.status(400).send('你的角色卡已經達到上限');
+
+});
+
+router.get('/charactersheet/:id',verify,async function (req,res) {
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
             if (sheet.system==="COC7th"){
@@ -234,7 +238,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
         }catch (err) {
             res.status(404).render('404');
         }
-    }
+
 });
 
 

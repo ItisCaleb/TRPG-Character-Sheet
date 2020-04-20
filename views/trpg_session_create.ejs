@@ -8,7 +8,7 @@
     <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/public/js/button.js" charset="UTF-8"></script>
+    <script src="/public/js/main.js" charset="UTF-8"></script>
 
 </head>
 <body style="background-color:#E0E0E0">
@@ -23,7 +23,7 @@
         <button class="subbtn btn validation" id="login" >登入</button>
         <button class="subbtn btn validation" id="signup" >註冊</button>
     </div>
-    <div class="message" style="top: 24px;"></div>
+    <div class="alert-message" style="top: 24px;"></div>
 </nav>
 <div class="content" >
     <h1 class="title">創建團務</h1>
@@ -38,11 +38,11 @@
             <button class="check-btn" type="submit">創建</button>
         </form>
     </div>
-    <button class="btn session" onclick="redirect('/trpgsession')"style="float:right;margin-right: 100px">團務</button>
+    <button class="btn session" onclick="redirect('/trpgsession')" style="float:right;margin-right: 100px">團務</button>
 </div>
 
 <script>
-    $('.content').submit(function (e) {
+    $('.table').submit(function (e) {
         e.preventDefault();
 
         $.ajax({

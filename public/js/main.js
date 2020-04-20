@@ -81,16 +81,24 @@ function check() {
 }
 
 function message(data) {
-    $('.message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
+    $('.pop').hide()
+    $('.alert-message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="message-line"></div></div></div>');
     setTimeout(function () {
-        $('.message-div').remove();
+        $('.alert-message').find('.message-div').remove();
     }, 1500)
 }
 function get(URL) {
     $.ajax({
         url: URL,
         type: 'GET',
-        success: redirect(URL),
+        success:function(data){
+            if (data && data.status !==400){
+                redirect(URL);
+            }
+            if (data.status===400){
+                message(data.responseText);
+            }
+        },
         error: function (data) {
             message(data.responseText)
         },

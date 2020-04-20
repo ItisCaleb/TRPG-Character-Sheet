@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
+    <title>TRPG Character Sheet Maker</title>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/Sheet.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="../public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/public/js/main.js" charset="UTF-8"></script>
+    <script src="/public/js/sheet.js" charset="UTF-8"></script>
+
+</head>
+<body style="background-color:#E0E0E0">
+
+<nav>
+    <div class="topic">TRPG角卡創建</div>
+    <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
+    <li class="menu btn" onclick="get('/about')">關於</li>
+    <li class="menu btn logged_in" onclick="get('/trpgsession')"style="visibility: hidden">團務</li>
+    <li class="menu btn logged_in" onclick="get('/charactersheet')"style="visibility: hidden">角色卡管理</li>
+    <li class="menu btn adminpost" onclick="get('/adminpost')" style="visibility: hidden">管理員貼文</li>
+    <div class="submenu">
+        <button class="subbtn btn validation" id="login" >登入</button>
+        <button class="subbtn btn validation" id="signup" >註冊</button>
+    </div>
+    <div class="alert-message" style="top: 24px;"></div>
+    <div id="create-window" class="message pop" style="top: 24px;display: none">
+            <div class="message-div">
+                <div class="message-alert">選擇系統
+                    <div class="message-content" style="border:1px solid lightgray;display: table">
+                        <table id="systems" >
+                            <tr class="systems-title" >
+                                <td class="systems-title-tile systems-choose" id="choose-coc7th">COC7th</td>
+                            </tr>
+                            <tr class="systems-title" >
+                                <td class="systems-title-tile " id="choose-dnd5e">DND5e</td>
+                            </tr>
+                        </table>
+                        <div style="display: inline-block;text-align: center;padding: 4px">
+                            <div class="systems-info systems-coc7th" id="info-coc7th" >
+                                <img class="systems-picture" src="/public/source/call-of-cthulhu-logo-black.jpg" alt="">
+                                <div style="font-size: 14px">使用克蘇魯的召喚7版的系統<br>創建屬於你的調查員</div>
+                            </div>
+                            <div class="systems-info systems-dnd5e" id="info-dnd5e" style="display: none" >
+                                <img class="systems-picture" src="/public/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
+                                <div style="font-size: 14px">使用龍與地下城5版的系統<br>創建屬於你的冒險者</div>
+                            </div>
+                            <button id="create-button" class="btn session">選擇</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</nav>
+<div class="content">
+    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
+    <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+    </div>
+    <div style="text-align: center">
+        <% if (content[0] =='你還沒創建角卡' ) { %>
+            <div><%=content[0]%></div>
+        <% }else{ %>
+        <% for(var i=0;i<content.length;i++) { %>
+            <div style="display: inline"><%= content[i] %> -----系統:<%=system[i] %></div>
+            <button class="btn session" onclick="redirect('/charactersheet/<%= url[i] %>')">檢閱</button><br>
+        <% } %>
+        <%}%>
+        <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
+    </div>
+</div>
+
+<div class="new_pusher"></div>
+<div class="footer">
+    Copyright © 2020 ItisCaleb & Kulimi. All rights reserved.
+</div>
+</body>
+</html>

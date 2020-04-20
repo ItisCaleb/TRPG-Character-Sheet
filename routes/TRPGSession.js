@@ -10,7 +10,6 @@ const {sessionValidation} = require("../public/js/validation");
 router.post('/TRPGCreateSession',verify, async function (req,res) {
 
 
-
     //check if the format is correct
     const {error}= sessionValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);

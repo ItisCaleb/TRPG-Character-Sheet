@@ -1,0 +1,30 @@
+#systems{
+    vertical-align: top;
+    width:30%;
+    display: table-cell;
+    border-right:1px solid lightgray;
+    border-collapse: collapse;
+}
+.systems-title{
+    text-align: center;
+    font-size: 23px;
+    padding:0;
+    margin: 0;
+    border-bottom: 1px solid lightgray;
+}
+.systems-title-tile{
+    padding: 3px 25px;
+    cursor:pointer;
+}
+.systems-picture{
+    width: 100%;
+}
+#systems-info{
+    height: 80%;
+    width: 70%;
+    text-align: right;
+}
+.systems-choose{
+    background: #46A3FF;
+    color: white;
+}
