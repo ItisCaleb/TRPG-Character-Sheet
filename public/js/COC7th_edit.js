@@ -33,20 +33,28 @@ $(document).ready(function () {
                 delete skill[name];
         });
     });
-    setInterval(function () {
-        var sheet = $('#myform').serializeArray();
+    $('input').change(function () {
+        $('#save-icon').show();
+        $('#success-icon').hide();
+        setTimeout(function () {
+            var sheet = $('#myform').serializeArray();
 
-        sheet.push({name:'skill',value:skill});
-        sheet.push({name:'stat',value:stat});
-        $.ajax({
-            url:'../api/sheet/COC7th/edit/'+ id,
-            type: 'POST',
-            contentType: 'application/json; charset=UTF-8',
-            data:JSON.stringify(sheet) ,
-            dataType:'json'
-        },10000);
+            sheet.push({name:'skill',value:skill});
+            sheet.push({name:'stat',value:stat});
+            $.ajax({
+                url:'../api/sheet/COC7th/edit/'+ id,
+                type: 'POST',
+                contentType: 'application/json; charset=UTF-8',
+                data:JSON.stringify(sheet) ,
+                dataType:'json',
+                success:function () {
+                    $('#save-icon').hide();
+                    $('#success-icon').show();
+                }
+            });
+        },3000)
 
-    },10000)
+    })
 
     $('#delete-check').click(function () {
         $('#delete-window').css('display','block');

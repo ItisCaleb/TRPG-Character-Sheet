@@ -6,6 +6,15 @@
     border-right:1px solid lightgray;
     border-collapse: collapse;
 }
+.green-dot {
+    height: 7px;
+    width: 7px;
+    background-color: rgb(76, 175, 80);
+    border-radius: 50%;
+    margin-right:5px ;
+    vertical-align: middle;
+    display: inline-block;
+}
 .systems-title{
     text-align: center;
     font-size: 23px;
@@ -14,7 +23,7 @@
     border-bottom: 1px solid lightgray;
 }
 .systems-title-tile{
-    padding: 3px 25px;
+    padding: 3px;
     cursor:pointer;
 }
 

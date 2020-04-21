@@ -53,6 +53,14 @@
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <div id="url" style="display: none"><%=id%></div>
     <div>
+        <div id="save-icon" style="display: none">
+            儲存中
+            <div id="loader"></div>
+        </div>
+        <div id="success-icon" style="display: none">
+            儲存成功
+            <img class="correct-image" src="/public/source/iconfinder_Tick_Mark_Dark_1398912.png">
+        </div>
         <button id="delete-check">delete</button>
 
         <form id="myform" method="post" action="../api/sheet/COC7th">

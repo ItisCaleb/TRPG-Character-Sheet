@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="UTF-8">
+    <title>TRPG Character Sheet Maker</title>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
+    <script src="/public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <script src="/public/js/main.js" charset="UTF-8"></script>
+
+</head>
+<body>
+
+<nav>
+    <div class="topic">TRPG角卡創建</div>
+    <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
+    <li class="menu btn" onclick="get('/about')">關於</li>
+    <li class="menu btn logged_in" onclick="get('/trpgsession')"style="visibility: hidden">團務</li>
+    <li class="menu btn logged_in" onclick="get('/charactersheet')"style="visibility: hidden">角色卡管理</li>
+    <li class="menu btn adminpost" onclick="get('/adminpost')" style="visibility: hidden">管理員貼文</li>
+    <div class="submenu">
+        <button class="subbtn btn validation" id="login">登入</button>
+        <button class="subbtn btn validation" id="signup">註冊</button>
+    </div>
+    <div class="alert-message" style="top: 24px;"></div>
+</nav>
+<div class="content">
+    <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
+    <p class="content-decribe" style="text-align: center;line-height:30px ;">
+        框內文字為範例角色卡 系統:DND5e
+    </p>
+    <section style="margin: 50px">
+        <div class="sheet_creat_div">
+            <div>
+                <button id="test" type="submit">test</button>
+                <p>冒險者資料：</p>
+                <section>
+                    <div class="sheet_input_div">
+                        <label>角色名稱：<input name="name" placeholder="克爾德"></label><br>
+                        <label>職業：<input name="class" placeholder="牧師" size="5"></label><br>
+                        <label>等級：<input name="level" type="number" step="1" min="0" max="30" placeholder="3" ></label>
+                        <label>背景：<input name="background"  placeholder="公會商人"></label><br>
+                        <label>玩家暱稱：<input name="player" value="<%= player %>" placeholder="ItisCaleb"></label><br>
+                        <label>種族：<input name="race" placeholder="人類"></label><br>
+                        <label>陣營：<input name="alignment" placeholder="絕對中立"></label><br>
+                        <label>經驗值：<input name="exp" placeholder="經驗值"></label><br>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <div class="sheet_creat_div" >
+            <div>
+                <label>角色形容：
+                    <textarea style="height: 200px;width: 100%;resize: none" name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea></label>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<div class="new_pusher"></div>
+
+<div class="footer">
+    Copyright © 2020 ItisCaleb & Kulimi. All rights reserved.
+</div>
+</body>
+</html>

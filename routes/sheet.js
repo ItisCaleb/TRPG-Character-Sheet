@@ -164,6 +164,8 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
             insane_status:csheet[13].value,
             characteristic:csheet[30].value
         }});
+        res.write(JSON.stringify({ status: "OK" }));
+        res.end();
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet');
