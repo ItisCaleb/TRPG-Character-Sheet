@@ -1,6 +1,7 @@
 #systems{
     vertical-align: top;
     width:30%;
+    text-align: center;
     display: table-cell;
     border-right:1px solid lightgray;
     border-collapse: collapse;
