@@ -207,9 +207,14 @@ router.get('/charactersheet/create/:id',verify,async function (req,res) {
             if (req.params.id === 'COC7th') {
                 res.render('COC7th_create', {
                     title: '創建角色卡',
-                    content: '創建你的角色卡',
                     player: user.name
                 });
+            }
+            if (req.params.id === 'DND5e') {
+                res.render('DND5e_create', {
+                    title: '創建角色卡',
+                    player: user.name
+            });
             } else {
                 res.render('404');
             }

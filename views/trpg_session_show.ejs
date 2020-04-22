@@ -38,15 +38,16 @@
                         <% } %>
                         <% if (user_status == '你擁有的角卡都已上傳' || user_status == '你還未擁有任何角色卡') {%>
                 <p style="display: inline" ><%=user_status %></p>
-                <% } %>
+                <% } %><span style="width: 100%;display: inline">
+                                <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
+                                    <button  type="submit" id="upload-check">上傳</button>
+                                <% } %>
+
+                    </span>
                 </form>
-                </div>
-                <span style="width: 100%;display: inline">
-                    <% if (user_status !== '你擁有的角卡都已上傳' && user_status !== '你還未擁有任何角色卡') { %>
-                       <button  type="submit" id="upload-check">上傳</button>
-                    <% } %>
                     <button id="upload-disable">取消</button>
-                </span>
+                </div>
+
             </div>
         </div>
     </div>

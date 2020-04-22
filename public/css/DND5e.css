@@ -4,21 +4,8 @@
 // border: 2px solid black;
     padding: 20px;
 }
-
-.sheet_input_div {
-    margin-right:60px;
-}
-
-.sheet_input_div2 {
-    margin-right:120px;
-    width: 50%;
-}
-
-.sheet_input_div3 {
-    margin-right:20px;
-}
-.chara{
-    display: inline;
+.sheet_input_div >label> input{
+    width: 30%;
 }
 #loader {
     display: inline-block;
