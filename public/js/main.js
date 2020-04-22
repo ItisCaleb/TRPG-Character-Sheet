@@ -116,11 +116,17 @@ $(document).mouseup(function (e)
 {
 
     var container = $(".pop");
+    var side_container = $(".side-pop");
 
     if (!container.is(e.target) // if the target of the click isn't the container...
         && container.has(e.target).length === 0) // ... nor a descendant of the container
     {
         container.hide();
+    }
+    if (!side_container.is(e.target) // if the target of the click isn't the container...
+        && side_container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+        side_container.hide();
     }
 });
 

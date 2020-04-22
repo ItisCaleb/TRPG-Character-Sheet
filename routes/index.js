@@ -191,7 +191,7 @@ router.get('/charactersheet',verify,async function (req,res) {
             sheet.url.push(Sheet._id)
         });
     }
-    res.render('trpg_sheet',{
+    res.render('trpg_sheet ',{
         title:info.title[5],
         content:sheet.name,
         system:sheet.system,

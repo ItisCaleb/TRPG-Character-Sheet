@@ -25,6 +25,7 @@
 .systems-title-tile{
     padding: 3px;
     cursor:pointer;
+
 }
 
 .systems-title-tile:hover{
@@ -41,8 +42,7 @@
     text-align: right;
 }
 .systems-choose{
-    /*background: #46A3FF;
-    color: white;*/
+    border-left:3px solid  #4CAF50;
 }
 
 .systems-title-tile:hover{

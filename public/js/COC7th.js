@@ -171,6 +171,16 @@ $(document).ready(function () {
     function getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;
     }
+    $('.list-button').click(function () {
+        $('.left-list-menu').show();
+    })
+    $('#permission').click(function () {
+        $('.right-list-menu').show();
+    })
+    $('.permissions').click(function () {
+        $('.permissions').removeClass('permissions-choose');
+        $(this).addClass('permissions-choose');
+    })
 
     //add stat's and skill's value to the form
     $('#myform').submit(function (e) {
