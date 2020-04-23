@@ -9,7 +9,6 @@ const {registerValidation, loginValidation, passwordValidation} = require("../pu
 //send register information to db
 router.post("/register", async (req, res) => {
 
-
     //validate register infomation
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -33,6 +32,9 @@ router.post("/register", async (req, res) => {
     });
     try {
         await user.save();
+        const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
+        const day =8640000;
+        res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'});
         res.send('註冊成功');
     } catch (err) {
         res.status(400).send(err).redirect('/register');

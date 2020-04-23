@@ -14,6 +14,10 @@ const registerValidation = data => {
         password: Joi.string()
             .min(6)
             .max(15)
+            .required(),
+        repassword:Joi.string()
+            .min(6)
+            .max(15)
             .required()
     };
     return Joi.validate(data, schema);

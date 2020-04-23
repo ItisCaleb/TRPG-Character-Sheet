@@ -236,19 +236,25 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                 if(sheet.author!==user._id){
                     if(sheet.permission==='限團務GM' && sheet.session.length !==0){
                         for (const session of sheet.session){
-                            console.log(session);
-                            var gm = await Session.findOne({_id:session}).gm
-                            if (user.name===gm) {
-                                res.render(
+                            var gm = await Session.findOne({_id:session})
+                            console.log(gm.gm)
+                            if (user.name===gm.gm) return res.render(
                                     res.render('COC7th_show', {
                                         title: '檢視角色卡',
                                         id: req.params.id
                                     }))
-                            }else return res.redirect('/charactersheet')
                         }
+                        res.redirect('/charactersheet');
                     }
                     if(sheet.permission==='團務所有玩家' && sheet.session.length !==0){
-
+                        for (const session of sheet.session){
+                            var player = await Session.findOne({_id:session})
+                            if (user.name===gm.gm) return res.render(
+                                res.render('COC7th_show', {
+                                    title: '檢視角色卡',
+                                    id: req.params.id
+                                }))
+                        }
                     }
                     if(sheet.permission==='所有人'){
                         res.render('COC7th_show',{
@@ -256,6 +262,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             id:req.params.id
                         })
                     }
+                    if (sheet.session.length === 0) return res.redirect('/charactersheet');
                 }
             }
         }catch (err) {
