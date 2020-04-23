@@ -5,7 +5,7 @@ const fs = require('fs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-
+const http =require('http')
 const https = require('https');
 
 
@@ -44,14 +44,6 @@ const certificate = fs.readFileSync(__dirname+'/public/ssl/certificate.crt');
 
 const credentials ={key:privateKey, cert:certificate};
 
-app.use(function (req,res,next) {
-    if(req.secure){
-        next()
-    }else {
-        res.redirect('https://' + req.headers.host + req.url);
-    }
-})
-
 app.use(function (req, res, next) {
     next(createError(404));
 });
@@ -67,12 +59,24 @@ app.use(function (err, req, res, next) {
 });
 
 
-
 // start server
 const port = process.env.PORT || 3000;
-const httpsServer = https.createServer(credentials,app)
+const server = https.createServer(credentials,app)
 
+server.listen(port,() => console.log('Server start on port:' + port));
 
+// Secondary http app
+const httpApp = express();
+const httpRouter = express.Router();
+httpApp.use('/', httpRouter);
+httpRouter.get('/', function(req, res){
+    var host = req.get('Host');
+    // replace the port in the host
+    host = host.replace(/:\d+$/, ":"+port);
 
-httpsServer.listen(port,() => console.log('Server start on port:' + port));
-
+    // determine the redirect destination
+    var destination = ['https://', host, req.url].join('');
+    return res.redirect(destination);
+});
+const httpServer = http.createServer(httpApp);
+httpServer.listen(8080,() => console.log('Server start on port:' + 8080));
