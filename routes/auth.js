@@ -55,7 +55,7 @@ router.post('/userlogin', async (req, res) => {
     })
 
     const mail={
-        from: 'verifybot@trpgtoaster.com',
+        from: 'TRPG Toaster <verifybot@trpgtoaster.com>',
         to:'happycaleb1212@gmail.com',
         subject:'test',
         text:'test success'
