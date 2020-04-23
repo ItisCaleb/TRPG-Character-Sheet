@@ -49,13 +49,13 @@ router.post('/userlogin', async (req, res) => {
         host:'smtp.zoho.com',
         port:465,
         auth:{
-            user:'admin@trpgtoaster.com',
+            user:'verifybot@trpgtoaster.com',
             pass:'GGcatisnumber1',
         }
     })
 
     const mail={
-        from: 'admin@trpgtoaster.com',
+        from: 'verifybot@trpgtoaster.com',
         to:'happycaleb1212@gmail.com',
         subject:'test',
         text:'test success'
@@ -74,11 +74,11 @@ router.post('/userlogin', async (req, res) => {
     //create jwt login token
     const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
     if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
-    /*mailTransport.sendMail(mail,function (err,info) {
-        if(err){
+    /*await mailTransport.sendMail(mail, function (err, info) {
+        if (err) {
             console.log(err);
-        }else {
-            console.log('訊息發送:'+info.response);
+        } else {
+            console.log('訊息發送:' + info.response);
         }
     })*/
     const day =8640000;
