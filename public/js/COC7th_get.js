@@ -39,6 +39,12 @@ $(document).ready(function () {
                     $('.story').each(function (index) {
                         $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
                     });
+                    $('.permissions').each(function () {
+                        $(this).removeClass('permissions-choose');
+                        if ($(this).text()===$('.permission-status').val()){
+                            $(this).addClass('permissions-choose');
+                        }
+                    })
                     $('.class-feature').val(sheet.skill.class_feature);
                     for (let i=0;i<Object.keys(sheet.skill.skill).length;i++){
                         $('.name').each(function () {

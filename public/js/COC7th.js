@@ -180,6 +180,7 @@ $(document).ready(function () {
     $('.permissions').click(function () {
         $('.permissions').removeClass('permissions-choose');
         $(this).addClass('permissions-choose');
+        $('.permission-status').val($(this).text()).trigger('change')
     })
 
     //add stat's and skill's value to the form
@@ -188,9 +189,9 @@ $(document).ready(function () {
 
         var sheet = $(this).serializeArray();
 
-
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
+        console.log(sheet);
         $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
@@ -201,8 +202,7 @@ $(document).ready(function () {
                 setTimeout(function(){
                     redirect('/charactersheet')
                 },1000)
-            },
-
+            }
         });
     })
 });

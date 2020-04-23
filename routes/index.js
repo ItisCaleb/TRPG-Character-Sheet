@@ -118,8 +118,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
 
                 //check if the sheets are already upload to the session
                 for (const info of sheets) {
-                    var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}}});
-
+                    var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}},_id:url});
                     //if not, show those sheet that doesn't upload to the session
                     if (!sheetExist) {
                         UserSheet.name.push(info.name);
@@ -200,26 +199,25 @@ router.get('/charactersheet',verify,async function (req,res) {
 });
 router.get('/charactersheet/create/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
-
+    const system=req.params.id;
     const sheetNumber = await User.findOne({_id: user._id});
         if (sheetNumber.sheet_number < 20) {
-            res.status(200);
-            if (req.params.id === 'COC7th') {
+            if (system === 'COC7th') {
                 res.render('COC7th_create', {
                     title: '創建角色卡',
                     player: user.name
                 });
-            }
-            if (req.params.id === 'DND5e') {
+            }else if (system === 'DND5e') {
                 res.render('DND5e_create', {
                     title: '創建角色卡',
                     player: user.name
-            });
-            } else {
-                res.render('404');
+                });
+            }else {
+                res.status(404).render('404');
             }
 
-        } else res.status(400).send('你的角色卡已經達到上限');
+        }
+        if (sheetNumber.sheet_number >= 20) return  res.status(400).send('你的角色卡已經達到上限');
 
 });
 
@@ -228,6 +226,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
             if (sheet.system==="COC7th"){
+
                 if(sheet.author===user._id) {
                     res.render('COC7th_edit', {
                         title: '編輯角色卡',
@@ -235,10 +234,28 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                     });
                 }
                 if(sheet.author!==user._id){
-                    res.render('COC7th_show',{
-                        title:'檢視角色卡',
-                        id:req.params.id
-                    })
+                    if(sheet.permission==='限團務GM' && sheet.session.length !==0){
+                        for (const session of sheet.session){
+                            console.log(session);
+                            var gm = await Session.findOne({_id:session}).gm
+                            if (user.name===gm) {
+                                res.render(
+                                    res.render('COC7th_show', {
+                                        title: '檢視角色卡',
+                                        id: req.params.id
+                                    }))
+                            }else return res.redirect('/charactersheet')
+                        }
+                    }
+                    if(sheet.permission==='團務所有玩家' && sheet.session.length !==0){
+
+                    }
+                    if(sheet.permission==='所有人'){
+                        res.render('COC7th_show',{
+                            title:'檢視角色卡',
+                            id:req.params.id
+                        })
+                    }
                 }
             }
         }catch (err) {

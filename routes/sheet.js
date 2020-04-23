@@ -20,6 +20,7 @@ router.post('/COC7th', verify, async (req, res) => {
         name:Csheet[0].value,
         player_name: Csheet[4].value,
         system:"COC7th",
+        permission:Csheet[28].value,
         author:id
     });
     try{
@@ -38,7 +39,7 @@ router.post('/COC7th', verify, async (req, res) => {
     //save skill
     const skill = new COC7thSkill({
         _id:sheet._id,
-        class_feature:Csheet[28].value,
+        class_feature:Csheet[29].value,
         skill:cskill
     });
     const stat = new COC7thStat({
@@ -114,7 +115,8 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     try{
         await Info.updateOne({_id:req.params.id},{
             name:csheet[0].value,
-            player_name: csheet[4].value
+            player_name: csheet[4].value,
+            permission:csheet[28].value
         });
     }catch (err) {
         res.status(400).send(err);

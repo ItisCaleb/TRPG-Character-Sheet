@@ -9,6 +9,7 @@ const InfoSchema = new mongoose.Schema({
     player_name:String,
     author:String,
     system:String,
+    permission:String,
     session:Array
 });
 
