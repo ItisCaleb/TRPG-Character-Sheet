@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+const fs = require('fs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const http = require('http').createServer(app);
+const https = require('https');
 
 
 //import routes
@@ -12,8 +13,6 @@ const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
 const sheetRoute = require('./routes/sheet');
-
-const vhost = require('./node_modules/vhost');
 
 
 //set view engine
@@ -39,6 +38,11 @@ app.use('/api/session', TRPGSessionRoute);
 app.use('/', indexRoute);
 app.use('/api/sheet',sheetRoute);
 
+const privateKey = fs.readFileSync(__dirname+'/public/ssl/private.key');
+const certificate = fs.readFileSync(__dirname+'/public/ssl/certificate.crt');
+
+const credentials ={key:privateKey, cert:certificate};
+
 app.use(function (req, res, next) {
     next(createError(404));
 });
@@ -54,7 +58,10 @@ app.use(function (err, req, res, next) {
 });
 
 
+
 // start server
 const port = process.env.PORT || 3000;
-http.listen(port, () => console.log("Server Start on port:" + port));
+const httpsServer = https.createServer(credentials,app)
+
+httpsServer.listen(port,() => console.log('Server start on port:' + port));
 

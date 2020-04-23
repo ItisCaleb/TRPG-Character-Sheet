@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../model/User");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodeMailer = require('nodemailer');
 const jwtDecode = require('jwt-decode');
 const {registerValidation, loginValidation, passwordValidation} = require("../public/js/validation");
 
@@ -44,6 +45,21 @@ router.post("/register", async (req, res) => {
 //Login
 router.post('/userlogin', async (req, res) => {
 
+    const mailTransport = nodeMailer.createTransport({
+        host:'smtp.zoho.com',
+        port:465,
+        auth:{
+            user:'admin@trpgtoaster.com',
+            pass:'GGcatisnumber1',
+        }
+    })
+
+    const mail={
+        from: 'admin@trpgtoaster.com',
+        to:'happycaleb1212@gmail.com',
+        subject:'test',
+        text:'test success'
+    }
 
 
     //validate login infomation
@@ -58,6 +74,13 @@ router.post('/userlogin', async (req, res) => {
     //create jwt login token
     const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
     if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
+    mailTransport.sendMail(mail,function (err,info) {
+        if(err){
+            console.log(err);
+        }else {
+            console.log('訊息發送:'+info.response);
+        }
+    })
     const day =8640000;
     res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功');
 
