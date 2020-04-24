@@ -71,6 +71,7 @@ const httpRouter = express.Router();
 httpApp.use('/', httpRouter);
 httpRouter.get('/', function(req, res){
     var host = req.get('Host');
+    console.log(host);
     // replace the port in the host
     host = host.replace(/:\d+$/, ":"+port);
 
