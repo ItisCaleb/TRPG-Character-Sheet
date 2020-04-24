@@ -47,7 +47,11 @@ router.get("/login", function (req, res) {
     res.render('login');
 });
 router.get('/authed/:id',function (req,res) {
-    res.render('index', {
+    if (req.params.id==='error') return res.render('index', {
+        title: '你的驗證已經逾時或是失效!',
+        content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次'
+    });
+    else return res.render('index', {
         title: '你已經驗證成功!',
         content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能'
     });

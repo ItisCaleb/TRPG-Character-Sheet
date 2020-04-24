@@ -9,14 +9,12 @@ const jwtDecode = require('jwt-decode');
 const {registerValidation, loginValidation, passwordValidation} = require("../public/js/validation");
 
 
-
-
 //send register information to db
 router.get("/register/:email", async (req, res) => {
     //create new user
     const email = req.params.email;
     const user = await tempUser.findOne({email:email});
-    if(!user) return res.send('你的驗證已經過期');
+    if(!user) return res.redirect('/authed/error');
     const newUser = new User({
         name: user.name,
         email: user.email,
@@ -88,7 +86,6 @@ router.post('/authed', async (req,res)=>{
 //Login
 router.post('/userlogin', async (req, res) => {
 
-
     //validate login infomation
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -109,7 +106,6 @@ router.post('/userlogin', async (req, res) => {
 
 //change password
 router.post('/password', async (req,res)=>{
-
 
     const {error} = passwordValidation(req.body);
     const username=jwtDecode(req.cookies.auth_token).name;
