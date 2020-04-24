@@ -70,11 +70,9 @@ const httpApp = express();
 const httpRouter = express.Router();
 httpApp.use('/', httpRouter);
 httpRouter.get('/', function(req, res){
-    var host = req.headers.host
-
-    host = host.replace(/:\d+$/, ":"+port);
     // determine the redirect destination
-    var destination = ['https://'+ host + req.url];
+    var destination = ['https://'+ 'trpgtoaster.com' + req.url];
+    console.log(destination)
     return res.redirect(destination);
 });
 const httpServer = http.createServer(httpApp);
