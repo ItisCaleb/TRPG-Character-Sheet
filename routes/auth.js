@@ -43,8 +43,8 @@ router.post('/authed', async (req,res)=>{
         host:'smtp.zoho.com',
         port:465,
         auth:{
-            user:'verifybot@trpgtoaster.com',
-            pass:'GGcatisnumber1',
+            user:process.env.VBOT,
+            pass:process.env.VPASS,
         }
     })
     //validate register infomation
