@@ -79,4 +79,4 @@ httpRouter.get('/', function(req, res){
     return res.redirect(destination);
 });
 const httpServer = http.createServer(httpApp);
-httpServer.listen(8080,() => console.log('Server start on port:' + 8080));
+httpServer.listen(3001,() => console.log('Server start on port:' + 3001));
