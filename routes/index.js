@@ -46,6 +46,12 @@ router.get("/login", function (req, res) {
     if (token) return res.redirect('/');
     res.render('login');
 });
+router.get('/authed/:id',function (req,res) {
+    res.render('index', {
+        title: '你已經驗證成功!',
+        content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能'
+    });
+})
 
 //render user page and check if the user is already login
 router.get("/user", verify, function (req, res) {
@@ -268,7 +274,6 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
         }catch (err) {
             res.status(404).render('404');
         }
-
 });
 
 

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>電子郵件驗證</title>
+    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/public/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="/public/js/main.js" charset="UTF-8"></script>
+
+
+</head>
+<body>
+
+<div class="content" style="text-align: center">
+    你收到來自TRPG Toaster網站的電子郵件驗證!<br>
+    驗證將在十分鐘之內失效<br>
+    如果不是你，請勿點開這封信的任何連結<br>
+    祝你TRPG玩得愉快!<br>
+    <a href="https://trpgtoaster.com/api/user/register/<%=email%>">點擊這邊驗證</a>
+</div>
+
+<div class="new_pusher"></div>
+
+<div class="footer" style="display: ">
+    Copyright © 2020 trpgtoaster.com. All rights reserved.
+</div>
+</body>
+</html>
+<!-- IE needs 512+ bytes: https://blogs.msdn.microsoft.com/ieinternals/2010/08/18/friendly-http-error-pages/ -->

@@ -23,7 +23,7 @@ dotenv.config();
 
 // connect Database
 mongoose.connect(process.env.DB_CONNECT,
-    {useNewUrlParser: true, useUnifiedTopology: true}, () => console.log("DB Started"));
+    {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true}, () => console.log("DB Started"));
 
 
 // middleware
@@ -63,7 +63,7 @@ app.use(function (err, req, res, next) {
 const port = process.env.PORT || 3000;
 const server = https.createServer(credentials,app)
 
-server.listen(port,() => console.log('Server start on port:' + port));
+server.listen(port,() => console.log('HTTPS start on port:' + port));
 
 // Secondary http app
 const httpApp = express();
@@ -73,8 +73,7 @@ const host = process.env.HOST || 'localhost:3000'
 httpRouter.get('/', function(req, res){
     // determine the redirect destination
     var destination = ['https://'+ host + req.url];
-    console.log(destination)
     return res.redirect(destination);
 });
 const httpServer = http.createServer(httpApp);
-httpServer.listen(3001,() => console.log('Server start on port:' + 3001));
+httpServer.listen(3001,() => console.log('HTTP start on port:' + 3001));
