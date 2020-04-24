@@ -6,7 +6,7 @@ form{
 // margin: 50px;
     width: 100%;
 // border: 2px solid black;
-    padding: 20px;
+    padding: 2%;
 }
 .left-side{
     height: 100%;
@@ -59,7 +59,7 @@ form{
 }
 .list-button{
     border-radius: 50%;
-    width: 30px;
+    width: 3%;
     cursor: pointer;
 }
 .list-menu{
