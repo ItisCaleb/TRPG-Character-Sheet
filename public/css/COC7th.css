@@ -17,7 +17,7 @@ form{
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 10%;
+    margin-top: 10%;
     text-align: center;
 }
 .right-side{
@@ -28,7 +28,7 @@ form{
     top: 0;
     right: 0;
     overflow-x: hidden;
-    padding-top: 10%;
+    margin-top: 10%;
     text-align: center;
 }
 .list{
@@ -54,6 +54,7 @@ form{
     vertical-align: center;
     background: white;
     border:1px solid lightgray;
+    margin-top: 5%;
     width: 80%;
     border-radius: 15%;
 }
@@ -82,11 +83,7 @@ form{
     background: #46A3FF;
     color: white;
 }
-.right-list-menu{
-    width: 80%;
-    font-size: 14px;
-    display: inline-block;
-}
+
 .permissions-choose{
     border-left:3px solid #4CAF50 ;
 }

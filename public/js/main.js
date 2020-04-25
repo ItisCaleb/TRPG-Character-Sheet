@@ -13,9 +13,7 @@ $(document).ready(function () {
     $('#menu').click(function () {
         $('.right-menu').show()
     });
-    if($('.right-menu').is(':visible')){
 
-    }
     //if user is already logged in, switch login and sign in button to user page and log out button
     if (document.cookie.indexOf("auth_token") >= 0) {
         $('.login').addClass('user').text('個人主頁');
