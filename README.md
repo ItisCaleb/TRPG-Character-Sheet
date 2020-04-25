@@ -41,7 +41,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 使用手冊
 * 暗色介面
 * 行動裝置排版
-
+* 將首頁完善(加入操作說明)
 
 
 
