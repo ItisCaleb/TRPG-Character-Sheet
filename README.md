@@ -48,6 +48,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * ~~團務系統優化 (可進行管理操作)(等待角卡創建頁面及管理頁面完工)~~(已完工，等待介面優化)
 * 角色卡創建系統(COC7th完成)
 * 資料庫轉移(可選)
+* 模板拉ㄐㄐ
 
 ## Web Design
 * 網頁Icon
