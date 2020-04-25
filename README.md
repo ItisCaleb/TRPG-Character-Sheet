@@ -51,7 +51,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 角色卡創建系統(COC7th完成)
 * 資料庫轉移(可選)
 
-##Web Design
+## Web Design
 * 網頁Icon
 * 主要風格
 * 角色卡創建頁面重新排版
