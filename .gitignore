@@ -6,3 +6,4 @@
 .env
 node_modules
 views/index.html
+python/test.py
