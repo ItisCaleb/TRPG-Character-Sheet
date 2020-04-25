@@ -25,8 +25,15 @@ router.get("/register/:email", async (req, res) => {
         //await user.save();
         await tempUser.deleteOne({email:email});
         await newUser.save();
-        const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
         const day =8640000;
+        const token = jwt.sign(
+            {
+                iss: 'trpgtoaster.com',
+                expiresIn:'7d',
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            }, process.env.JWT_SECRET);
         res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'});
         res.redirect('/authed/'+email);
     } catch (err) {
@@ -96,10 +103,16 @@ router.post('/userlogin', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).send('密碼錯誤');
     //create jwt login token
-    const token = jwt.sign({_id: user._id, name: user.name, email: user.email}, process.env.JWT_SECRET);
-    if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
-
     const day =8640000;
+    const token = jwt.sign(
+        {
+            iss: 'trpgtoaster.com',
+            expiresIn: '7d',
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+        }, process.env.JWT_SECRET);
+    if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
     res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功');
 
 });

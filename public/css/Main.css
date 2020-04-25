@@ -41,21 +41,26 @@
         display: none;
     }
     nav > .topic {
+        align-items: center;
         flex: none;
+        width: 20%;
+        max-width:40%;
         font-size: 35px;
+        margin-left:-2% ;
         font-weight: bold;
         line-height: 45px;
         text-indent: 35px;
+        text-align: left;
         float: left;
     }
     nav >ul{
-        margin: 0;
+        margin:0 0;
     }
     nav > ul> .menu {
         font-size: 20px;
         line-height: 40px;
         text-align: left;
-        margin-left: 30px;
+        margin-left: 2%;
         cursor: pointer;
         float: left;
         border-bottom-style: solid;
@@ -102,10 +107,8 @@
 
         flex-direction: column;
         justify-content: center;
-
         text-align: center;
         position: fixed;
-
         background-color: #ffffff;
         padding: 20px;
         top: 60px;
@@ -507,6 +510,10 @@
     }
 
 }
+.topic-img{
+    max-width: 10%;
+}
+
 .session {
     font-size: 15px;
     line-height: 1.5;
