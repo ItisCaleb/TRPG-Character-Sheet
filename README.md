@@ -25,10 +25,10 @@ A project for the TRPG player and GM who suffering from managing character sheet
         - ......
 ## Using
 
-- Docker
 - Nodejs
 - MongoDB
 - MacOS
+- Nginx
 
 
 # Todo List
@@ -42,8 +42,6 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 暗色介面
 * 行動裝置排版
 * 將首頁完善(加入操作說明)
-
-
 
 ## BackEnd
 * 角色卡MongoDB schema
