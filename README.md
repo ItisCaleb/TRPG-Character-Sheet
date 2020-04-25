@@ -40,8 +40,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 ~~* bgm(background music)~~
 * 使用手冊
 * 暗色介面
-
-
+* 將首頁完善(加入操作說明)
 
 
 ## 後端
