@@ -9,7 +9,7 @@ $(document).ready(function () {
             }
             if($('#email').val().length>=1 && !($('#email').val().match(new RegExp('[@]')))){
                 $('#email').parent('.input') .css("borderBottomColor", "#ee6723");
-                $('#email').siblings('.check').text('電子郵件錯誤');
+                $('#email').siblings('.check').text('無效電子郵件');
                 $('#email').siblings('.check').css('color','#ee6723')
             }
             if(input.val().length >=1){
@@ -22,7 +22,7 @@ $(document).ready(function () {
                 }
                 if (!result) {
                     $(this).css("borderBottomColor", "#46A3FF");
-                    check.text('輸入正確');
+                    check.text('有效');
                     check.css('color',"#46A3FF")
                 }
             }

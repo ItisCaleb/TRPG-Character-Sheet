@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="view" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta charset="UTF-8">
     <title>TRPG Character Sheet Maker</title>
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
@@ -16,14 +16,19 @@
 
 <nav>
     <div class="topic">TRPG角卡創建</div>
-    <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-    <li class="menu btn" onclick="get('/about')">關於</li>
-    <li class="menu btn logged_in" onclick="get('/trpgsession')"style="visibility: hidden">團務</li>
-    <li class="menu btn logged_in" onclick="get('/charactersheet')"style="visibility: hidden">角色卡管理</li>
-    <li class="menu btn adminpost" onclick="get('/adminpost')" style="visibility: hidden">管理員貼文</li>
+    <div id="menu" class="menu" >
+        <img src="/public/source/icons8-menu.svg" alt="">
+    </div>
+    <ul>
+        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
+        <li class="menu btn" onclick="get('/about')">關於</li>
+        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
+        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
+        <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
+    </ul>
     <div class="submenu">
-        <button class="subbtn btn validation" id="login" >登入</button>
-        <button class="subbtn btn validation" id="signup" >註冊</button>
+        <button class="subbtn btn validation login">登入</button>
+        <button class="subbtn btn validation signup">註冊</button>
     </div>
     <div class="alert-message" style="top: 24px;"></div>
     <div id="create-window" class="message pop" style="top: 24px;display: none">
@@ -58,6 +63,16 @@
             </div>
     </div>
 </nav>
+<div class="right-menu pop" style="display: none">
+        <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
+        <a class="btn" id="btn" onclick="get('/')">首頁</a>
+        <a class="btn" onclick="get('/about')">關於</a>
+        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
+        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
+        <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
+        <a class="btn validation login">登入</a>
+        <a class="btn validation signup">註冊</a>
+</div>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">

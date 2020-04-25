@@ -69,7 +69,7 @@ server.listen(port,() => console.log('HTTPS start on port:' + port));
 const httpApp = express();
 const httpRouter = express.Router();
 httpApp.use('/', httpRouter);
-const host = process.env.HOST || 'localhost:3000'
+const host = process.env.HOST || '192.168.0.107:3000'
 httpRouter.get('/', function(req, res){
     // determine the redirect destination
     var destination = ['https://'+ host + req.url];

@@ -4,44 +4,44 @@ $(document).ready(function () {
     var array = url.split('/');
     var id = array[array.length-1];
     //when hover on button, change their color
-    $(".btn").hover(function () {
-        $(this).css({"color": "#46A3FF", "borderBottomColor": "#46A3FF"})
-    }, function () {
-        $(this).css({"color": "", "borderBottomColor": ""})
-    });
-
     $('#change_password').click(function () {
         $('#password-window').show();
     });
     $('#cancel_password').click(function () {
         $('#password_window').hide();
     });
+    $('#menu').click(function () {
+        $('.right-menu').show()
+    });
+    if($('.right-menu').is(':visible')){
+
+    }
     //if user is already logged in, switch login and sign in button to user page and log out button
     if (document.cookie.indexOf("auth_token") >= 0) {
-        $('#login').attr('id', 'user').text('個人主頁');
-        $('#signup').attr('id', 'exit').text('登出');
-        $('#user').click(function () {
+        $('.login').addClass('user').text('個人主頁');
+        $('.signup').addClass('exit').text('登出');
+        $('.user').click(function () {
             redirect('/user')
         });
         //log out and clear cookies
-        $('#exit').click(function () {
+        $('.exit').click(function () {
             Cookies.remove('auth_token', '');
             Cookies.remove('admin', '');
             redirect('/');
         })
     } else {
-        $('#login').click(function () {
+        $('.login').click(function () {
             redirect('/login');
         });
-        $('#signup').click(function () {
+        $('.signup').click(function () {
             redirect('/signup')
         });
     }
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
-        $('.adminpost').css({'visibility': 'visible'});
+        $('.adminpost').css({'display': 'block'});
     if (document.cookie.indexOf('auth_token') >= 0)
-        $('.logged_in').css({'visibility': 'visible'});
+        $('.logged_in').css({'display': 'block'});
     //alert message when user use invalid format to sign up and log in
     setInterval(function () {
         $('.input').each(function () {

@@ -59,7 +59,7 @@ form{
 }
 .list-button{
     border-radius: 50%;
-    width: 3%;
+    width: 40%;
     cursor: pointer;
 }
 .list-menu{
@@ -93,8 +93,6 @@ form{
 .right-list-menu:hover{
     display: inline-block;
 }
-
-
 
 .sheet_input_div {
     margin-right:60px;
