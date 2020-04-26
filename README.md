@@ -35,7 +35,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 
 ## FrontEnd
 * 角色卡創建頁面(擲骰及自動換算)(目前只做COC7th跟DND5e)(COC7th完工，缺簡易加點)
-* 角色卡管理頁面(完工)
+* ~~角色卡管理頁面~~(完工)
 * 404彩蛋
 * 自訂背景
 * 使用手冊
