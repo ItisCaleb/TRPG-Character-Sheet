@@ -30,7 +30,7 @@
     }
 
     html {
-        font-family: 'Noto Sans TC', sans-serif;
+        font-family: 'Noto Sans TC', sans-serif;!important;
         height: 100%;
     }
 
@@ -281,10 +281,6 @@
         height: 100%;
     }
 
-    section {
-        display: -webkit-flex;
-        display: flex;
-    }
 
     nav {
         background-color: white;
@@ -506,7 +502,6 @@
         font-size: 10px;
         text-align: center;
         padding-top: 7px;
-        width: 100%;
     }
 
 }
