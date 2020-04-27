@@ -10,10 +10,12 @@
         text-align: left;
         padding: 10px;
     }
+
     section {
         display: -webkit-flex;
         display: flex;
     }
+
     nav {
         background-color: white;
         height: 50px;
@@ -37,26 +39,30 @@
     button {
         font-family: 'Noto Sans TC', sans-serif;
     }
-    .right-menu{
+
+    .right-menu {
         display: none;
     }
+
     nav > .topic {
         align-items: center;
         flex: none;
         width: 20%;
-        max-width:40%;
+        max-width: 40%;
         font-size: 35px;
-        margin-left:-2% ;
+        margin-left: -2%;
         font-weight: bold;
         line-height: 45px;
         text-indent: 35px;
         text-align: left;
         float: left;
     }
-    nav >ul{
-        margin:0 0;
+
+    nav > ul {
+        margin: 0 0;
     }
-    nav > ul> .menu {
+
+    nav > ul > .menu {
         font-size: 20px;
         line-height: 40px;
         text-align: left;
@@ -68,15 +74,18 @@
         border-bottom-color: white;
         display: inline;
     }
+
     nav > .submenu {
         float: right;
         margin: 0;
     }
-    .btn:hover{
+
+    .btn:hover {
         color: #46A3FF;
-        border-bottom-color: #46A3FF ;
+        border-bottom-color: #46A3FF;
     }
-    #menu{
+
+    #menu {
         padding: .25rem .75rem;
         font-size: 1.25rem;
         line-height: 1;
@@ -124,7 +133,6 @@
 
     .message-content {
         /*background-color: rgb(185, 185, 185);*/
-    / / border-bottom: 10 px #27fdff solid;
         transition: color;
         color: #000000;
         padding-bottom: 0;
@@ -145,6 +153,7 @@
         animation-iteration-count: 1;
         animation-duration: 1s;
     }
+
     .bad-message-line {
         height: 5px;
         top: 1px;
@@ -169,15 +178,12 @@
     @keyframes message-content-in {
         0% {
             color: #ffffff;
-        / / border-bottom: 10 px #ffffff solid;
         }
         100% {
             color: black;
-        / / border-bottom: 10 px #27fdff solid;
         }
         100% {
             color: black;
-        / / border-bottom: 10 px #27fdff solid;
         }
     }
 
@@ -257,8 +263,7 @@
         text-align: center;
         padding-top: 7px;
         width: 100%;
-    / / position: absolute;
-    / / bottom: 0;
+
     }
 
     #wrapper {
@@ -271,11 +276,10 @@
     }
 
 
-
 }
 
 /*noinspection ALL*/
-@media only screen and (max-width:768px) {
+@media only screen and (max-width: 768px) {
     html {
         font-family: 'Noto Sans TC', sans-serif;
         height: 100%;
@@ -303,7 +307,7 @@
         display: inline-block;
     }
 
-    nav >ul {
+    nav > ul {
         display: none;
     }
 
@@ -366,7 +370,6 @@
 
     .message-content {
         /*background-color: rgb(185, 185, 185);*/
-    / / border-bottom: 10 px #27fdff solid;
         transition: color;
         color: #000000;
         padding-bottom: 0;
@@ -412,15 +415,12 @@
     @keyframes message-content-in {
         0% {
             color: #ffffff;
-        / / border-bottom: 10 px #ffffff solid;
         }
         100% {
             color: black;
-        / / border-bottom: 10 px #27fdff solid;
         }
         100% {
             color: black;
-        / / border-bottom: 10 px #27fdff solid;
         }
     }
 
@@ -462,15 +462,15 @@
         top: 0;
         right: -0px;
         position: fixed;
-        border-left:1px solid lightgray;
+        border-left: 1px solid lightgray;
         text-align: center;
     }
 
-    .right-menu >a{
+    .right-menu > a {
         display: block;
         font-size: 120%;
-        border-bottom:1px solid lightgray;
-        padding-bottom:2% ;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 2%;
     }
 
     .content {
@@ -487,7 +487,8 @@
 
 
     }
-    .content >div{
+
+    .content > div {
         font-size: 14px;
     }
 
@@ -510,7 +511,8 @@
     }
 
 }
-.topic-img{
+
+.topic-img {
     max-width: 10%;
 }
 
