@@ -182,17 +182,36 @@ $(document).ready(function () {
         $(this).addClass('permissions-choose');
         $('.permission-status').val($(this).text()).trigger('change')
     })
+    $('ul.tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+    });
+    $('ul.main-tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.main-tabs li').removeClass('main-current');
+        $('.main-tab-content').removeClass('main-current');
+
+        $(this).addClass('main-current');
+        $("#"+tab_id).addClass('main-current');
+    })
+
 
     //add stat's and skill's value to the form
-    $('#myform').submit(function (e) {
+    $('#create').click(function (e) {
         e.preventDefault();
 
-        var sheet = $(this).serializeArray();
+        var sheet = $($('#myform')).serializeArray();
 
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
         console.log(sheet);
-        $.ajax({
+        /*$.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
@@ -203,6 +222,7 @@ $(document).ready(function () {
                     redirect('/charactersheet')
                 },1000)
             }
-        });
+        });*/
     })
+
 });

@@ -35,13 +35,15 @@ A project for the TRPG player and GM who suffering from managing character sheet
 
 ## FrontEnd
 * 角色卡創建頁面(擲骰及自動換算)(目前只做COC7th跟DND5e)(COC7th完工，缺簡易加點)
-* 角色卡管理頁面(完工)
+* ~~角色卡管理頁面~~(完工)
 * 404彩蛋
 * 自訂背景
 * 使用手冊
 * 暗色介面
 * 行動裝置排版
 * 將首頁完善(加入操作說明)
+* 上方菜單重新設計，換到大螢幕就知道了
+* Bug回報機制
 
 ## BackEnd
 * 角色卡MongoDB schema
@@ -55,3 +57,9 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 主要風格
 * 角色卡創建頁面重新排版
 
+## Bug
+* 管理員非預期登出時還是看的到管理員貼文選項
+* 創建跑團群組會提示輸入帳號密碼
+
+## Issue
+* 團務介面，團務密碼裸露

@@ -3,10 +3,8 @@ form{
     width: auto;
 }
 .sheet_creat_div {
-// margin: 50px;
     width: 100%;
-// border: 2px solid black;
-    padding: 2%;
+    padding: 1%;
 }
 .left-side{
     height: 100%;
@@ -123,22 +121,141 @@ form{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+@media only screen and (max-width:768px) {
+    .main-tab-content{
+        font-size: 10px;
+    }
+    td > input{
+        width: 70%;
+    }
+    .custom{
+        width: 70%;
+    }
+
+}
+label >input{
+    width: 50%;
+}
 td{
     padding: 0;
+    display: table-cell;
+}
+
+@media only screen and (min-width: 768px) {
+    td > input{
+        width: 100%;
+    }
+    .custom{
+        width: 100%;
+    }
 }
 td > input{
     border: 0;
-    height: 25px;
+    height:25px;
+}
+.name{
+    width: 8%;
+}
+.base{
+    width: 6%;
+}
+.td-input{
+    width: 14%;
+}
+
+.total{
+    width: 6%;
+}
+
+.container{
+
+    width: 100%;
+    margin: 0;
 }
 
 
+ul.tabs{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
 
+}
+ul.tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
 
-#tab_demo{ width:900px;}
-#tab_demo > ul{ display:block; margin:0;list-style:none;}
-.tab_title{list-style:none;}
-#tab_demo > ul > li{ display: inline-block; vertical-align: bottom; margin:0 -1px -1px 0 ; border:1px solid #BCBCBC; height:25px; line-height:25px; background:#cdcdcd;padding:0 15px;list-style:none; box-sizing:border-box;}
-#tab_demo >  ul > li a{ color:#000; text-decoration:none;}
-#tab_demo > ul > li.active{ border-bottom:1px solid #fff; background:#fff;}
-#tab_demo > .tab{ clear:both; color:#000; border:1px #BCBCBC solid;}
-.tab{ padding:15px;}
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    border: 1px solid lightgray;
+    display: none;
+    width:90%;
+    padding: 15px;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+ul.tabs{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+ul.tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    border: 1px solid lightgray;
+    display: none;
+    padding: 15px;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+ul.main-tabs{
+    margin-left: 5%;
+    padding: 0px;
+    list-style: none;
+
+}
+ul.main-tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.main-tabs li.main-current{
+    background: #ededed;
+    color: #222;
+}
+
+.main-tab-content{
+    border: 1px solid lightgray;
+    display: none;
+    padding: 15px;
+}
+
+.main-tab-content.main-current{
+    display: inherit;
+}

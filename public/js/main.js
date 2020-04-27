@@ -83,14 +83,14 @@ function good_message(data) {
     $('.alert-message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="good-message-line"></div></div></div>');
     setTimeout(function () {
         $('.alert-message').find('.message-div').remove();
-    }, 1500)
+    }, 1000)
 }
 function bad_message(data) {
     $('.pop').hide()
     $('.alert-message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="bad-message-line"></div></div></div>');
     setTimeout(function () {
         $('.alert-message').find('.message-div').remove();
-    }, 1500)
+    }, 1000)
 }
 function get(URL) {
     $.ajax({
