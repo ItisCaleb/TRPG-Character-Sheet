@@ -1,12 +1,12 @@
 .sheet_creat_div {
-// margin: 50px;
     width: 100%;
-// border: 2px solid black;
     padding: 20px;
 }
+
 .sheet_input_div >label> input{
     width: 30%;
 }
+
 #loader {
     display: inline-block;
     border: 5px solid #f3f3f3; /* Light grey */
@@ -16,6 +16,7 @@
     height: 10px;
     animation: spin 2s linear infinite;
 }
+
 .correct-image{
     width: 2%;
 }
