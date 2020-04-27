@@ -62,4 +62,4 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 創建跑團群組會提示輸入帳號密碼
 
 ## Issue
-* 團務介面，團務密碼裸露
+~~* 團務介面，團務密碼裸露~~(現在只有GM看的到了)

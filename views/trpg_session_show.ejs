@@ -107,7 +107,9 @@
                 <%  content.push('你還沒有玩家') %>
         <% }%>
         <div>gm:<%=content[0]%></div>
+        <% if (password != 'none')  {%>
         密碼: <%=password%> <br>
+                <%}%>
         玩家:
             <% for(var i=1;i<content.length;i++) { %>
                 <div style="display: inline"><%= content[i] %></div><br>

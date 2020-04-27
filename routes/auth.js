@@ -112,7 +112,7 @@ router.post('/userlogin', async (req, res) => {
             name: user.name,
             email: user.email,
         }, process.env.JWT_SECRET);
-    if (jwtDecode(token).name === process.env.ADMIN) res.cookie('admin', 'True');
+    if (user.admin===true)  res.cookie('admin', 'True');
     res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功');
 
 });

@@ -70,13 +70,13 @@
             type: 'POST',
             data:$(this).serializeArray() ,
             success:function(data){
-                good_message(data)
+                good_message(data);
                 setTimeout(function(){
-                    redirect('/trpgsession')
+                    redirect('/trpgsession');
                 },1000)
             },
             error:function(data){
-                message(data.responseText)
+                bad_message(data.responseText);
             },
         });
     })

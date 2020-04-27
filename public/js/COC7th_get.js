@@ -12,6 +12,7 @@ $(document).ready(function () {
                 contentType: 'application/json; charset=UTF-8',
                 success:function(data){
                     sheet=JSON.parse(data);
+
                     for (let i=0;i<Object.keys(sheet).length;i++){
                         delete sheet[Object.keys(sheet)[i]]._id;
                         delete sheet[Object.keys(sheet)[i]].__v;

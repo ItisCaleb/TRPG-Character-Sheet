@@ -7,31 +7,23 @@ form{
     padding: 1%;
 }
 .left-side{
-    height: 100%;
-    width: 15%;
+    height: 70%;
+    width: 10%;
     max-width: 20%;
     position: fixed;
     z-index: 1;
     top: 0;
-    left: 0;
+    left: -1%;
     overflow-x: hidden;
     margin-top: 10%;
+    margin-right: -10%;
     text-align: center;
 }
-.right-side{
-    height: 100%;
-    width: 10%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    overflow-x: hidden;
-    margin-top: 10%;
-    text-align: center;
-}
+
 .list{
     width: 100%;
     height: auto;
+
 }
 .list-left-side{
     width: 60%;
@@ -40,9 +32,11 @@ form{
     float: left;
 }
 .list-right-side{
-    width: 50%;
+    width: 10%;
+    position: fixed;
+    left: 9%;
     display: inline-block;
-    padding-top: 32%;
+    margin-top: 20%;
 }
 .list-text{
     margin-bottom:10% ;
@@ -53,7 +47,7 @@ form{
     background: white;
     border:1px solid lightgray;
     margin-top: 5%;
-    width: 80%;
+    width: 70%;
     border-radius: 15%;
 }
 .list-button{
@@ -95,7 +89,7 @@ form{
 
 .sheet_input_div2 {
     margin-right:120px;
-    width: 50%;
+    width: 100%;
 }
 
 .sheet_input_div3 {
@@ -126,12 +120,28 @@ form{
         font-size: 10px;
     }
     td > input{
-        width: 70%;
+        width: 50%;
     }
     .custom{
         width: 70%;
     }
+    .add-menu{
+        width: 9%;
+    }
 
+}
+@media only screen and (min-width: 768px) {
+    td > input {
+        width: 100%;
+    }
+
+    .custom {
+        width: 100%;
+    }
+
+    .add-menu {
+        width: 5%;
+    }
 }
 label >input{
     width: 50%;
@@ -139,32 +149,46 @@ label >input{
 td{
     padding: 0;
     display: table-cell;
+    text-align: center;
 }
 
-@media only screen and (min-width: 768px) {
-    td > input{
-        width: 100%;
-    }
-    .custom{
-        width: 100%;
-    }
-}
 td > input{
     border: 0;
     height:25px;
 }
 .name{
-    width: 8%;
+    width: 10%;
 }
 .base{
-    width: 6%;
+    width: 3%;
 }
 .td-input{
-    width: 14%;
+    width: 4%;
 }
 
 .total{
-    width: 6%;
+    width: 5%;
+}
+.add-menu{
+    position: fixed;
+    right: 4%;
+    top:30%;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+.add-slider{
+    display: inline-block;
+    -webkit-appearance: slider-vertical;
+    width: 40%;
+    align-items: center;
+}
+.add-number {
+    display: inline-block;
+    position: absolute;
+    top:37%;
+}
+.limit-number{
+    left: 20%;
 }
 
 .container{

@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="/public/js/main.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
+    <script src="/public/js/COC7th_get.js" charset="UTF-8"></script>
+    <script src="/public/js/COC7th_edit.js" charset="UTF-8"></script>
 </head>
 <body id="page">
 
@@ -29,7 +31,20 @@
         <button class="subbtn btn validation login">登入</button>
         <button class="subbtn btn validation signup">註冊</button>
     </div>
-    <div class="alert-message"></div>
+    <div class="alert-message" style="top: 24px;"></div>
+    <div id="delete-window" class="message pop" style="top:24px;display: none">
+        <div class="message-div">
+            <div class="message-alert">刪除角色卡
+                <p class="message-content">
+                    你確定要刪除嗎?
+                </p>
+                <span style="display: inline">
+                    <button id="delete" class="btn session">確認</button>
+                    <button id="delete-disable" class="btn session">關閉</button>
+                </span>
+            </div>
+        </div>
+    </div>
 </nav>
 <div class="right-menu pop" style="display: none">
     <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
@@ -43,7 +58,6 @@
 </div>
 <div class="left-side">
     <div class="list">
-        <div class="list-left-side">
             <div class="list-top">
                 <div>
                     <div id="save-icon" style="display: none">
@@ -68,18 +82,17 @@
                     刪除角色卡
                 </div>
             </div>
-        </div>
-        <div class="list-right-side">
-            <div class="right-list-menu list-menu side-pop pop" style="display: none">
-                <div class="list-menu-text permissions permissions-choose">限團務GM</div>
-                <div class="list-menu-text permissions">團務所有玩家</div>
-                <div class="list-menu-text permissions">所有人</div>
-            </div>
-        </div>
+    </div>
+</div>
+<div class="list-right-side">
+    <div class="right-list-menu list-menu side-pop pop" style="display: none">
+        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+        <div class="list-menu-text permissions">團務所有玩家</div>
+        <div class="list-menu-text permissions">所有人</div>
     </div>
 </div>
 <div class="content">
-
+    <div id="url"></div>
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
         框內文字為範例角色卡 系統:COC7th
@@ -95,27 +108,28 @@
                 <section style="display: inline-block">
                     <p>調查員基本資料：</p>
                     <div class="sheet_input_div">
-                        <label>姓名：<input name="name" placeholder="島田 半藏"></label><br>
-                        <label>職業：<input name="class" placeholder="職業殺手、傭兵"></label> <br>
-                        <label>年齡：<input name="age" type="number" placeholder="38"></label><br>
-                        <label>性別：<input name="sex" placeholder="男"></label><br>
+                        <label>姓名：<input name="name" class="info"></label><br>
+                        <label>職業：<input name="class" class="story"></label> <br>
+                        <label>年齡：<input name="age" type="number" class="story"></label><br>
+                        <label>性別：<input name="sex" class="story"></label><br>
                     </div>
                     <div class="sheet_input_div">
-                        <label>玩家暱稱：<input name="player" placeholder="最強小雞，朋友很多"></label><br>
-                        <label>現居地：<input name="residence" placeholder="直布羅陀"></label><br>
-                        <label>出生地：<input name="birthplace" placeholder="日本，花村"></label><br>
+                        <label>玩家暱稱：<input name="player" class="info"></label><br>
+                        <label>現居地：<input name="residence" class="story"></label><br>
+                        <label>出生地：<input name="birthplace" class="story"></label><br>
                     </div>
                 </section>
+
                 <section style="display: inline-block;">
                     <p>調查員當前狀態：</p>
                     <div class="sheet_input_div">
-                        <label>HP： <input id="hp" name="hp" class="skill" type="number" min="0" max="40" size="2"/></label>/<p
+                        <label>HP： <input id="hp" name="hp" class="skill status" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="hp-max" class="chara"></p> <br>
-                        <label>SAN：<input id="san" name="san" class="skill" type="number" min="0" max="99" size="2"/></label>/<p
+                        <label>SAN：<input id="san" name="san" class="skill status" type="number" min="0" max="99" size="2"/></label>/<p
                                 id="san-max" class="chara"></p><br>
-                        <label>MP： <input id="mp" name="mp" class="skill" type="number" min="0" max="40" size="2"/></label>/<p
+                        <label>MP： <input id="mp" name="mp" class="skill status" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="mp-max" class="chara"></p><br>
-                        <label>LUK：<input id="luk" name="luk" class="attr skill luk" type="number" min="0" max="99" size="2"/><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;"></label>/
+                        <label>LUK：<input id="luk" name="luk" class="attr skill luk status" type="number" min="0" max="99" size="2"/></label>/
                         <p class="chara">99</p><br>
                     </div>
                     <div class="sheet_input_div" style="width: 50%">
@@ -123,14 +137,14 @@
                         機動力(MOV)：<p id="mov" class="chara"></p><br>
                         <label>
                             負傷狀態：
-                            <select name="injury">
+                            <select name="injury" class="status">
                                 <option>無</option>
                                 <option>重傷</option>
                                 <option>瀕死</option>
                                 <option>暫時穩定</option>
                             </select></label><br>
                         <label>
-                            瘋狂狀態：<select name="madness">
+                            瘋狂狀態：<select name="madness" class="status">
                                 <option>無</option>
                                 <option>臨時瘋狂</option>
                                 <option>不定性瘋狂</option>
@@ -140,78 +154,68 @@
                     <section>
                         <div class="" style="width: 50%">
                             <p>調查員物品：</p>
-                            <label>攜帶物品:<textarea name="equip"></textarea></label><br>
-                            <label>金錢：<input name="money"></label><br>
-                            <label>武器：<input name="weapon"></label><br>
+                            <label>攜帶物品:<textarea name="equip" class="equip"></textarea></label><br>
+                            <label>金錢：<input name="money" class="equip"></label><br>
+                            <label>武器：<input name="weapon" class="equip"></label><br>
                         </div>
                     </section>
                 </section>
                 <section>
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
-                        <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            <input type="button" class="plus_menu">
-                            ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="str-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="str"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            <input type="button" class="plus_menu">
-                            ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="con-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="con"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＤＥＸ(敏捷)：<input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＤＥＸ(敏捷)：<input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="dex-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="dex"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＡＰＰ(外貌)：<input type="number" step="1" min="0" max="100" value="0" id="app-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＡＰＰ(外貌)：<input type="number" step="1" min="0" max="100" value="0" id="app-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="app-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="app"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＰＯＷ(意志)：<input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＰＯＷ(意志)：<input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="pow-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="pow"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＳＩＺ(體型)：<input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＳＩＺ(體型)：<input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="siz-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="siz"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＩＮＴ(智力)：<input type="number" step="1" min="0" max="100" value="0" id="int-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＩＮＴ(智力)：<input type="number" step="1" min="0" max="100" value="0" id="int-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="int-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="int"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            ＥＤＵ(教育)：<input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
-                                           class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                        <div>ＥＤＵ(教育)：<input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
+                                           class="attr stat " size="2"/>調整值：<input type="number" step="1" min="-50"
                                                                                   max="100" id="edu-adj"
-                                                                                  class="attr-add stat" value="0"
+                                                                                  class="attr-add stat " value="0"
                                                                                   size="2"/>總值:<p id="edu"
                                                                                                   class="chara attr"></p>
                         </div>
@@ -223,18 +227,17 @@
                     <div class="sheet_creat_div" >
                         <div >
                             <label>角色形容：<br>
-                                <textarea style="height: 200px;width: 90%;resize: none" name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea></label>
+                                <textarea style="height: 200px;width: 90%;resize: none" name="Role_describtion" class="story"></textarea></label>
                         </div>
 
                     </div>
                     <div class="" style="width: 50%">
                         <p>調查員經歷：</p><br>
-                        <label> 思念與信念：<textarea name="belief" placeholder="「榮耀伴隨死亡而來，但隨榮耀而來的是無止盡的贖罪。」"></textarea></label><br>
-                        <label> 重要之人：<textarea name="significant_people" placeholder="親弟弟 源氏"></textarea></label><br>
-                        <label> 意義非凡之地：<textarea name="meaningful_location" placeholder="日本，花村"></textarea></label><br>
-                        <label> 寶貴之物：<textarea name="treasured_possession" placeholder="暴風弓"></textarea></label><br>
-                        <label> 特點：<textarea name="trait"
-                                             placeholder="半藏的弓箭具備有不同的功能，既可以偵測敵情，也可以分散成數股箭矢攻擊多個敵人。他還可以攀爬牆壁，從高處攻擊敵人，或是召喚巨大的巨龍之魂衝擊敵人。 "></textarea></label><br>
+                        <label> 思念與信念：<textarea name="belief" class="story"></textarea></label><br>
+                        <label> 重要之人：<textarea name="significant_people" class="story"></textarea></label><br>
+                        <label> 意義非凡之地：<textarea name="meaningful_location" class="story"></textarea></label><br>
+                        <label> 寶貴之物：<textarea name="treasured_possession" class="story"></textarea></label><br>
+                        <label> 特點：<textarea name="trait" class="story"></textarea></label><br>
 
                     </div>
                 </section>
@@ -242,27 +245,25 @@
                     <section>
                         <div class="" style="width: 50%">
                             <p>調查員背景：</p>
-                            神話相信者：<select name="myth">
+                            神話相信者：<select name="myth" class="story">
                                 <option>否</option>
                                 <option>是</option>
                             </select><br>
-                            創傷與傷疤：<input name="injuries" placeholder="曾經以為自己殺死了自己的親弟弟。" size="40"/><br>
-                            第三類接觸：<input name="encounter" placeholder="自己召喚的神龍" size="40"/><br>
-                            恐懼與狂熱：<input name="mania" placeholder="" size="40"/><br>
-                            魔法書與咒文：<input name=magic" placeholder="竜が我が敵を喰らう！" size="40"/><br>
+                            創傷與傷疤：<input name="injuries" class="story" size="40"/><br>
+                            第三類接觸：<input name="encounter" class="story" size="40"/><br>
+                            恐懼與狂熱：<input name="mania" class="story" size="40"/><br>
+                            魔法書與咒文：<input name=magic" class="story" size="40"/><br>
                         </div>
 
                         <div class="" style="width: 50%">
-                            <p>調查員個人描述：</p>
-                            <textarea name="description" cols="30"
-                                      placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。島田家的歷史可以追溯到幾個世紀之前，這個刺客組織經年累月在累積實力，讓他們有能力建立一個龐大的犯罪帝國，經由軍火和非法物品的交易獲得龐大的利益。半藏身為領袖的長子，始終負有繼承父親、統治島田組這片江山的使命。所以半藏從小受到嚴密訓練，而他也在訓練中展現出了天生的領導能力和戰術策略天份。不僅如此，半藏在實戰方面也有傑出表現，他在武術、劍術，和弓術上的造詣也是相當不凡。在父親去世之後，族中長老指示半藏去說服桀傲不馴的弟弟，要弟弟回來幫忙打理島田組的這片江山。但是他的弟弟拒絕接受這個提議，於是半藏被迫親手殺了他。這件事讓半藏哀莫大於心死，決心拒絕繼承父親的事業，同時脫離組織，並且放棄他一路艱辛得來的成果。現在半藏周遊列國，只為了讓他的戰士技藝更臻完美，冀望能藉此獲得只屬於他自己的榮耀，擺脫那些不斷糾纏他的往事。"
-                                      rows="10"></textarea>
+                            <label>調查員個人描述：
+                            <textarea name="description" class="story" cols="30" rows="10"></textarea></label>
                         </div>
                     </section>
                 </div>
             </div>
 
-            <input name='permission' class="permission-status" value="限團務GM" style="display: none">
+            <input name='permission' class="permission-status info" style="display: none">
             <div id="main-tab-3" class="main-tab-content">
                 <div class="sheet_creat_div">
                     <div class="container">
@@ -301,8 +302,10 @@
                                 <tr>
                                     <td class="name">會計</td>
                                     <td class="base base-skill">5</td>
-                                    <td>
-                                        <input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input">
+                                        <input type="number" max="100" min="0" class="skill base-input class" />
+
+                                    </td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
                                     <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total"></td>
@@ -746,7 +749,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">藝術與工藝</td>
+                                    <td class="name" rowspan="3">藝術與工藝</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -755,7 +758,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">藝術與工藝</td>
+                                    <td class="name" style="display: none">藝術與工藝</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -764,7 +767,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">藝術與工藝</td>
+                                    <td class="name" style="display: none">藝術與工藝</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -773,7 +776,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td>戰鬥</td>
+                                    <td rowspan="3">戰鬥</td>
                                     <td class="name">鬥毆</td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -782,7 +785,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">戰鬥</td>
+                                    <td class="name" style="display: none">戰鬥</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -791,7 +794,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">戰鬥</td>
+                                    <td class="name" style="display: none">戰鬥</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -800,7 +803,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">火器</td>
+                                    <td class="name" rowspan="3">火器</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -809,7 +812,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">火器</td>
+                                    <td class="name" style="display: none">火器</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -818,7 +821,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">火器</td>
+                                    <td class="name" style="display: none">火器</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -827,7 +830,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">他國語言</td>
+                                    <td class="name" rowspan="3">他國語言</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -836,7 +839,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">他國語言</td>
+                                    <td class="name" style="display: none">他國語言</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -845,7 +848,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">他國語言</td>
+                                    <td class="name" style="display: none">他國語言</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -864,7 +867,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">科學</td>
+                                    <td class="name" rowspan="3">科學</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -873,7 +876,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">科學</td>
+                                    <td class="name" style="display: none">科學</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -882,7 +885,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">科學</td>
+                                    <td class="name" style="display: none">科學</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -891,7 +894,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">偏門學問</td>
+                                    <td class="name" rowspan="3">偏門學問</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -900,7 +903,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">偏門學問</td>
+                                    <td class="name" style="display: none">偏門學問</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
@@ -909,7 +912,7 @@
                                     <td class="total"></td>
                                 </tr>
                                 <tr>
-                                    <td class="name">偏門學問</td>
+                                    <td class="name" style="display: none">偏門學問</td>
                                     <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>

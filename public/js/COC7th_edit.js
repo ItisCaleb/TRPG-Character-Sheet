@@ -33,7 +33,7 @@ $(document).ready(function () {
                 delete skill[name];
         });
     });
-    /*$('input').change(function () {
+    $('input').change(function () {
         $('#save-icon').show();
         $('#success-icon').hide();
         setTimeout(function () {
@@ -53,7 +53,7 @@ $(document).ready(function () {
                 }
             });
         },2000)
-    })*/
+    })
 
     $('#delete-check').click(function () {
         $('#delete-window').css('display','block');

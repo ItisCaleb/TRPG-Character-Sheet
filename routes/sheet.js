@@ -32,9 +32,9 @@ router.post('/COC7th', verify, async (req, res) => {
 
     //transform skill from object to array
     var cskill = [{}];
-    for (var i=0;i<Object.keys(Csheet[29].value).length;i++){
-        var name = Object.keys(Csheet[29].value)[i];
-        cskill[i] = {name :name,number:Object.values(Csheet[29].value)[i]};
+    for (var i=0;i<Object.keys(Csheet[30].value).length;i++){
+        var name = Object.keys(Csheet[30].value)[i];
+        cskill[i] = {name :name,number:Object.values(Csheet[30].value)[i]};
     }
     //save skill
     const skill = new COC7thSkill({
@@ -44,13 +44,13 @@ router.post('/COC7th', verify, async (req, res) => {
     });
     const stat = new COC7thStat({
         _id:sheet._id,
-        hp:Csheet[8].value,
-        san:Csheet[9].value,
-        mp:Csheet[10].value,
-        luk:Csheet[11].value,
-        injured_status:Csheet[12].value,
-        insane_status:Csheet[13].value,
-        characteristic:Csheet[30].value
+        hp:Csheet[7].value,
+        san:Csheet[8].value,
+        mp:Csheet[9].value,
+        luk:Csheet[10].value,
+        injured_status:Csheet[11].value,
+        insane_status:Csheet[12].value,
+        characteristic:Csheet[31].value
     });
     const story = new COC7thStory({
         _id:sheet._id,
@@ -59,24 +59,24 @@ router.post('/COC7th', verify, async (req, res) => {
         sex:Csheet[3].value,
         residence:Csheet[5].value,
         birthplace:Csheet[6].value,
-        role_description:Csheet[7].value,
-        belief:Csheet[14].value,
-        significant_people:Csheet[15].value,
-        meaningful_location:Csheet[16].value,
-        treasured_possession:Csheet[17].value,
-        trait:Csheet[18].value,
-        myth:Csheet[19].value,
-        injuries:Csheet[20].value,
-        encounter:Csheet[21].value,
-        mania:Csheet[22].value,
-        magic:Csheet[23].value,
-        description:Csheet[24].value
+        role_description:Csheet[16].value,
+        belief:Csheet[17].value,
+        significant_people:Csheet[18].value,
+        meaningful_location:Csheet[19].value,
+        treasured_possession:Csheet[20].value,
+        trait:Csheet[21].value,
+        myth:Csheet[22].value,
+        injuries:Csheet[23].value,
+        encounter:Csheet[24].value,
+        mania:Csheet[25].value,
+        magic:Csheet[26].value,
+        description:Csheet[27].value
     });
     const equip = new COC7thEquip({
         _id:sheet._id,
-        equip:Csheet[25].value,
-        cash:Csheet[26].value,
-        weapon:Csheet[27].value
+        equip:Csheet[13].value,
+        cash:Csheet[14].value,
+        weapon:Csheet[15].value
     });
     try{
         await skill.save();
@@ -123,48 +123,49 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     }
     //transform skill from object to array
     var cskill = [{}];
-    for (var i=0;i<Object.keys(csheet[29].value).length;i++){
-        var name = Object.keys(csheet[29].value)[i];
-        cskill[i] = {name :name,number:Object.values(csheet[29].value)[i]};
+    for (var i=0;i<Object.keys(csheet[30].value).length;i++){
+        var name = Object.keys(csheet[30].value)[i];
+        cskill[i] = {name :name,number:Object.values(csheet[30].value)[i]};
     }
 
     try{
         await COC7thSkill.updateOne({_id:req.params.id}, {$set:{
-            class_feature:csheet[28].value,
+            class_feature:csheet[29].value,
             skill:cskill
         }});
         await COC7thStory.updateOne({_id:req.params.id},{$set:{
-            class:csheet[1].value,
-            age:csheet[2].value,
-            sex:csheet[3].value,
-            residence:csheet[5].value,
-            birthplace:csheet[6].value,
-            role_description:csheet[7].value,
-            belief:csheet[14].value,
-            significant_people:csheet[15].value,
-            meaningful_location:csheet[16].value,
-            treasured_possession:csheet[17].value,
-            trait:csheet[18].value,
-            myth:csheet[19].value,
-            injuries:csheet[20].value,
-            encounter:csheet[21].value,
-            mania:csheet[22].value,
-            magic:csheet[23].value,
-            description:csheet[24].value
+                class:csheet[1].value,
+                age:csheet[2].value,
+                sex:csheet[3].value,
+                residence:csheet[5].value,
+                birthplace:csheet[6].value,
+                role_description:csheet[16].value,
+                belief:csheet[17].value,
+                significant_people:csheet[18].value,
+                meaningful_location:csheet[19].value,
+                treasured_possession:csheet[20].value,
+                trait:csheet[21].value,
+                myth:csheet[22].value,
+                injuries:csheet[23].value,
+                encounter:csheet[24].value,
+                mania:csheet[25].value,
+                magic:csheet[26].value,
+                description:csheet[27].value
         }});
         await COC7thEquip.updateOne({_id:req.params.id},{$set: {
-            equip:csheet[25].value,
-            cash:csheet[26].value,
-            weapon:csheet[27].value
+            equip:csheet[13].value,
+            cash:csheet[14].value,
+            weapon:csheet[15].value
         }});
         await COC7thStat.updateOne({_id:req.params.id},{$set: {
-            hp:csheet[8].value,
-            san:csheet[9].value,
-            mp:csheet[10].value,
-            luk:csheet[11].value,
-            injured_status:csheet[12].value,
-            insane_status:csheet[13].value,
-            characteristic:csheet[30].value
+            hp:csheet[7].value,
+            san:csheet[8].value,
+            mp:csheet[9].value,
+            luk:csheet[10].value,
+            injured_status:csheet[11].value,
+            insane_status:csheet[12].value,
+            characteristic:csheet[31].value
+
         }});
         res.write(JSON.stringify({ status: "OK" }));
         res.end();

@@ -120,6 +120,11 @@ $(document).ready(function () {
         if(parseInt($('#luk').val())>99 || parseInt($('#luk').val())<0)
             $('#luk').val(99);
 
+
+        $('.add-number').text(parseInt($('.add-slider').val()))
+        $('.add-slider').parent('.add-menu').siblings('.skill').val($('.add-slider').val())
+
+
         //push the stat's value to array
         stat = [];
         $('.chara').each(function () {
@@ -162,9 +167,33 @@ $(document).ready(function () {
                 delete skill[name];
         });
     },0);
+    //easy adding slider
+    $('.skill').click(function () {
+        $('.slider-pop').remove();
+        $(this).parent('.td-input').append('<div class="add-menu slider-pop">\n' +
+            '                                            <p class="limit-number">99</p>\n' +
+            '                                            <input type="range" min="0" max="99" class="add-slider">\n' +
+            '                                            <p class="add-number"></p>\n' +
+            '                                            <p class="limit-number">0</p>\n' +
+            '                                        </div>')
+        $('.add-slider').val($(this).val());
+    })
+    //slider pop
+    $(document).mouseup(function (e)
+    {
+        var container = $(".slider-pop");
+
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.remove();
+        }
+    });
+    //roll
     $('.dice').click(function () {
         $(this).siblings('.attr').val(getRandom(3,18)*5)
     })
+    //roll
     $('.2d6dice').click(function () {
         $(this).siblings('.attr').val((getRandom(3,12)+6)*5)
     })
@@ -211,7 +240,7 @@ $(document).ready(function () {
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
         console.log(sheet);
-        /*$.ajax({
+        $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
@@ -222,7 +251,7 @@ $(document).ready(function () {
                     redirect('/charactersheet')
                 },1000)
             }
-        });*/
+        });
     })
 
 });

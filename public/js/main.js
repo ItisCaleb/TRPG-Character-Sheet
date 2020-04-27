@@ -68,7 +68,7 @@ function redirect(URL) {
 function check() {
     const regExp = /,/;
     var text = $(".input").val();
-    const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
+    const pattern = new RegExp("[`~!#$^&*()=-|.{}':;,\\[\\]<>/?￥…—|【】_=‘”“。、+%]");
     const result = text.match(pattern);
     if (result) {
         message("含有特殊字元");
@@ -101,11 +101,11 @@ function get(URL) {
                 redirect(URL);
             }
             if (data.status===400){
-                message(data.responseText);
+                bad_message(data.responseText);
             }
         },
         error: function (data) {
-            message(data.responseText)
+            bad_message(data.responseText)
         },
     });
 }
