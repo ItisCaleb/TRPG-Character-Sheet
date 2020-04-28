@@ -18,9 +18,10 @@
 
     nav {
         background-color: white;
-        height: 50px;
+        height:10%;
         vertical-align: top;
         box-shadow: 0 0 4px grey;
+        position: relative;
     }
 
     body {
@@ -50,16 +51,19 @@
         width: 20%;
         max-width: 40%;
         font-size: 35px;
-        margin-left: -2%;
         font-weight: bold;
         line-height: 45px;
         text-indent: 35px;
         text-align: left;
-        float: left;
+        position: absolute;
+        display: inline-block;
+        left: 0;
     }
 
     nav > ul {
-        margin: 0 0;
+        width: 40%;
+        margin: 0 20%;
+        display: inline-block;
     }
 
     nav > ul > .menu {
@@ -68,7 +72,6 @@
         text-align: left;
         margin-left: 2%;
         cursor: pointer;
-        float: left;
         border-bottom-style: solid;
         border-bottom-width: 2px;
         border-bottom-color: white;
@@ -448,13 +451,24 @@
             width: 100%;
         }
     }
-
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    }
     .right-menu {
         width: 40%;
         height: 100%;
         background: white;
         position: absolute;
-        margin-top: 14%;
+        margin-top: 0;
         top: 0;
         right: -0px;
         position: fixed;

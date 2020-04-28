@@ -11,8 +11,12 @@ $(document).ready(function () {
         $('#password_window').hide();
     });
     $('#menu').click(function () {
-        $('.right-menu').show()
+        $('.right-menu').show();
+        $('#overlay').show();
     });
+    $('#overlay').click(function () {
+        $(this).hide();
+    })
 
     //if user is already logged in, switch login and sign in button to user page and log out button
     if (document.cookie.indexOf("auth_token") >= 0) {
