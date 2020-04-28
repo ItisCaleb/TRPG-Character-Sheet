@@ -41,9 +41,9 @@ $(document).ready(function () {
     }
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
-        $('.adminpost').css({'display': 'block'});
+        $('.adminpost').show();
     if (document.cookie.indexOf('auth_token') >= 0)
-        $('.logged_in').css({'display': 'block'});
+        $('.logged_in').show();
     //alert message when user use invalid format to sign up and log in
     setInterval(function () {
         $('.input').each(function () {

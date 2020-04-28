@@ -45,7 +45,7 @@
 
     nav > .topic {
         align-items: center;
-        width: 20%;
+        width: auto;
         max-width: 40%;
         font-size: 35px;
         font-weight: bold;
@@ -57,22 +57,25 @@
     }
 
     nav > ul {
-        width: 40%;
-        display: inline-block;
+        width:50%;
         padding-left: 0;
         margin-top:2px ;
+        display: inline-block;
     }
 
     nav > ul > .menu {
         font-size: 25px;
         line-height: 40px;
+
         text-align: left;
-        margin-left: 4%;
+        margin-left: 2%;
+        margin-right:0 ;
+        width: auto;
         cursor: pointer;
         border-bottom-style: solid;
         border-bottom-width: 2px;
         border-bottom-color: white;
-        display: inline;
+        display: inline-block;
     }
 
     nav > .submenu {
@@ -247,6 +250,7 @@
         background-color: white;
         min-height: auto;
         width: 80%;
+        height: auto;
         max-width: 80%;
         margin: 2% auto;
         border-width: 2px;

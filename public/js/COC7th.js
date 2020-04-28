@@ -122,7 +122,6 @@ $(document).ready(function () {
 
 
         $('.add-number').text(parseInt($('.add-slider').val()))
-        $('.add-slider').parent('.add-menu').siblings('.skill').val($('.add-slider').val())
 
 
         //push the stat's value to array
@@ -165,8 +164,13 @@ $(document).ready(function () {
             }
             if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
                 delete skill[name];
+
         });
     },0);
+    $('.add-slider').change(function () {
+        $('.add-slider').parent('.add-menu').siblings('.skill').val($('.add-slider').val())
+    })
+
     //easy adding slider
     $('.skill').click(function () {
         $('.slider-pop').remove();
@@ -178,6 +182,7 @@ $(document).ready(function () {
             '                                        </div>')
         $('.add-slider').val($(this).val());
     })
+
     //slider pop
     $(document).mouseup(function (e)
     {
