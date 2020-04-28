@@ -196,11 +196,11 @@ $(document).ready(function () {
     });
     //roll
     $('.dice').click(function () {
-        $(this).siblings('.attr').val(getRandom(3,18)*5)
+        $(this).siblings('label').find('.attr').val(getRandom(3,18)*5)
     })
     //roll
     $('.2d6dice').click(function () {
-        $(this).siblings('.attr').val((getRandom(3,12)+6)*5)
+        $(this).siblings('label').find('.attr').val((getRandom(3,12)+6)*5)
     })
     function getRandom(min,max){
         return Math.floor(Math.random()*(max-min+1))+min;

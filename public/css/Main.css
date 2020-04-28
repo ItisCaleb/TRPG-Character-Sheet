@@ -67,7 +67,6 @@
     nav > ul > .menu {
         font-size: 25px;
         line-height: 40px;
-
         text-align: left;
         margin-left: 2%;
         margin-right:0 ;
@@ -319,7 +318,6 @@
     }
 
     #menu {
-        padding: .25rem .75rem;
         font-size: 1.25rem;
         line-height: 1;
         background-color: transparent;
@@ -328,6 +326,9 @@
         text-align: right;
         cursor: pointer;
         display: inline-block;
+        position: absolute;
+        right: 10%;
+        top: 25%;
     }
 
     body {

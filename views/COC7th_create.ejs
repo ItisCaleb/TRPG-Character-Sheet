@@ -105,7 +105,7 @@
                                 id="san-max" class="chara"></p><br>
                         <label>MP： <input id="mp" name="mp" class="skill" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="mp-max" class="chara"></p><br>
-                        <label>LUK：<input id="luk" name="luk" class="attr skill luk" type="number" min="0" max="99" size="2"/><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;"></label>/
+                        <label for="luk">LUK：<input id="luk" name="luk" class="attr skill luk" type="number" min="0" max="99" size="2"/></label><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">/
                         <p class="chara">99</p><br>
                     </div>
                     <div class="sheet_input_div" style="width: 50%">
@@ -140,69 +140,67 @@
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
                         <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                            <input type="button" class="plus_menu">
-                                ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label> <input type="number" step="1" min="-50"
                                                                                        max="100" id="str-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="str"
+                                                                                       size="2"/></label>總值:<p id="str"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                <input type="button" class="plus_menu">
-                                ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="con-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="con"
+                                                                                       size="2"/></label>總值:<p id="con"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＤＥＸ(敏捷)：<input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＤＥＸ(敏捷)：<input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="dex-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="dex"
+                                                                                       size="2"/></label>總值:<p id="dex"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＡＰＰ(外貌)：<input type="number" step="1" min="0" max="100" value="0" id="app-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＡＰＰ(外貌)：<input type="number" step="1" min="0" max="100" value="0" id="app-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="app-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="app"
+                                                                                       size="2"/></label>總值:<p id="app"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＰＯＷ(意志)：<input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＰＯＷ(意志)：<input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="pow-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="pow"
+                                                                                       size="2"/></label>總值:<p id="pow"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＳＩＺ(體型)：<input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＳＩＺ(體型)：<input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="siz-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="siz"
+                                                                                       size="2"/></label>總值:<p id="siz"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＩＮＴ(智力)：<input type="number" step="1" min="0" max="100" value="0" id="int-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＩＮＴ(智力)：<input type="number" step="1" min="0" max="100" value="0" id="int-bas"
+                                                      class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="int-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="int"
+                                                                                       size="2"/></label>總值:<p id="int"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                ＥＤＵ(教育)：<input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
-                                                class="attr stat" size="2"/>調整值：<input type="number" step="1" min="-50"
+                                <label>ＥＤＵ(教育)：<input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="edu-adj"
                                                                                        class="attr-add stat" value="0"
-                                                                                       size="2"/>總值:<p id="edu"
+                                                                                       size="2"/></label>總值:<p id="edu"
                                                                                                        class="chara attr"></p>
                             </div>
                         </div>

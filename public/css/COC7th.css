@@ -143,9 +143,6 @@ form{
         width: 5%;
     }
 }
-label >input{
-    width: 50%;
-}
 td{
     padding: 0;
     display: table-cell;
@@ -199,8 +196,8 @@ td > input{
 
 
 ul.tabs{
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     list-style: none;
 
 }
