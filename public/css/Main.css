@@ -18,14 +18,12 @@
 
     nav {
         background-color: white;
-        height:10%;
+        height:6%;
         vertical-align: top;
         box-shadow: 0 0 4px grey;
-        position: relative;
     }
 
     body {
-        display: flex;
         flex-direction: column;
         margin: 0;
         height: 100%;
@@ -47,7 +45,6 @@
 
     nav > .topic {
         align-items: center;
-        flex: none;
         width: 20%;
         max-width: 40%;
         font-size: 35px;
@@ -55,22 +52,22 @@
         line-height: 45px;
         text-indent: 35px;
         text-align: left;
-        position: absolute;
         display: inline-block;
         left: 0;
     }
 
     nav > ul {
         width: 40%;
-        margin: 0 20%;
         display: inline-block;
+        padding-left: 0;
+        margin-top:2px ;
     }
 
     nav > ul > .menu {
-        font-size: 20px;
+        font-size: 25px;
         line-height: 40px;
         text-align: left;
-        margin-left: 2%;
+        margin-left: 4%;
         cursor: pointer;
         border-bottom-style: solid;
         border-bottom-width: 2px;
@@ -287,8 +284,6 @@
         font-family: 'Noto Sans TC', sans-serif;
         height: 100%;
     }
-
-
     nav {
         background-color: white;
         height: 8%;
