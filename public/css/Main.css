@@ -18,7 +18,7 @@
 
     nav {
         background-color: white;
-        height:6%;
+        height:auto;
         vertical-align: top;
         box-shadow: 0 0 4px grey;
     }
@@ -32,7 +32,8 @@
 
     html {
         font-family: 'Noto Sans TC', sans-serif;!important;
-        height: 100%;
+        position:relative;
+        min-height:100%
     }
 
     button {
@@ -47,7 +48,7 @@
         align-items: center;
         width: auto;
         max-width: 40%;
-        font-size: 35px;
+        font-size: 200%;
         font-weight: bold;
         line-height: 45px;
         text-indent: 35px;
@@ -266,8 +267,10 @@
         height: 22px;
         text-align: center;
         padding-top: 7px;
+        bottom:0;
+        position:absolute;
         width: 100%;
-
+        overflow:hidden;
     }
 
     #wrapper {
@@ -286,7 +289,9 @@
 @media only screen and (max-width: 768px) {
     html {
         font-family: 'Noto Sans TC', sans-serif;
-        height: 100%;
+        position:relative;
+        min-height:100%
+
     }
     nav {
         background-color: white;
@@ -513,9 +518,13 @@
         color: black;
         background: white;
         height: 22px;
+        width: 100%;
         font-size: 10px;
         text-align: center;
         padding-top: 7px;
+        bottom:0;
+        position: absolute;
+        overflow: hidden;
     }
 
 }
@@ -538,7 +547,3 @@
 }
 
 
-.new_pusher {
-    height: 100%;
-    flex-grow: 5;
-}

@@ -167,8 +167,8 @@ $(document).ready(function () {
 
         });
     },0);
-    $('.add-slider').change(function () {
-        $('.add-slider').parent('.add-menu').siblings('.skill').val($('.add-slider').val())
+    $(document).on('input','.add-slider',function (event) {
+        $(this).parent('.add-menu').siblings('.skill').val($(this).val())
     })
 
     //easy adding slider

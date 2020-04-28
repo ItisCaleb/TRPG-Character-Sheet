@@ -33,7 +33,7 @@ $(document).ready(function () {
                 delete skill[name];
         });
     });
-    $('input').change(function () {
+    $(document).on('change','input',function () {
         $('#save-icon').show();
         $('#success-icon').hide();
         setTimeout(function () {
