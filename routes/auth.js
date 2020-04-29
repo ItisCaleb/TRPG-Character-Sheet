@@ -29,10 +29,10 @@ router.get("/register/:email", async (req, res) => {
         const token = jwt.sign(
             {
                 iss: 'trpgtoaster.com',
-                expiresIn:'7d',
+                expiresIn: '7d',
                 _id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
             }, process.env.JWT_SECRET);
         res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'});
         res.redirect('/authed/'+email);
