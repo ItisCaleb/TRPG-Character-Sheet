@@ -3,6 +3,7 @@ const jwtDecode = require('jwt-decode');
 const verify = require('../public/js/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
+const mongo= require('mongoose-gridfs');
 const Session = require('../model/Session');
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
@@ -15,8 +16,9 @@ router.post('/COC7th', verify, async (req, res) => {
 
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     var Csheet = req.body;
+    console.log(Object.values(Csheet) );
     //save new sheet
-    const sheet = new Info({
+    /*const sheet = new Info({
         name:Csheet[0].value,
         player_name: Csheet[4].value,
         system:"COC7th",
@@ -88,7 +90,7 @@ router.post('/COC7th', verify, async (req, res) => {
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
-    }
+    }*/
 });
 
 router.get('/COC7th/json/:id',verify,async function (req,res) {

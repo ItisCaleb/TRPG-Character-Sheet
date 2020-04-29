@@ -54,9 +54,9 @@
                 <div id="delete-check" class="list-menu-text">
                     匯入
                 </div>
-                <div id="create" class="list-menu-text">
+                <button id="create" type="submit" form="myform" style="border: 0;padding: 5%;font-size: 100%;width: 100%" class="list-menu-text" >
                     創建
-                </div>
+                </button>
             </div>
 
     </div>
@@ -141,7 +141,7 @@
                         <p>調查員基本屬性：</p>
                         <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＳＴＲ(力量)：<input type="number" step="1" min="0" max="100" value="0" id="str-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label> <input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label> <input type="number" step="1" min="-50"
                                                                                        max="100" id="str-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="str"
@@ -149,7 +149,7 @@
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＣＯＮ(體質)：<input type="number" step="1" min="0" max="100" value="0" id="con-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="con-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="con"
@@ -157,7 +157,7 @@
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＤＥＸ(敏捷)：<input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="dex-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="dex"
@@ -165,7 +165,7 @@
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＡＰＰ(外貌)：<input type="number" step="1" min="0" max="100" value="0" id="app-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="app-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="app"
@@ -173,7 +173,7 @@
                             </div>
                             <div><input type="button" class='dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＰＯＷ(意志)：<input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="pow-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="pow"
@@ -181,7 +181,7 @@
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＳＩＺ(體型)：<input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="siz-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="siz"
@@ -189,19 +189,23 @@
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
                                 <label>ＩＮＴ(智力)：<input type="number" step="1" min="0" max="100" value="0" id="int-bas"
-                                                      class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
+                                                      class="attr stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
                                                                                        max="100" id="int-adj"
                                                                                        class="attr-add stat" value="0"
                                                                                        size="2"/></label>總值:<p id="int"
                                                                                                        class="chara attr"></p>
                             </div>
                             <div><input type="button" class='2d6dice' style="background-image:url('/public/source/dice.png');background-size: 100% 100%;width:25px;height:25px;">
-                                <label>ＥＤＵ(教育)：<input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
-                                                class="attr chara stat" size="2"/></label> 調整值：<label><input type="number" step="1" min="-50"
-                                                                                       max="100" id="edu-adj"
-                                                                                       class="attr-add stat" value="0"
-                                                                                       size="2"/></label>總值:<p id="edu"
-                                                                                                       class="chara attr"></p>
+                                <label>ＥＤＵ(教育)：
+                                    <input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
+                                                class="attr stat" size="2"/>
+                                </label> 調整值：
+                                <label><input type="number" step="1" min="-50"
+                                              max="100" id="edu-adj"
+                                              class="attr-add stat" value="0"
+                                              size="2"/>
+                                </label>總值:
+                                <p id="edu" class="chara attr"></p>
                             </div>
                         </div>
                     </section>
@@ -214,7 +218,11 @@
                             <textarea style="height: 200px;width: 90%;resize: none" name="Role_describtion" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea>
                         </label><br>
                         <label for="image">角色圖片:<br></label>
-                        <label ><img id="add-image" src="/public/source/iconmonstr-plus-6.svg"><input type="file" id="image" onchange="readURL(this)" name="image" accept="image/jpeg, image/png" style="display: none"></label>
+                        <label>
+                            <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
+                            <input type="file" id="image" onchange="readURL(this)" accept="image/*" style="display: none">
+                        </label>
+
 
                         
                     </div>
@@ -242,7 +250,7 @@
                             創傷與傷疤：<input name="injuries" placeholder="曾經以為自己殺死了自己的親弟弟。" size="40"/><br>
                             第三類接觸：<input name="encounter" placeholder="自己召喚的神龍" size="40"/><br>
                             恐懼與狂熱：<input name="mania" placeholder="" size="40"/><br>
-                            魔法書與咒文：<input name=magic" placeholder="竜が我が敵を喰らう！" size="40"/><br>
+                            魔法書與咒文：<input name="magic" placeholder="竜が我が敵を喰らう！" size="40"/><br>
                         </div>
 
                         <div class="" style="width: 50%">

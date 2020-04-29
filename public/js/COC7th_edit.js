@@ -10,7 +10,7 @@ $(document).ready(function () {
         $('.chara').each(function () {
 
             //push the stat's value to array
-            $(this).siblings('.stat').each(function () {
+            $(this).siblings('label').find('.stat').each(function () {
                 stat.push(parseInt($(this).val()));
             });
         });

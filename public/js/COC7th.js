@@ -1,81 +1,81 @@
 document.write();
 $(document).ready(function () {
     //sum up function
-    function sum_up(bas,adj){
-        return parseInt(bas,10) + parseInt(adj,10)
+    function sum_up(bas, adj) {
+        return parseInt(bas, 10) + parseInt(adj, 10)
     }
 
     //repeat
     setInterval(function () {
 
         //calculate the sum of the stat
-        var str = parseInt(($('#str').text(sum_up($('#str-bas').val(),$('#str-adj').val()))).text());
-        var con = parseInt(($('#con').text(sum_up($('#con-bas').val(),$('#con-adj').val()))).text());
-        var dex = parseInt(($('#dex').text(sum_up($('#dex-bas').val(),$('#dex-adj').val()))).text());
-        var app = parseInt(($('#app').text(sum_up($('#app-bas').val(),$('#app-adj').val()))).text());
-        var pow = parseInt(($('#pow').text(sum_up($('#pow-bas').val(),$('#pow-adj').val()))).text());
-        var siz = parseInt(($('#siz').text(sum_up($('#siz-bas').val(),$('#siz-adj').val()))).text());
-        var int = parseInt(($('#int').text(sum_up($('#int-bas').val(),$('#int-adj').val()))).text());
-        var edu = parseInt(($('#edu').text(sum_up($('#edu-bas').val(),$('#edu-adj').val()))).text());
-        $('#hp-max').text(Math.floor(sum_up(con,siz)/10));
-        $('#mp-max').text(Math.floor(pow/5));
-        $('#san-max').text(sum_up(99,-$('#san-minus').text()));
-        var class_feature=$('.class-feature').val()
+        var str = parseInt(($('#str').text(sum_up($('#str-bas').val(), $('#str-adj').val()))).text());
+        var con = parseInt(($('#con').text(sum_up($('#con-bas').val(), $('#con-adj').val()))).text());
+        var dex = parseInt(($('#dex').text(sum_up($('#dex-bas').val(), $('#dex-adj').val()))).text());
+        var app = parseInt(($('#app').text(sum_up($('#app-bas').val(), $('#app-adj').val()))).text());
+        var pow = parseInt(($('#pow').text(sum_up($('#pow-bas').val(), $('#pow-adj').val()))).text());
+        var siz = parseInt(($('#siz').text(sum_up($('#siz-bas').val(), $('#siz-adj').val()))).text());
+        var int = parseInt(($('#int').text(sum_up($('#int-bas').val(), $('#int-adj').val()))).text());
+        var edu = parseInt(($('#edu').text(sum_up($('#edu-bas').val(), $('#edu-adj').val()))).text());
+        $('#hp-max').text(Math.floor(sum_up(con, siz) / 10));
+        $('#mp-max').text(Math.floor(pow / 5));
+        $('#san-max').text(sum_up(99, -$('#san-minus').text()));
+        var class_feature = $('.class-feature').val()
         $('.class-point').text(function () {
             var sum
-            if(class_feature==='EDU')
-                sum=4*(edu);
-            if(class_feature==='EDU+STR')
-                sum=2*(edu+str);
-            if(class_feature==='EDU+DEX')
-                sum=2*(edu+dex);
-            if(class_feature==='EDU+APP')
-                sum=2*(edu+app);
-            if(class_feature==='EDU+POW')
-                sum=2*(edu+pow);
+            if (class_feature === 'EDU')
+                sum = 4 * (edu);
+            if (class_feature === 'EDU+STR')
+                sum = 2 * (edu + str);
+            if (class_feature === 'EDU+DEX')
+                sum = 2 * (edu + dex);
+            if (class_feature === 'EDU+APP')
+                sum = 2 * (edu + app);
+            if (class_feature === 'EDU+POW')
+                sum = 2 * (edu + pow);
             $('.class').each(function () {
-                sum-=$(this).val()
+                sum -= $(this).val()
             })
-            return '剩餘職業點數：'+sum
+            return '剩餘職業點數：' + sum
         })
         $('.interest-point').text(function () {
-            var sum = int*2
+            var sum = int * 2
             $('.interest').each(function () {
-                sum-=$(this).val()
+                sum -= $(this).val()
             })
-            return '剩餘興趣點數：'+sum
+            return '剩餘興趣點數：' + sum
         })
         //calculate the origin value of these specific skills
-        $('#dodge').text(Math.floor(dex/2));
+        $('#dodge').text(Math.floor(dex / 2));
         $('#mother-language').text(edu);
 
         //calculate mov value
-        if(dex < siz || str < siz)
+        if (dex < siz || str < siz)
             $('#mov').text('7');
-        if(dex >= siz || str >= siz)
+        if (dex >= siz || str >= siz)
             $('#mov').text('8');
-        if(dex > siz && str > siz)
+        if (dex > siz && str > siz)
             $('#mov').text('9');
 
         //calculate db and build value
-        if(str + siz < 2)
+        if (str + siz < 2)
             $('#build').text('請填寫完整屬性');
-        if(str + siz >= 2 && str + siz <= 64)
+        if (str + siz >= 2 && str + siz <= 64)
             $('#build').text('-2 & -2');
-        if(str + siz >= 65 && str + siz <= 84)
+        if (str + siz >= 65 && str + siz <= 84)
             $('#build').text('-1 & -1');
-        if(str + siz >= 85 && str + siz <= 124)
+        if (str + siz >= 85 && str + siz <= 124)
             $('#build').text('0 & 0');
-        if(str + siz >= 125 && str + siz <= 164)
+        if (str + siz >= 125 && str + siz <= 164)
             $('#build').text('+1d4 & 1');
-        if(str + siz >= 165 && str + siz <= 204)
+        if (str + siz >= 165 && str + siz <= 204)
             $('#build').text('+1d6 & 2');
-        if(str + siz >= 205 && str + siz <= 284)
+        if (str + siz >= 205 && str + siz <= 284)
             $('#build').text('+2d6 & 3');
-        if(str + siz >=285)
-            $('#build').text(Math.floor((((str+siz)-205)/80)+2)+'d6 & '+Math.floor((((str+siz)-205)/80)+3));
+        if (str + siz >= 285)
+            $('#build').text(Math.floor((((str + siz) - 205) / 80) + 2) + 'd6 & ' + Math.floor((((str + siz) - 205) / 80) + 3));
 
-    },0);
+    }, 0);
 
     //declare skill as an object and stat as an array
     var skill = {};
@@ -84,36 +84,36 @@ $(document).ready(function () {
 
         //maker sure stat's and skill's value won't pass the limit
         $('.attr-add').each(function () {
-            if ($(this).val()>99)
+            if ($(this).val() > 99)
                 $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String )
+            if ($(this).val() === '' || $(this).val() === String)
                 $(this).val(0);
-            if ($(this).val()<-50)
+            if ($(this).val() < -50)
                 $(this).val(-50);
         });
         $('.attr').each(function () {
-            if ($(this).val()>99)
+            if ($(this).val() > 99)
                 $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String )
+            if ($(this).val() === '' || $(this).val() === String)
                 $(this).val(0);
-            if ($(this).val()<0)
+            if ($(this).val() < 0)
                 $(this).val(0);
         });
         $('.skill').each(function () {
-            if ($(this).val()>99)
+            if ($(this).val() > 99)
                 $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String )
+            if ($(this).val() === '' || $(this).val() === String)
                 $(this).val(0);
-            if ($(this).val()<0)
+            if ($(this).val() < 0)
                 $(this).val(0);
         });
-        if(parseInt($('#hp').val())>parseInt($('#hp-max').text()) || parseInt($('#hp').val())<0)
+        if (parseInt($('#hp').val()) > parseInt($('#hp-max').text()) || parseInt($('#hp').val()) < 0)
             $('#hp').val($('#hp-max').text());
-        if(parseInt($('#mp').val())>parseInt($('#mp-max').text()) || parseInt($('#mp').val())<0)
+        if (parseInt($('#mp').val()) > parseInt($('#mp-max').text()) || parseInt($('#mp').val()) < 0)
             $('#mp').val($('#mp-max').text());
-        if(parseInt($('#san').val())>parseInt($('#san-max').text()) )
+        if (parseInt($('#san').val()) > parseInt($('#san-max').text()))
             $('#san').val($('#san-max').text());
-        if(parseInt($('#luk').val())>99 || parseInt($('#luk').val())<0)
+        if (parseInt($('#luk').val()) > 99 || parseInt($('#luk').val()) < 0)
             $('#luk').val(99);
 
 
@@ -124,13 +124,13 @@ $(document).ready(function () {
         stat = [];
         $('.chara').each(function () {
             //make sure the total value of stat won't below 0
-            if (parseInt($(this).text())<0) {
+            if (parseInt($(this).text()) < 0) {
                 $(this).siblings('.attr-add').val(function () {
                     return parseInt($(this).val()) + 1
                 });
             }
             //push the stat's value to array
-            $(this).siblings('.stat').each(function () {
+            $(this).siblings('label').find('.stat').each(function () {
                 stat.push(parseInt($(this).val()));
             });
         });
@@ -144,12 +144,12 @@ $(document).ready(function () {
                 $(this).siblings().find('.base-input').each(function () {
                     sum += parseInt($(this).val());
                 });
-                sum += parseInt($(this).siblings('.base').text()) ;
+                sum += parseInt($(this).siblings('.base').text());
                 return sum
             });
             //push the active skill's value to object
             var name = $(this).siblings('.name').text();
-            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ) {
+            if (parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())) {
                 skill[name] = [];
                 $(this).siblings().find('.base-input').each(function () {
                     skill[name].push(parseInt($(this).val()));
@@ -162,15 +162,15 @@ $(document).ready(function () {
                 delete skill[name];
 
         });
-    },0);
+    }, 0);
 
 
-    $(document).on('change','.class-feature',function () {
+    $(document).on('change', '.class-feature', function () {
         $('.class-feature').val($(this).val())
     })
 
 
-    $(document).on('input','.add-slider',function (event) {
+    $(document).on('input', '.add-slider', function (event) {
         $(this).parent('.add-menu').siblings('.skill').val($(this).val())
     })
 
@@ -187,8 +187,7 @@ $(document).ready(function () {
     })
 
     //slider pop
-    $(document).mouseup(function (e)
-    {
+    $(document).mouseup(function (e) {
         var container = $(".slider-pop");
 
         if (!container.is(e.target) // if the target of the click isn't the container...
@@ -199,15 +198,17 @@ $(document).ready(function () {
     });
     //roll
     $('.dice').click(function () {
-        $(this).siblings('label').find('.attr').val(getRandom(3,18)*5)
+        $(this).siblings('label').find('.attr').val(getRandom(3, 18) * 5)
     })
     //roll
     $('.2d6dice').click(function () {
-        $(this).siblings('label').find('.attr').val((getRandom(3,12)+6)*5)
+        $(this).siblings('label').find('.attr').val((getRandom(3, 12) + 6) * 5)
     })
-    function getRandom(min,max){
-        return Math.floor(Math.random()*(max-min+1))+min;
+
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
     $('.list-button').click(function () {
         $('.left-list-menu').show();
     })
@@ -219,58 +220,72 @@ $(document).ready(function () {
         $(this).addClass('permissions-choose');
         $('.permission-status').val($(this).text()).trigger('change')
     })
-    $('ul.tabs li').click(function(){
+    $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.tabs li').removeClass('current');
         $('.tab-content').removeClass('current');
 
         $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
+        $("#" + tab_id).addClass('current');
     });
-    $('ul.main-tabs li').click(function(){
+    $('ul.main-tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.main-tabs li').removeClass('main-current');
         $('.main-tab-content').removeClass('main-current');
 
         $(this).addClass('main-current');
-        $("#"+tab_id).addClass('main-current');
+        $("#" + tab_id).addClass('main-current');
     })
 
 
     //add stat's and skill's value to the form
-    $('#create').click(function (e) {
+    $(document).on("submit", "#myform", function (e) {
         e.preventDefault();
+        var cSheet = $(this).serializeArray();
+        var form = $(this).closest("form");
+        var sheet = new FormData(form[0]);
+        //sheet.append('skill',JSON.stringify(skill));
+        sheet.append('skill', JSON.stringify(skill));
+        sheet.append('stat', stat);
+        sheet.append('file', $('input[type=file]')[0].files[0]);
+        var object = {};
+        sheet.forEach(function(value, key){
+            object[key] = value;
+        });
+        var json = JSON.stringify(object);
+        console.log(json);
 
-        var sheet = $($('#myform')).serializeArray();
-
-        sheet.push({name:'skill',value:skill});
-        sheet.push({name:'stat',value:stat});
-        console.log(sheet);
-        /*$.ajax({
+        $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
-            contentType: 'application/json; charset=UTF-8',
-            data:JSON.stringify(sheet) ,
-            success:function(data){
+            contentType: 'application/json; charset=utf-8',
+            data:  json,
+            success: function (data) {
                 good_message(data)
-                setTimeout(function(){
+                setTimeout(function () {
                     redirect('/charactersheet')
-                },1000)
+                }, 1000)
             }
-        });*/
-    })
-
+        });
+    });
 });
 function readURL(input) {
     if (input.files && input.files[0]) {
+        $('#error-image').remove();
         var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#add-image')
-                .attr('src', e.target.result)
-        };
         reader.readAsDataURL(input.files[0]);
+        const size=(input.files[0].size/1024)
+        console.log(size +"kb");
+        if(size>=500){
+            $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">檔案過大!請上傳小於500kb的圖像</p>')
+        }else{
+            reader.onload = function (e) {
+                $('#add-image').attr('src', e.target.result)
+            };
+        }
+
+
     }
 }

@@ -34,6 +34,10 @@ $(document).ready(function () {
                     $('.stat').each(function (index) {
                         $(this).val(stat[index]);
                     });
+                    //prevent hp and san from getting 0
+                    $('.stat').each(function (index) {
+                        $(this).val(stat[index]);
+                    });
                     $('.status').each(function (index) {
                         $(this).val(sheet.stat[Object.keys(sheet.stat)[index]]);
                     });

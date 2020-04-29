@@ -156,8 +156,10 @@ td > input{
 }
 #add-image{
     border: 1px solid lightgray;
-    width: 30%;
-    height: 30%;
+    min-width: 10%;
+    max-width: 40%;
+    min-height: 10%;
+    max-height: 40%;
     cursor: pointer;
 }
 .name{
@@ -172,7 +174,6 @@ td > input{
 input{
     text-align: center;
 }
-
 .total{
     width: 5%;
 }
