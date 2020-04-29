@@ -79,8 +79,11 @@
     }
 
     nav > .submenu {
-        float: right;
+        right: 0;
         margin: 0;
+        position: absolute;
+        top: 1%;
+        display: inline-block;
     }
 
     .btn:hover {
@@ -231,15 +234,15 @@
 
 
     .subbtn {
-        font-size: 15px;
+        font-size: 20px;
         line-height: 1.5;
         margin-right: 10px;
+        width:auto ;
         background-color: transparent;
         border: 1px solid #E0E0E0;
         display: inline;
         border-radius: 4px;
         padding: 4px 10px;
-        margin-top: 10px;
         cursor: pointer;
 
     }

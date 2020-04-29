@@ -133,6 +133,7 @@ form{
 @media only screen and (min-width: 768px) {
     td > input {
         width: 100%;
+
     }
 
     .custom {
@@ -153,6 +154,12 @@ td > input{
     border: 0;
     height:25px;
 }
+#add-image{
+    border: 1px solid lightgray;
+    width: 30%;
+    height: 30%;
+    cursor: pointer;
+}
 .name{
     width: 10%;
 }
@@ -161,6 +168,9 @@ td > input{
 }
 .td-input{
     width: 4%;
+}
+input{
+    text-align: center;
 }
 
 .total{

@@ -82,10 +82,6 @@ $(document).ready(function () {
     var stat = [];
     setInterval(function () {
 
-        $('.class-feature').change(function () {
-            $('.class-feature').val($(this).val())
-        })
-
         //maker sure stat's and skill's value won't pass the limit
         $('.attr-add').each(function () {
             if ($(this).val()>99)
@@ -167,6 +163,13 @@ $(document).ready(function () {
 
         });
     },0);
+
+
+    $(document).on('change','.class-feature',function () {
+        $('.class-feature').val($(this).val())
+    })
+
+
     $(document).on('input','.add-slider',function (event) {
         $(this).parent('.add-menu').siblings('.skill').val($(this).val())
     })
@@ -245,7 +248,7 @@ $(document).ready(function () {
         sheet.push({name:'skill',value:skill});
         sheet.push({name:'stat',value:stat});
         console.log(sheet);
-        $.ajax({
+        /*$.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
@@ -256,7 +259,18 @@ $(document).ready(function () {
                     redirect('/charactersheet')
                 },1000)
             }
-        });
+        });*/
     })
 
 });
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#add-image')
+                .attr('src', e.target.result)
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}

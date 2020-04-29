@@ -197,7 +197,7 @@ router.get('/charactersheet',verify,async function (req,res) {
     const cursor =  await Sheet.find({author: {$in:[id]} });
     const sheet={name:[],system:[],url:[]};
     if (!SheetFind) {
-        sheet.name.push('你還沒創建角卡');
+        sheet.name.push('你還沒創建角色卡');
     }else {
         cursor.forEach(function (Sheet) {
             sheet.name.push(Sheet.name);
