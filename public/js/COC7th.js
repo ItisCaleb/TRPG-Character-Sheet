@@ -243,30 +243,25 @@ $(document).ready(function () {
     //add stat's and skill's value to the form
     $(document).on("submit", "#myform", function (e) {
         e.preventDefault();
-        var cSheet = $(this).serializeArray();
-        var form = $(this).closest("form");
-        var sheet = new FormData(form[0]);
-        //sheet.append('skill',JSON.stringify(skill));
-        sheet.append('skill', JSON.stringify(skill));
-        sheet.append('stat', stat);
-        sheet.append('file', $('input[type=file]')[0].files[0]);
-        var object = {};
-        sheet.forEach(function(value, key){
-            object[key] = value;
-        });
-        var json = JSON.stringify(object);
-        console.log(json);
+        var form=$(this)[0];
+        var sheet = new FormData(form);
+        sheet.append('skill',JSON.stringify(skill) );
+        sheet.append('stat',stat);
+        sheet.append('file',$('input[type=file]')[0].files[0]);
 
         $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data:  json,
+            contentType: false,
+            processData: false, // required
+            data:  sheet,
             success: function (data) {
                 good_message(data)
                 setTimeout(function () {
-                    redirect('/charactersheet')
+                    redirect('/charactersheet');
                 }, 1000)
+            }, error:function (res) {
+                bad_message(res.responseText);
             }
         });
     });

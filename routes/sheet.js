@@ -3,26 +3,47 @@ const jwtDecode = require('jwt-decode');
 const verify = require('../public/js/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
-const mongo= require('mongoose-gridfs');
+const dotenv = require('dotenv');
+const GridFsStorage= require('multer-gridfs-storage');
+const multer = require('multer');
 const Session = require('../model/Session');
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
 
-router.post('/COC7th', verify, async (req, res) => {
+dotenv.config()
+
+
+const upload = multer({
+    limit:{
+        fileSize:500000
+    },
+    fileFilter(req,file,cb){
+        cb(null,true)
+        {
+            console.log(file.originalname);
+        }
+        cb(null,false)
+    }
+})
+router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
-
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
-    var Csheet = req.body;
-    console.log(Object.values(Csheet) );
+    var cs = req.body;
+    var cskill = [{}];
+    for (var i=0;i<Object.keys(JSON.parse(cs.skill)).length;i++){
+        var name = Object.keys(JSON.parse(cs.skill))[i];
+        cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
+    }
     //save new sheet
-    /*const sheet = new Info({
-        name:Csheet[0].value,
-        player_name: Csheet[4].value,
+    if(!cs.name) return res.status(400).send('請至少填入角色名字');
+    const sheet = new Info({
+        name:cs.name,
+        player_name: cs.player,
         system:"COC7th",
-        permission:Csheet[28].value,
+        permission:cs.permission,
         author:id
     });
     try{
@@ -32,53 +53,49 @@ router.post('/COC7th', verify, async (req, res) => {
         res.redirect('/charactersheet/create')
     }
 
-    //transform skill from object to array
-    var cskill = [{}];
-    for (var i=0;i<Object.keys(Csheet[30].value).length;i++){
-        var name = Object.keys(Csheet[30].value)[i];
-        cskill[i] = {name :name,number:Object.values(Csheet[30].value)[i]};
-    }
+
     //save skill
     const skill = new COC7thSkill({
         _id:sheet._id,
-        class_feature:Csheet[29].value,
+        class_feature:cs['class-feature'],
         skill:cskill
     });
     const stat = new COC7thStat({
         _id:sheet._id,
-        hp:Csheet[7].value,
-        san:Csheet[8].value,
-        mp:Csheet[9].value,
-        luk:Csheet[10].value,
-        injured_status:Csheet[11].value,
-        insane_status:Csheet[12].value,
-        characteristic:Csheet[31].value
+        hp:cs.hp,
+        san:cs.san,
+        mp:cs.mp,
+        luk:cs.luk,
+        injured_status:cs.injury,
+        insane_status:cs.madness,
+        characteristic:cs.equip
     });
     const story = new COC7thStory({
         _id:sheet._id,
-        class:Csheet[1].value,
-        age:Csheet[2].value,
-        sex:Csheet[3].value,
-        residence:Csheet[5].value,
-        birthplace:Csheet[6].value,
-        role_description:Csheet[16].value,
-        belief:Csheet[17].value,
-        significant_people:Csheet[18].value,
-        meaningful_location:Csheet[19].value,
-        treasured_possession:Csheet[20].value,
-        trait:Csheet[21].value,
-        myth:Csheet[22].value,
-        injuries:Csheet[23].value,
-        encounter:Csheet[24].value,
-        mania:Csheet[25].value,
-        magic:Csheet[26].value,
-        description:Csheet[27].value
+        class:cs.class,
+        age:cs.age,
+        sex:cs.sex,
+        residence:cs.residence,
+        birthplace:cs.birthplace,
+        role_description:cs.role_description,
+        belief:cs.belief,
+        significant_people:cs.significant_people,
+        meaningful_location:cs.meaningful_location,
+        treasured_possession:cs.treasured_possession,
+        trait:cs.trait,
+        myth:cs.myth,
+        injuries:cs.injuries,
+        encounter:cs.encounter,
+        mania:cs.mania,
+        magic:cs.magic,
+        description:cs.description,
+        avatar:req.file.buffer
     });
     const equip = new COC7thEquip({
         _id:sheet._id,
-        equip:Csheet[13].value,
-        cash:Csheet[14].value,
-        weapon:Csheet[15].value
+        equip:cs.equip,
+        cash:cs.money,
+        weapon:cs.weapon
     });
     try{
         await skill.save();
@@ -90,7 +107,7 @@ router.post('/COC7th', verify, async (req, res) => {
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create');
-    }*/
+    }
 });
 
 router.get('/COC7th/json/:id',verify,async function (req,res) {
@@ -110,10 +127,11 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
     await res.json(JSON.stringify(sheet));
 
 });
-router.post('/COC7th/edit/:id',verify,async function(req,res) {
+router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
 
     const id = jwtDecode(req.cookies.auth_token)._id
-    var csheet = req.body;
+    const cs = req.body;
+
     try{
         await Info.updateOne({_id:req.params.id},{
             name:csheet[0].value,
@@ -125,52 +143,52 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
     }
     //transform skill from object to array
     var cskill = [{}];
-    for (var i=0;i<Object.keys(csheet[30].value).length;i++){
-        var name = Object.keys(csheet[30].value)[i];
-        cskill[i] = {name :name,number:Object.values(csheet[30].value)[i]};
+    for (let i = 0; i<Object.keys(JSON.parse(cs.skill)).length; i++){
+        var name = Object.keys(JSON.parse(cs.skill))[i];
+        cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
     }
 
     try{
         await COC7thSkill.updateOne({_id:req.params.id}, {$set:{
-            class_feature:csheet[29].value,
+            class_feature:cs['class-feature'],
             skill:cskill
         }});
         await COC7thStory.updateOne({_id:req.params.id},{$set:{
-                class:csheet[1].value,
-                age:csheet[2].value,
-                sex:csheet[3].value,
-                residence:csheet[5].value,
-                birthplace:csheet[6].value,
-                role_description:csheet[16].value,
-                belief:csheet[17].value,
-                significant_people:csheet[18].value,
-                meaningful_location:csheet[19].value,
-                treasured_possession:csheet[20].value,
-                trait:csheet[21].value,
-                myth:csheet[22].value,
-                injuries:csheet[23].value,
-                encounter:csheet[24].value,
-                mania:csheet[25].value,
-                magic:csheet[26].value,
-                description:csheet[27].value
+                class:cs.class,
+                age:cs.age,
+                sex:cs.sex,
+                residence:cs.residence,
+                birthplace:cs.birthplace,
+                role_description:cs.role_description,
+                belief:cs.belief,
+                significant_people:cs.significant_people,
+                meaningful_location:cs.meaningful_location,
+                treasured_possession:cs.treasured_possession,
+                trait:cs.trait,
+                myth:cs.myth,
+                injuries:cs.injuries,
+                encounter:cs.encounter,
+                mania:cs.mania,
+                magic:cs.magic,
+                description:cs.description,
+                avatar:req.file.buffer
         }});
         await COC7thEquip.updateOne({_id:req.params.id},{$set: {
-            equip:csheet[13].value,
-            cash:csheet[14].value,
-            weapon:csheet[15].value
+                equip:cs.equip,
+                cash:cs.money,
+                weapon:cs.weapon
         }});
         await COC7thStat.updateOne({_id:req.params.id},{$set: {
-            hp:csheet[7].value,
-            san:csheet[8].value,
-            mp:csheet[9].value,
-            luk:csheet[10].value,
-            injured_status:csheet[11].value,
-            insane_status:csheet[12].value,
-            characteristic:csheet[31].value
+                hp:cs.hp,
+                san:cs.san,
+                mp:cs.mp,
+                luk:cs.luk,
+                injured_status:cs.injury,
+                insane_status:cs.madness,
+                characteristic:cs.equip
 
         }});
-        res.write(JSON.stringify({ status: "OK" }));
-        res.end();
+        res.send('yes');
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet');

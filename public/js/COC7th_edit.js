@@ -37,17 +37,19 @@ $(document).ready(function () {
         $('#save-icon').show();
         $('#success-icon').hide();
         setTimeout(function () {
-            var sheet = $('#myform').serializeArray();
-
-            sheet.push({name:'skill',value:skill});
-            sheet.push({name:'stat',value:stat});
+            var form=$('#myform')[0];
+            var sheet = new FormData(form);
+            sheet.append('skill',JSON.stringify(skill) );
+            sheet.append('stat',stat);
+            sheet.append('file',$('input[type=file]')[0].files[0]);
             $.ajax({
                 url:'../api/sheet/COC7th/edit/'+ id,
                 type: 'POST',
-                contentType: 'application/json; charset=UTF-8',
-                data:JSON.stringify(sheet) ,
-                dataType:'json',
-                success:function () {
+                contentType: false,
+                processData: false, // required
+                data:  sheet,
+                success:function (data) {
+                    console.log(data)
                     $('#save-icon').hide();
                     $('#success-icon').show();
                 }

@@ -228,8 +228,13 @@
                     <div class="sheet_creat_div" >
                         <div >
                             <label>角色形容：<br>
-                                <textarea style="height: 200px;width: 90%;resize: none" name="Role_describtion" class="story"></textarea></label>
+                                <textarea style="height: 200px;width: 90%;resize: none" name="role_description" class="story"></textarea></label>
                         </div>
+                        <label for="image">角色圖片:<br></label>
+                        <label>
+                            <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
+                            <input type="file" id="image" onchange="readURL(this)" accept="image/*" style="display: none">
+                        </label>
 
                     </div>
                     <div class="" style="width: 50%">

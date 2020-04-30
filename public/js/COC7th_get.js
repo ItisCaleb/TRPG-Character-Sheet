@@ -22,8 +22,10 @@ $(document).ready(function () {
                     delete sheet.info.session;
                     var stat = sheet.stat.characteristic;
                     var fellow = sheet.story.fellow_investigator;
+                    var image = sheet.story.avatar;
                     delete sheet.story.fellow_investigator;
                     delete sheet.stat.characteristic;
+                    delete sheet.story.avatar;
                     console.log(sheet);
                     $('.info').each(function (index) {
                         $(this).val(sheet.info[Object.keys(sheet.info)[index]]);
@@ -44,6 +46,7 @@ $(document).ready(function () {
                     $('.story').each(function (index) {
                         $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
                     });
+                    $("#add-image").attr("src","data:image/;base64,"+image);
                     $('.permissions').each(function () {
                         $(this).removeClass('permissions-choose');
                         if ($(this).text()===$('.permission-status').val()){

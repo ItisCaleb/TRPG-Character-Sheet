@@ -20,7 +20,10 @@ const COC7thStorySchema = new mongoose.Schema({
     mania:String,
     magic:String,
     encounter:String,
-    fellow_investigator:Array
+    fellow_investigator:Array,
+    avatar: {
+        type: Buffer
+    }
 });
 
 module.exports = mongoose.model("COC7th_Story",COC7thStorySchema);
