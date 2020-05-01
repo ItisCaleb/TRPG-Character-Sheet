@@ -14,7 +14,7 @@ const COC7thSkill = require('../model/COC7th/Skill');
 
 dotenv.config()
 
-
+var image;
 const upload = multer({
     limit:{
         fileSize:500000
@@ -24,7 +24,7 @@ const upload = multer({
         {
             console.log(file.originalname);
         }
-        cb(null,false)
+
     }
 })
 router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
@@ -68,7 +68,7 @@ router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
         luk:cs.luk,
         injured_status:cs.injury,
         insane_status:cs.madness,
-        characteristic:cs.equip
+        characteristic:JSON.parse(cs.stat)
     });
     const story = new COC7thStory({
         _id:sheet._id,
@@ -134,9 +134,9 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
 
     try{
         await Info.updateOne({_id:req.params.id},{
-            name:csheet[0].value,
-            player_name: csheet[4].value,
-            permission:csheet[28].value
+            name:cs.name,
+            player_name: cs.player,
+            permission:cs.permission
         });
     }catch (err) {
         res.status(400).send(err);
@@ -185,10 +185,9 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
                 luk:cs.luk,
                 injured_status:cs.injury,
                 insane_status:cs.madness,
-                characteristic:cs.equip
-
+                characteristic:JSON.parse(cs.stat)
         }});
-        res.send('yes');
+        res.status(200).send()
     }catch (err) {
         res.status(400).send(err);
         res.redirect('/charactersheet');

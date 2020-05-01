@@ -26,7 +26,7 @@ $(document).ready(function () {
                     delete sheet.story.fellow_investigator;
                     delete sheet.stat.characteristic;
                     delete sheet.story.avatar;
-                    console.log(sheet);
+
                     $('.info').each(function (index) {
                         $(this).val(sheet.info[Object.keys(sheet.info)[index]]);
                     });
@@ -37,9 +37,6 @@ $(document).ready(function () {
                         $(this).val(stat[index]);
                     });
                     //prevent hp and san from getting 0
-                    $('.stat').each(function (index) {
-                        $(this).val(stat[index]);
-                    });
                     $('.status').each(function (index) {
                         $(this).val(sheet.stat[Object.keys(sheet.stat)[index]]);
                     });

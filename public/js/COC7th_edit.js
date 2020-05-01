@@ -39,9 +39,15 @@ $(document).ready(function () {
         setTimeout(function () {
             var form=$('#myform')[0];
             var sheet = new FormData(form);
-            sheet.append('skill',JSON.stringify(skill) );
-            sheet.append('stat',stat);
-            sheet.append('file',$('input[type=file]')[0].files[0]);
+            sheet.append('skill',JSON.stringify(skill));
+            sheet.append('stat',JSON.stringify(stat));
+            var image;
+            if ($('input[type=file]')[0].files[0]===undefined){
+                image=$('#add-image').attr('src')
+            }else image=$('input[type=file]')[0].files[0];
+            sheet.append('file',image);
+
+
             $.ajax({
                 url:'../api/sheet/COC7th/edit/'+ id,
                 type: 'POST',
@@ -49,9 +55,11 @@ $(document).ready(function () {
                 processData: false, // required
                 data:  sheet,
                 success:function (data) {
-                    console.log(data)
                     $('#save-icon').hide();
                     $('#success-icon').show();
+                },
+                error:function (res) {
+                    bad_message(res.responseText);
                 }
             });
         },2000)
@@ -73,4 +81,5 @@ $(document).ready(function () {
                 },1000)
         })
     })
+
 });

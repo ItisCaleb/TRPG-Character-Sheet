@@ -239,6 +239,23 @@ $(document).ready(function () {
         $("#" + tab_id).addClass('main-current');
     })
 
+    $(document).on('change','#image',function (inp) {
+        var input=inp.currentTarget
+        if (input.files && input.files[0]) {
+            $('#error-image').remove();
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            const size=(input.files[0].size/1024)
+            console.log(size +"kb");
+            if(size>=500){
+                $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">檔案過大!請上傳小於500kb的圖像</p>')
+            }else{
+                reader.onload = function (e) {
+                    $('#add-image').attr('src', e.target.result)
+                };
+            }
+        }
+    })
 
     //add stat's and skill's value to the form
     $(document).on("submit", "#myform", function (e) {
@@ -246,7 +263,7 @@ $(document).ready(function () {
         var form=$(this)[0];
         var sheet = new FormData(form);
         sheet.append('skill',JSON.stringify(skill) );
-        sheet.append('stat',stat);
+        sheet.append('stat',JSON.stringify(stat) );
         sheet.append('file',$('input[type=file]')[0].files[0]);
 
         $.ajax({
@@ -266,21 +283,35 @@ $(document).ready(function () {
         });
     });
 });
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        $('#error-image').remove();
-        var reader = new FileReader();
-        reader.readAsDataURL(input.files[0]);
-        const size=(input.files[0].size/1024)
-        console.log(size +"kb");
-        if(size>=500){
-            $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">檔案過大!請上傳小於500kb的圖像</p>')
-        }else{
-            reader.onload = function (e) {
-                $('#add-image').attr('src', e.target.result)
-            };
-        }
-
-
+var debug = true;//true: add debug logs when cloning
+var evenMoreListeners = true;//demonstrat re-attaching javascript Event Listeners (Inline Event Listeners don't need to be re-attached)
+if (evenMoreListeners) {
+    var allFleChoosers = $("input[type='file']");
+    addEventListenersTo(allFleChoosers);
+    function addEventListenersTo(fileChooser) {
+        fileChooser.change(function (event) { console.log("file( #" + event.target.id + " ) : " + event.target.value.split("\\").pop()) });
+        fileChooser.click(function (event) { console.log("open( #" + event.target.id + " )") });
     }
+}
+var clone = {};
+// FileClicked()
+function fileClicked(event) {
+    var fileElement = event.target;
+    if (fileElement.value !== "") {
+        if (debug) { console.log("Clone( #" + fileElement.id + " ) : " + fileElement.value.split("\\").pop()) }
+        clone[fileElement.id] = $(fileElement).clone(); //'Saving Clone'
+    }
+    //What ever else you want to do when File Chooser Clicked
+}
+
+// FileChanged()
+function fileChanged(event) {
+    var fileElement = event.target;
+    if (fileElement.value === "") {
+        if (debug) { console.log("Restore( #" + fileElement.id + " ) : " + clone[fileElement.id].val().split("\\").pop()) }
+        clone[fileElement.id].insertBefore(fileElement); //'Restoring Clone'
+        $(fileElement).remove(); //'Removing Original'
+        if (evenMoreListeners) { addEventListenersTo(clone[fileElement.id]) }//If Needed Re-attach additional Event Listeners
+    }
+    //What ever else you want to do when File Chooser Changed
 }

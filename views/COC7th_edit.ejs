@@ -233,7 +233,7 @@
                         <label for="image">角色圖片:<br></label>
                         <label>
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
-                            <input type="file" id="image" onchange="readURL(this)" accept="image/*" style="display: none">
+                            <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)" accept="image/*" style="display: none">
                         </label>
 
                     </div>
