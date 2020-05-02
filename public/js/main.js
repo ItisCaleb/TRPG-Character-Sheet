@@ -4,11 +4,11 @@ $(document).ready(function () {
     var array = url.split('/');
     var id = array[array.length-1];
     //when hover on button, change their color
-    $('#change_password').click(function () {
+    $('#change-password').click(function () {
         $('#password-window').show();
     });
-    $('#cancel_password').click(function () {
-        $('#password_window').hide();
+    $('#cancel-password').click(function () {
+        $('#password-window').hide();
     });
     $('#menu').click(function () {
         $('.right-menu').show();

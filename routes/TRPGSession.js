@@ -86,9 +86,8 @@ router.post('/sheet_upload/:id',verify,async function (req,res) {
             res.status(400).send('請選擇角卡上傳');
         }
     }catch (err) {
-        res.status(404).send('上傳角卡失敗');
+        res.status(400).send('上傳角卡失敗');
     }
-
 });
 
 //leave or dismiss a session if you are the gm

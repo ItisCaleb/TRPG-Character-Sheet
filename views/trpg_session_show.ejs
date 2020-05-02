@@ -59,17 +59,19 @@
     <div id="sheet-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert">檢閱角色卡
-                <p class="message-content">
+                <div class="message-content">
         <% if (session_status !='看來還沒有人上傳角卡') { %>
             <% for(var k=0;k<session_sheet_name.length;k++) { %>
-                <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%><button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button></p>
+                <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%>
+                    <button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button>
+                    <button style="display: inline-block;width: 50px;color: red" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>移除</button>
+                </p>
                 <br>
             <% } %>
         <% } %>
         <% if (session_status =='看來還沒有人上傳角卡') {%>
         <p style="display: inline" ><%=session_status%></p><br>
         <% } %>
-                </p>
         <button id="sheet-disable">關閉</button>
             </div>
         </div>

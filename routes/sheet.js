@@ -14,17 +14,14 @@ const COC7thSkill = require('../model/COC7th/Skill');
 
 dotenv.config()
 
-var image;
+
 const upload = multer({
     limit:{
         fileSize:500000
     },
     fileFilter(req,file,cb){
-        cb(null,true)
-        {
-            console.log(file.originalname);
-        }
-
+        console.log(file.originalname);
+        cb(null,true);
     }
 })
 router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
@@ -32,6 +29,8 @@ router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     var cs = req.body;
+    var image;
+    (req.file) ? image=req.file.buffer : image='';
     var cskill = [{}];
     for (var i=0;i<Object.keys(JSON.parse(cs.skill)).length;i++){
         var name = Object.keys(JSON.parse(cs.skill))[i];
@@ -52,7 +51,6 @@ router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
         res.status(400).send(err);
         res.redirect('/charactersheet/create')
     }
-
 
     //save skill
     const skill = new COC7thSkill({
@@ -89,7 +87,7 @@ router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
         mania:cs.mania,
         magic:cs.magic,
         description:cs.description,
-        avatar:req.file.buffer
+        avatar:image
     });
     const equip = new COC7thEquip({
         _id:sheet._id,
@@ -131,7 +129,6 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
 
     const id = jwtDecode(req.cookies.auth_token)._id
     const cs = req.body;
-
     try{
         await Info.updateOne({_id:req.params.id},{
             name:cs.name,
@@ -143,6 +140,8 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
     }
     //transform skill from object to array
     var cskill = [{}];
+    var image;
+    (req.file) ? image=req.file.buffer : image='';
     for (let i = 0; i<Object.keys(JSON.parse(cs.skill)).length; i++){
         var name = Object.keys(JSON.parse(cs.skill))[i];
         cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
@@ -171,7 +170,7 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
                 mania:cs.mania,
                 magic:cs.magic,
                 description:cs.description,
-                avatar:req.file.buffer
+                avatar:image
         }});
         await COC7thEquip.updateOne({_id:req.params.id},{$set: {
                 equip:cs.equip,
@@ -189,8 +188,7 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
         }});
         res.status(200).send()
     }catch (err) {
-        res.status(400).send(err);
-        res.redirect('/charactersheet');
+        res.status(400).redirect('/charactersheet');
     }
 })
 router.get('/delete/:id',verify,async function (req,res) {

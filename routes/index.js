@@ -114,7 +114,6 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
     if (url === 'create') return res.render('trpg_session_create');
     if (url !=='join'|| url !== 'create') {
         try {
-
             //find current session
             const session = await Session.findOne({_id: url});
 
@@ -127,7 +126,6 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
 
                 //find all the sheet that user has
                 const sheets = await Sheet.find({author:user._id});
-
                 //check if the sheets are already upload to the session
                 for (const info of sheets) {
                     var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}},_id:url});
@@ -168,6 +166,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             }
             else
                 dismiss.option = '離開';
+
             res.render('trpg_session_show', {
                 title: '團務名稱：' + session.name,
                 content: session.player,
