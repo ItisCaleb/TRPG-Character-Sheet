@@ -21,7 +21,7 @@
     </div>
     <ul>
         <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
+        <li class="menu btn" onclick="get('/about')">關於我們</li>
         <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
         <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
         <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
@@ -96,7 +96,7 @@
 <div class="right-menu pop" style="display: none">
         <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
         <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
+        <a class="btn" onclick="get('/about')">關於我們</a>
         <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
         <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
         <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
@@ -120,7 +120,7 @@
                 <div style="display: inline"><%= content[i] %></div><br>
         <% }%>
         <br>
-    <button id="delete-check" class="btn session"><%=dismiss%></button>
+    <button id="delete-check" class="btn session" style="color: red"><%=dismiss%></button>
     <button id="upload" class="btn session">上傳角卡</button>
     <button id="sheet-show" class="btn session">檢閱角卡</button>
 

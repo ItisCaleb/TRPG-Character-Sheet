@@ -58,11 +58,13 @@ router.get('/authed/:id',function (req,res) {
 })
 
 //render user page and check if the user is already login
-router.get("/user", verify, function (req, res) {
-    const userinfo = jwtDecode(req.cookies.auth_token);
+router.get("/user", verify,async function (req, res) {
+    const user = jwtDecode(req.cookies.auth_token);
+    const userInfo = await User.findOne({_id:user._id})
     res.render('user', {
-        title: userinfo.name + info.title[3],
-        email: userinfo.email
+        title: userInfo.name + info.title[3],
+        email: userInfo.email,
+        number:userInfo.sheet_number
     });
 });
 
@@ -210,7 +212,8 @@ router.get('/charactersheet',verify,async function (req,res) {
         title:info.title[5],
         content:sheet.name,
         system:sheet.system,
-        url:sheet.url
+        url:sheet.url,
+        number:sheet.name.length
     });
 });
 router.get('/charactersheet/create/:id',verify,async function (req,res) {

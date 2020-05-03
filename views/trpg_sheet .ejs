@@ -21,7 +21,7 @@
     </div>
     <ul>
         <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
+        <li class="menu btn" onclick="get('/about')">關於我們</li>
         <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
         <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
         <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
@@ -67,7 +67,7 @@
 <div class="right-menu pop" style="display: none">
         <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
         <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
+        <a class="btn" onclick="get('/about')">關於我們</a>
         <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
         <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
         <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
@@ -77,6 +77,8 @@
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+        一人可擁有的角色卡上限為20張<br>
+        你現在共擁有<%=number%>張角色卡
     </div>
     <div style="text-align: center">
         <% if (content[0] =='你還沒創建角色卡' ) { %>

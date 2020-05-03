@@ -70,12 +70,16 @@ function redirect(URL) {
 }
 
 function check() {
-    const regExp = /,/;
-    var text = $(".input").val();
-    const pattern = new RegExp("[`~!#$^&*()=-|.{}':;,\\[\\]<>/?￥…—|【】_=‘”“。、+%]");
+    var text = $(".input-box").val();
+    const pattern = new RegExp("[`~!#$^&*()=|{}\\-':;,\\[\\]<>/?￥…—+\"【】‘”“。、%]");
     const result = text.match(pattern);
     if (result) {
-        message("含有特殊字元");
+        console.log(result);
+        $('.check-btn').prop('disabled',true);
+        bad_message("含有特殊字元");
+        setTimeout(function () {
+            $('.check-btn').prop('disabled',false);
+        },1000)
         return true
     } else {
         return false

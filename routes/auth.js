@@ -85,7 +85,7 @@ router.post('/authed', async (req,res)=>{
             mailTransport.sendMail(mail);
         });
         await temp.save();
-        res.send('已寄出驗證電子郵件');
+        res.send('已寄出驗證電子郵件，請耐心等待');
     } catch (err) {
         res.status(400).send(err);
     }
@@ -113,8 +113,9 @@ router.post('/userlogin', async (req, res) => {
             email: user.email,
         }, process.env.JWT_SECRET);
     if (user.admin===true)  res.cookie('admin', 'True');
-    res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功');
-
+    (req.body.check)
+        ? res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功')
+        : res.cookie('auth_token', token,{sameSite:'Lax'}).send('登入成功');
 });
 
 //change password

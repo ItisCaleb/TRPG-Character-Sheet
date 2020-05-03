@@ -13,7 +13,7 @@ $(document).ready(function () {
                 $('#email').siblings('.check').css('color','#ee6723')
             }
             if(input.val().length >=1){
-                const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
+                const pattern = new RegExp("[`~!#$^&*()=|{}':;,\\[\\]<>/?￥…—【】‘”“。、%]");
                 const result = input.val().match(pattern);
                 if (result) {
                     $(this).css("borderBottomColor", "#ee6723");
@@ -33,13 +33,22 @@ $(document).ready(function () {
         $('.input-box').each(function () {
             if($(this).val().length===0) {
                 bad_message('請輸入資料');
+                $('.check-btn').prop('disabled',true);
                 input=false;
+                setTimeout(function () {
+                    $('.check-btn').prop('disabled',false);
+                },1000)
+                return false
             }
         })
         if(!input) return false
         const email=$('#email').val();
         if(email.length>=1 && !(email.match(new RegExp('[@]')))||email.length===0){
+            $('.check-btn').prop('disabled',true);
             bad_message('請輸入完整的電子郵件');
+            setTimeout(function () {
+                $('.check-btn').prop('disabled',false);
+            },1000)
             return false
         }
         return true
