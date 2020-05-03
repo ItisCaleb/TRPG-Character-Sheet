@@ -43,7 +43,8 @@ $(document).ready(function () {
                     $('.story').each(function (index) {
                         $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
                     });
-                    $("#add-image").attr("src","data:image/;base64,"+image);
+                    (image==='')?$("#add-image").attr("src",'/public/source/iconmonstr-plus-6.svg'):$("#add-image").attr("src","data:image/;base64,"+image);
+
                     $('.permissions').each(function () {
                         $(this).removeClass('permissions-choose');
                         if ($(this).text()===$('.permission-status').val()){

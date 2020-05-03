@@ -120,7 +120,6 @@
                         <label>出生地：<input name="birthplace" class="story"></label><br>
                     </div>
                 </section>
-
                 <section style="display: inline-block;">
                     <p>調查員當前狀態：</p>
                     <div class="sheet_input_div">
@@ -235,6 +234,7 @@
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
                             <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)" accept="image/*" style="display: none">
                         </label>
+                        <button id="cancel-image" class="btn session">取消圖片</button>
 
                     </div>
                     <div class="" style="width: 50%">
@@ -784,7 +784,7 @@
                                 <tr>
                                     <td rowspan="3">戰鬥</td>
                                     <td class="name">鬥毆</td>
-                                    <td class="base base-skill">0</td>
+                                    <td class="base base-skill">25</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
                                     <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>

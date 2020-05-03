@@ -258,9 +258,9 @@ $(document).ready(function () {
     })
 
     //add stat's and skill's value to the form
-    $(document).on("submit", "#myform", function (e) {
+    $(document).on("click", "#create", function (e) {
         e.preventDefault();
-        var form=$(this)[0];
+        var form=$('#myform')[0];
         var sheet = new FormData(form);
         sheet.append('skill',JSON.stringify(skill) );
         sheet.append('stat',JSON.stringify(stat) );

@@ -7,8 +7,8 @@
     <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="../public/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
     <script src="/public/js/main.js" charset="UTF-8"></script>
+    <script src="/public/js/session.js" charset="UTF-8"></script>
 
 
 </head>
@@ -78,6 +78,7 @@
             </div>
         </div>
     </div>
+    </div>
     <div id="delete-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert"><%=dismiss%>團務
@@ -125,77 +126,6 @@
 
     </div>
 </div>
-<script>
-    $('#upload').click(function () {
-        $('#upload-window').css('display','block');
-    })
-    $('#sheet-show').click(function () {
-        $('#sheet-window').css('display','block');
-    })
-    $('#delete-check').click(function () {
-        $('#delete-window').css('display','block');
-    })
-    $('#delete-disable').click(function () {
-        $('#delete-window').css('display','none');
-    })
-    $('#sheet-disable').click(function () {
-        $('#sheet-window').css('display','none');
-    })
-    $('#upload-disable').click(function () {
-        $('#upload-window').css('display','none');
-    })
-    $('#upload-sheet-form').submit(function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: '../api/session/sheet_upload/<%=url%>',
-            type: 'POST',
-            data:$(this).serializeArray(),
-            success:function(data){
-                good_message(data)
-                setTimeout(function(){
-                    redirect('/trpgsession/<%=url%>')
-                },1000)
-            },
-            error:function(data){
-                bad_message(data.responseText)
-            },
-        });
-    })
-    $('.sheet-delete').click(function (e) {
-        e.preventDefault()
-        $.ajax({
-            url:'../api/session/sheetdelete/'+$(this).attr('data-id')+'?session=<%=url%>',
-            type:'GET',
-            success:function(data){
-                good_message(data)
-                setTimeout(function(){
-                    redirect('/trpgsession/<%=url%>')
-                },1000)
-            },
-            error:function(data){
-                bad_message(data.responseText)
-            },
-        })
-    })
-
-    $('#delete').click(function (e) {
-        e.preventDefault();
-        $('#delete-window').css('display','none');
-        $.ajax({
-            url: '../api/session/delete/<%=url%>',
-            type: 'GET',
-            success:function(data){
-                good_message(data)
-                setTimeout(function(){
-                    redirect('/trpgsession')
-                },1000)
-            },
-            error:function(data){
-                bad_message(data.responseText)
-            },
-        });
-    })
-</script>
 <div class="new_pusher"></div>
 <div class="footer">
     Copyright © 2020 trpgtoaster.com. All rights reserved.
