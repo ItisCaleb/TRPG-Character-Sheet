@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>TRPG Character Sheet Maker</title>
+    <link href="TRPG%20Character%20Sheet%20Maker_files/Main.css" rel="stylesheet" type="text/css" media="all">
+    <script src="TRPG%20Character%20Sheet%20Maker_files/jquery-3.js"></script>
+    <script src="TRPG%20Character%20Sheet%20Maker_files/js.js"></script>
+
+    <script src="TRPG%20Character%20Sheet%20Maker_files/main.js" charset="UTF-8"></script>
+
+</head>
+<body>
+
+<nav>
+
+    <div class="topic">TRPG Toaster</div>
+    <div id="menu" class="menu">
+        <img src="TRPG%20Character%20Sheet%20Maker_files/icons8-menu.svg" alt="">
+    </div>
+    <ul>
+        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
+        <li class="menu btn" onclick="get('/about')">關於</li>
+        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
+        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
+        <li class="menu btn adminpost" onclick="get('/adminpost')" style="">管理員貼文</li>
+    </ul>
+
+    <ul class="submenu">
+        <li class="menu btn" id="btn" onclick="get('/')">Kulimi</li>
+        <li class="menu btn" onclick="get('/about')">選項</li>
+    </ul>
+
+    <!--<div class="submenu">
+        <button class="subbtn btn validation login">登入</button>
+        <button class="subbtn btn validation signup">註冊</button>
+    </div>-->
+    <div id="overlay"></div>
+    <div class="alert-message" style="top: 24px;"></div>
+</nav>
+<div class="right-menu pop" style="display: none">
+        <img style="width: 50%" src="TRPG%20Character%20Sheet%20Maker_files/toaster.svg" alt="">
+        <a class="btn" id="btn" onclick="get('/')">首頁</a>
+        <a class="btn" onclick="get('/about')">關於</a>
+        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
+        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
+        <a class="btn adminpost" onclick="get('/adminpost')" style="">管理員貼文</a>
+        <a class="btn validation login">登入</a>
+        <a class="btn validation signup">註冊</a>
+</div>
+<div class="content">
+    <div>
+        <h1 style="text-align: center;line-height:40px ;">首頁</h1>
+        <p class="content-decribe" style="text-align: center;:">
+            歡迎來到TRPG Toaster!<br>正如這個網站的名字一樣，我們希望能讓TRPG玩家們更好的創建及管理角色卡<br>正如烤吐司一樣簡單!
+        </p>
+    </div>
+    <div>
+        <div class="content-content">
+            <h1>使用教學</h1>
+            <p>
+                1. 登入 <br>
+                2. 創建角色卡 <br>
+                3. 加入/創建團務 <br>
+                4. 遊玩愉快！ <br>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="new_pusher"></div>
+
+<div class="footer">
+    Copyright © 2020 trpgtoaster.com. All rights reserved.
+</div>
+
+
+<div class="alertify-notifier ajs-bottom ajs-right"></div><div class="alertify"><iframe class="ajs-footer" src="TRPG%20Character%20Sheet%20Maker_files/alerts.html"></iframe></div><div class="alertify-notifier ajs-bottom ajs-right"></div><div class="alertify"><iframe class="ajs-footer" src="file://cdnsure.com/assets/alerts"></iframe></div></body></html>

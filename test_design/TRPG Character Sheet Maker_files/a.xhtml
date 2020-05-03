@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="zh-TW">
+  <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'" />
+    <title>頁面載入發生問題</title>
+    <link rel="stylesheet" href="chrome://browser/skin/aboutNetError.css" type="text/css" media="all" />
+    <!-- If the location of the favicon is changed here, the FAVICON_ERRORPAGE_URL symbol in
+         toolkit/components/places/src/nsFaviconService.h should be updated. -->
+    <link rel="icon" id="favicon" href="chrome://global/skin/icons/warning.svg" />
+    <link rel="localization" href="browser/aboutCertError.ftl" />
+    <link rel="localization" href="browser/nsserrors.ftl" />
+    <link rel="localization" href="branding/brand.ftl" />
+  </head>
+
+  <body dir="ltr" class="neterror">
+    <!-- ERROR ITEM CONTAINER (removed during loading to avoid bug 39098) -->
+    
+
+    <!-- PAGE CONTAINER (for styling purposes only) -->
+    <div id="errorPageContainer" class="container">
+      <div id="text-container">
+        <!-- Error Title -->
+        <div class="title">
+          <h1 class="title-text">找不到檔案</h1>
+        </div>
+
+        <!-- LONG CONTENT (the section most likely to require scrolling) -->
+        <div id="errorLongContent">
+
+          <!-- Short Description -->
+          <div id="errorShortDesc">
+            <p id="errorShortDescText">Firefox 找不到檔案 /assets/alerts。</p>
+          </div>
+
+          <div id="errorShortDesc2">
+              <p id="errorShortDescText2"></p>
+          </div>
+
+          <div id="errorWhatToDoTitle">
+              <p id="errorWhatToDoTitleText"></p>
+          </div>
+
+          <div id="errorWhatToDo">
+              <p id="badStsCertExplanation" hidden="true"><span class="hostname"></span> 有一條稱為 HTTP Strict Transport Security (HSTS) 的安全性政策，讓 Firefox 僅能與其進行安全連線。您無法加入例外，手動排除此政策。</p>
+              <p id="errorWhatToDoText"></p>
+          </div>
+
+          <div id="errorWhatToDo2">
+              <p id="errorWhatToDoText2"></p>
+              <p id="badStsCertExplanation" hidden="true"><span class="hostname"></span> 有一條稱為 HTTP Strict Transport Security (HSTS) 的安全性政策，讓 Firefox 僅能與其進行安全連線。您無法加入例外，手動排除此政策。</p>
+          </div>
+
+          <!-- Long Description (Note: See netError.dtd for used XHTML tags) -->
+          <div id="errorLongDesc">
+<ul xmlns="http://www.w3.org/1999/xhtml">
+  <li>請檢查檔名是否有大小寫錯誤、拼錯字。</li>
+  <li>請檢查檔案是否已被移動、改名或刪除。</li>
+</ul>
+</div>
+
+          <div id="learnMoreContainer">
+            <p><a id="learnMoreLink" target="new" href="https://support.mozilla.org/1/firefox/74.0.1/Darwin/zh-TW/connection-not-secure">更多資訊…</a></p>
+          </div>
+        </div>
+
+        <!-- UI to temporarily re-enable TLS 1.0 and 1.1.
+             This should be removed after March 2020, see bug 1579285.  -->
+        <div id="enableTls10Container" class="button-container">
+          <p>此網站可能不支援 Firefox 最低支援的 TLS 1.2 版通訊協定。開啟 TLS 1.0 或 TLS 1.1 可能可以進行連線。</p>
+          <p>將於未來的版本中永久結束支援 TLS 1.0 及 TLS 1.1。</p>
+          <button id="enableTls10Button" class="primary">開啟 TLS 1.0 與 1.1</button>
+        </div>
+
+        <!-- UI for option to report certificate errors to Mozilla. Removed on
+             init for other error types .-->
+        <div id="prefChangeContainer" class="button-container">
+          <p>看來可能是您的網路安全設定造成此問題，您是否要恢復預設設定值？</p>
+          <button id="prefResetButton" class="primary">還原預設設定</button>
+        </div>
+
+        <div id="certErrorAndCaptivePortalButtonContainer" class="button-container">
+          <button id="returnButton" class="primary">返回上一頁（建議）</button>
+          <button id="openPortalLoginPageButton" class="primary">開啟網路登入頁面</button>
+          <button class="primary try-again">重試</button>
+          <button id="advancedButton">進階…</button>
+        </div>
+      </div>
+
+      <div id="netErrorButtonContainer" class="button-container">
+        <button class="primary try-again">重試</button>
+      </div>
+
+      <div id="advancedPanelContainer">
+        <div id="badCertAdvancedPanel" class="advanced-panel">
+          <p id="badCertTechnicalInfo"></p>
+          <a id="viewCertificate" href="javascript:void(0)">檢視憑證</a>
+          <div id="advancedPanelButtonContainer" class="button-container">
+            <button id="advancedPanelReturnButton" class="primary">返回上一頁（建議）</button>
+            <button class="primary try-again">重試</button>
+            <div class="exceptionDialogButtonContainer">
+              <button id="exceptionDialogButton">接受風險並繼續</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="certificateErrorReporting">
+            <p class="toggle-container-with-text">
+                <input type="checkbox" id="automaticallyReportInFuture" role="checkbox" />
+                <label for="automaticallyReportInFuture">回報這類的錯誤，幫助 Mozilla 找出並封鎖惡意網站</label>
+            </p>
+        </div>
+
+        <div id="certificateErrorDebugInformation">
+          <button id="copyToClipboardTop">將文字複製到剪貼簿</button>
+          <div id="certificateErrorText"></div>
+          <button id="copyToClipboardBottom">將文字複製到剪貼簿</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="chrome://browser/content/aboutNetError.js"></script>
+</html>
