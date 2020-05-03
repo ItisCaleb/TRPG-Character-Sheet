@@ -64,7 +64,9 @@
             <% for(var k=0;k<session_sheet_name.length;k++) { %>
                 <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%>
                     <button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button>
-                    <button style="display: inline-block;width: 50px;color: red" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>移除</button>
+                    <%if (session_sheet_access[k]==='yes') { %>
+                    <button class="sheet-delete" style="display: inline-block;width: 50px;color: red" data-id="<%=session_sheet_id[k]%>">移除</button>
+                    <% }%>
                 </p>
                 <br>
             <% } %>
@@ -159,6 +161,23 @@
             },
         });
     })
+    $('.sheet-delete').click(function (e) {
+        e.preventDefault()
+        $.ajax({
+            url:'../api/session/sheetdelete/'+$(this).attr('data-id')+'?session=<%=url%>',
+            type:'GET',
+            success:function(data){
+                good_message(data)
+                setTimeout(function(){
+                    redirect('/trpgsession/<%=url%>')
+                },1000)
+            },
+            error:function(data){
+                bad_message(data.responseText)
+            },
+        })
+    })
+
     $('#delete').click(function (e) {
         e.preventDefault();
         $('#delete-window').css('display','none');

@@ -89,6 +89,24 @@ router.post('/sheet_upload/:id',verify,async function (req,res) {
         res.status(400).send('上傳角卡失敗');
     }
 });
+router.get('/sheetdelete/:id',verify,async function (req,res) {
+    const user =jwtDecode(req.cookies.auth_token);
+    const sheet=req.params.id;
+    const session=req.query.session;
+    const sheetOwn= await Info.findOne({_id:sheet ,author:user._id});
+    if (!sheetOwn) return res.status(400).send('這不是你的角色卡!');
+    if(!session) return res.status(400).send('URL的值無效')
+    try {
+        await Session.updateOne({_id:session},{$pull:{sheet:sheetOwn._id}});
+        await Info.updateOne({_id:sheet,author:user._id},{$pull:{session:session}});
+        res.send('已取消上傳的角色卡');
+    }catch (err) {
+        res.status(400).send(err)
+    }
+
+
+})
+
 
 //leave or dismiss a session if you are the gm
 router.get('/delete/:id',verify, async function (req,res) {

@@ -107,7 +107,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
     const username=jwtDecode(req.cookies.auth_token);
     const url=req.params.id;
     const UserSheet={name:[],system:[],sheet_id:[],status:''};
-    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:''};
+    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:'',access:[]};
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
@@ -154,6 +154,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                     SessionSheet.system.push(sheet.system);
                     SessionSheet.sheet_id.push(sheet._id);
                     SessionSheet.player.push(player.name);
+                    (player.name===user.name) ? SessionSheet.access.push('yes') :SessionSheet.access.push('no');
                 }
             }else{
                 SessionSheet.status='看來還沒有人上傳角卡'
@@ -181,7 +182,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 session_system:SessionSheet.system,
                 session_sheet_id:SessionSheet.sheet_id,
                 session_status:SessionSheet.status,
-                session_sheet_player:SessionSheet.player
+                session_sheet_player:SessionSheet.player,
+                session_sheet_access:SessionSheet.access
             })
         } catch (err) {
             res.status(404).render('404')
