@@ -49,7 +49,7 @@
 <div class="content" >
     <h1 class="title">註冊</h1>
     <div id="form-box">
-        <form class="table" action="../api/user/authed" method="post">
+        <form id="form" class="table" action="../api/user/authed">
             <label class="input">
                 <input class="input-box" type="text" placeholder="輸入暱稱" name="name" id="name" required>
                 <span class="check"></span>
@@ -66,38 +66,13 @@
                 <input class="input-box" type="password" placeholder="再次輸入密碼" name="repassword" id="repassword" required>
                 <span class="check"></span>
             </label>
-            <button class="check-btn"  type="submit">註冊</button>
+            <button id="signup" class="check-btn">註冊</button>
         </form>
         <p style="text-align: left">已經有帳號了嗎?<a href="/login">點擊這邊登入</a></p>
     </div>
 
 </div>
-<script>
-    $('.table').submit(function (e) {
-        e.preventDefault();
-        if (!check()) {
-            if($('#password').val() !== $('#repassword').val()){
-                bad_message('重新輸入密碼有誤')
-            }
-            if ($('#password').val() === $('#repassword').val()) {
-                $.ajax({
-                    url: $(this).attr("action"),
-                    type: 'POST',
-                    data: $(this).serializeArray(),
-                    success: function (data) {
-                        good_message(data)
-                        setTimeout(function () {
-                            redirect('/login')
-                        }, 1000)
-                    },
-                    error: function (data) {
-                        bad_message(data.responseText)
-                    },
-                });
-            }
-        }
-    })
-</script>
+
 <div class="new_pusher"></div>
 <div class="footer">
     Copyright © 2020 trpgtoaster.com. All rights reserved.

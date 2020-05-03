@@ -260,12 +260,12 @@ $(document).ready(function () {
     //add stat's and skill's value to the form
     $(document).on("click", "#create", function (e) {
         e.preventDefault();
+        $('#create').prop('disabled',true);
         var form=$('#myform')[0];
         var sheet = new FormData(form);
         sheet.append('skill',JSON.stringify(skill) );
         sheet.append('stat',JSON.stringify(stat) );
         sheet.append('file',$('input[type=file]')[0].files[0]);
-
         $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
@@ -277,8 +277,11 @@ $(document).ready(function () {
                 setTimeout(function () {
                     redirect('/charactersheet');
                 }, 1000)
-            }, error:function (res) {
-                bad_message(res.responseText);
+            }, error: function (data) {
+                bad_message(data.responseText)
+                setTimeout(function () {
+                    $('#create').prop('disabled',false);
+                },1000)
             }
         });
     });

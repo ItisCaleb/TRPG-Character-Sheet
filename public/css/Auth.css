@@ -137,4 +137,8 @@
         cursor: pointer;
         width: 100%;
     }
+
+}
+.check-btn:hover {
+    opacity: 0.8;
 }

@@ -25,7 +25,7 @@ router.get("/register/:email", async (req, res) => {
         //await user.save();
         await tempUser.deleteOne({email:email});
         await newUser.save();
-        const day =8640000;
+        const day =86490000;
         const token = jwt.sign(
             {
                 iss: 'trpgtoaster.com',
@@ -103,7 +103,7 @@ router.post('/userlogin', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).send('密碼錯誤');
     //create jwt login token
-    const day =8640000;
+    const day =86409000;
     const token = jwt.sign(
         {
             iss: 'trpgtoaster.com',

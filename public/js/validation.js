@@ -49,6 +49,11 @@ const loginValidation = data => {
             .min(6)
             .max(15)
             .required()
+            .error(()=>{
+                return{
+                    message:"密碼長度為6到20個字元"
+                }
+            }),
     };
     return Joi.validate(data,schema);
 };

@@ -65,7 +65,7 @@
 <script>
     $('.table').submit(function (e) {
         e.preventDefault();
-
+        $('.check-btn').prop('disabled',true);
         $.ajax({
             url: $(this).attr("action"),
             type: 'POST',
@@ -76,9 +76,12 @@
                     redirect('/trpgsession');
                 },1000)
             },
-            error:function(data){
-                bad_message(data.responseText);
-            },
+            error: function (data) {
+                bad_message(data.responseText)
+                setTimeout(function () {
+                    $('.check-btn').prop('disabled', false);
+                }, 1000)
+            }
         });
     })
 </script>
