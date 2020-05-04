@@ -3,6 +3,7 @@ const info = require('../public/info');
 const Session = require('../model/Session');
 const Sheet = require('../model/Info');
 const User = require('../model/User');
+const tempUser=require('../model/tempUser');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
@@ -46,17 +47,37 @@ router.get("/login", function (req, res) {
     if (token) return res.redirect('/');
     res.render('login');
 });
+router.get('/forget_password',function (req,res) {
+    const token= req.cookies.auth_token;
+    if (token) return res.redirect('/');
+    res.render('forget_password');
+})
+
 router.get('/authed/:id',function (req,res) {
     if (req.params.id==='error') return res.render('index', {
         title: '你的驗證已經逾時或是失效!',
         content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次'
     });
-    else return res.render('index', {
+    res.render('index', {
         title: '你已經驗證成功!',
         content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能'
     });
 })
-
+router.get('/find_password/:email',async function (req,res) {
+    const findExpire= await tempUser.findOne({email:req.params.email});
+    if(!findExpire) return res.render('find_password', {
+        title: '你的修改密碼已經逾時或是失效!',
+        content: '這個網址已經失效\r\n如只是逾時請再請求發送電子郵件',
+        email:'',
+        pstatus:'false'
+    });
+    res.render('find_password', {
+        title: '修改密碼',
+        content: '',
+        email:findExpire.email,
+        pstatus:'true'
+    });
+})
 //render user page and check if the user is already login
 router.get("/user", verify,async function (req, res) {
     const user = jwtDecode(req.cookies.auth_token);

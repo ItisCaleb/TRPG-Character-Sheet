@@ -83,7 +83,7 @@ $(document).ready(function () {
             }
         }
     })
-    $('#login').click(async function (e) {
+    $('#login').click( function (e) {
         e.preventDefault();
         if(checkInput()) {
             if (!check()) {
@@ -108,4 +108,28 @@ $(document).ready(function () {
             }
         }
     })
+    $('#forget_password').click(function (e) {
+        e.preventDefault();
+        if(checkInput()) {
+                $('#forget_password').prop('disabled',true);
+                $.ajax({
+                    url: $('#form').attr("action"),
+                    type: 'POST',
+                    data: $('#form').serializeArray(),
+                    success:function (data) {
+                        good_message(data)
+                        setTimeout(function () {
+                            redirect('/')
+                        }, 1000)
+                    },
+                    error: function (data) {
+                        bad_message(data.responseText)
+                        setTimeout(function () {
+                            $('#forget_password').prop('disabled',false);
+                        },1000)
+                    }
+                });
+            }
+    })
+
 });

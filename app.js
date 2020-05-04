@@ -17,6 +17,9 @@ const sheetRoute = require('./routes/sheet');
 
 
 //set view engine
+
+app.engine('ejs',require('ejs-locals'));
+app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs');
 dotenv.config();
 
