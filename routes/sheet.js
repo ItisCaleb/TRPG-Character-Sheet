@@ -7,14 +7,21 @@ const dotenv = require('dotenv');
 const GridFsStorage= require('multer-gridfs-storage');
 const multer = require('multer');
 const Session = require('../model/Session');
+
+
+//import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
+const DND5eStat = require('../model/DND5e/Stat');
+const DND5eStory = require('../model/DND5e/Story');
+const DND5eEquip = require('../model/DND5e/Equip');
+const DND5eSpell = require('../model/DND5e/Spell');
 
 dotenv.config()
 
-
+// image filter middleware
 const upload = multer({
     limit:{
         fileSize:500000
@@ -24,7 +31,7 @@ const upload = multer({
         cb(null,true);
     }
 })
-router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
+router.post('/COC7th', verify,upload.single('file'), async function (req, res)  {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
@@ -107,7 +114,6 @@ router.post('/COC7th', verify,upload.single('file'), async (req, res) => {
         res.redirect('/charactersheet/create');
     }
 });
-
 router.get('/COC7th/json/:id',verify,async function (req,res) {
     const url = req.params.id;
     var sheet = {};
@@ -191,6 +197,12 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
         res.status(400).redirect('/charactersheet');
     }
 })
+
+router.post('/DND5e',verify,upload.single('file'),async function (req,res) {
+
+})
+
+
 router.get('/delete/:id',verify,async function (req,res) {
 
     const sheetId = req.params.id;
