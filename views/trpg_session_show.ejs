@@ -76,16 +76,20 @@
 
 
     <div style="text-align: center">
-            <% if (content[1] == null ) { %>
-                <%  content.push('你還沒有玩家') %>
+            <% if (player[1] == null ) { %>
+                <%  player.push('你還沒有玩家') %>
         <% }%>
-        <div>gm:<%=content[0]%></div>
+        <div>gm:<%=player[0]%></div>
         <% if (password != 'none')  {%>
         密碼: <%=password%> <br>
                 <%}%>
         玩家:
-            <% for(var i=1;i<content.length;i++) { %>
-                <div style="display: inline"><%= content[i] %></div><br>
+            <% for(var i=1;i<player.length;i++) { %>
+                <div style="display: inline"><%= player[i] %></div>
+                 <% if (password !='none' && player[1] !== '你還沒有玩家' ) { %>
+                    <button class="player-delete" style="display: inline-block;width: 50px;color: red" data-id="<%=player[i]%>">剔除</button>
+                 <% } %>
+                    <br>
         <% }%>
         <br>
     <button id="delete-check" class="btn session" style="color: red"><%=dismiss%></button>

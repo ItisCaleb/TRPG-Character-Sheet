@@ -193,7 +193,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
 
             res.render('trpg_session_show', {
                 title: '團務名稱：' + session.name,
-                content: session.player,
+                player: session.player,
                 password:pword,
                 dismiss: dismiss.option,
                 url: dismiss.url,

@@ -133,7 +133,6 @@ form{
 @media only screen and (min-width: 768px) {
     td > input {
         width: 100%;
-
     }
 
     .custom {
@@ -181,10 +180,11 @@ input{
     position: fixed;
     right: 4%;
     top:30%;
+    width: 8%;
     border: 1px solid lightgray;
     background-color: white;
 }
-.add-slider{
+#add-slider{
     display: inline-block;
     -webkit-appearance: slider-vertical;
     width: 40%;
@@ -195,8 +195,22 @@ input{
     position: absolute;
     top:37%;
 }
-.limit-number{
-    left: 20%;
+#add{
+    margin-top: 5%;
+    background-image:url("/public/source/iconmonstr-plus-6.svg") ;
+    background-size:100% ;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    cursor: pointer;
+}
+#minus{
+    background-image:url("/public/source/iconmonstr-minus-circle-thin.svg") ;
+    background-size:100% ;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    cursor: pointer;
 }
 
 .container{
@@ -265,7 +279,7 @@ ul.tabs li.current{
 }
 ul.main-tabs{
     margin-left: 5%;
-    padding: 0px;
+    padding: 0;
     list-style: none;
 
 }

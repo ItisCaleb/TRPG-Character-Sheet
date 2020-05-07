@@ -51,6 +51,7 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
 
     //check if the player is already in the session
     const playerExist = await Session.findOne({name:req.body.name,player:{$in:[user]}});
+    if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
     //check if the session doesn't exist
     if (!session) return res.status(400).send('此團務不存在');
     //check the password
@@ -103,8 +104,33 @@ router.get('/sheetdelete/:id',verify,async function (req,res) {
     }catch (err) {
         res.status(400).send(err)
     }
+})
+router.get('/playerdelete/:id',verify,async function (req,res) {
+    //get current user
+    const user =jwtDecode(req.cookies.auth_token);
+    //check if the user is gm
+    //get delete player
+    const player=req.params.id;
+    //get current session
+    const session=req.query.session;
+    const gm= await Session.findOne({_id:session ,gm:user.name});
+    if (!gm) return res.status(400).send('你並無權限剔除人');
+    if(!session) return res.status(400).send('URL的值無效')
 
-
+    //find player's information
+    const player_user = await User.findOne({name:player})
+    //find player's sheet in the session
+    const user_sheet = await Info.find({session:{$elemMatch:{$in:[session]}},author:player_user._id});
+    try {
+        for (const info of user_sheet) {
+            await Info.updateOne({_id:info._id,author:player_user._id},{$pull:{session:session}});
+            await Session.updateOne({_id:session},{$pull:{sheet:info._id}});
+        }
+        await Session.updateOne({_id:session},{$pull:{player:player}});
+        res.send('已將'+player+'剔除');
+    }catch (err) {
+        res.status(400).send(err)
+    }
 })
 
 

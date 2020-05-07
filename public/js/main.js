@@ -61,7 +61,15 @@ $(document).ready(function () {
             }
         });
     },0)
-
+    $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
+    function zoomDisable(){
+        $('head meta[name=viewport]').remove();
+        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>\n');
+    }
+    function zoomEnable(){
+        $('head meta[name=viewport]').remove();
+        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1">');
+    }
 });
 
 //redirect URL function

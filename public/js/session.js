@@ -58,6 +58,26 @@ $(document).ready(function () {
             },
         })
     })
+    $('.player-delete').click(function (e) {
+        e.preventDefault()
+        $('.player-delete').prop('disabled',true);
+        $.ajax({
+            url:'../api/session/playerdelete/'+$(this).attr('data-id')+'?session='+id,
+            type:'GET',
+            success:function(data){
+                good_message(data)
+                setTimeout(function(){
+                    redirect('/trpgsession/'+id)
+                },1000)
+            },
+            error:function(data){
+                bad_message(data.responseText);
+                setTimeout(function () {
+                    $('.player-delete').prop('disabled',false);
+                },1000)
+            },
+        })
+    })
 
     $('#delete').click(function (e) {
         e.preventDefault();

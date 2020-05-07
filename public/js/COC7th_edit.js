@@ -34,6 +34,9 @@ $(document).ready(function () {
         });
     });
     $(document).on('change','input',function () {
+        if($('#name').val()===''){
+            return bad_message('調查員姓名不得為空')
+        }
         $('#save-icon').show();
         $('#success-icon').hide();
         setTimeout(function () {
