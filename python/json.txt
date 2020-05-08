@@ -1,0 +1,48 @@
+[
+  { name: 'name', value: 'caleb1212' }, //角色名字
+  { name: 'class', value: '' },	//職業
+  { name: 'age', value: '' },	//年齡
+  { name: 'sex', value: '' },	//性別
+  { name: 'player', value: 'tester' }, //玩家
+  { name: 'residence', value: '' }, //現居地
+  { name: 'birthplace', value: '' }, //出生地
+  { name: 'Role_describtion', value: '' }, //角色形容
+  { name: 'hp', value: '0' }, //生命值
+  { name: 'san', value: '0' }, //san直
+  { name: 'mp', value: '0' }, //魔力直
+  { name: 'luk', value: '0' }, //幸運直
+  { name: 'injury', value: '無' }, //受傷狀態
+  { name: 'madness', value: '無' }, //瘋狂狀態
+  { name: 'belief', value: '' }, //信仰
+  { name: 'significant_people', value: '' }, //重要之人
+  { name: 'meaningful_location', value: '' }, //意義非凡之地
+  { name: 'treasured_possession', value: '' },  //寶貴之物
+  { name: 'trait', value: '' }, //特點
+  { name: 'myth', value: '否' }, //神話信仰者
+  { name: 'injuries', value: '' }, //創傷與傷疤
+  { name: 'encounter', value: '' }, //第三類接觸
+  { name: 'mania', value: '' },// 恐懼與狂熱
+  { name: 'magic"', value: '' }, //魔法書與咒文
+  { name: 'description', value: '' }, //個人描述
+  { name: 'equip', value: '' }, //身上裝備
+  { name: 'money', value: '' }, //錢
+  { name: 'weapon', value: '' }, //武器
+  { name: 'class-feature', value: 'EDU' }, //職業特徵
+  {
+    name: 'skill', //技能 Array裡長[職業，興趣，成長]若是自訂義技能則有第四項名字
+    value: {
+      '信用評級(Credit Rating) ': [Array],
+      '閃避(Dodge) ': [Array],
+      '母語(Language (Own)': [Array]
+    }
+  },
+  {
+    name: 'stat', //照著str con dex app pow siz int edu的初始值及成長排下去
+    value: [
+      0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0
+    ]
+  }
+]
+
