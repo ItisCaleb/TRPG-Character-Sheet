@@ -1,38 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta charset="UTF-8">
-    <title>TRPG Character Sheet Maker</title>
-    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
+    <%include head.ejs%>
     <link href="/public/css/COC7th.css" rel="stylesheet" type="text/css" media="all">
-    <script src="/public/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/public/js/main.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th_get.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th_edit.js" charset="UTF-8"></script>
 </head>
-<body id="page">
-
+<body>
 <nav>
-    <div class="topic">TRPG Toaster</div>
-    <div id="menu" class="menu" >
-        <img src="/public/source/icons8-menu.svg" alt="">
-    </div>
-    <ul>
-        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
-        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
-        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
-        <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
-    </ul>
-    <div class="submenu">
-        <button class="subbtn btn validation login">登入</button>
-        <button class="subbtn btn validation signup">註冊</button>
-    </div>
-    <div id="overlay"></div>
-    <div class="alert-message" style="top: 24px;"></div>
+<% include header.ejs%>
+
     <div id="delete-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert">刪除角色卡
@@ -47,16 +25,7 @@
         </div>
     </div>
 </nav>
-<div class="right-menu pop" style="display: none">
-    <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
-    <a class="btn" id="btn" onclick="get('/')">首頁</a>
-    <a class="btn" onclick="get('/about')">關於</a>
-    <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
-    <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
-    <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
-    <a class="btn validation login">登入</a>
-    <a class="btn validation signup">註冊</a>
-</div>
+<% include rightmenu.ejs%>
 <div class="left-side">
     <div class="list">
             <div class="list-top">
@@ -109,7 +78,7 @@
                 <section style="display: inline-block">
                     <p>調查員基本資料：</p>
                     <div class="sheet_input_div">
-                        <label>姓名：<input name="name" class="info"></label><br>
+                        <label>姓名：<input name="name" id="name" class="info"></label><br>
                         <label>職業：<input name="class" class="story"></label> <br>
                         <label>年齡：<input name="age" type="number" class="story"></label><br>
                         <label>性別：<input name="sex" class="story"></label><br>
@@ -120,7 +89,6 @@
                         <label>出生地：<input name="birthplace" class="story"></label><br>
                     </div>
                 </section>
-
                 <section style="display: inline-block;">
                     <p>調查員當前狀態：</p>
                     <div class="sheet_input_div">
@@ -235,6 +203,7 @@
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
                             <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)" accept="image/*" style="display: none">
                         </label>
+                        <button id="cancel-image" class="btn session">取消圖片</button>
 
                     </div>
                     <div class="" style="width: 50%">
@@ -784,7 +753,7 @@
                                 <tr>
                                     <td rowspan="3">戰鬥</td>
                                     <td class="name">鬥毆</td>
-                                    <td class="base base-skill">0</td>
+                                    <td class="base base-skill">25</td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
                                     <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
                                     <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
@@ -946,11 +915,7 @@
     </div>
 </div>
 
-<div class="new_pusher"></div>
-
-<div class="footer">
-    Copyright © 2020 trpgtoaster.com. All rights reserved.
-</div>
+<%include footer.ejs%>
 
 
 </body>

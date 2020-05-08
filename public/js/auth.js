@@ -13,7 +13,7 @@ $(document).ready(function () {
                 $('#email').siblings('.check').css('color','#ee6723')
             }
             if(input.val().length >=1){
-                const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~!#￥……&*()——|{}【】‘;:”“'。,、?%]");
+                const pattern = new RegExp("[`~!#$^&*()=|{}':;,\\[\\]<>/?￥…—【】‘”“。、%]");
                 const result = input.val().match(pattern);
                 if (result) {
                     $(this).css("borderBottomColor", "#ee6723");
@@ -28,6 +28,108 @@ $(document).ready(function () {
             }
         })
     },0);
-
+    function checkInput(){
+        var input=true;
+        $('.input-box').each(function () {
+            if($(this).val().length===0) {
+                bad_message('請輸入資料');
+                $('.check-btn').prop('disabled',true);
+                input=false;
+                setTimeout(function () {
+                    $('.check-btn').prop('disabled',false);
+                },1000)
+                return false
+            }
+        })
+        if(!input) return false
+        const email=$('#email').val();
+        if(email.length>=1 && !(email.match(new RegExp('[@]')))||email.length===0){
+            $('.check-btn').prop('disabled',true);
+            bad_message('請輸入完整的電子郵件');
+            setTimeout(function () {
+                $('.check-btn').prop('disabled',false);
+            },1000)
+            return false
+        }
+        return true
+    }
+    $('#signup').click(function (e) {
+        e.preventDefault();
+        if(checkInput()) {
+            if (!check()) {
+                $('#signup').prop('disabled',true);
+                if ($('#password').val() !== $('#repassword').val()) {
+                    bad_message('重新輸入密碼有誤')
+                }
+                if ($('#password').val() === $('#repassword').val()) {
+                    $.ajax({
+                        url: $('#form').attr("action"),
+                        type: 'POST',
+                        data: $('#form').serializeArray(),
+                        success: function (data) {
+                            good_message(data)
+                            setTimeout(function () {
+                                redirect('/login')
+                            }, 1000)
+                        },
+                        error: function (data) {
+                            bad_message(data.responseText)
+                            setTimeout(function () {
+                                $('#signup').prop('disabled',false);
+                            },1000)
+                        },
+                    });
+                }
+            }
+        }
+    })
+    $('#login').click( function (e) {
+        e.preventDefault();
+        if(checkInput()) {
+            if (!check()) {
+                $('#login').prop('disabled',true);
+                $.ajax({
+                    url: $('#form').attr("action"),
+                    type: 'POST',
+                    data: $('#form').serializeArray(),
+                    success:function (data) {
+                        good_message(data)
+                        setTimeout(function () {
+                            redirect('/')
+                        }, 1000)
+                    },
+                    error: function (data) {
+                        bad_message(data.responseText)
+                        setTimeout(function () {
+                            $('#login').prop('disabled',false);
+                        },1000)
+                    }
+                });
+            }
+        }
+    })
+    $('#forget_password').click(function (e) {
+        e.preventDefault();
+        if(checkInput()) {
+                $('#forget_password').prop('disabled',true);
+                $.ajax({
+                    url: $('#form').attr("action"),
+                    type: 'POST',
+                    data: $('#form').serializeArray(),
+                    success:function (data) {
+                        good_message(data)
+                        setTimeout(function () {
+                            redirect('/')
+                        }, 1000)
+                    },
+                    error: function (data) {
+                        bad_message(data.responseText)
+                        setTimeout(function () {
+                            $('#forget_password').prop('disabled',false);
+                        },1000)
+                    }
+                });
+            }
+    })
 
 });

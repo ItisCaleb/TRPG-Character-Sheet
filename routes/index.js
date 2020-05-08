@@ -3,6 +3,7 @@ const info = require('../public/info');
 const Session = require('../model/Session');
 const Sheet = require('../model/Info');
 const User = require('../model/User');
+const tempUser=require('../model/tempUser');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
@@ -46,23 +47,45 @@ router.get("/login", function (req, res) {
     if (token) return res.redirect('/');
     res.render('login');
 });
+router.get('/forget_password',function (req,res) {
+    const token= req.cookies.auth_token;
+    if (token) return res.redirect('/');
+    res.render('forget_password');
+})
+
 router.get('/authed/:id',function (req,res) {
     if (req.params.id==='error') return res.render('index', {
         title: '你的驗證已經逾時或是失效!',
         content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次'
     });
-    else return res.render('index', {
+    res.render('index', {
         title: '你已經驗證成功!',
         content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能'
     });
 })
-
+router.get('/find_password/:email',async function (req,res) {
+    const findExpire= await tempUser.findOne({email:req.params.email});
+    if(!findExpire) return res.render('find_password', {
+        title: '你的修改密碼已經逾時或是失效!',
+        content: '這個網址已經失效\r\n如只是逾時請再請求發送電子郵件',
+        email:'',
+        pstatus:'false'
+    });
+    res.render('find_password', {
+        title: '修改密碼',
+        content: '',
+        email:findExpire.email,
+        pstatus:'true'
+    });
+})
 //render user page and check if the user is already login
-router.get("/user", verify, function (req, res) {
-    const userinfo = jwtDecode(req.cookies.auth_token);
+router.get("/user", verify,async function (req, res) {
+    const user = jwtDecode(req.cookies.auth_token);
+    const userInfo = await User.findOne({_id:user._id})
     res.render('user', {
-        title: userinfo.name + info.title[3],
-        email: userinfo.email
+        title: userInfo.name + info.title[3],
+        email: userInfo.email,
+        number:userInfo.sheet_number
     });
 });
 
@@ -107,14 +130,13 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
     const username=jwtDecode(req.cookies.auth_token);
     const url=req.params.id;
     const UserSheet={name:[],system:[],sheet_id:[],status:''};
-    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:''};
+    const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:'',access:[]};
     //render session join page
     if (url === 'join') return res.render('trpg_session_join');
     //render session create page
     if (url === 'create') return res.render('trpg_session_create');
     if (url !=='join'|| url !== 'create') {
         try {
-
             //find current session
             const session = await Session.findOne({_id: url});
 
@@ -127,7 +149,6 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
 
                 //find all the sheet that user has
                 const sheets = await Sheet.find({author:user._id});
-
                 //check if the sheets are already upload to the session
                 for (const info of sheets) {
                     var sheetExist = await Session.findOne({sheet:{$elemMatch:{$in:[info._id]}},_id:url});
@@ -156,6 +177,7 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                     SessionSheet.system.push(sheet.system);
                     SessionSheet.sheet_id.push(sheet._id);
                     SessionSheet.player.push(player.name);
+                    (player.name===user.name) ? SessionSheet.access.push('yes') :SessionSheet.access.push('no');
                 }
             }else{
                 SessionSheet.status='看來還沒有人上傳角卡'
@@ -168,9 +190,10 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
             }
             else
                 dismiss.option = '離開';
+
             res.render('trpg_session_show', {
                 title: '團務名稱：' + session.name,
-                content: session.player,
+                player: session.player,
                 password:pword,
                 dismiss: dismiss.option,
                 url: dismiss.url,
@@ -182,7 +205,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 session_system:SessionSheet.system,
                 session_sheet_id:SessionSheet.sheet_id,
                 session_status:SessionSheet.status,
-                session_sheet_player:SessionSheet.player
+                session_sheet_player:SessionSheet.player,
+                session_sheet_access:SessionSheet.access
             })
         } catch (err) {
             res.status(404).render('404')
@@ -209,7 +233,8 @@ router.get('/charactersheet',verify,async function (req,res) {
         title:info.title[5],
         content:sheet.name,
         system:sheet.system,
-        url:sheet.url
+        url:sheet.url,
+        number:sheet.name.length
     });
 });
 router.get('/charactersheet/create/:id',verify,async function (req,res) {

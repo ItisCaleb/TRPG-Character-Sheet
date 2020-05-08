@@ -4,11 +4,11 @@ $(document).ready(function () {
     var array = url.split('/');
     var id = array[array.length-1];
     //when hover on button, change their color
-    $('#change-password').click(function () {
+    $('#change_password').click(function () {
         $('#password-window').show();
     });
-    $('#cancel-password').click(function () {
-        $('#password-window').hide();
+    $('#cancel_password').click(function () {
+        $('#password_window').hide();
     });
     $('#menu').click(function () {
         $('.right-menu').show();
@@ -61,15 +61,7 @@ $(document).ready(function () {
             }
         });
     },0)
-    $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
-    function zoomDisable(){
-        $('head meta[name=viewport]').remove();
-        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>\n');
-    }
-    function zoomEnable(){
-        $('head meta[name=viewport]').remove();
-        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1">');
-    }
+
 });
 
 //redirect URL function
@@ -78,16 +70,12 @@ function redirect(URL) {
 }
 
 function check() {
-    var text = $(".input-box").val();
-    const pattern = new RegExp("[`~!#$^&*()=|{}\\-':;,\\[\\]<>/?￥…—+\"【】‘”“。、%]");
+    const regExp = /,/;
+    var text = $(".input").val();
+    const pattern = new RegExp("[`~!#$^&*()=-|.{}':;,\\[\\]<>/?￥…—|【】_=‘”“。、+%]");
     const result = text.match(pattern);
     if (result) {
-        console.log(result);
-        $('.check-btn').prop('disabled',true);
-        bad_message("含有特殊字元");
-        setTimeout(function () {
-            $('.check-btn').prop('disabled',false);
-        },1000)
+        message("含有特殊字元");
         return true
     } else {
         return false

@@ -1,48 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta charset="UTF-8">
-    <title>TRPG Character Sheet Maker</title>
-    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
-    <script src="/public/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
-    <script src="/public/js/main.js" charset="UTF-8"></script>
+    <%include head.ejs%>
 
 </head>
 <body>
-
 <nav>
-    <div class="topic">TRPG Toaster</div>
-    <div id="menu" class="menu" >
-        <img src="/public/source/icons8-menu.svg" alt="">
-    </div>
-    <ul>
-        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
-        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
-        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
-        <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
-    </ul>
-    <div class="submenu">
-        <button class="subbtn btn validation login">登入</button>
-        <button class="subbtn btn validation signup">註冊</button>
-    </div>
-    <div id="overlay"></div>
-    <div class="alert-message" style="top: 24px;"></div>
+<% include header.ejs%>
 </nav>
-<div class="right-menu pop" style="display: none">
-        <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
-        <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
-        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
-        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
-        <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
-        <a class="btn validation login">登入</a>
-        <a class="btn validation signup">註冊</a>
-</div>
+<% include rightmenu.ejs%>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;">創建角色卡</h1>
     <p class="content-decribe" style="text-align: center;line-height:30px;">
@@ -172,11 +138,6 @@
 
     </section>
 </div>
-
-<div class="new_pusher"></div>
-
-<div class="footer">
-    Copyright © 2020 trpgtoaster.com. All rights reserved.
-</div>
+<%include footer.ejs%>
 </body>
 </html>

@@ -117,7 +117,7 @@ $(document).ready(function () {
             $('#luk').val(99);
 
 
-        $('.add-number').text(parseInt($('.add-slider').val()))
+        $('.add-number').text(parseInt($('#add-slider').val()))
 
 
         //push the stat's value to array
@@ -145,6 +145,7 @@ $(document).ready(function () {
                     sum += parseInt($(this).val());
                 });
                 sum += parseInt($(this).siblings('.base').text());
+                $(this).siblings().find('.add-menu').find('#total').text(sum)
                 return sum
             });
             //push the active skill's value to object
@@ -164,26 +165,36 @@ $(document).ready(function () {
         });
     }, 0);
 
-
     $(document).on('change', '.class-feature', function () {
         $('.class-feature').val($(this).val())
     })
 
-
-    $(document).on('input', '.add-slider', function (event) {
+    $(document).on('input', '#add-slider', function () {
         $(this).parent('.add-menu').siblings('.skill').val($(this).val())
+    })
+
+    $(document).on('mousedown', '#add', function () {
+        var sum=parseInt($(this).siblings('#add-slider').val()) +1;
+        $(this).siblings('#add-slider').val(sum);
+        $(this).parent('.add-menu').siblings('.skill').val(sum);
+    })
+    $(document).on('mousedown', '#minus', function () {
+        var sum=parseInt($(this).siblings('#add-slider').val()) -1;
+        $(this).siblings('#add-slider').val(sum);
+        $(this).parent('.add-menu').siblings('.skill').val(sum);
     })
 
     //easy adding slider
     $('.skill').click(function () {
         $('.slider-pop').remove();
         $(this).parent('.td-input').append('<div class="add-menu slider-pop">\n' +
-            '                                            <p class="limit-number">99</p>\n' +
-            '                                            <input type="range" min="0" max="99" class="add-slider">\n' +
-            '                                            <p class="add-number"></p>\n' +
-            '                                            <p class="limit-number">0</p>\n' +
+            '                                            <p id="total"></p>'+
+            '                                            <input type="button"  id="add"><br>\n' +
+            '                                            <input type="range" min="0" max="99" id="add-slider" class="slider-input">\n' +
+            '                                            <p class="add-number"></p><br>\n' +
+            '                                            <input type="button" id="minus">\n' +
             '                                        </div>')
-        $('.add-slider').val($(this).val());
+        $('#add-slider').val($(this).val());
     })
 
     //slider pop
@@ -258,14 +269,14 @@ $(document).ready(function () {
     })
 
     //add stat's and skill's value to the form
-    $(document).on("submit", "#myform", function (e) {
+    $(document).on("click", "#create", function (e) {
         e.preventDefault();
-        var form=$(this)[0];
+        $('#create').prop('disabled',true);
+        var form=$('#myform')[0];
         var sheet = new FormData(form);
         sheet.append('skill',JSON.stringify(skill) );
         sheet.append('stat',JSON.stringify(stat) );
         sheet.append('file',$('input[type=file]')[0].files[0]);
-
         $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',
@@ -277,8 +288,11 @@ $(document).ready(function () {
                 setTimeout(function () {
                     redirect('/charactersheet');
                 }, 1000)
-            }, error:function (res) {
-                bad_message(res.responseText);
+            }, error: function (data) {
+                bad_message(data.responseText)
+                setTimeout(function () {
+                    $('#create').prop('disabled',false);
+                },1000)
             }
         });
     });

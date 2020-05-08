@@ -49,6 +49,12 @@ const loginValidation = data => {
             .min(6)
             .max(15)
             .required()
+            .error(()=>{
+                return{
+                    message:"密碼長度為6到20個字元"
+                }
+            }),
+        check:Joi.string()
     };
     return Joi.validate(data,schema);
 };
@@ -99,11 +105,35 @@ const passwordValidation = data =>{
   };
   return Joi.validate(data,schema);
 };
+const findPasswordValidation = data =>{
+    const schema= {
+        password:Joi.string()
+            .required()
+            .min(6)
+            .max(20)
+            .error(()=>{
+                return{
+                    message:"密碼長度為6到20個字元"
+                }
+            }),
+        repassword:Joi.string()
+            .required()
+            .min(6)
+            .max(20)
+            .error(()=>{
+                return{
+                    message:"密碼長度為6到20個字元"
+                }
+            }),
+    };
+    return Joi.validate(data,schema);
+};
 
 
 module.exports.registerValidation =registerValidation;
 module.exports.loginValidation =loginValidation;
 module.exports.sessionValidation =sessionValidation;
 module.exports.passwordValidation =passwordValidation;
+module.exports.findPasswordValidation = findPasswordValidation;
 
 

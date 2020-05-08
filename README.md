@@ -58,8 +58,9 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * 角色卡創建頁面重新排版
 
 ## Bug
-* 管理員非預期登出時還是看的到管理員貼文選項
-* 創建跑團群組會提示輸入帳號密碼
+~~* 管理員非預期登出時還是看的到管理員貼文選項~~
+
+~~* 創建跑團群組會提示輸入帳號密碼~~
 
 ## Issue
 ~~* 團務介面，團務密碼裸露~~(現在只有GM看的到了)

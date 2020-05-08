@@ -1,37 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta charset="UTF-8">
-    <title>TRPG Character Sheet Maker</title>
-    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="/public/css/Sheet.css" rel="stylesheet" type="text/css" media="all"/>
-    <script src="../public/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/public/js/main.js" charset="UTF-8"></script>
+    <%include head.ejs%>
+    <link href="/public/css/Sheet.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/sheet.js" charset="UTF-8"></script>
-
 </head>
-<body style="background-color:#E0E0E0">
-
+<body>
 <nav>
-    <div class="topic">TRPG Toaster</div>
-    <div id="menu" class="menu" >
-        <img src="/public/source/icons8-menu.svg" alt="">
-    </div>
-    <ul>
-        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
-        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
-        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
-        <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
-    </ul>
-    <div class="submenu">
-        <button class="subbtn btn validation login">登入</button>
-        <button class="subbtn btn validation signup">註冊</button>
-    </div>
-    <div id="overlay"></div>
-    <div class="alert-message" style="top: 24px;"></div>
+<% include header.ejs%>
     <div id="create-window" class="message pop" style="top: 24px;display: none">
             <div class="message-div">
                 <div class="message-alert">選擇系統
@@ -64,36 +40,57 @@
             </div>
     </div>
 </nav>
-<div class="right-menu pop" style="display: none">
-        <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
-        <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
-        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
-        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
-        <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
-        <a class="btn validation login">登入</a>
-        <a class="btn validation signup">註冊</a>
-</div>
-<div class="content">
+<% include rightmenu.ejs%>
+<div class="content" style="text-align: center;">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+        一人可擁有的角色卡上限為20張<br>
+        你現在共擁有<%=number%>張角色卡<br>
+        直接點擊文字來檢閱或編輯角色卡
     </div>
-    <div style="text-align: center">
-        <% if (content[0] =='你還沒創建角色卡' ) { %>
-            <div><%=content[0]%></div>
-        <% }else{ %>
-        <% for(var i=0;i<content.length;i++) { %>
-            <div style="display: inline"><%= content[i] %> -----系統:<%=system[i] %></div>
-            <button class="btn session" onclick="redirect('/charactersheet/<%= url[i] %>')">檢閱</button><br>
+    <ul class="main-tabs">
+        <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
+        <% if (content.length > 10 ) { %>
+        <li class="main-tab-link" data-tab="main-tab-2">2</li>
+        <% }%>
+    </ul>
+    <div style="width: 100%;">
+        <div id="main-tab-1" class="main-tab-content main-current">
+            <div style="text-align: center;margin: 5%">
+                <% if (content[0] =='你還沒創建角色卡' ) { %>
+                    <div style="font-size: 20px"><%=content[0]%></div>
+                <% }else{ %>
+                <% for(var i=0;i<content.length;i++) { %>
+                        <% if (i>=10) { %>
+                            <% break; %>
+                        <%　}%>
+                    <div class="sheet" style="display: inline" onclick="redirect('/charactersheet/<%= url[i] %>')"><%= content[i] %> -----系統:<%=system[i] %></div>
+                    <br>
+                <% } %>
+                <%}%>
+            </div>
+        </div>
+        <div id="main-tab-2" class="main-tab-content">
+            <div style="text-align: center;margin: 5%">
+        <% for(var k=10;k<content.length;k++) { %>
+            <div class="sheet" style="display: inline" onclick="redirect('/charactersheet/<%= url[k] %>')"><%= content[i] %> -----系統:<%=system[k] %></div><br>
         <% } %>
-        <%}%>
-        <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
+            </div>
+        </div>
     </div>
+    <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
 </div>
+<script>
+    $('ul.main-tabs li').click(function () {
+    var tab_id = $(this).attr('data-tab');
 
-<div class="new_pusher"></div>
-<div class="footer">
-    Copyright © 2020 trpgtoaster.com. All rights reserved.
-</div>
+    $('ul.main-tabs li').removeClass('main-current');
+    $('.main-tab-content').removeClass('main-current');
+
+    $(this).addClass('main-current');
+    $("#" + tab_id).addClass('main-current');
+    })
+</script>
+<%include footer.ejs%>
 </body>
 </html>

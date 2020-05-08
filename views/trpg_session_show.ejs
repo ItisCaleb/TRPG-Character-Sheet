@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta charset="UTF-8">
-    <title>TRPG Character Sheet Maker</title>
-    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
-    <script src="../public/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
-    <script src="/public/js/main.js" charset="UTF-8"></script>
-
-
+    <%include head.ejs%>
+    <script src="/public/js/session.js" charset="UTF-8"></script>
 </head>
 <body>
-
 <nav>
-    <div class="topic">TRPG Toaster</div>
-    <div id="menu" class="menu" >
-        <img src="/public/source/icons8-menu.svg" alt="">
-    </div>
-    <ul>
-        <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
-        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
-        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
-        <li class="menu btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</li>
-    </ul>
-    <div class="submenu">
-        <button class="subbtn btn validation login">登入</button>
-        <button class="subbtn btn validation signup">註冊</button>
-    </div>
-    <div class="alert-message"></div>
+<% include header.ejs%>
+
     <div id="upload-window" class="message pop" style="top: 24px;display: none">
         <div class="message-div">
             <div class="message-alert">上傳角色卡
@@ -59,20 +36,25 @@
     <div id="sheet-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert">檢閱角色卡
-                <p class="message-content">
+                <div class="message-content">
         <% if (session_status !='看來還沒有人上傳角卡') { %>
             <% for(var k=0;k<session_sheet_name.length;k++) { %>
-                <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%><button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button></p>
+                <p style="display: inline;font-size: 14px"><%= session_sheet_name[k] %> 系統:<%=session_system[k]%>擁有者:<%=session_sheet_player[k]%>
+                    <button style="display: inline-block;width: 50px" onclick=get("/charactersheet/<%=session_sheet_id[k]%>")>檢閱</button>
+                    <%if (session_sheet_access[k]==='yes') { %>
+                    <button class="sheet-delete" style="display: inline-block;width: 50px;color: red" data-id="<%=session_sheet_id[k]%>">移除</button>
+                    <% }%>
+                </p>
                 <br>
             <% } %>
         <% } %>
         <% if (session_status =='看來還沒有人上傳角卡') {%>
         <p style="display: inline" ><%=session_status%></p><br>
         <% } %>
-                </p>
         <button id="sheet-disable">關閉</button>
             </div>
         </div>
+    </div>
     </div>
     <div id="delete-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
@@ -88,96 +70,34 @@
         </div>
     </div>
 </nav>
-<div class="right-menu pop" style="display: none">
-        <img style="width: 50%" src="/public/source/toaster.svg"  alt="">
-        <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
-        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
-        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
-        <a class="btn adminpost" onclick="get('/adminpost')" style="display: none">管理員貼文</a>
-        <a class="btn validation login">登入</a>
-        <a class="btn validation signup">註冊</a>
-</div>
+<% include rightmenu.ejs%>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
 
 
     <div style="text-align: center">
-            <% if (content[1] == null ) { %>
-                <%  content.push('你還沒有玩家') %>
+            <% if (player[1] == null ) { %>
+                <%  player.push('你還沒有玩家') %>
         <% }%>
-        <div>gm:<%=content[0]%></div>
+        <div>gm:<%=player[0]%></div>
         <% if (password != 'none')  {%>
         密碼: <%=password%> <br>
                 <%}%>
         玩家:
-            <% for(var i=1;i<content.length;i++) { %>
-                <div style="display: inline"><%= content[i] %></div><br>
+            <% for(var i=1;i<player.length;i++) { %>
+                <div style="display: inline"><%= player[i] %></div>
+                 <% if (password !='none' && player[1] !== '你還沒有玩家' ) { %>
+                    <button class="player-delete" style="display: inline-block;width: 50px;color: red" data-id="<%=player[i]%>">剔除</button>
+                 <% } %>
+                    <br>
         <% }%>
         <br>
-    <button id="delete-check" class="btn session"><%=dismiss%></button>
+    <button id="delete-check" class="btn session" style="color: red"><%=dismiss%></button>
     <button id="upload" class="btn session">上傳角卡</button>
     <button id="sheet-show" class="btn session">檢閱角卡</button>
 
     </div>
 </div>
-<script>
-    $('#upload').click(function () {
-        $('#upload-window').css('display','block');
-    })
-    $('#sheet-show').click(function () {
-        $('#sheet-window').css('display','block');
-    })
-    $('#delete-check').click(function () {
-        $('#delete-window').css('display','block');
-    })
-    $('#delete-disable').click(function () {
-        $('#delete-window').css('display','none');
-    })
-    $('#sheet-disable').click(function () {
-        $('#sheet-window').css('display','none');
-    })
-    $('#upload-disable').click(function () {
-        $('#upload-window').css('display','none');
-    })
-    $('#upload-sheet-form').submit(function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: '../api/session/sheet_upload/<%=url%>',
-            type: 'POST',
-            data:$(this).serializeArray(),
-            success:function(data){
-                good_message(data)
-                setTimeout(function(){
-                    redirect('/trpgsession/<%=url%>')
-                },1000)
-            },
-            error:function(data){
-                bad_message(data.responseText)
-            },
-        });
-    })
-    $('#delete').click(function (e) {
-        e.preventDefault();
-        $('#delete-window').css('display','none');
-        $.ajax({
-            url: '../api/session/delete/<%=url%>',
-            type: 'GET',
-            success:function(data){
-                good_message(data)
-                setTimeout(function(){
-                    redirect('/trpgsession')
-                },1000)
-            },
-            error:function(data){
-                bad_message(data.responseText)
-            },
-        });
-    })
-</script>
-<div class="new_pusher"></div>
-<div class="footer">
-    Copyright © 2020 trpgtoaster.com. All rights reserved.
-</div>
+<%include footer.ejs%>
 </body>
 </html>
