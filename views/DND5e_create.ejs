@@ -23,8 +23,7 @@
                     <div class="sheet_input_div">
                         <label>角色名稱：<input name="name" placeholder="克爾德"></label><br>
                         <label>職業：<input name="class" placeholder="牧師" size="5"></label><br>
-                        <label>等級：<input max="30" min="0" name="level" placeholder="3" step="1"
-                                         type="number"></label><br>
+                        <label>等級：<input max="30" min="0" name="level" placeholder="3" step="1" type="number"></label><br>
                         <label>角色背景：<input name="background" placeholder="公會商人"></label><br>
                     </div>
                     <div class="cheet_input_div">
@@ -40,9 +39,7 @@
 
         <div class="sheet_creat_div">
             <label>角色形容：
-                <textarea name="Role_describtion"
-                          placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們"
-                          style="height: 90%;width: 100%;resize: none"></textarea></label>
+                <textarea name="Role_describtion" placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們" style="height: 90%;width: 200%;resize: none"></textarea></label>
         </div>
     </section>
 
@@ -111,10 +108,10 @@
 
 
             <div class="sheet_creat_div">
-                <p>攻擊 & 法術</p>
+                <p>攻擊 &amp; 法術</p>
                 <section id="sheet_creat_attack_and_spell">
                     <div class="sheet_creat_div" style="width: 50%">
-                        <p>名稱&攻擊類型</p>
+                        <p>名稱&amp;攻擊類型</p>
                         <input name="name" placeholder="武士刀/揮砍" size="10"><br>
                     </div>
                     <div class="sheet_creat_div">
@@ -127,16 +124,61 @@
                     </div>
                 </section>
             </div>
+            <div class="sheet_creat_div" style="height: 50%">
+                <div class="sheet_creat_div" style="height: 90%">
+                    <label>常備裝備：
+                        <textarea name="Role_describtion" placeholder="一個背包
+一本學科書
+一瓶墨水
+一支墨水筆
+十張羊皮紙
+一小袋沙
+一把小刀
+一把匕首
+一個奧術法器
+一本法術書
+治療藥水5瓶
+皮甲
+冒險者名片
+一本筆紀本
+哈雷的研究筆記
+5天份糧食" style="height: 100%;width: 100%;resize: none"></textarea></label>
+                </div>
+            </div>
+            <section class="sheet_creat_div">
+                <label>CP：<input type="number" placeholder="0" size="2"></label>
+                <label>SP：<input type="number" placeholder="0" size="2"></label>
+                <label>EP：<input type="number" placeholder="0" size="2"></label>
+                <label>GP：<input type="number" placeholder="0" size="2"></label>
+                <label>PP：<input type="number" placeholder="0" size="2"></label>
+            </section>
         </div>
 
         <div class="sheet_creat_div">
-            理念：<textarea name="significant_people" class="story"></textarea><br>
-            關係：<textarea name="meaningful_location" class="story"></textarea><br>
-            缺點：<textarea name="treasured_possession" class="story"></textarea><br>
-            性格：<textarea name="trait" class="story"></textarea><br>
+            <div>
+                理念：<textarea name="significant_people" class="story"></textarea><br>
+                關係：<textarea name="meaningful_location" class="story"></textarea><br>
+                缺點：<textarea name="treasured_possession" class="story"></textarea><br>
+                性格：<textarea name="trait" class="story"></textarea><br>
+            </div>
         </div>
-
+        <div class="sheet_creat_div">
+            <label>攜帶物品：
+                <textarea name="Role_describtion" placeholder="一本筆紀本:哈雷的法陣圖樣
+帶有紫色塗料的地磚
+黑豹的綠石板
+鞋子、斧頭、鑲嵌著石頭的項鍊(皆為魔法物品)
+裝著哈雷頭的寶箱" style="height: 90%;width: 100%;resize: none"></textarea></label>
+        </div>
     </section>
+    <div style="margin: 50px">
+        <section class="sheet_creat_div">
+            <label>法術職業：<input placeholder="變化係法師" size="20"></label>
+            <label>法術施展能力：<input placeholder="智力" size="10"></label>
+            <label>法術豁免值：<input type="number" placeholder="15" size="2"></label>
+            <label>法術攻擊加值：<input type="number" placeholder="7" size="2"></label>
+        </section>
+    </div>
 </div>
 <%include footer.ejs%>
 </body>
