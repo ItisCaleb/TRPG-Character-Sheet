@@ -59,8 +59,13 @@ A project for the TRPG player and GM who suffering from managing character sheet
 
 ## Bug
 ~~* 管理員非預期登出時還是看的到管理員貼文選項~~
-
 ~~* 創建跑團群組會提示輸入帳號密碼~~
 
 ## Issue
 ~~* 團務介面，團務密碼裸露~~(現在只有GM看的到了)
+
+## Hack Point
+* Password backEnd doesn't check special symbol.
+* Password frountEnd doesn't check space.
+* Email backEnd doesn't check.
+* DDOS/DOS not prevent.
