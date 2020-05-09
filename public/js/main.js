@@ -78,11 +78,14 @@ function redirect(URL) {
 }
 
 function check() {
-    var text = $(".input-box").val();
+    var text = $(".input-box");
+    var result =false;
     const pattern = new RegExp("[`~!#$^&*()=|{}\\-':;,\\[\\]<>/?￥…—+\"【】‘”“。、%]");
-    const result = text.match(pattern);
+    text.each(function () {
+        if($(this).val().match(pattern))
+            result=true;
+    })
     if (result) {
-        console.log(result);
         $('.check-btn').prop('disabled',true);
         bad_message("含有特殊字元");
         setTimeout(function () {
