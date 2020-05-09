@@ -46,7 +46,8 @@
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
         一人可擁有的角色卡上限為20張<br>
         你現在共擁有<%=number%>張角色卡<br>
-        直接點擊文字來檢閱或編輯角色卡
+        直接點擊文字來檢閱或編輯角色卡<br>
+        <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
     </div>
     <ul class="main-tabs">
         <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
@@ -78,7 +79,7 @@
             </div>
         </div>
     </div>
-    <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
+
 </div>
 <script>
     $('ul.main-tabs li').click(function () {

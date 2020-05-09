@@ -10,7 +10,35 @@
 <body>
 <nav>
 <% include header.ejs%>
-
+    <div id="mobile-option">
+    <div class="mobile-nav">
+        <div class="save-icon" style="display: none">
+            儲存中
+            <div class="loader"></div>
+        </div>
+        <div class="success-icon">
+            最新狀態
+            <img class="correct-image" src="/public/source/iconfinder_Tick_Mark_Dark_1398912.png" alt="">
+        </div>
+        <div id=mobile-option style="display: inline;">
+            選項
+            <img id="mobile-img" src="/public/source/angle-arrow-down.svg" alt="">
+        </div>
+    </div>
+    <div class="mobile-nav-menu list-menu side-pop" style="display: none">
+        <div class="list-menu-text mobile-permission">
+            檢視權限
+        </div>
+        <div class="list-menu-text delete-check">
+            刪除角色卡
+        </div>
+    </div>
+    <div class="mobile-permission-menu list-menu side-pop pop" style="display: none">
+        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+        <div class="list-menu-text permissions">團務所有玩家</div>
+        <div class="list-menu-text permissions">所有人</div>
+    </div>
+    </div>
     <div id="delete-window" class="message pop" style="top:24px;display: none">
         <div class="message-div">
             <div class="message-alert">刪除角色卡
@@ -30,11 +58,11 @@
     <div class="list">
             <div class="list-top">
                 <div>
-                    <div id="save-icon" style="display: none">
+                    <div class="save-icon" style="display: none">
                         儲存中
-                        <div id="loader"></div>
+                        <div class="loader"></div>
                     </div>
-                    <div id="success-icon">
+                    <div class="success-icon">
                         最新狀態
                         <img class="correct-image" src="/public/source/iconfinder_Tick_Mark_Dark_1398912.png" alt="">
                     </div>
@@ -45,10 +73,10 @@
                 <img src="../public/source/menu-icon.png" class="list-button" alt="">
             </div>
             <div class="left-list-menu list-menu side-pop" style="display: none">
-                <div id="permission" class="list-menu-text">
+                <div  class="list-menu-text permission">
                     檢視權限
                 </div>
-                <div id="delete-check" class="list-menu-text">
+                <div  class="list-menu-text delete-check">
                     刪除角色卡
                 </div>
             </div>

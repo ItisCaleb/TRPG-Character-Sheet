@@ -30,7 +30,7 @@ router.get("/register/:email", async (req, res) => {
         const token = jwt.sign(
             {
                 iss: 'trpgtoaster.com',
-                expiresIn: '7d',
+                exp: (Date.now()+(7*day))/1000,
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -113,12 +113,14 @@ router.post('/userlogin', async (req, res) => {
     const token = jwt.sign(
         {
             iss: 'trpgtoaster.com',
-            expiresIn: '7d',
+            exp: (Date.now()+(7*day))/1000,
             _id: user._id,
             name: user.name,
             email: user.email,
         }, process.env.JWT_SECRET);
-    if (user.admin===true)  res.cookie('admin', 'True');
+    (user.admin===true && req.body.check)
+        ? res.cookie('admin', 'True',{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'})
+        : res.cookie('admin', 'True',{sameSite:'Lax'});
     (req.body.check)
         ? res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功')
         : res.cookie('auth_token', token,{sameSite:'Lax'}).send('登入成功');

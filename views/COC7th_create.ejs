@@ -8,7 +8,30 @@
 <body>
 <nav>
 <% include header.ejs%>
-
+    <div id="mobile-option">
+        <div class="mobile-nav" style="width:15%;padding: 2%">
+            <div id=mobile-option style="display: inline;">
+                選項
+                <img id="mobile-img" style="width: 30%" src="/public/source/angle-arrow-down.svg" alt="">
+            </div>
+        </div>
+        <div class="mobile-nav-menu list-menu side-pop" style="display: none">
+            <div class="list-menu-text mobile-permission">
+                檢視權限
+            </div>
+            <div class="list-menu-text delete-check">
+                匯入
+            </div>
+            <button class="list-menu-text create" >
+                創建
+            </button>
+        </div>
+        <div class="mobile-permission-menu list-menu side-pop pop" style="display: none">
+            <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+            <div class="list-menu-text permissions">團務所有玩家</div>
+            <div class="list-menu-text permissions">所有人</div>
+        </div>
+    </div>
 </nav>
 <% include rightmenu.ejs%>
 <div class="left-side">
@@ -18,13 +41,13 @@
                 <img src="/public/source/menu-icon.png" class="list-button" alt="">
             </div>
             <div class="left-list-menu list-menu side-pop" style="display: none">
-                <div id="permission" class="list-menu-text">
+                <div class="list-menu-text permission">
                     檢視權限
                 </div>
-                <div id="delete-check" class="list-menu-text">
+                <div  class="list-menu-text delete-check">
                     匯入
                 </div>
-                <button id="create"  style="border: 0;padding: 5%;font-size: 100%;width: 100%" class="list-menu-text" >
+                <button style="border: 0;padding: 5%;font-size: 100%;width: 100%" class="list-menu-text create" >
                     創建
                 </button>
             </div>
@@ -183,7 +206,7 @@
             <div id="main-tab-2" class="main-tab-content">
                 <section>
                 <div class="sheet_creat_div" >
-                    <div >
+                    <div>
                         <label>角色形容：<br>
                             <textarea style="height: 200px;width: 90%;resize: none" name="role_description" placeholder="島田半藏不斷精進他身為弓手和刺客的技藝，只為了證明他是身手不凡的戰士。"></textarea>
                         </label><br>
@@ -192,9 +215,7 @@
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
                             <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)" accept="image/*" style="display: none">
                         </label>
-
-
-                        
+                        <button id="cancel-image" class="btn session">取消圖片</button>
                     </div>
 
                 </div>

@@ -220,16 +220,30 @@ $(document).ready(function () {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    $('#mobile-option').click(function () {
+       $('.mobile-nav-menu') .show();
+    })
     $('.list-button').click(function () {
         $('.left-list-menu').show();
     })
-    $('#permission').click(function () {
+    $('.mobile-permission').click(function () {
+        $('.mobile-permission-menu').show();
+    })
+    $('.permission').click(function () {
         $('.right-list-menu').show();
     })
     $('.permissions').click(function () {
         $('.permissions').removeClass('permissions-choose');
         $(this).addClass('permissions-choose');
         $('.permission-status').val($(this).text()).trigger('change')
+    })
+    $('#cancel-image').click(function (e) {
+        e.preventDefault();
+        if($('#image').val()!=='' || $('#add-image').attr('src') !=='/public/source/iconmonstr-plus-6.svg') {
+            $('#image').val('');
+            $('#add-image').attr('src', '/public/source/iconmonstr-plus-6.svg')
+            $('#name').trigger('change')
+        }
     })
     $('ul.tabs li').click(function () {
         var tab_id = $(this).attr('data-tab');
@@ -260,6 +274,7 @@ $(document).ready(function () {
             console.log(size +"kb");
             if(size>=500){
                 $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">檔案過大!請上傳小於500kb的圖像</p>')
+                $('#image').val('');
             }else{
                 reader.onload = function (e) {
                     $('#add-image').attr('src', e.target.result)
@@ -269,9 +284,9 @@ $(document).ready(function () {
     })
 
     //add stat's and skill's value to the form
-    $(document).on("click", "#create", function (e) {
+    $(document).on("click", ".create", function (e) {
         e.preventDefault();
-        $('#create').prop('disabled',true);
+        $('.create').prop('disabled',true);
         var form=$('#myform')[0];
         var sheet = new FormData(form);
         sheet.append('skill',JSON.stringify(skill) );
@@ -291,7 +306,7 @@ $(document).ready(function () {
             }, error: function (data) {
                 bad_message(data.responseText)
                 setTimeout(function () {
-                    $('#create').prop('disabled',false);
+                    $('.create').prop('disabled',false);
                 },1000)
             }
         });

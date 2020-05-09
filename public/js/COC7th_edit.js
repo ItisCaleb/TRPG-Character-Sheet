@@ -37,8 +37,8 @@ $(document).ready(function () {
         if($('#name').val()===''){
             return bad_message('調查員姓名不得為空')
         }
-        $('#save-icon').show();
-        $('#success-icon').hide();
+        $('.save-icon').show();
+        $('.success-icon').hide();
         setTimeout(function () {
             var form=$('#myform')[0];
             var sheet = new FormData(form);
@@ -58,8 +58,8 @@ $(document).ready(function () {
                 processData: false, // required
                 data:  sheet,
                 success:function (data) {
-                    $('#save-icon').hide();
-                    $('#success-icon').show();
+                    $('.save-icon').hide();
+                    $('.success-icon').show();
                 },
                 error:function (res) {
                     bad_message(res.responseText);
@@ -68,7 +68,7 @@ $(document).ready(function () {
         },2000)
     })
 
-    $('#delete-check').click(function () {
+    $('.delete-check').click(function () {
         $('#delete-window').css('display','block');
     });
     $('#delete-disable').click(function () {

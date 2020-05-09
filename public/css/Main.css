@@ -31,7 +31,7 @@
     }
 
     html {
-        font-family: 'Noto Sans TC', sans-serif;!important;
+        font-family: 'Noto Sans TC', sans-serif;
         position:relative;
         min-height:100%
     }
@@ -105,14 +105,6 @@
 
     .message {
         top: 24px;
-    }
-
-    .message_div {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-
-        background-color: rgb(255, 255, 255);
     }
 
     .message-alert {
@@ -307,7 +299,7 @@
 
     .topic {
         font-size: 200%;
-        width: 80%;
+        width: 65%;
         height: auto;
         display: inline-block;
     }
@@ -346,13 +338,6 @@
         top: 24px;
     }
 
-    .message_div {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-
-        background-color: rgb(255, 255, 255);
-    }
 
     .message-alert {
         border: 2px #ccc solid;
