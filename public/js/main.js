@@ -78,23 +78,29 @@ function redirect(URL) {
 }
 
 function check() {
+    var email=$('.email-box');
     var text = $(".input-box");
-    var result =false;
-    const pattern = new RegExp("[`~!#$^&*()=|{}\\-':;,\\[\\]<>/?￥…—+\"【】‘”“。、%]");
-    text.each(function () {
-        if($(this).val().match(pattern))
-            result=true;
-    })
-    if (result) {
+    const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+(([.\-])[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…【】‘”“。、%]");
+    if(!email.val().match(emailRule)){
         $('.check-btn').prop('disabled',true);
-        bad_message("含有特殊字元");
+        bad_message("電子郵件格式錯誤");
         setTimeout(function () {
             $('.check-btn').prop('disabled',false);
         },1000)
         return true
-    } else {
-        return false
     }
+    text.each(function () {
+        if($(this).val().match(pattern)){
+            $('.check-btn').prop('disabled',true);
+            bad_message("含有特殊字元");
+            setTimeout(function () {
+                $('.check-btn').prop('disabled',false);
+            },1000)
+            return true
+        }
+    })
+    return false
 }
 
 function good_message(data) {

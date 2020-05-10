@@ -24,7 +24,7 @@
         border-bottom-color: #ccc;
         box-sizing: border-box;
     }
-
+    .email-box,
     .input-box {
         float: left;
         width: 60%;
@@ -93,7 +93,7 @@
         border-bottom-color: #ccc;
         box-sizing: border-box;
     }
-
+    .email-box,
     .input-box {
         float: left;
         display: inline-block;

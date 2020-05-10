@@ -9,6 +9,8 @@ const ejs = require('ejs');
 const jwtDecode = require('jwt-decode');
 const {registerValidation, loginValidation, passwordValidation,findPasswordValidation} = require("../public/js/validation");
 
+const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—【】‘”“。、%]");
+
 
 //send register information to db
 router.get("/register/:email", async (req, res) => {
@@ -56,7 +58,11 @@ router.post('/authed', async (req,res)=>{
     //validate register infomation
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-
+    for(let key in req.body) {
+        if(req.body[key].match(pattern)) {
+            return res.status(400).send('你的資料含有特殊字元')
+        }
+    }
     //check if user is already register
     const userExist = await User.findOne({name: req.body.name});
     const emailExist = await User.findOne({email: req.body.email});
@@ -101,10 +107,15 @@ router.post('/userlogin', async (req, res) => {
 
     //validate login infomation
     const {error} = loginValidation(req.body);
+    for(let key in req.body) {
+        if(req.body[key].match(pattern)) {
+            return res.status(400).send('你的資料含有特殊字元')
+        }
+    }
     if (error) return res.status(400).send(error.details[0].message);
     //check if user exist
     const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(400).send('電子郵件錯誤');
+    if (!user) return res.status(400).send('電子郵件不存在');
     //check password
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).send('密碼錯誤');
@@ -171,6 +182,11 @@ router.post('/find_password/:email', async (req,res)=>{
     if(!check) return res.status(400).send('此連結已失效!');
     if(req.body.password !== req.body.repassword) return res.status(400).send('再次輸入密碼錯誤');
     const {error} = findPasswordValidation(req.body);
+    for(let key in req.body) {
+        if(req.body[key].match(pattern)) {
+            return res.status(400).send('你的資料含有特殊字元')
+        }
+    }
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findOne({email:req.params.email});
     const salt = await bcrypt.genSalt(10);
@@ -183,6 +199,11 @@ router.post('/find_password/:email', async (req,res)=>{
 router.post('/password', async (req,res)=>{
 
     const {error} = passwordValidation(req.body);
+    for(let key in req.body) {
+        if(req.body[key].match(pattern)) {
+            return res.status(400).send('你的資料含有特殊字元')
+        }
+    }
     const username=jwtDecode(req.cookies.auth_token).name;
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findOne({name:username});

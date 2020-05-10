@@ -18,20 +18,20 @@ const registerValidation = data => {
             .email(),
         password: Joi.string()
             .min(6)
-            .max(20)
+            .max(15)
             .required()
             .error(()=>{
                 return{
-                    message:"密碼長度為6到20個字元"
+                    message:"密碼長度為6到15個字元"
                 }
             }),
         repassword:Joi.string()
             .min(6)
-            .max(20)
+            .max(15)
             .required()
             .error(()=>{
                 return{
-                    message:"密碼長度為6到20個字元"
+                    message:"密碼長度為6到15個字元"
                 }
             }),
 
@@ -51,7 +51,7 @@ const loginValidation = data => {
             .required()
             .error(()=>{
                 return{
-                    message:"密碼長度為6到20個字元"
+                    message:"密碼長度為6到15個字元"
                 }
             }),
         check:Joi.string()
@@ -87,19 +87,19 @@ const passwordValidation = data =>{
     old_password:Joi.string()
         .required()
         .min(6)
-        .max(20)
+        .max(15)
         .error(()=>{
             return{
-                message:"密碼長度為6到20個字元"
+                message:"密碼長度為6到15個字元"
             }
         }),
     new_password:Joi.string()
         .required()
         .min(6)
-        .max(20)
+        .max(15)
         .error(()=>{
             return{
-                message:"密碼長度為6到20個字元"
+                message:"密碼長度為6到15個字元"
             }
         }),
   };
@@ -110,19 +110,19 @@ const findPasswordValidation = data =>{
         password:Joi.string()
             .required()
             .min(6)
-            .max(20)
+            .max(15)
             .error(()=>{
                 return{
-                    message:"密碼長度為6到20個字元"
+                    message:"密碼長度為6到15個字元"
                 }
             }),
         repassword:Joi.string()
             .required()
             .min(6)
-            .max(20)
+            .max(15)
             .error(()=>{
                 return{
-                    message:"密碼長度為6到20個字元"
+                    message:"密碼長度為6到15個字元"
                 }
             }),
     };
