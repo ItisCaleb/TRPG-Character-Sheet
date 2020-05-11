@@ -69,3 +69,4 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * Password frountEnd doesn't check space.
 * Email backEnd doesn't check.
 * DDOS/DOS not prevent.
+* Password don't send with light text.
