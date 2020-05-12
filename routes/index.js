@@ -43,12 +43,12 @@ router.get("/signup", function (req, res) {
 
 //render login page
 router.get("/login", function (req, res) {
-    const token = req.cookies.auth_token;
+    const token = req.cookies.authed;
     if (token) return res.redirect('/');
     res.render('login');
 });
 router.get('/forget_password',function (req,res) {
-    const token= req.cookies.auth_token;
+    const token= req.cookies.authed;
     if (token) return res.redirect('/');
     res.render('forget_password');
 })
