@@ -12,7 +12,8 @@ const  DND5eStatSchema = new mongoose.Schema({
     max_hp:Number,
     hp:Number,
     temp_hp:Number,
-    hitdice:Number,
+    hitdice:String,
+    hitdicetotal:Number,
     death_save:[Number]
 });
 

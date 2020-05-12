@@ -2,13 +2,64 @@
 <html lang="en">
 <head>
     <%include head.ejs%>
-
+    <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
 <nav>
 <% include header.ejs%>
+    <div id="mobile-option">
+        <div class="mobile-nav" style="width:15%;padding: 2%">
+            <div id=mobile-option style="display: inline;">
+                選項
+                <img id="mobile-img" style="width: 30%" src="/public/source/angle-arrow-down.svg" alt="">
+            </div>
+        </div>
+        <div class="mobile-nav-menu list-menu side-pop" style="display: none">
+            <div class="list-menu-text mobile-permission">
+                檢視權限
+            </div>
+            <div class="list-menu-text delete-check">
+                匯入
+            </div>
+            <button class="list-menu-text create" >
+                創建
+            </button>
+        </div>
+        <div class="mobile-permission-menu list-menu side-pop pop" style="display: none">
+            <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+            <div class="list-menu-text permissions">團務所有玩家</div>
+            <div class="list-menu-text permissions">所有人</div>
+        </div>
+    </div>
 </nav>
 <% include rightmenu.ejs%>
+<div class="left-side">
+    <div class="list">
+        <div class="list-top">
+            <p class="list-text">編輯選項</p>
+            <img src="/public/source/menu-icon.png" class="list-button" alt="">
+        </div>
+        <div class="left-list-menu list-menu side-pop" style="display: none">
+            <div class="list-menu-text permission">
+                檢視權限
+            </div>
+            <div  class="list-menu-text delete-check">
+                匯入
+            </div>
+            <button style="border: 0;padding: 5%;font-size: 100%;width: 100%" class="list-menu-text create" >
+                創建
+            </button>
+        </div>
+
+    </div>
+</div>
+<div class="list-right-side">
+    <div class="right-list-menu list-menu side-pop pop" style="display: none">
+        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+        <div class="list-menu-text permissions">團務所有玩家</div>
+        <div class="list-menu-text permissions">所有人</div>
+    </div>
+</div>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;">創建角色卡</h1>
     <p class="content-decribe" style="text-align: center;line-height:30px;">
@@ -27,9 +78,9 @@
                         <label>角色背景：<input name="background" placeholder="公會商人"></label><br>
                     </div>
                     <div class="cheet_input_div">
-                        <label>玩家暱稱：<input name="player" placeholder="ItisCaleb" value="tester"></label><br>
+                        <label>玩家暱稱：<input name="player" placeholder="ItisCaleb"></label><br>
                         <label>種族：<input name="race" placeholder="人類"></label><br>
-                        <label>陣營：<input name="alignment" placeholder="絕對中立"></label><br>
+                        <label>陣營：<input name="faction" placeholder="絕對中立"></label><br>
                         <label>經驗值：<input name="exp" placeholder="經驗值"></label><br>
                     </div>
                 </section>
@@ -39,71 +90,72 @@
 
         <div class="sheet_creat_div">
             <label>角色形容：
-                <textarea name="Role_describtion" placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們" style="height: 90%;width: 200%;resize: none"></textarea></label>
+                <textarea name="Role_describtion" placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們" style="height: 90%;width: 80%;resize: none"></textarea></label>
         </div>
     </section>
 
     <section style="margin: 50px">
         <div class="sheet_creat_div">
-            <label>力量：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>敏捷：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>體魄：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>智力：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>感知：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>魅力：<input name="name" type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>力量：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>敏捷：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>體魄：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>智力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>感知：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>魅力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
         </div>
         <div class="sheet_creat_div">
-            <label>激勵值：<input name="name" type="number" placeholder="0" size="1"></label><br>
-            <label>熟練加成：<input name="name" type="number" placeholder="0" size="1"></label><br>
+            <label>激勵值：<input name="inspiration" type="number" placeholder="0" size="1"></label><br>
+            <label>熟練加成：<input name="pro" type="number" placeholder="0" size="1"></label><br>
 
             <div id="sheet_creat_exempt">
                 <p>豁免檢定：</p>
-                <input name="power_exempt?" type="checkbox" placeholder="0" size="1"><label>力量：0</label><br>
-                <input name="agile_exempt?" type="checkbox" placeholder="0" size="1"><label>敏捷：0</label><br>
-                <input name="physique_exempt?" type="checkbox" placeholder="0" size="1"><label>體魄：0</label><br>
-                <input name="intelligence_exempt?" type="checkbox" placeholder="0" size="1"><label>智力：0</label><br>
-                <input name="Perception_exempt?" type="checkbox" placeholder="0" size="1"><label>感知：0</label><br>
-                <input name="charm_exempt?" type="checkbox" placeholder="0" size="1"><label>魅力：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>力量：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>敏捷：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>體魄：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>智力：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>感知：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>魅力：0</label><br>
             </div>
 
             <div id="sheet_creat_skill">
                 <p>技能：</p>
-                <input name="motion_exempt?" type="checkbox" placeholder="0" size="1"><label>運動：0</label>【力量】<br>
-                <input name="pickpocket_exempt?" type="checkbox" placeholder="0" size="1"><label>扒手：0</label>【敏捷】<br>
-                <input name="hide_exempt?" type="checkbox" placeholder="0" size="1"><label>隱藏：0</label>【敏捷】<br>
-                <input name="Stunt action_exempt?" type="checkbox" placeholder="0" size="1"><label>特技動作：0</label>【敏捷】<br>
-                <input name="survey_exempt?" type="checkbox" placeholder="0" size="1"><label>調查：0</label>【智力】<br>
-                <input name="history_exempt?" type="checkbox" placeholder="0" size="1"><label>歷史：0</label>【智力】<br>
-                <input name="Arcane_exempt?" type="checkbox" placeholder="0" size="1"><label>奧術：0</label>【智力】<br>
-                <input name="natural_exempt?" type="checkbox" placeholder="0" size="1"><label>自然：0</label>【智力】<br>
-                <input name="religion_exempt?" type="checkbox" placeholder="0" size="1"><label>宗教：0</label>【智力】<br>
-                <input name="Tame animals_exempt?" type="checkbox" placeholder="0" size="1"><label>馴服動物：0</label>【感知】<br>
-                <input name="Observance_exempt?" type="checkbox" placeholder="0" size="1"><label>察言觀色：0</label>【感知】<br>
-                <input name="Medical technique_exempt?" type="checkbox" placeholder="0" size="1"><label>醫術：0</label>【感知】<br>
-                <input name="Observed_exempt?" type="checkbox" placeholder="0" size="1"><label>觀察：0</label>【感知】<br>
-                <input name="Survival_exempt?" type="checkbox" placeholder="0" size="1"><label>求生：0</label>【感知】<br>
-                <input name="fool_exempt?" type="checkbox" placeholder="0" size="1"><label>欺瞞：0</label>【魅力】<br>
-                <input name="Intimidate_exempt?" type="checkbox" placeholder="0" size="1"><label>威嚇：0</label>【魅力】<br>
-                <input name="Performance_exempt?" type="checkbox" placeholder="0" size="1"><label>表演：0</label>【魅力】<br>
-                <input name="convince_exempt?" type="checkbox" placeholder="0" size="1"><label>說服：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>運動：0</label>【力量】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>扒手：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>隱藏：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>特技動作：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>調查：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>歷史：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>奧術：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>自然：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>宗教：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>馴服動物：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>察言觀色：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>醫術：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>觀察：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>求生：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>欺瞞：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>威嚇：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>表演：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>說服：0</label>【魅力】<br>
             </div>
         </div>
 
         <div class="sheet_creat_div">
             <section class="sheet_creat_div">
-                <label>防禦值：<input type="number" placeholder="0" size="2"></label><br>
-                <label>先攻調整值：<input type="number" placeholder="0" size="2"></label><br>
-                <label>速度：<input type="number" placeholder="0" size="2"></label><br>
+                <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
+                <label>先攻調整值：<input name="initiative" type="number" placeholder="0" size="2"></label><br>
+                <label>速度：<input name="speed" type="number" placeholder="0" size="2"></label><br>
             </section>
 
             <div id="sheet_creat_hp" class="sheet_creat_div">
-                <label>最高血量：<input type="number" placeholder="0" size="2"></label><br>
-                <label>目前血量：<input type="number" placeholder="0" size="2"></label><br>
-                <label>暫時血量：<input type="number" placeholder="0" size="2"></label><br>
+                <label>最高血量：<input name="max-hp" type="number" placeholder="0" size="2"></label><br>
+                <label>目前血量：<input name="hp" type="number" placeholder="0" size="2"></label><br>
+                <label>暫時血量：<input name="temp-hp" type="number" placeholder="0" size="2"></label><br>
             </div>
 
             <section class="sheet_creat_div">
-                <label>生命骰：<input name="name" placeholder="1d10" size="5"></label><label>總數：<input name="name" type="number" placeholder="" size="2"></label><br>
+                <label>生命骰：<input name="hitdice" placeholder="1d10" size="5"></label>
+                <label>總數：<input name="hitdicetotal" type="number" placeholder="" size="2"></label><br>
             </section>
 
 
@@ -112,22 +164,22 @@
                 <section id="sheet_creat_attack_and_spell">
                     <div class="sheet_creat_div" style="width: 50%">
                         <p>名稱&amp;攻擊類型</p>
-                        <input name="name" placeholder="武士刀/揮砍" size="10"><br>
+                        <input class="attack" placeholder="武士刀/揮砍" size="10"><br>
                     </div>
                     <div class="sheet_creat_div">
                         <p>加值</p>
-                        <input name="name" placeholder="+2" size="4"><br>
+                        <input class="attack" placeholder="+2" size="4"><br>
                     </div>
                     <div class="sheet_creat_div">
                         <p>攻擊力</p>
-                        <input name="name" placeholder="1d10" size="6"><br>
+                        <input class="attack" placeholder="1d10" size="6"><br>
                     </div>
                 </section>
             </div>
             <div class="sheet_creat_div" style="height: 50%">
                 <div class="sheet_creat_div" style="height: 90%">
                     <label>常備裝備：
-                        <textarea name="Role_describtion" placeholder="一個背包
+                        <textarea name="armor" placeholder="一個背包
 一本學科書
 一瓶墨水
 一支墨水筆
@@ -139,44 +191,36 @@
 一本法術書
 治療藥水5瓶
 皮甲
-冒險者名片
-一本筆紀本
-哈雷的研究筆記
-5天份糧食" style="height: 100%;width: 100%;resize: none"></textarea></label>
+一本筆紀本" style="height: 60%;width: 60%;resize: none"></textarea></label>
                 </div>
             </div>
             <section class="sheet_creat_div">
-                <label>CP：<input type="number" placeholder="0" size="2"></label>
-                <label>SP：<input type="number" placeholder="0" size="2"></label>
-                <label>EP：<input type="number" placeholder="0" size="2"></label>
-                <label>GP：<input type="number" placeholder="0" size="2"></label>
-                <label>PP：<input type="number" placeholder="0" size="2"></label>
+                <label>CP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>SP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>EP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>GP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>PP：<input class="money" type="number" placeholder="0" size="2"></label>
             </section>
         </div>
 
         <div class="sheet_creat_div">
             <div>
-                理念：<textarea name="significant_people" class="story"></textarea><br>
-                關係：<textarea name="meaningful_location" class="story"></textarea><br>
-                缺點：<textarea name="treasured_possession" class="story"></textarea><br>
-                性格：<textarea name="trait" class="story"></textarea><br>
+                性格：<textarea name="personality" class="story"></textarea><br>
+                理念：<textarea name="ideals" class="story"></textarea><br>
+                關係：<textarea name="bonds" class="story"></textarea><br>
+                缺點：<textarea name="flaws" class="story"></textarea><br>
             </div>
         </div>
         <div class="sheet_creat_div">
-            <label>攜帶物品：
-                <textarea name="Role_describtion" placeholder="一本筆紀本:哈雷的法陣圖樣
-帶有紫色塗料的地磚
-黑豹的綠石板
-鞋子、斧頭、鑲嵌著石頭的項鍊(皆為魔法物品)
-裝著哈雷頭的寶箱" style="height: 90%;width: 100%;resize: none"></textarea></label>
+            <label>特性：<textarea name="otherTrait"  style="height: 90%;width: 100%;resize: none"></textarea></label>
         </div>
     </section>
     <div style="margin: 50px">
         <section class="sheet_creat_div">
-            <label>法術職業：<input placeholder="變化係法師" size="20"></label>
-            <label>法術施展能力：<input placeholder="智力" size="10"></label>
-            <label>法術豁免值：<input type="number" placeholder="15" size="2"></label>
-            <label>法術攻擊加值：<input type="number" placeholder="7" size="2"></label>
+            <label>法術職業：<input name="spell-class" placeholder="變化係法師" size="20"></label>
+            <label>法術施展能力：<input name="spell-ability" placeholder="智力" size="10"></label>
+            <label>法術豁免值：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            <label>法術攻擊加值：<input name="spell-bonus" type="number" placeholder="7" size="2"></label>
         </section>
     </div>
 </div>

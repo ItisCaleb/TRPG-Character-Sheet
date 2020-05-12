@@ -65,8 +65,6 @@ A project for the TRPG player and GM who suffering from managing character sheet
 ~~* 團務介面，團務密碼裸露~~(現在只有GM看的到了)
 
 ## Hack Point
-* Password backEnd doesn't check special symbol.
-* Password frountEnd doesn't check space.
-* Email backEnd doesn't check.
+~~* 前後端檢查特殊字元~~(完工)
 * DDOS/DOS not prevent.
-* Password don't send with light text.
+

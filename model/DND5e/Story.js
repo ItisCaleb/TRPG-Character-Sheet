@@ -10,7 +10,7 @@ const  DND5eStorySchema = new mongoose.Schema({
     exp:String,
     personality:String,
     ideals:String,
-    Bonds:String,
+    bonds:String,
     flaws:String,
     language:String,
     role_description: String,

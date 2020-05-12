@@ -87,7 +87,7 @@ ul.main-tabs li{
 }
 
 ul.main-tabs li.main-current{
-    background: #ededed;
+    background: lightgray;
     color: #222;
 }
 
