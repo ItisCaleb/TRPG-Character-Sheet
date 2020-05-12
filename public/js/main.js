@@ -19,7 +19,7 @@ $(document).ready(function () {
     })
 
     //if user is already logged in, switch login and sign in button to user page and log out button
-    if (document.cookie.indexOf("auth_token") >= 0) {
+    if (Cookies.get("authed") === 'true') {
         $('.login').addClass('user').text('個人主頁');
         $('.signup').addClass('exit').text('登出');
         $('.user').click(function () {
@@ -42,25 +42,28 @@ $(document).ready(function () {
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
         $('.adminpost').show();
-    if (document.cookie.indexOf('auth_token') >= 0)
+    if (Cookies.get("authed") === 'true')
         $('.logged_in').show();
-    //alert message when user use invalid format to sign up and log in
+
     setInterval(function () {
-        $('.input').each(function () {
-            const input = $(this).find('.input-box');
-            if(input.val().length===0){
-                input.focus(function (e) {
-                    $(this).parent('.input').css("borderBottomColor", "#46A3FF");
-                });
-                input.blur(function () {
-                    $(this).parent('.input').css("borderBottomColor", "#ccc");
-                });
-            }
-            if(input.val().length >=1 && id !=='login' && id !=='signup'){
-                $(this).css("borderBottomColor", "#46A3FF");
-            }
-        });
+        if(doesHttpOnlyCookieExist('auth_token')) {
+            $.ajax({
+                url: '../api/user/check_auth',
+                type: 'GET',
+                contentType: 'application/json; charset=UTF-8',
+                success: function (data) {
+                    if (data === 'true') {
+                        Cookies.set('authed', data, {sameSite: 'Lax', secure: true});
+                        redirect(url);
+                    }if (data === 'false') {
+                        Cookies.remove('authed', data, {sameSite: 'Lax', secure: true});
+                        redirect('/');
+                    }
+                }
+            })
+        }
     },0)
+
     $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
     function zoomDisable(){
         $('head meta[name=viewport]').remove();
@@ -116,6 +119,18 @@ function bad_message(data) {
     setTimeout(function () {
         $('.alert-message').find('.message-div').remove();
     }, 1000)
+}
+function doesHttpOnlyCookieExist(cookiename) {
+    var d = new Date();
+    d.setTime(d.getTime() + (1000));
+    var expires = "expires=" + d.toUTCString();
+
+    document.cookie = cookiename + "=new_value;path=/;" + expires;
+    if (document.cookie.indexOf(cookiename + '=') === -1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 function get(URL) {
     $.ajax({

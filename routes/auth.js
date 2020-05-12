@@ -132,10 +132,16 @@ router.post('/userlogin', async (req, res) => {
     (user.admin===true && req.body.check)
         ? res.cookie('admin', 'True',{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'})
         : res.cookie('admin', 'True',{sameSite:'Lax'});
-    (req.body.check)
-        ? res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax'}).send('登入成功')
-        : res.cookie('auth_token', token,{sameSite:'Lax'}).send('登入成功');
+    if(req.body.check){
+        res.cookie('authed',true,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax',secure:true});
+        res.cookie('auth_token', token,{expires:new Date(Date.now()+(7*day)),sameSite:'Lax',secure:true,httpOnly:true}).send('登入成功');
+    }else {
+        res.cookie('authed',true,{sameSite:'Lax',secure:true});
+        res.cookie('auth_token', token, {sameSite: 'Lax'}).send('登入成功');
+    }
 });
+
+//forget password
 router.post('/forget_password',async function (req,res) {
     const email=req.body.email;
     const emailExist = await User.findOne({email:email});
@@ -177,6 +183,8 @@ router.post('/forget_password',async function (req,res) {
         res.status(400).send(err)
     }
 })
+
+//find password
 router.post('/find_password/:email', async (req,res)=>{
     const check = await tempUser({email:req.params.email});
     if(!check) return res.status(400).send('此連結已失效!');
@@ -214,5 +222,16 @@ router.post('/password', async (req,res)=>{
     await User.updateOne({name:username},{$set:{password:hashPassword}});
     res.send('你成功修改了密碼!');
 });
+
+router.get('/check_auth', async (req,res)=>{
+    const token=req.cookies.auth_token;
+    if(!token) return res.send('false');
+    const auth = jwt.verify(token, process.env.JWT_SECRET);
+    const auth_check = req.cookies.authed;
+    if(auth && !auth_check){
+        return res.send('true');
+    }
+
+})
 
 module.exports = router;

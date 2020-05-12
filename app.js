@@ -48,7 +48,7 @@ const certificate = fs.readFileSync(__dirname+'/public/ssl/certificate.crt');
 const credentials ={key:privateKey, cert:certificate};
 
 app.use(function (req, res, next) {
-    next(createError(404));
+    next(res.createError(404));
 });
 
 // error handler
