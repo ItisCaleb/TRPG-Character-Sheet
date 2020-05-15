@@ -19,7 +19,7 @@ $(document).ready(function () {
     })
 
     //if user is already logged in, switch login and sign in button to user page and log out button
-    if (Cookies.get("authed") === 'true') {
+    if (document.cookie.indexOf("auth_token")>=0) {
         $('.login').addClass('user').text('個人主頁');
         $('.signup').addClass('exit').text('登出');
         $('.user').click(function () {
@@ -42,27 +42,8 @@ $(document).ready(function () {
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
         $('.adminpost').show();
-    if (Cookies.get("authed") === 'true')
+    if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').show();
-
-    setInterval(function () {
-        if(doesHttpOnlyCookieExist('auth_token')) {
-            $.ajax({
-                url: '../api/user/check_auth',
-                type: 'GET',
-                contentType: 'application/json; charset=UTF-8',
-                success: function (data) {
-                    if (data === 'true') {
-                        Cookies.set('authed', data, {sameSite: 'Lax', secure: true});
-                        redirect(url);
-                    }if (data === 'false') {
-                        Cookies.remove('authed', data, {sameSite: 'Lax', secure: true});
-                        redirect('/');
-                    }
-                }
-            })
-        }
-    },0)
 
     $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
     function zoomDisable(){
