@@ -4,11 +4,11 @@ $(document).ready(function () {
     var array = url.split('/');
     var id = array[array.length-1];
     //when hover on button, change their color
-    $('#change_password').click(function () {
+    $('#change-password').click(function () {
         $('#password-window').show();
     });
-    $('#cancel_password').click(function () {
-        $('#password_window').hide();
+    $('#cancel-password').click(function () {
+        $('#password-window').hide();
     });
     $('#menu').click(function () {
         $('.right-menu').show();
@@ -19,7 +19,7 @@ $(document).ready(function () {
     })
 
     //if user is already logged in, switch login and sign in button to user page and log out button
-    if (document.cookie.indexOf("auth_token") >= 0) {
+    if (document.cookie.indexOf("auth_token")>=0) {
         $('.login').addClass('user').text('個人主頁');
         $('.signup').addClass('exit').text('登出');
         $('.user').click(function () {
@@ -44,24 +44,16 @@ $(document).ready(function () {
         $('.adminpost').show();
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').show();
-    //alert message when user use invalid format to sign up and log in
-    setInterval(function () {
-        $('.input').each(function () {
-            const input = $(this).find('.input-box');
-            if(input.val().length===0){
-                input.focus(function (e) {
-                    $(this).parent('.input').css("borderBottomColor", "#46A3FF");
-                });
-                input.blur(function () {
-                    $(this).parent('.input').css("borderBottomColor", "#ccc");
-                });
-            }
-            if(input.val().length >=1 && id !=='login' && id !=='signup'){
-                $(this).css("borderBottomColor", "#46A3FF");
-            }
-        });
-    },0)
 
+    $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
+    function zoomDisable(){
+        $('head meta[name=viewport]').remove();
+        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>\n');
+    }
+    function zoomEnable(){
+        $('head meta[name=viewport]').remove();
+        $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1">');
+    }
 });
 
 //redirect URL function
@@ -70,16 +62,29 @@ function redirect(URL) {
 }
 
 function check() {
-    const regExp = /,/;
-    var text = $(".input").val();
-    const pattern = new RegExp("[`~!#$^&*()=-|.{}':;,\\[\\]<>/?￥…—|【】_=‘”“。、+%]");
-    const result = text.match(pattern);
-    if (result) {
-        message("含有特殊字元");
+    var email=$('.email-box');
+    var text = $(".input-box");
+    const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+(([.\-])[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…【】‘”“。、%]");
+    if(!email.val().match(emailRule)){
+        $('.check-btn').prop('disabled',true);
+        bad_message("電子郵件格式錯誤");
+        setTimeout(function () {
+            $('.check-btn').prop('disabled',false);
+        },1000)
         return true
-    } else {
-        return false
     }
+    text.each(function () {
+        if($(this).val().match(pattern)){
+            $('.check-btn').prop('disabled',true);
+            bad_message("含有特殊字元");
+            setTimeout(function () {
+                $('.check-btn').prop('disabled',false);
+            },1000)
+            return true
+        }
+    })
+    return false
 }
 
 function good_message(data) {
@@ -95,6 +100,18 @@ function bad_message(data) {
     setTimeout(function () {
         $('.alert-message').find('.message-div').remove();
     }, 1000)
+}
+function doesHttpOnlyCookieExist(cookiename) {
+    var d = new Date();
+    d.setTime(d.getTime() + (1000));
+    var expires = "expires=" + d.toUTCString();
+
+    document.cookie = cookiename + "=new_value;path=/;" + expires;
+    if (document.cookie.indexOf(cookiename + '=') === -1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 function get(URL) {
     $.ajax({

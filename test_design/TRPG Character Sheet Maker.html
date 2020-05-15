@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
+        <meta charset="utf-8">
     <title>TRPG Character Sheet Maker</title>
     <link href="TRPG%20Character%20Sheet%20Maker_files/Main.css" rel="stylesheet" type="text/css" media="all">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="TRPG%20Character%20Sheet%20Maker_files/jquery-3.js"></script>
     <script src="TRPG%20Character%20Sheet%20Maker_files/js.js"></script>
-
     <script src="TRPG%20Character%20Sheet%20Maker_files/main.js" charset="UTF-8"></script>
-
+    <link href="TRPG%20Character%20Sheet%20Maker_files/DND5e.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-
 <nav>
 
     <div class="topic">TRPG Toaster</div>
@@ -21,60 +19,427 @@
     </div>
     <ul>
         <li class="menu btn" id="btn" onclick="get('/')">首頁</li>
-        <li class="menu btn" onclick="get('/about')">關於</li>
-        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</li>
-        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</li>
+        <li class="menu btn" onclick="get('/about')">關於我們</li>
+        <li class="menu btn logged_in" onclick="get('/trpgsession')" style="">團務</li>
+        <li class="menu btn logged_in" onclick="get('/charactersheet')" style="">角色卡管理</li>
         <li class="menu btn adminpost" onclick="get('/adminpost')" style="">管理員貼文</li>
     </ul>
-
-    <ul class="submenu">
-        <li class="menu btn" id="btn" onclick="get('/')">Kulimi</li>
-        <li class="menu btn" onclick="get('/about')">選項</li>
-    </ul>
-
-    <!--<div class="submenu">
-        <button class="subbtn btn validation login">登入</button>
-        <button class="subbtn btn validation signup">註冊</button>
-    </div>-->
+    <div class="submenu">
+        <button class="subbtn btn validation login user">個人主頁</button>
+        <button class="subbtn btn validation signup exit">登出</button>
+    </div>
     <div id="overlay"></div>
     <div class="alert-message" style="top: 24px;"></div>
-</nav>
-<div class="right-menu pop" style="display: none">
-        <img style="width: 50%" src="TRPG%20Character%20Sheet%20Maker_files/toaster.svg" alt="">
-        <a class="btn" id="btn" onclick="get('/')">首頁</a>
-        <a class="btn" onclick="get('/about')">關於</a>
-        <a class="btn logged_in" onclick="get('/trpgsession')" style="display: none">團務</a>
-        <a class="btn logged_in" onclick="get('/charactersheet')" style="display: none">角色卡管理</a>
-        <a class="btn adminpost" onclick="get('/adminpost')" style="">管理員貼文</a>
-        <a class="btn validation login">登入</a>
-        <a class="btn validation signup">註冊</a>
-</div>
-<div class="content">
-    <div>
-        <h1 style="text-align: center;line-height:40px ;">首頁</h1>
-        <p class="content-decribe" style="text-align: center;:">
-            歡迎來到TRPG Toaster!<br>正如這個網站的名字一樣，我們希望能讓TRPG玩家們更好的創建及管理角色卡<br>正如烤吐司一樣簡單!
-        </p>
-    </div>
-    <div>
-        <div class="content-content">
-            <h1>使用教學</h1>
-            <p>
-                1. 登入 <br>
-                2. 創建角色卡 <br>
-                3. 加入/創建團務 <br>
-                4. 遊玩愉快！ <br>
-            </p>
+
+    <div id="mobile-option">
+        <div class="mobile-nav" style="width:15%;padding: 2%">
+            <div id="mobile-option" style="display: inline;">
+                選項
+                <img id="mobile-img" style="width: 30%" src="TRPG%20Character%20Sheet%20Maker_files/angle-arrow-down.svg" alt="">
+            </div>
+        </div>
+        <div class="mobile-nav-menu list-menu side-pop" style="display: none">
+            <div class="list-menu-text mobile-permission">
+                檢視權限
+            </div>
+            <div class="list-menu-text delete-check">
+                匯入
+            </div>
+            <button class="list-menu-text create">
+                創建
+            </button>
+        </div>
+        <div class="mobile-permission-menu list-menu side-pop pop" style="display: none">
+            <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+            <div class="list-menu-text permissions">團務所有玩家</div>
+            <div class="list-menu-text permissions">所有人</div>
         </div>
     </div>
-
+</nav>
+<div class="right-menu pop" style="display: none">
+    <img style="width: 50%" src="TRPG%20Character%20Sheet%20Maker_files/toaster.svg" alt="">
+    <a class="btn" id="btn" onclick="get('/')">首頁</a>
+    <a class="btn" onclick="get('/about')">關於我們</a>
+    <a class="btn logged_in" onclick="get('/trpgsession')" style="">團務</a>
+    <a class="btn logged_in" onclick="get('/charactersheet')" style="">角色卡管理</a>
+    <a class="btn adminpost" onclick="get('/adminpost')" style="">管理員貼文</a>
+    <a class="btn validation login user">個人主頁</a>
+    <a class="btn validation signup exit">登出</a>
 </div>
+<div class="left-side">
+    <div class="list">
+        <div class="list-top">
+            <p class="list-text">編輯選項</p>
+            <img src="TRPG%20Character%20Sheet%20Maker_files/menu-icon.png" class="list-button" alt="">
+        </div>
+        <div class="left-list-menu list-menu side-pop" style="display: none">
+            <div class="list-menu-text permission">
+                檢視權限
+            </div>
+            <div class="list-menu-text delete-check">
+                匯入
+            </div>
+            <button style="border: 0;padding: 5%;font-size: 100%;width: 100%" class="list-menu-text create">
+                創建
+            </button>
+        </div>
 
-<div class="new_pusher"></div>
+    </div>
+</div>
+<div class="list-right-side">
+    <div class="right-list-menu list-menu side-pop pop" style="display: none">
+        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+        <div class="list-menu-text permissions">團務所有玩家</div>
+        <div class="list-menu-text permissions">所有人</div>
+    </div>
+</div>
+<div class="content">
+    <h1 style="text-align: center;line-height:40px ;">創建角色卡</h1>
+    <p class="content-decribe" style="text-align: center;line-height:30px;">
+        框內文字為範例角色卡 系統:DND5e
+    </p>
+    <section style="margin: 50px">
+        <div class="sheet_creat_div">
+            <div>
+                <button id="test" type="submit">創建</button>
+                <p>冒險者資料：</p>
+                <section>
+                    <div class="sheet_input_div">
+                        <label>角色名稱：<input name="name" placeholder="克爾德"></label><br>
+                        <label>職業：<input name="class" placeholder="牧師" size="5"></label><br>
+                        <label>等級：<input max="30" min="0" name="level" placeholder="3" step="1" type="number"></label><br>
+                        <label>角色背景：<input name="background" placeholder="公會商人"></label><br>
+                        <label>年齡：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
+                        <label>體重：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
+                        <label>髮色：<input name="name" placeholder="克爾德"></label><br>
 
+
+                    </div>
+                    <div class="cheet_input_div">
+                        <label>玩家暱稱：<input name="player" placeholder="ItisCaleb"></label><br>
+                        <label>種族：<input name="race" placeholder="人類"></label><br>
+                        <label>陣營：<input name="faction" placeholder="絕對中立"></label><br>
+                        <label>經驗值：<input name="exp" placeholder="經驗值"></label><br>
+                        <label>身高：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
+                        <label>膚色：<input name="name" placeholder="克爾德"></label><br>
+                        <label>所屬組織：<input name="name" placeholder="師大附中網管小組"></label><br>
+
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <div class="sheet_creat_div">
+            <label>角色形容：
+                <textarea name="Role_describtion" placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們" style="height: 90%;width: 80%;resize: none"></textarea></label>
+        </div>
+    </section>
+    <div class="sheet_creat_div" style="height: 100%">
+        <section class="sheet_creat_div">
+            <label>角色外觀：
+                <textarea name="Role_describtion" placeholder="克爾德雖然是個牧師，但起因卻只是小時候接受教堂施捨認為神職者都很有錢才加入教堂，而在離開教會之後，便成為了商人四處旅行，同時也利用從教會學來的治療法術好好剝削需要治療傷痛的人們" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            <label>所屬組織介紹：
+                <textarea name="Role_describtion" placeholder="史克威爾冒險者協會
+研究者協會:致力於蒐羅並研究各地不同民族及語言之學術,信仰或故事性質的書籍或資訊" style="height: 150px;width: 100%;resize: none"></textarea></label>
+        </section>
+        <div class="sheet_creat_div">
+            <label>角色背景歷史：
+                <textarea name="Role_describtion" placeholder="從同族允許的年齡後 就開始周遊各地 學習知識 並於5年前進入法術學院儘管2年前已能畢業 但由於認為自已還有所不足的原因研讀1年半後才從中畢業 並開始接觸魔法 如今初出茅廬
+傑洛喜歡吃義大利麵 批薩 炸雞 起司 冰淇淋 鬆餅 和冰淇淋鬆餅
+最愛的是白酒蛤蜊意大利麵
+他的組織就像我之前描述的一樣
+然後有各種喜歡知識的人聚集在一起
+傑洛算是組織裡滿有名的人
+然後組織其實在各地都有分布
+
+赫特•潘茲 也是組織中有名的人之一 粉髮 紅瞳 人類女性 二十三歲 一七零公分高 與傑洛關係甚好 有著名為 護霜旅行者（Cream starter）的魔法道具
+
+厄莉莎•露芙斯 名人之一 高等精靈 三十五歲 喜歡貓咪 巧克力 咖啡 小提琴 鋼琴 交響樂 熟練烹飪和音樂 熱愛大自然 著名音樂家 精通幻術學派魔法 與傑洛關係不錯
+
+福里斯克•查拉 男 人類 十六歲 精通防護學派法術 經驗十分豐富的探險家 性格十分仁慈 卻不知為何有部分探險者卻傳言他其實十分冷血 並精通詠劍學派法術 且與某些未曾見過的怪物有交流由於不符年齡的能力與身份 和神秘的傳言使他滿有名的 極度極度極度喜歡巧克力" style="height: 150px;width: 90%;resize: none"></textarea></label>
+        </div>
+        <section>
+            <label>其他特徵＆特性：
+                <textarea name="Role_describtion" placeholder="長的跟傑洛·齊貝林一模一樣 連牙齒也一樣
+
+法尼•瓦倫泰 組織的創始人之一 關於此人有許多傳言 比如有著自由穿梭不同位面和平行宇宙的能力 或者他如今未死 金髮 藍瞳 組織創立時四十三歲
+
+恩里克•普奇 組織的創始人之一 關於此人的傳言比上者更多很多   白髮 棕瞳 組織創立時三十九歲
+
+迪奧•布藍度 組織的創始人之一 關於此人有許多傳言 比如他是吸血鬼 或是能暫停時間 有趣的是他確實不喜歡曬太陽  金髮 紅瞳 組織創立時年齡不詳
+以上三人皆無確認死亡
+
+然後組織裡面基本上是沒有頭頭的 而且總人數不多
+如果有事的話通常會是有公信力的人協助解決
+情報大致上是公開的 如果有過於虛假或是爭議性或引起恐慌的資訊
+那些傢伙通常會想辦法處理
+有公信力的人通常是名人 但名人不一定有公信力
+順帶一提 傑洛因為冷靜且公正的態度 和龐大的知識量 也算是有公信力的人
+有傳言組織的情搜能力與資訊量可與公會一比 只是因為兩方並不多關聯 且知情人很少 所以除了組織裡的大傢伙或公會高層以外幾乎沒人知道
+組織分部各地都有 偏遠的地區平均人數大約是首都總部的一半 但其實分布與偏遠地區在活動人數較高 總部大部分都在處理資料與通訊等雜務
+原因是越少人的地方
+往往有越多未發掘的事物
+大圖書館的職員有蠻多是組織的人 大部分都在做研究" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            <label>寶物：
+                <textarea name="Role_describtion" placeholder="20th century boy 為附贈動作 二環
+二回合內不受傷害，攻擊會被吸收，不會被移動，但也不能做任何行動
+如果對方力量大於施法者施法屬性1.5倍，可以骰力量檢定來推動施法者
+施放時必須專注若是中斷，你將承受一半被吸收的攻擊
+
+Oye Co Mova 動作 一環
+三回合內若有近戰攻擊或是遠程物理攻擊
+則攻擊者進行體質檢定
+如失敗則被推離20呎且攻擊失效，且近戰攻擊者受到1d6爆炸傷害
+成功被推離十呎，並受到一半傷害，並且攻擊骰劣勢" style="height: 150px;width: 100%;resize: none"></textarea></label>
+
+        </section>
+    </div>
+    <section style="margin: 50px">
+        <div class="sheet_creat_div">
+            <label>力量：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>敏捷：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>體魄：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>智力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>感知：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+            <label>魅力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+        </div>
+        <div class="sheet_creat_div">
+            <label>激勵值：<input name="inspiration" type="number" placeholder="0" size="1"></label><br>
+            <label>熟練加成：<input name="pro" type="number" placeholder="0" size="1"></label><br>
+
+            <div id="sheet_creat_exempt">
+                <p>豁免檢定：</p>
+                <input type="checkbox" placeholder="0" size="1"><label>力量：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>敏捷：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>體魄：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>智力：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>感知：0</label><br>
+                <input type="checkbox" placeholder="0" size="1"><label>魅力：0</label><br>
+            </div>
+
+            <div id="sheet_creat_skill">
+                <p>技能：</p>
+                <input type="checkbox" placeholder="0" size="1"><label>運動：0</label>【力量】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>扒手：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>隱藏：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>特技動作：0</label>【敏捷】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>調查：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>歷史：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>奧術：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>自然：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>宗教：0</label>【智力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>馴服動物：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>察言觀色：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>醫術：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>觀察：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>求生：0</label>【感知】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>欺瞞：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>威嚇：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>表演：0</label>【魅力】<br>
+                <input type="checkbox" placeholder="0" size="1"><label>說服：0</label>【魅力】<br>
+            </div>
+        </div>
+
+        <div class="sheet_creat_div">
+            <section class="sheet_creat_div">
+                <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
+                <label>先攻調整值：<input name="initiative" type="number" placeholder="0" size="2"></label><br>
+                <label>速度：<input name="speed" type="number" placeholder="0" size="2"></label><br>
+            </section>
+
+            <div id="sheet_creat_hp" class="sheet_creat_div">
+                <label>最高血量：<input name="max-hp" type="number" placeholder="0" size="2"></label><br>
+                <label>目前血量：<input name="hp" type="number" placeholder="0" size="2"></label><br>
+                <label>暫時血量：<input name="temp-hp" type="number" placeholder="0" size="2"></label><br>
+            </div>
+
+            <section class="sheet_creat_div">
+                <label>生命骰：<input name="hitdice" placeholder="1d10" size="5"></label>
+                <label>總數：<input name="hitdicetotal" type="number" placeholder="" size="2"></label><br>
+            </section>
+
+
+            <div class="sheet_creat_div">
+                <p>攻擊 &amp; 法術</p>
+                <section id="sheet_creat_attack_and_spell">
+                    <div class="sheet_creat_div" style="width: 50%">
+                        <p>名稱&amp;攻擊類型</p>
+                        <input class="attack" placeholder="武士刀/揮砍" size="10"><br>
+                    </div>
+                    <div class="sheet_creat_div">
+                        <p>加值</p>
+                        <input class="attack" placeholder="+2" size="4"><br>
+                    </div>
+                    <div class="sheet_creat_div">
+                        <p>攻擊力</p>
+                        <input class="attack" placeholder="1d10" size="6"><br>
+                    </div>
+                </section>
+            </div>
+            <div class="sheet_creat_div" style="height: 50%">
+                <div class="sheet_creat_div" style="height: 90%">
+                    <label>常備裝備：
+                        <textarea name="armor" placeholder="一個背包
+一本學科書
+一瓶墨水
+一支墨水筆
+十張羊皮紙
+一小袋沙
+一把小刀
+一把匕首
+一個奧術法器
+一本法術書
+治療藥水5瓶
+皮甲
+一本筆紀本" style="height: 60%;width: 60%;resize: none"></textarea></label>
+                </div>
+            </div>
+            <section class="sheet_creat_div">
+                <label>CP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>SP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>EP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>GP：<input class="money" type="number" placeholder="0" size="2"></label>
+                <label>PP：<input class="money" type="number" placeholder="0" size="2"></label>
+            </section>
+        </div>
+
+        <div class="sheet_creat_div">
+            <div>
+                性格：<textarea name="personality" class="story"></textarea><br>
+                理念：<textarea name="ideals" class="story"></textarea><br>
+                關係：<textarea name="bonds" class="story"></textarea><br>
+                缺點：<textarea name="flaws" class="story"></textarea><br>
+            </div>
+        </div>
+        <div class="sheet_creat_div">
+            <label>特性：<textarea name="otherTrait" style="height: 90%;width: 100%;resize: none"></textarea></label>
+        </div>
+    </section>
+    <div style="margin: 50px">
+        <section class="sheet_creat_div">
+            <label>法術職業：<input name="spell-class" placeholder="變化係法師" size="20"></label>
+            <label>法術施展能力：<input name="spell-ability" placeholder="智力" size="10"></label>
+            <label>法術豁免值：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            <label>法術攻擊加值：<input name="spell-bonus" type="number" placeholder="7" size="2"></label>
+        </section>
+        <div>
+            <section>
+                <label>法術環數：0</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="閃電牽引
+舞光術
+火焰箭" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：1</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：2</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：3</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：4</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：5</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：6</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：7</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：8</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+        <div>
+            <section>
+                <label>法術環數：9</label>
+                <label>法術總級：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+                <label>法術用量：<input name="spell-save" type="number" placeholder="15" size="2"></label>
+            </section>
+            <div>
+                <label>法術：
+                    <textarea name="armor" placeholder="" style="height: 150px;width: 100%;resize: none"></textarea></label>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="footer">
     Copyright © 2020 trpgtoaster.com. All rights reserved.
 </div>
 
 
-<div class="alertify-notifier ajs-bottom ajs-right"></div><div class="alertify"><iframe class="ajs-footer" src="TRPG%20Character%20Sheet%20Maker_files/alerts.html"></iframe></div><div class="alertify-notifier ajs-bottom ajs-right"></div><div class="alertify"><iframe class="ajs-footer" src="file://cdnsure.com/assets/alerts"></iframe></div></body></html>
+</body></html>
