@@ -76,12 +76,16 @@
         border-bottom-color: white;
         display: inline-block;
     }
+    nav > ul > li>a {
+        text-decoration: none;
+        color: inherit
+    }
 
     nav > .submenu {
         right: 1%;
         margin: 0;
         position: absolute;
-        top: 1%;
+        top: 10px;
         display: inline-block;
     }
 

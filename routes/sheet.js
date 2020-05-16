@@ -199,7 +199,10 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
 })
 
 router.post('/DND5e',verify,upload.single('file'),async function (req,res) {
-
+    const id = jwtDecode(req.cookies.auth_token)._id;
+    const user = await User.findOne({_id:id});
+    if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
+    var cs = req.body;
 })
 
 

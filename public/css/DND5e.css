@@ -2,9 +2,42 @@
     width: 100%;
     padding: 20px;
 }
-
+.sheet_creat_div >label>input{
+    width: 50%;
+}
+.sheet_input_div {
+    width: 100%;
+}
 .sheet_input_div >label> input{
-    width: 30%;
+    width: 70%;
+}
+ul.main-tabs{
+    margin-left: 5%;
+    padding: 0;
+    list-style: none;
+
+}
+ul.main-tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.main-tabs li.main-current{
+    background: lightgray;
+    color: #222;
+}
+
+.main-tab-content{
+    border: 1px solid lightgray;
+    display: none;
+    padding: 15px;
+}
+
+.main-tab-content.main-current{
+    display: inherit;
 }
 
 @media only screen and (min-width: 768px){
@@ -15,6 +48,9 @@
 
 
 @media only screen and (max-width: 768px) {
+    .left-side{
+        display: none;
+    }
     .mobile-nav{
         margin-top: 4%;
         padding:0.5% ;
