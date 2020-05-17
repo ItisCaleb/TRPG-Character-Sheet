@@ -1,0 +1,40 @@
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#content{
+    background-color: #cecece;
+    height: 100%;
+    width: 100%;
+    animation: load_in 2s;
+}
+
+@keyframes load_in {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 100%;
+    }
+}
+
+#credit {
+    text-align: center;
+    font-size: 72px;
+}
+
+#notification {
+    position: fixed;
+    width: 100%;
+    top: 30%;
+    text-align: center;
+    font-size: 144px;
+}
