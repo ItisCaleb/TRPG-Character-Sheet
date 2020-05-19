@@ -1,6 +1,6 @@
 .sheet_creat_div {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
 }
 .sheet_creat_div >label>input{
     width: 50%;
@@ -10,6 +10,12 @@
 }
 .sheet_input_div >label> input{
     width: 70%;
+}
+.create{
+    background-color: white;
+}
+.chara{
+    display: inline;
 }
 ul.main-tabs{
     margin-left: 5%;

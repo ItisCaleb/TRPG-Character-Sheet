@@ -21,9 +21,19 @@ $(document).ready(function () {
     $('.permission').click(function () {
         $('.right-list-menu').show();
     })
+
     $(document).on("click", ".create", function (e){
       e.preventDefault();
+        var skill=[];
+        $('.skill').each(function () {
+            const input = $(this).siblings('label');
+            if(input.find('input').val()==='on') {
+                skill.push(input.find("input").val());
+            }
+        })
       const sheet = $('#myform').serializeArray();
+      sheet.push(skill);
       console.log(sheet);
     })
+
 })
