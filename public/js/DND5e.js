@@ -21,14 +21,21 @@ $(document).ready(function () {
     $('.permission').click(function () {
         $('.right-list-menu').show();
     })
+    setInterval(function () {
+        $('.skill').each(function () {
+            var num=$(this).text();
+            var attr=$(this).siblings('p').text();
+            console.log(attr);
+        })
+    },0)
 
     $(document).on("click", ".create", function (e){
       e.preventDefault();
         var skill=[];
         $('.skill').each(function () {
             const input = $(this).siblings('label');
-            if(input.find('input').val()==='on') {
-                skill.push(input.find("input").val());
+            if(parseInt($(this).text())>0){
+                skill.push(input.text())
             }
         })
       const sheet = $('#myform').serializeArray();
