@@ -41,6 +41,7 @@
 
     .right-menu {
         display: none;
+        animation: right-menu-in 2s;
     }
 
     @keyframes right-menu-in {
