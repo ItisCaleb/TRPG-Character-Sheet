@@ -43,6 +43,15 @@
         display: none;
     }
 
+    @keyframes right-menu-in {
+        0%{
+            width: 0;
+        }
+        100%{
+
+        }
+    }
+
     nav > .topic {
         align-items: center;
         width: auto;
