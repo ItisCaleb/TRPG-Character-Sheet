@@ -27,25 +27,56 @@
     cursor:pointer;
 
 }
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+th{
+    border: 1px solid lightgray;
+    padding: 0;
+    background: rgb(240, 240, 240);
+}
+td{
+    border: 1px solid lightgray;
+    padding: 2%;
+}
 
 .systems-title-tile:hover{
     background: #46A3FF;
     color: white;
 }
 @media only screen and (max-width: 768px){
-    .sheet{
-        font-size: 12px;
+
+    ul.main-tabs li{
+        padding: 3px 10px;
+    }
+    th{
+        font-size: 20px;
+    }
+    td{
+        font-size: 15px;
     }
 }
 @media only screen and (min-width: 768px){
-    .sheet{
-        cursor: pointer;
-        font-size: 25px;
+    ul.main-tabs li{
+        padding: 7px 20px;
     }
+    th{
+        font-size: 30px;
+    }
+    td{
+        font-size: 20px;
+    }
+
 }
 
 .sheet:hover{
-    color: #46A3FF;
+    background:#e8e2d5;
+    cursor: pointer;
 }
 
 .systems-picture{
@@ -75,26 +106,21 @@ ul.main-tabs{
     padding: 0;
     list-style: none;
     width: 60%;
-
-
+    margin-bottom: 0;
 }
 ul.main-tabs li{
-    background: none;
     color: #222;
     display: inline-block;
-    padding: 10px 15px;
     cursor: pointer;
 }
 
 ul.main-tabs li.main-current{
-    background: lightgray;
+    background: rgb(224, 224, 224);;
     color: #222;
 }
 
 .main-tab-content{
-    border: 1px solid lightgray;
     display: none;
-    padding: 15px ;
     margin:0 20%;
 }
 

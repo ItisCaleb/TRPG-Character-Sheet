@@ -3,22 +3,22 @@ $(document).ready(function () {
     var url = $(location).attr('href');
     var array = url.split('/');
     var id = array[array.length-1];
-    $('#upload').click(function () {
+    $('#upload').on('click',function () {
         $('#upload-window').show()
     })
-    $('#sheet-show').click(function () {
+    $('#sheet-show').on('click',function () {
         $('#sheet-window').show();
     })
-    $('#delete-check').click(function () {
+    $('#delete-check').on('click',function () {
         $('#delete-window').show();
     })
-    $('#delete-disable').click(function () {
+    $('#delete-disable').on('click',function () {
         $('#delete-window').hide();
     })
-    $('#sheet-disable').click(function () {
+    $('#sheet-disable').on('click',function () {
         $('#sheet-window').hide()
     })
-    $('#upload-disable').click(function () {
+    $('#upload-disable').on('click',function () {
         $('#upload-window').hide()
     })
     $('#upload-sheet-form').submit(function (e) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
             },
         });
     })
-    $('.sheet-delete').click(function (e) {
+    $('.sheet-delete').on('click',function (e) {
         e.preventDefault()
         $('.sheet-delete').prop('disabled',true);
         $.ajax({
@@ -58,7 +58,7 @@ $(document).ready(function () {
             },
         })
     })
-    $('.player-delete').click(function (e) {
+    $('.player-delete').on('click',function (e) {
         e.preventDefault()
         $('.player-delete').prop('disabled',true);
         $.ajax({
@@ -79,7 +79,7 @@ $(document).ready(function () {
         })
     })
 
-    $('#delete').click(function (e) {
+    $('#delete').on('click',function (e) {
         e.preventDefault();
         $('#delete').prop('disabled',true);
         $('#delete-window').css('display','none');

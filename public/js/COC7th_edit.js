@@ -68,20 +68,23 @@ $(document).ready(function () {
         },2000)
     })
 
-    $('.delete-check').click(function () {
+    $('.delete-check').on('click',function () {
         $('#delete-window').css('display','block');
     });
-    $('#delete-disable').click(function () {
+    $('#delete-disable').on('click',function () {
         $('#delete-window').css('display','none');
     });
-    $('#delete').click(function () {
+    $('#delete').on('click',function () {
         $('#delete-window').css('display','none');
-        $.get('../api/sheet/delete/'+ id,
-            function(data){
+        $.ajax({
+            url:'../api/sheet/delete/'+ id,
+            type:'DELETE',
+            success:function(data) {
                 good_message(data)
-                setTimeout(function(){
+                setTimeout(function () {
                     redirect('/charactersheet')
-                },1000)
+                }, 1000)
+            }
         })
     })
 

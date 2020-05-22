@@ -43,7 +43,7 @@
 <% include rightmenu.ejs%>
 <div class="content" style="text-align: center;">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-    <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+    <div class="content-decribe" id="session"  style="line-height:30px ;">
         一人可擁有的角色卡上限為20張<br>
         你現在共擁有<%=number%>張角色卡<br>
         直接點擊文字來檢閱或編輯角色卡<br>
@@ -57,41 +57,50 @@
     </ul>
     <div style="width: 100%;">
         <div id="main-tab-1" class="main-tab-content main-current">
-            <div style="text-align: center;margin: 5%">
+            <div style="text-align: center;">
                 <% if (content[0] =='你還沒創建角色卡' ) { %>
                     <div style="font-size: 20px"><%=content[0]%></div>
                 <% }else{ %>
+                <table>
+                    <tr>
+                        <th>角色卡</th>
+                        <th style="width: 30%">系統</th>
+                    </tr>
+
                 <% for(var i=0;i<content.length;i++) { %>
                         <% if (i>=10) { %>
                             <% break; %>
                         <%　}%>
-                    <div class="sheet" style="display: inline" onclick="redirect('/charactersheet/<%= url[i] %>')"><%= content[i] %> -----系統:<%=system[i] %></div>
-                    <br>
+                            <tr class="sheet" onclick="redirect('/charactersheet/<%= url[i] %>')">
+                                <td><%= content[i]%></td>
+                                <td><%=system[i] %></td>
+                            </tr>
                 <% } %>
+                </table>
                 <%}%>
             </div>
         </div>
         <div id="main-tab-2" class="main-tab-content">
-            <div style="text-align: center;margin: 5%">
-        <% for(var k=10;k<content.length;k++) { %>
-            <div class="sheet" style="display: inline" onclick="redirect('/charactersheet/<%= url[k] %>')"><%= content[i] %> -----系統:<%=system[k] %></div><br>
-        <% } %>
+            <div style="text-align: center;">
+                <table>
+                    <tr>
+                        <th>角色卡</th>
+                        <th style="width: 30%">系統</th>
+                    </tr>
+
+                    <% for(var k=10;k<content.length;k++) { %>
+                        <tr class="sheet" onclick="redirect('/charactersheet/<%= url[k] %>')">
+                            <td><%= content[k]%></td>
+                            <td><%=system[k] %></td>
+                        </tr>
+                    <% } %>
+                </table>
             </div>
         </div>
     </div>
 
 </div>
-<script>
-    $('ul.main-tabs li').click(function () {
-    var tab_id = $(this).attr('data-tab');
 
-    $('ul.main-tabs li').removeClass('main-current');
-    $('.main-tab-content').removeClass('main-current');
-
-    $(this).addClass('main-current');
-    $("#" + tab_id).addClass('main-current');
-    })
-</script>
 <%include footer.ejs%>
 </body>
 </html>

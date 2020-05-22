@@ -206,7 +206,7 @@ router.post('/DND5e',verify,upload.single('file'),async function (req,res) {
 })
 
 
-router.get('/delete/:id',verify,async function (req,res) {
+router.delete('/delete/:id',verify,async function (req,res) {
 
     const sheetId = req.params.id;
     const user=jwtDecode(req.cookies.auth_token)._id;

@@ -4,17 +4,17 @@ $(document).ready(function () {
     var array = url.split('/');
     var id = array[array.length-1];
     //when hover on button, change their color
-    $('#change-password').click(function () {
+    $('#change-password').on('click',function () {
         $('#password-window').show();
     });
-    $('#cancel-password').click(function () {
+    $('#cancel-password').on('click',function () {
         $('#password-window').hide();
     });
-    $('#menu').click(function () {
+    $('#menu').on('click',function () {
         $('.right-menu').show();
         $('#overlay').show();
     });
-    $('#overlay').click(function () {
+    $('#overlay').on('click',function () {
         $(this).hide();
     })
 
@@ -22,20 +22,20 @@ $(document).ready(function () {
     if (document.cookie.indexOf("auth_token")>=0) {
         $('.login').addClass('user').text('個人主頁');
         $('.signup').addClass('exit').text('登出');
-        $('.user').click(function () {
+        $('.user').on('click',function () {
             redirect('/user')
         });
         //log out and clear cookies
-        $('.exit').click(function () {
+        $('.exit').on('click',function () {
             Cookies.remove('auth_token', '');
             Cookies.remove('admin', '');
             redirect('/');
         })
     } else {
-        $('.login').click(function () {
+        $('.login').on('click',function () {
             redirect('/login');
         });
-        $('.signup').click(function () {
+        $('.signup').on('click',function () {
             redirect('/signup')
         });
     }
@@ -44,6 +44,15 @@ $(document).ready(function () {
         $('.adminpost').show();
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').show();
+    $('ul.main-tabs li').on('click',function () {
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.main-tabs li').removeClass('main-current');
+        $('.main-tab-content').removeClass('main-current');
+
+        $(this).addClass('main-current');
+        $("#" + tab_id).addClass('main-current');
+    })
 
     $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
     function zoomDisable(){

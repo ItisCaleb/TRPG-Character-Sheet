@@ -1,7 +1,7 @@
 document.write("");
 $(document).ready(function () {
     var choose_value='/charactersheet/create/COC7th'
-    $('.systems-title-tile').click(function () {
+    $('.systems-title-tile').on('click',function () {
         $('.systems-title-tile').removeClass('systems-choose')
         $(this).addClass('systems-choose')
         if($(this).attr('id')==='choose-coc7th'){
@@ -19,7 +19,7 @@ $(document).ready(function () {
             choose_value = '/charactersheet/create/DND5e'
         }
     })
-    $('#create-button').click(function () {
+    $('#create-button').on('click',function () {
         get(choose_value)
     })
 })

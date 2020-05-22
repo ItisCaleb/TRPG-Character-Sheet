@@ -80,7 +80,7 @@ $(document).ready(function () {
         }
         return true
     }
-    $('#signup').click(function (e) {
+    $('#signup').on('click',function (e) {
         e.preventDefault();
         if(checkInput()) {
             if (!check()) {
@@ -110,7 +110,7 @@ $(document).ready(function () {
             }
         }
     })
-    $('#login').click( function (e) {
+    $('#login').on('click', function (e) {
         e.preventDefault();
         if(checkInput()) {
             if (!check()) {
@@ -135,7 +135,7 @@ $(document).ready(function () {
             }
         }
     })
-    $('#forget_password').click(function (e) {
+    $('#forget_password').on('click',function (e) {
         e.preventDefault();
         if(checkInput()) {
                 $('#forget_password').prop('disabled',true);

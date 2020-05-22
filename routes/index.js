@@ -105,7 +105,8 @@ router.get('/trpgsession',verify,async function (req,res) {
     const name = jwtDecode(req.cookies.auth_token).name;
     const SessionFind = await Session.findOne({player:name});
     const cursor =  await Session.find({ player: {$in:[name]} });
-    const session = {name:[],gm:[],url:[]};
+    const session = {name:[],gm:[],url:[],player:[]};
+
     if (!SessionFind) {
         session.name.push('你還沒創建團務');
     }else {
@@ -113,14 +114,15 @@ router.get('/trpgsession',verify,async function (req,res) {
             session.name.push(Session.name);
             session.gm.push(Session.gm);
             session.url.push(Session._id)
+            session.player.push(Session.player.length);
         });
     }
-
     res.render('trpg_session', {
         title: info.title[4],
         content:session.name,
         gm:session.gm,
-        url:session.url
+        url:session.url,
+        player:session.player
     });
 });
 
