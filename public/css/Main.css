@@ -468,7 +468,7 @@
         position: fixed;
         border-left: 1px solid lightgray;
         text-align: center;
-        animation: right-menu-in 1s;
+        animation: right-menu-in 0.5s;
     }
 
     @keyframes right-menu-in {
