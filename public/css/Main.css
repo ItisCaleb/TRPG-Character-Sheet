@@ -468,6 +468,16 @@
         position: fixed;
         border-left: 1px solid lightgray;
         text-align: center;
+        animation: right-menu-in 2s;
+    }
+
+    @keyframes right-menu-in {
+        0%{
+            width: 0;
+        }
+        100%{
+
+        }
     }
 
     .right-menu > a {
