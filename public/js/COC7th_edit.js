@@ -20,19 +20,35 @@ $(document).ready(function () {
 
             //push the active skill's value to object
             var name = $(this).siblings('.name').text();
-            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text()) ) {
+            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text())
+                || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())
+                || $(this).siblings('.custom-skill-name').length>0) {
                 skill[name] = [];
                 $(this).siblings().find('.base-input').each(function () {
                     skill[name].push(parseInt($(this).val()));
                 });
-                $(this).siblings().find('.custom').each(function () {
-                    skill[name].push($(this).val());
-                });
+                if($(this).siblings().find('.custom').length>0){
+                    skill[name].push($(this).siblings().find('.custom').val());
+                }
+                if($(this).siblings('.custom-base').length>0) {
+                    skill[name].push($(this).siblings('.custom-skill-name').text());
+                    skill[name].push(parseInt($(this).siblings('.custom-base').text()));
+                }
             }
-            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
+            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text())
+                && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text())
+                && $(this).siblings('.custom-base').length<=0)
                 delete skill[name];
         });
     });
+    $(document).on('click','.custom-delete',function (e) {
+        e.preventDefault();
+        delete skill[$(this).parent().text()]
+        $('input').first().trigger('change');
+    })
+    $('.custom-add').on('click',function () {
+        $('input').first().trigger('change');
+    })
     $(document).on('change','input',function () {
         if($('#name').val()===''){
             return bad_message('調查員姓名不得為空')

@@ -56,7 +56,10 @@ form{
 .chara{
     display: inline;
 }
-
+.custom-add:hover{
+    background:#e8e2d5;
+    cursor: pointer;
+}
 
 
 @keyframes spin {
@@ -203,15 +206,22 @@ form{
     width: 100%;
     background:white ;
 }
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
 td{
     padding: 0;
     display: table-cell;
     text-align: center;
+    border: 1px solid lightgray;
 }
 
 td > input{
     border: 0;
+    padding: 0;
     height:25px;
+    width: 100%;
 
 }
 #add-image{
@@ -301,10 +311,8 @@ ul.tabs li.current{
 }
 
 .tab-content{
-    border: 1px solid lightgray;
     display: none;
-    width:90%;
-    padding: 15px;
+    width:auto;
 }
 
 .tab-content.current{
@@ -330,9 +338,7 @@ ul.tabs li.current{
 }
 
 .tab-content{
-    border: 1px solid lightgray;
     display: none;
-    padding: 15px;
 }
 
 .tab-content.current{

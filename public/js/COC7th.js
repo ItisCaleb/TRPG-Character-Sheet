@@ -150,16 +150,24 @@ $(document).ready(function () {
             });
             //push the active skill's value to object
             var name = $(this).siblings('.name').text();
-            if (parseInt($(this).text()) > parseInt($(this).siblings('.base').text()) || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())) {
+            if (parseInt($(this).text()) > parseInt($(this).siblings('.base').text())
+                || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())
+                || $(this).siblings('.custom-skill-name').length>0) {
                 skill[name] = [];
                 $(this).siblings().find('.base-input').each(function () {
                     skill[name].push(parseInt($(this).val()));
                 });
-                $(this).siblings().find('.custom').each(function () {
-                    skill[name].push($(this).val());
-                });
+                if($(this).siblings().find('.custom').length>0){
+                    skill[name].push($(this).siblings().find('.custom').val());
+                }
+                if($(this).siblings('.custom-base').length>0) {
+                    skill[name].push($(this).siblings('.custom-skill-name').text());
+                    skill[name].push(parseInt($(this).siblings('.custom-base').text()));
+                }
             }
-            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text()) && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text()))
+            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text())
+                && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text())
+                && $(this).siblings('.custom-base').length<=0)
                 delete skill[name];
 
         });
@@ -183,9 +191,42 @@ $(document).ready(function () {
         $(this).siblings('#add-slider').val(sum);
         $(this).parent('.add-menu').siblings('.skill').val(sum);
     })
+    $(document).on('click','.custom-delete',function (e) {
+        e.preventDefault();
+        delete skill[$(this).parent().text()]
+        $(this).closest('tr').remove();
+        var number=0
+        $('.custom-name').each(function () {
+            $(this).html('自定義技能'+number+'<button class="custom-delete">刪除</button>')
+            number++;
+        })
+    })
+
+    $('.custom-add').on('click',function () {
+        const number=$('.custom-skill').length;
+        const name=$(this).siblings('td').find("input[type=text]").val();
+        const origin=$(this).siblings('td').find("input[type=number]").val();
+        if(name !=='' && number<20){
+            $(this).parent().children().first().html('增加自定義技能');
+            $(this).parent().prev().after('<tr class="custom-skill">\n' +
+                '<td class="custom-name name">自定義技能'+number+'<button class="custom-delete">刪除</button></td>\n' +
+                '<td class="td-input custom-skill-name ">'+name+'</td>\n' +
+                '<td class="base base-skill custom-base">'+origin+'</td>\n' +
+                '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
+                '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
+                '<td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
+                '<td class="total"></td>\n' +
+                '</tr>')
+            $('input').first().trigger('change');
+        }else if(name===''){
+            $(this).parent().children().first().html('增加自定義技能<p style="color: red;display: inline">(請輸入名稱)</p>');
+        }else {
+            $(this).parent().children().first().html('增加自定義技能<p style="color: red;display: inline">(自定義技能已達到上限)</p>');
+        }
+    })
 
     //easy adding slider
-    $('.skill').on('click',function () {
+    $(document).on('click','.skill',function () {
         $('.slider-pop').remove();
         $(this).parent('.td-input').append('<div class="add-menu slider-pop">\n' +
             '                                            <p id="total"></p>'+
@@ -198,7 +239,7 @@ $(document).ready(function () {
     })
 
     //slider pop
-    $(document).mouseup(function (e) {
+    $(document).on('mouseup',function (e) {
         var container = $(".slider-pop");
 
         if (!container.is(e.target) // if the target of the click isn't the container...
@@ -284,6 +325,7 @@ $(document).ready(function () {
         sheet.append('skill',JSON.stringify(skill) );
         sheet.append('stat',JSON.stringify(stat) );
         sheet.append('file',$('input[type=file]')[0].files[0]);
+
         $.ajax({
             url: "../../api/sheet/COC7th",
             type: 'POST',

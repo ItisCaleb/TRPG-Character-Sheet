@@ -52,19 +52,35 @@ $(document).ready(function () {
                         }
                     })
                     $('.class-feature').val(sheet.skill.class_feature);
+                    var number=0;
                     for (let i=0;i<Object.keys(sheet.skill.skill).length;i++){
+                        let skill =sheet.skill.skill[i];
                         $('.name').each(function () {
-                            if ($(this).text()===sheet.skill.skill[i].name){
+                            if ($(this).text()===skill.name){
                                 $(this).siblings().find('.base-input').each(function (index) {
-                                    $(this).val(sheet.skill.skill[i].number[index])
+                                    $(this).val(skill.number[index])
                                 });
-                                if (sheet.skill.skill[i].number.length === 4){
+                                if (skill.number.length === 4 && !skill.name.match('自定義技能')){
                                     $(this).siblings().find('.custom').each(function () {
-                                        $(this).val(sheet.skill.skill[i].number[3])
+                                        $(this).val(skill.number[3])
                                     })
                                 }
                             }
                         })
+
+                        if(skill.name.match('自定義技能')){
+
+                            $('tr').last().prev().after('<tr class="custom-skill">\n' +
+                                '<td class="custom-name name">自定義技能'+number+'<button class="custom-delete">刪除</button></td>\n' +
+                                '<td class="td-input custom-skill-name">'+skill.number[3]+'</td>\n' +
+                                '<td class="base base-skill custom-base">'+skill.number[4]+'</td>\n' +
+                                '<td class="td-input"><input value="'+skill.number[0] +'" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
+                                '<td class="td-input"><input value="'+skill.number[1] +'" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
+                                '<td class="td-input"><input value="'+skill.number[2] +'" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
+                                '<td class="total"></td>\n' +
+                                '</tr>')
+                            number++;
+                        }
                     }
 
                 },
