@@ -49,17 +49,19 @@
         直接點擊文字來檢閱或編輯角色卡<br>
         <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
     </div>
-    <ul class="main-tabs">
-        <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
-        <% if (content.length > 10 ) { %>
-        <li class="main-tab-link" data-tab="main-tab-2">2</li>
-        <% }%>
-    </ul>
+    <% if (content[0] !=='你還沒創建角色卡' ) { %>
+        <ul class="main-tabs">
+            <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
+            <% if (content.length > 10 ) { %>
+                <li class="main-tab-link" data-tab="main-tab-2">2</li>
+            <% }%>
+        </ul>
+    <% } %>
     <div style="width: 100%;">
         <div id="main-tab-1" class="main-tab-content main-current">
             <div style="text-align: center;">
                 <% if (content[0] =='你還沒創建角色卡' ) { %>
-                    <div style="font-size: 20px"><%=content[0]%></div>
+                    <div style="font-size: 20px;margin:3% 0"><%=content[0]%></div>
                 <% }else{ %>
                 <table>
                     <tr>

@@ -14,6 +14,7 @@ th{
 td{
     border: 1px solid lightgray;
     padding: 2%;
+    word-break: break-all;
 }
 
 .trpg_session:hover{
@@ -41,7 +42,7 @@ ul.main-tabs li.main-current{
 
 .main-tab-content{
     display: none;
-    margin:0 20%;
+    margin:0 10%;
 }
 
 .main-tab-content.main-current{

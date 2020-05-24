@@ -5,11 +5,12 @@
     <link href="/public/css/Session.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-<nav>
-<% include header.ejs%>
-</nav>
-<% include rightmenu.ejs%>
-<div class="content" style="text-align: center;">
+    <nav>
+    <% include header.ejs%>
+    </nav>
+    <% include rightmenu.ejs%>
+    <% include footer.ejs%>
+    <div class="content" style="text-align: center;">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
         團務系統可以讓你上傳你的角色卡<br>
@@ -18,18 +19,21 @@
         <button class="btn session" onclick="redirect('/trpgsession/join')">加入一個群組</button>
         <button class="btn session"  onclick="redirect('/trpgsession/create')">創建跑團群組</button>
     </div>
-    <ul class="main-tabs">
-        <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
-        <% if (content.length > 10 ) { %>
-            <li class="main-tab-link" data-tab="main-tab-2">2</li>
-        <% }%>
-    </ul>
+    <% if (content[0] !=='你還沒創建團務' ) { %>
+        <ul class="main-tabs">
+            <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
+            <% if (content.length > 10 ) { %>
+                <li class="main-tab-link" data-tab="main-tab-2">2</li>
+            <% }%>
+        </ul>
+    <% }%>
+
     <div style="width: 100%;">
 
     <div id="main-tab-1" class="main-tab-content main-current">
         <div style="text-align: center">
         <% if (content[0] =='你還沒創建團務' ) { %>
-            <div><%=content[0]%></div>
+            <div style="font-size: 20px;margin:3% 0"><%=content[0]%></div>
         <% }else{ %>
         <table>
             <tr>
@@ -75,6 +79,6 @@
     </div>
 </div>
 
-<%include footer.ejs%>
+
 </body>
 </html>

@@ -1,13 +1,12 @@
 document.write();
 $(document).ready(function () {
+    sheetCalculate()
+
     //sum up function
-    function sum_up(bas, adj) {
-        return parseInt(bas, 10) + parseInt(adj, 10)
-    }
+
 
     //repeat
-    setInterval(function () {
-
+    function sheetCalculate () {
         //calculate the sum of the stat
         var str = parseInt(($('#str').text(sum_up($('#str-bas').val(), $('#str-adj').val()))).text());
         var con = parseInt(($('#con').text(sum_up($('#con-bas').val(), $('#con-adj').val()))).text());
@@ -75,14 +74,7 @@ $(document).ready(function () {
         if (str + siz >= 285)
             $('#build').text(Math.floor((((str + siz) - 205) / 80) + 2) + 'd6 & ' + Math.floor((((str + siz) - 205) / 80) + 3));
 
-    }, 0);
 
-    //declare skill as an object and stat as an array
-    var skill = {};
-    var stat = [];
-    setInterval(function () {
-
-        //maker sure stat's and skill's value won't pass the limit
         $('.attr-add').each(function () {
             if ($(this).val() > 99)
                 $(this).val(99);
@@ -116,29 +108,11 @@ $(document).ready(function () {
         if (parseInt($('#luk').val()) > 99 || parseInt($('#luk').val()) < 0)
             $('#luk').val(99);
 
-
+        //async slider's number and input's
         $('.add-number').text(parseInt($('#add-slider').val()))
 
-
-        //push the stat's value to array
-        stat = [];
-        $('.chara').each(function () {
-            //make sure the total value of stat won't below 0
-            if (parseInt($(this).text()) < 0) {
-                $(this).siblings('.attr-add').val(function () {
-                    return parseInt($(this).val()) + 1
-                });
-            }
-            //push the stat's value to array
-            $(this).siblings('label').find('.stat').each(function () {
-                stat.push(parseInt($(this).val()));
-            });
-        });
-
-        //push the skill's value to object
+        //calculate the sum of skill's value
         $('.total').each(function () {
-
-            //calculate the sum of skill's value
             $(this).text(function () {
                 var sum = 0;
                 $(this).siblings().find('.base-input').each(function () {
@@ -148,39 +122,21 @@ $(document).ready(function () {
                 $(this).siblings().find('.add-menu').find('#total').text(sum)
                 return sum
             });
-            //push the active skill's value to object
-            var name = $(this).siblings('.name').text();
-            if (parseInt($(this).text()) > parseInt($(this).siblings('.base').text())
-                || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())
-                || $(this).siblings('.custom-skill-name').length>0) {
-                skill[name] = [];
-                $(this).siblings().find('.base-input').each(function () {
-                    skill[name].push(parseInt($(this).val()));
-                });
-                if($(this).siblings().find('.custom').length>0){
-                    skill[name].push($(this).siblings().find('.custom').val());
-                }
-                if($(this).siblings('.custom-base').length>0) {
-                    skill[name].push($(this).siblings('.custom-skill-name').text());
-                    skill[name].push(parseInt($(this).siblings('.custom-base').text()));
-                }
-            }
-            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text())
-                && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text())
-                && $(this).siblings('.custom-base').length<=0)
-                delete skill[name];
-
-        });
-    }, 0);
-
+        })
+    }
+    $(document).on('input click','input',function () {
+        sheetCalculate();
+    })
     $(document).on('change', '.class-feature', function () {
         $('.class-feature').val($(this).val())
+        sheetCalculate();
     })
-
     $(document).on('input', '#add-slider', function () {
-        $(this).parent('.add-menu').siblings('.skill').val($(this).val())
+        $(this).parent('.add-menu').siblings('.skill').val($(this).val());
     })
-
+    $(document).on('input','.skill',function () {
+        $(this).siblings('.add-menu').find('#add-slider').val($(this).val());
+    })
     $(document).on('mousedown', '#add', function () {
         var sum=parseInt($(this).siblings('#add-slider').val()) +1;
         $(this).siblings('#add-slider').val(sum);
@@ -193,32 +149,34 @@ $(document).ready(function () {
     })
     $(document).on('click','.custom-delete',function (e) {
         e.preventDefault();
-        delete skill[$(this).parent().text()]
         $(this).closest('tr').remove();
         var number=0
         $('.custom-name').each(function () {
-            $(this).html('自定義技能'+number+'<button class="custom-delete">刪除</button>')
+            $(this).html('自定義技能'+(number+1)+'<button class="custom-delete">刪除</button>')
             number++;
         })
     })
 
     $('.custom-add').on('click',function () {
         const number=$('.custom-skill').length;
-        const name=$(this).siblings('td').find("input[type=text]").val();
-        const origin=$(this).siblings('td').find("input[type=number]").val();
-        if(name !=='' && number<20){
+        const name=$(this).siblings('td').find("input[type=text]");
+        const origin=$(this).siblings('td').find("input[type=number]");
+        if(name.val() !=='' && number<20){
             $(this).parent().children().first().html('增加自定義技能');
             $(this).parent().prev().after('<tr class="custom-skill">\n' +
-                '<td class="custom-name name">自定義技能'+number+'<button class="custom-delete">刪除</button></td>\n' +
-                '<td class="td-input custom-skill-name ">'+name+'</td>\n' +
-                '<td class="base base-skill custom-base">'+origin+'</td>\n' +
+                '<td class="custom-name name">自定義技能'+(number+1)+'<button class="custom-delete">刪除</button></td>\n' +
+                '<td class="td-input custom-skill-name ">'+name.val()+'</td>\n' +
+                '<td class="base base-skill custom-base">'+origin.val()+'</td>\n' +
                 '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
                 '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
                 '<td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
                 '<td class="total"></td>\n' +
                 '</tr>')
+            name.val('');
+            origin.val(0);
             $('input').first().trigger('change');
-        }else if(name===''){
+            sheetCalculate();
+        }else if(name.val()===''){
             $(this).parent().children().first().html('增加自定義技能<p style="color: red;display: inline">(請輸入名稱)</p>');
         }else {
             $(this).parent().children().first().html('增加自定義技能<p style="color: red;display: inline">(自定義技能已達到上限)</p>');
@@ -228,14 +186,22 @@ $(document).ready(function () {
     //easy adding slider
     $(document).on('click','.skill',function () {
         $('.slider-pop').remove();
+        var name;
+        if($(this).parent().siblings('.td-input').find('.custom').length>0){
+            name =$(this).parent().siblings('.td-input').find('.custom').val()
+        }else {
+            name =$(this).parent().siblings('.name').text()
+        }
         $(this).parent('.td-input').append('<div class="add-menu slider-pop">\n' +
-            '                                            <p id="total"></p>'+
+            '                                            <p style="margin: 0" id="total"></p>'+
+            '                                            <p style="margin: 0">'+ name+'</p>'+
             '                                            <input type="button"  id="add"><br>\n' +
             '                                            <input type="range" min="0" max="99" id="add-slider" class="slider-input">\n' +
             '                                            <p class="add-number"></p><br>\n' +
             '                                            <input type="button" id="minus">\n' +
             '                                        </div>')
         $('#add-slider').val($(this).val());
+        sheetCalculate();
     })
 
     //slider pop
@@ -322,6 +288,8 @@ $(document).ready(function () {
         $('.create').prop('disabled',true);
         var form=$('#myform')[0];
         var sheet = new FormData(form);
+        const skill = sheetPush().skill;
+        const stat = sheetPush().stat;
         sheet.append('skill',JSON.stringify(skill) );
         sheet.append('stat',JSON.stringify(stat) );
         sheet.append('file',$('input[type=file]')[0].files[0]);
@@ -366,7 +334,6 @@ function fileClicked(event) {
     }
     //What ever else you want to do when File Chooser Clicked
 }
-
 // FileChanged()
 function fileChanged(event) {
     var fileElement = event.target;
@@ -377,4 +344,52 @@ function fileChanged(event) {
         if (evenMoreListeners) { addEventListenersTo(clone[fileElement.id]) }//If Needed Re-attach additional Event Listeners
     }
     //What ever else you want to do when File Chooser Changed
+}
+function sum_up(bas, adj) {
+    return parseInt(bas, 10) + parseInt(adj, 10)
+}
+function sheetPush(){
+    //push the stat's value to array
+    var stat = [];
+    var skill={};
+    $('.chara').each(function () {
+        //make sure the total value of stat won't below 0
+        if (parseInt($(this).text()) < 0) {
+            $(this).siblings('.attr-add').val(function () {
+                return parseInt($(this).val()) + 1
+            });
+        }
+        //push the stat's value to array
+        $(this).siblings('label').find('.stat').each(function () {
+            stat.push(parseInt($(this).val()));
+        });
+    });
+    //push the skill's value to object
+    $('.total').each(function () {
+
+        //push the active skill's value to object
+        var name = $(this).siblings('.name').text();
+        if (parseInt($(this).text()) > parseInt($(this).siblings('.base').text())
+            || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())
+            || $(this).siblings('.custom-skill-name').length>0) {
+            skill[name] = [];
+            $(this).siblings().find('.base-input').each(function () {
+                skill[name].push(parseInt($(this).val()));
+            });
+            if($(this).siblings().find('.custom').length>0){
+                skill[name].push($(this).siblings().find('.custom').val());
+            }
+            if($(this).siblings('.custom-base').length>0) {
+                skill[name].push($(this).siblings('.custom-skill-name').text());
+                skill[name].push(parseInt($(this).siblings('.custom-base').text()));
+            }
+        }
+        if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text())
+            && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text())
+            && $(this).siblings('.custom-base').length<=0)
+            delete skill[name];
+    });
+    this.skill=skill;
+    this.stat=stat;
+    return this;
 }

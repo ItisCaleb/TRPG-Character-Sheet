@@ -3,53 +3,11 @@ $(document).ready(function () {
     var url = $(location).attr('href')
     var array = url.split('/');
     var id = array[array.length-1];
-    var skill = {}
-    var stat = []
-    setInterval(function () {
-        stat = [];
-        $('.chara').each(function () {
-
-            //push the stat's value to array
-            $(this).siblings('label').find('.stat').each(function () {
-                stat.push(parseInt($(this).val()));
-            });
-        });
-
-        //push the skill's value to object
-        $('.total').each(function () {
-
-            //push the active skill's value to object
-            var name = $(this).siblings('.name').text();
-            if(parseInt($(this).text()) > parseInt($(this).siblings('.base').text())
-                || parseInt($(this).text()) > parseInt($(this).siblings('.base-skill').text())
-                || $(this).siblings('.custom-skill-name').length>0) {
-                skill[name] = [];
-                $(this).siblings().find('.base-input').each(function () {
-                    skill[name].push(parseInt($(this).val()));
-                });
-                if($(this).siblings().find('.custom').length>0){
-                    skill[name].push($(this).siblings().find('.custom').val());
-                }
-                if($(this).siblings('.custom-base').length>0) {
-                    skill[name].push($(this).siblings('.custom-skill-name').text());
-                    skill[name].push(parseInt($(this).siblings('.custom-base').text()));
-                }
-            }
-            if (parseInt($(this).text()) === parseInt($(this).siblings('.base').text())
-                && parseInt($(this).text()) <= parseInt($(this).siblings('.base-skill').text())
-                && $(this).siblings('.custom-base').length<=0)
-                delete skill[name];
-        });
-    });
     $(document).on('click','.custom-delete',function (e) {
         e.preventDefault();
-        delete skill[$(this).parent().text()]
         $('input').first().trigger('change');
     })
-    $('.custom-add').on('click',function () {
-        $('input').first().trigger('change');
-    })
-    $(document).on('change','input',function () {
+    $(document).on('change','input, textarea,select',function () {
         if($('#name').val()===''){
             return bad_message('調查員姓名不得為空')
         }
@@ -58,6 +16,8 @@ $(document).ready(function () {
         setTimeout(function () {
             var form=$('#myform')[0];
             var sheet = new FormData(form);
+            const skill =sheetPush().skill;
+            const stat =sheetPush().stat;
             sheet.append('skill',JSON.stringify(skill));
             sheet.append('stat',JSON.stringify(stat));
             var image;
@@ -65,8 +25,6 @@ $(document).ready(function () {
                 image=$('#add-image').attr('src')
             }else image=$('input[type=file]')[0].files[0];
             sheet.append('file',image);
-
-
             $.ajax({
                 url:'../api/sheet/COC7th/edit/'+ id,
                 type: 'POST',

@@ -70,9 +70,12 @@ form{
     .mobile-nav{
         margin-top: 4%;
         padding:0.5% ;
-        width: 45%;
+        width: 100%;
         background: white;
         border: 1px solid lightgray;
+    }
+    #mobile-option{
+        width: 45%;
     }
     .loader {
         display: inline-block;
@@ -103,12 +106,10 @@ form{
         width: 15%;
         vertical-align: middle
     }
-    .mobile-nav-menu{
-        vertical-align: top;
-    }
     .list-menu{
-        width: 30%;
+        width: 60%;
     }
+
     .main-tab-content{
         font-size: 10px;
     }
@@ -123,6 +124,14 @@ form{
     }
     .left-side{
         display: none;
+    }
+    .add-menu{
+        position: fixed;
+        left: 4%;
+        top:30%;
+        width: 15%;
+        border: 1px solid lightgray;
+        background-color: white;
     }
 
 }
@@ -185,6 +194,9 @@ form{
         display: inline-block;
         margin-top: 15%;
     }
+    .list-menu{
+        width: 70%;
+    }
     .list-text{
         margin-bottom:10% ;
     }
@@ -196,6 +208,14 @@ form{
         margin-top: 5%;
         width: 70%;
         border-radius: 15%;
+    }
+    .add-menu{
+        position: fixed;
+        right: 4%;
+        top:30%;
+        width: 8%;
+        border: 1px solid lightgray;
+        background-color: white;
     }
 }
 .create{
@@ -247,14 +267,10 @@ input{
 .total{
     width: 5%;
 }
-.add-menu{
-    position: fixed;
-    right: 4%;
-    top:30%;
-    width: 8%;
-    border: 1px solid lightgray;
-    background-color: white;
+.custom,.custom-skill-name{
+    word-break: break-all;
 }
+
 #add-slider{
     display: inline-block;
     -webkit-appearance: slider-vertical;

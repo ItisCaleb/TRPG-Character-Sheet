@@ -87,6 +87,7 @@
         display: inline-block;
     }
     nav > ul > li>a {
+        height: 100%;
         text-decoration: none;
         color: inherit
     }
