@@ -300,7 +300,6 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             id:req.params.id
                         });
                     }
-                    if (sheet.session.length === 0) return res.redirect('/charactersheet');
                 }
             }
         }catch (err) {

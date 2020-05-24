@@ -111,15 +111,15 @@ $(document).ready(function () {
 
         //calculate the sum of skill's value
         $('.total').each(function () {
-            $(this).text(function () {
-                var sum = 0;
-                $(this).siblings().find('.base-input').each(function () {
-                    sum += parseInt($(this).val());
-                });
-                sum += parseInt($(this).siblings('.base').text());
-                $(this).siblings().find('.add-menu').find('#total').text(sum)
-                return sum
+            var sum = 0;
+            $(this).siblings().find('.base-input').each(function () {
+                sum += parseInt($(this).val());
             });
+            sum += parseInt($(this).siblings('.base').text());
+            $(this).siblings().find('.add-menu').find('#total').text(sum)
+            $(this).find('.max').text(sum);
+            $(this).find('.hard').text(Math.floor(sum/2));
+            $(this).find('.extreme').text(Math.floor(sum/5));
         })
     }
     if ($('#url').length > 0) {
@@ -194,7 +194,17 @@ $(document).ready(function () {
                                 '<td class="td-input"><input value="'+skill.number[0] +'" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
                                 '<td class="td-input"><input value="'+skill.number[1] +'" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
                                 '<td class="td-input"><input value="'+skill.number[2] +'" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
-                                '<td class="total"></td>\n' +
+                                '<td class="total">\n' +
+                                '                                            <table>\n' +
+                                '                                                <tr>\n' +
+                                '                                                    <td rowspan="2" class="max"></td>\n' +
+                                '                                                    <td class="hard"></td>\n' +
+                                '                                                </tr>\n' +
+                                '                                                <tr>\n' +
+                                '                                                    <td class="extreme"></td>\n' +
+                                '                                                </tr>\n' +
+                                '                                            </table>\n' +
+                                '                                        </td>\n' +
                                 '</tr>')
                             number++;
                         }

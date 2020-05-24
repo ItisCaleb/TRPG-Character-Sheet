@@ -1,10 +1,11 @@
 document.write();
 $(document).ready(function () {
     sheetCalculate()
-
-    //sum up function
-
-
+    setInterval(function () {
+        $('td').children('input').each(function () {
+            $(this).css('height',$(this).parent().css('height'));
+        })
+    },0);
     //repeat
     function sheetCalculate () {
         //calculate the sum of the stat
@@ -113,15 +114,15 @@ $(document).ready(function () {
 
         //calculate the sum of skill's value
         $('.total').each(function () {
-            $(this).text(function () {
-                var sum = 0;
-                $(this).siblings().find('.base-input').each(function () {
-                    sum += parseInt($(this).val());
-                });
-                sum += parseInt($(this).siblings('.base').text());
-                $(this).siblings().find('.add-menu').find('#total').text(sum)
-                return sum
+            var sum = 0;
+            $(this).siblings().find('.base-input').each(function () {
+                sum += parseInt($(this).val());
             });
+            sum += parseInt($(this).siblings('.base').text());
+            $(this).siblings().find('.add-menu').find('#total').text(sum)
+            $(this).find('.max').text(sum);
+            $(this).find('.hard').text(Math.floor(sum/2));
+            $(this).find('.extreme').text(Math.floor(sum/5));
         })
     }
     $(document).on('input click','input',function () {
@@ -133,9 +134,11 @@ $(document).ready(function () {
     })
     $(document).on('input', '#add-slider', function () {
         $(this).parent('.add-menu').siblings('.skill').val($(this).val());
+        sheetCalculate()
     })
     $(document).on('input','.skill',function () {
         $(this).siblings('.add-menu').find('#add-slider').val($(this).val());
+        sheetCalculate()
     })
     $(document).on('mousedown', '#add', function () {
         var sum=parseInt($(this).siblings('#add-slider').val()) +1;
@@ -170,7 +173,17 @@ $(document).ready(function () {
                 '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
                 '<td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
                 '<td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
-                '<td class="total"></td>\n' +
+                '<td class="total">\n' +
+                '                                            <table>\n' +
+                '                                                <tr>\n' +
+                '                                                    <td rowspan="2" class="max"></td>\n' +
+                '                                                    <td class="hard"></td>\n' +
+                '                                                </tr>\n' +
+                '                                                <tr>\n' +
+                '                                                    <td class="extreme"></td>\n' +
+                '                                                </tr>\n' +
+                '                                            </table>\n' +
+                '                                        </td>\n' +
                 '</tr>')
             name.val('');
             origin.val(0);
@@ -189,6 +202,8 @@ $(document).ready(function () {
         var name;
         if($(this).parent().siblings('.td-input').find('.custom').length>0){
             name =$(this).parent().siblings('.td-input').find('.custom').val()
+        }else if($(this).parent().siblings('.custom-skill-name').length>0){
+            name =$(this).parent().siblings('.custom-skill-name').text()
         }else {
             name =$(this).parent().siblings('.name').text()
         }

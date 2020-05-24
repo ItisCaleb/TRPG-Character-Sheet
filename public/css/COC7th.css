@@ -238,11 +238,13 @@ td{
 }
 
 td > input{
+    background: transparent;
     border: 0;
     padding: 0;
-    height:25px;
     width: 100%;
-
+}
+.max{
+    width: 50%;
 }
 #add-image{
     border: 1px solid lightgray;
