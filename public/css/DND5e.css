@@ -1,14 +1,39 @@
-.sheet_creat_div {
+.sheet-creat-div {
     width: 100%;
+    height: 50%;
     padding: 10px;
 }
-.sheet_creat_div >label>input{
+.sheet-creat-div >label>input{
     width: 50%;
 }
-.sheet_input_div {
+#sheet-creat-skill{
+    width: 90%;
+}
+table{
+    width: 87%;
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+td{
+    border: 1px solid lightgray;
+}
+.skill-td{
+    border: 1px solid lightgray;
+    border-right:0 ;
+    width: 30%;
+}
+td> p{
+    display: inline;
+}
+.attr{
+    border-left:0;
+    width: 27%;
+    text-align: right;
+}
+.sheet-input-div {
     width: 100%;
 }
-.sheet_input_div >label> input{
+.sheet-input-div >label> input{
     width: 70%;
 }
 .create{
