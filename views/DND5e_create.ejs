@@ -90,25 +90,6 @@
                         <label>陣營：<input name="faction" placeholder="絕對中立"></label><br>
                         <label>經驗值：<input name="exp" placeholder="經驗值"></label><br>
                     </div>
-                    <div>
-                        <section class="sheet-creat-div">
-                            <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
-                            <label>先攻調整值：<input name="initiative" type="number" placeholder="0" size="2"></label><br>
-                            <label>速度：<input name="speed" type="number" placeholder="0" size="2"></label><br>
-                        </section>
-
-                        <div id="sheet-creat-hp" class="sheet-creat-div">
-                            <label>最高血量：<input name="max-hp" type="number" placeholder="0" size="2"></label><br>
-                            <label>目前血量：<input name="hp" type="number" placeholder="0" size="2"></label><br>
-                            <label>暫時血量：<input name="temp-hp" type="number" placeholder="0" size="2"></label><br>
-                        </div>
-
-                        <section class="sheet-creat-div">
-                            <label>生命骰：<input name="hitdice" placeholder="1d10" size="5"></label>
-                            <label>總數：<input name="hitdicetotal" type="number" placeholder="" size="2"></label><br>
-                        </section>
-
-                    </div>
 
                 </section>
             </div>
@@ -116,13 +97,13 @@
         </div>
             </section>
             <section style="margin: 50px">
-        <div class="sheet-creat-div">
-            <label>力量：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>敏捷：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>體魄：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>智力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>感知：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
-            <label>魅力：<input type="number" placeholder="0" size="1"></label><label>調整值：0</label><br>
+        <div class="sheet-creat-div" style="text-align: center">
+            <label>力量<br><input type="number" ></label><label><br>調整值：0</label><br>
+            <label>敏捷<br><input type="number" ></label><label><br>調整值：0</label><br>
+            <label>體魄<br><input type="number" ></label><label><br>調整值：0</label><br>
+            <label>智力<br><input type="number" ></label><label><br>調整值：0</label><br>
+            <label>感知<br><input type="number" ></label><label><br>調整值：0</label><br>
+            <label>魅力<br><input type="number" ></label><label><br>調整值：0</label><br>
         </div>
         <div class="sheet-creat-div">
             <label>激勵值：<input name="inspiration" type="number" placeholder="0" size="1"></label><br>
@@ -292,8 +273,26 @@
                 </table>
             </div>
         </div>
-
         <div class="sheet-creat-div">
+            <div class="sheet-creat-div">
+                <section class="sheet-creat-div">
+                    <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
+                    <label>先攻調整值：<input name="initiative" type="number" placeholder="0" size="2"></label><br>
+                    <label>速度：<input name="speed" type="number" placeholder="0" size="2"></label><br>
+                </section>
+
+                <div id="sheet-creat-hp" class="sheet-creat-div">
+                    <label>最高血量：<input name="max-hp" type="number" placeholder="0" size="2"></label><br>
+                    <label>目前血量：<input name="hp" type="number" placeholder="0" size="2"></label><br>
+                    <label>暫時血量：<input name="temp-hp" type="number" placeholder="0" size="2"></label><br>
+                </div>
+
+                <section class="sheet-creat-div">
+                    <label>生命骰：<input name="hitdice" placeholder="1d10" size="5"></label>
+                    <label>總數：<input name="hitdicetotal" type="number" placeholder="" size="2"></label><br>
+                </section>
+
+            </div>
             <div class="sheet-creat-div">
                 <p>攻擊 &amp; 法術</p>
                 <section id="sheet-creat-attack-and-spell">
@@ -334,22 +333,21 @@
         <div id="main-tab-2" class="main-tab-content">
             <div class="sheet-creat-div" style="height: 100%">
                 <section class="sheet-creat-div">
-                    <div>
                     <label>身高：<input name="height" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>膚色：<input name="skin" placeholder="克爾德"></label><br>
                     <label>年齡：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>體重：<input name="weight" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>髮色：<input name="hair" placeholder="克爾德"></label><br>
+
+                </section>
+
+                <section style="height:100%;">
                     <label>角色外觀：<br>
                         <textarea name="role-description"  style="height: 150px;width: 100%;resize: none"></textarea></label><br>
                     <label>同盟 & 組織：<br>
                         <textarea name="alignment" style="height: 150px;width: 100%;resize: none"></textarea></label><br>
-                        <label>角色背景歷史：<br>
-                            <textarea name="backstory" style="height: 150px;width: 100%;resize: none"></textarea></label><br>
-                    </div>
-                </section>
-
-                <section>
+                    <label>角色背景歷史：<br>
+                        <textarea name="backstory" style="height: 150px;width: 100%;resize: none"></textarea></label><br>
                     <label>其他特徵＆特性：
                         <textarea name="otherTrait"  style="height: 150px;width: 30%;resize: none"></textarea></label>
                     <label>寶物：

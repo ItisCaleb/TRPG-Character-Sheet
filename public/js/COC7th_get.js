@@ -173,7 +173,7 @@ $(document).ready(function () {
                     for (let i=0;i<Object.keys(sheet.skill.skill).length;i++){
                         let skill =sheet.skill.skill[i];
                         $('.name').each(function () {
-                            if ($(this).text()===skill.name){
+                            if ($(this).text().match(skill.name)){
                                 $(this).siblings().find('.base-input').each(function (index) {
                                     $(this).val(skill.number[index])
                                 });
