@@ -172,14 +172,15 @@ $(document).ready(function () {
                 })
                 $('.class-feature').val(sheet.skill.class_feature);
                 var number = 0;
+                console.log(sheet.skill);
                 for (let i = 0; i < Object.keys(sheet.skill.skill).length; i++) {
                     let skill = sheet.skill.skill[i];
                     $('.name').each(function () {
-                        if ($(this).text().match(skill.name)) {
+                        if ($(this).text().includes(skill.name)) {
                             $(this).siblings().find('.base-input').each(function (index) {
                                 $(this).val(skill.number[index])
                             });
-                            if (skill.number.length === 4 && !skill.name.match('自定義技能')) {
+                            if (skill.number.length === 4 && !skill.name.includes('自定義技能')) {
                                 $(this).siblings().find('.custom').each(function () {
                                     $(this).val(skill.number[3])
                                 })
@@ -187,7 +188,7 @@ $(document).ready(function () {
                         }
                     })
 
-                    if (skill.name.match('自定義技能')) {
+                    if (skill.name.includes('自定義技能')) {
 
                         $('tr').last().prev().after('<tr class="custom-skill">\n' +
                             '<td class="custom-name name">自定義技能' + (number + 1) + '<button class="custom-delete">刪除</button></td>\n' +
