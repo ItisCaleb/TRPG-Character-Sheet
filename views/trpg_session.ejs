@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%include head.ejs%>
+    <% include head.ejs %>
     <link href="/public/css/Session.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-    <nav>
-    <% include header.ejs%>
-    </nav>
-    <% include rightmenu.ejs%>
-    <% include footer.ejs%>
-    <div class="content" style="text-align: center;">
-    <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
-    <div class="content-decribe" id="session"  style="text-align: center;line-height:30px ;">
+<nav>
+    <% include header.ejs %>
+</nav>
+<% include rightmenu.ejs %>
+<% include footer.ejs %>
+<div class="content" style="text-align: center;">
+    <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
+    <div class="content-decribe" id="session" style="text-align: center;line-height:30px ;">
         團務系統可以讓你上傳你的角色卡<br>
         方便跑團時的GM以及團員檢閱<br>
         一個團務的玩家上限是15人<br>
         <button class="btn session" onclick="redirect('/trpgsession/join')">加入一個群組</button>
-        <button class="btn session"  onclick="redirect('/trpgsession/create')">創建跑團群組</button>
+        <button class="btn session" onclick="redirect('/trpgsession/create')">創建跑團群組</button>
     </div>
-    <% if (content[0] !=='你還沒創建團務' ) { %>
+    <% if (content[0] !== '你還沒創建團務' ) { %>
         <ul class="main-tabs">
             <li class="main-tab-link main-current" data-tab="main-tab-1">1</li>
             <% if (content.length > 10 ) { %>
                 <li class="main-tab-link" data-tab="main-tab-2">2</li>
-            <% }%>
+            <% } %>
         </ul>
-    <% }%>
+    <% } %>
 
     <div style="width: 100%;">
 
-    <div id="main-tab-1" class="main-tab-content main-current">
-        <div style="text-align: center">
-        <% if (content[0] =='你還沒創建團務' ) { %>
-            <div style="font-size: 20px;margin:3% 0"><%=content[0]%></div>
-        <% }else{ %>
-        <table>
-            <tr>
-                <th>團務</th>
-                <th style="width: 30%">GM</th>
-                <th style="width: 25%">人數</th>
-            </tr>
-        <% for(var i=0;i<content.length;i++) { %>
-                <% if (i>=10) { %>
-                    <% break; %>
-                <%　}%>
-            <tr class="trpg_session" onclick="redirect('/trpgsession/<%= url[i] %>')">
-                <td><%= content[i] %></td>
-                <td><%= gm[i] %></td>
-                <td><%= player[i]%></td>
-            </tr>
-        <% } %>
-        </table>
-        <%}%>
+        <div id="main-tab-1" class="main-tab-content main-current">
+            <div style="text-align: center">
+                <% if (content[0] == '你還沒創建團務' ) { %>
+                <div style="font-size: 20px;margin:3% 0"><%= content[0] %></div>
+                <% }else{ %>
+                    <table>
+                        <tr>
+                            <th>團務</th>
+                            <th style="width: 30%">GM</th>
+                            <th style="width: 25%">人數</th>
+                        </tr>
+                        <% for(var i = 0;i < content.length;i++) { %>
+                            <% if (i >= 10) { %>
+                                <% break; %>
+                            <% } %>
+                            <tr class="trpg_session" onclick="redirect('/trpgsession/<%= url[i] %>')">
+                                <td><%= content[i] %></td>
+                                <td><%= gm[i] %></td>
+                                <td><%= player[i] %></td>
+                            </tr>
+                        <% } %>
+                    </table>
+                <% } %>
+            </div>
+
+
         </div>
-
-
-    </div>
-    <div id="main-tab-2" class="main-tab-content">
-        <div style="text-align: center">
-            <table>
-                <tr>
-                    <th>團務</th>
-                    <th style="width: 30%">GM</th>
-                    <th style="width: 20%">人數</th>
-                </tr>
-                <% for(var k=10;k<content.length;i++) { %>
-                    <tr class="trpg_session" onclick="redirect('/trpgsession/<%= url[k] %>')">
-                        <td><%= content[k] %></td>
-                        <td><%= gm[k] %></td>
-                        <td><%= player[k]%></td>
+        <div id="main-tab-2" class="main-tab-content">
+            <div style="text-align: center">
+                <table>
+                    <tr>
+                        <th>團務</th>
+                        <th style="width: 30%">GM</th>
+                        <th style="width: 20%">人數</th>
                     </tr>
-            </table>
-            <%}%>
-        </div>
+                    <% for(var k = 10;k < content.length;i++) { %>
+                        <tr class="trpg_session" onclick="redirect('/trpgsession/<%= url[k] %>')">
+                            <td><%= content[k] %></td>
+                            <td><%= gm[k] %></td>
+                            <td><%= player[k] %></td>
+                        </tr>
+                </table>
+                <% } %>
+            </div>
 
         </div>
     </div>

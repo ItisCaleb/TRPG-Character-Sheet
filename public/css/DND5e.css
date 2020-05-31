@@ -42,6 +42,9 @@ td> p{
 .chara{
     display: inline;
 }
+.spell-number{
+    width: 80%;
+}
 ul.main-tabs{
     margin-left: 5%;
     padding: 0;

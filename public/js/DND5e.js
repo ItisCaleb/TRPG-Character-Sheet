@@ -18,7 +18,7 @@ $(document).ready(function () {
             var attr=$(this).siblings('p').text();
         })
     },0)
-    $('input[name=check]').on('click',function (e) {
+    $('.check-input').on('click',function (e) {
         if($(this).val()==='on') {
             $(this).val('yes');
         }else if($(this).val()==='yes'){

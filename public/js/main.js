@@ -2,40 +2,40 @@ document.write("");
 $(document).ready(function () {
     var url = $(location).attr('href');
     var array = url.split('/');
-    var id = array[array.length-1];
+    var id = array[array.length - 1];
     //when hover on button, change their color
-    $('#change-password').on('click',function () {
+    $('#change-password').on('click', function () {
         $('#password-window').show();
     });
-    $('#cancel-password').on('click',function () {
+    $('#cancel-password').on('click', function () {
         $('#password-window').hide();
     });
-    $('#menu').on('click',function () {
+    $('#menu').on('click', function () {
         $('.right-menu').show();
         $('#overlay').show();
     });
-    $('#overlay').on('click',function () {
+    $('#overlay').on('click', function () {
         $(this).hide();
     })
 
     //if user is already logged in, switch login and sign in button to user page and log out button
-    if (document.cookie.indexOf("auth_token")>=0) {
+    if (document.cookie.indexOf("auth_token") >= 0) {
         $('.login').addClass('user').text('個人主頁');
         $('.signup').addClass('exit').text('登出');
-        $('.user').on('click',function () {
+        $('.user').on('click', function () {
             redirect('/user')
         });
         //log out and clear cookies
-        $('.exit').on('click',function () {
+        $('.exit').on('click', function () {
             Cookies.remove('auth_token', '');
             Cookies.remove('admin', '');
             redirect('/');
         })
     } else {
-        $('.login').on('click',function () {
+        $('.login').on('click', function () {
             redirect('/login');
         });
-        $('.signup').on('click',function () {
+        $('.signup').on('click', function () {
             redirect('/signup')
         });
     }
@@ -44,7 +44,7 @@ $(document).ready(function () {
         $('.adminpost').show();
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').show();
-    $('ul.main-tabs li').on('click',function () {
+    $('ul.main-tabs li').on('click', function () {
         var tab_id = $(this).attr('data-tab');
 
         $('ul.main-tabs li').removeClass('main-current');
@@ -55,11 +55,13 @@ $(document).ready(function () {
     })
 
     $("input,textarea,select").mousedown(zoomDisable).mouseup(zoomEnable);
-    function zoomDisable(){
+
+    function zoomDisable() {
         $('head meta[name=viewport]').remove();
         $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>\n');
     }
-    function zoomEnable(){
+
+    function zoomEnable() {
         $('head meta[name=viewport]').remove();
         $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1">');
     }
@@ -71,25 +73,25 @@ function redirect(URL) {
 }
 
 function check() {
-    var email=$('.email-box');
+    var email = $('.email-box');
     var text = $(".input-box");
     const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+(([.\-])[A-Za-z0-9]+)*\.[A-Za-z]+$/;
     const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…【】‘”“。、%]");
-    if(!email.val().match(emailRule)){
-        $('.check-btn').prop('disabled',true);
+    if (!email.val().match(emailRule)) {
+        $('.check-btn').prop('disabled', true);
         bad_message("電子郵件格式錯誤");
         setTimeout(function () {
-            $('.check-btn').prop('disabled',false);
-        },1000)
+            $('.check-btn').prop('disabled', false);
+        }, 1000)
         return true
     }
     text.each(function () {
-        if($(this).val().match(pattern)){
-            $('.check-btn').prop('disabled',true);
+        if ($(this).val().match(pattern)) {
+            $('.check-btn').prop('disabled', true);
             bad_message("含有特殊字元");
             setTimeout(function () {
-                $('.check-btn').prop('disabled',false);
-            },1000)
+                $('.check-btn').prop('disabled', false);
+            }, 1000)
             return true
         }
     })
@@ -103,6 +105,7 @@ function good_message(data) {
         $('.alert-message').find('.message-div').remove();
     }, 1000)
 }
+
 function bad_message(data) {
     $('.pop').hide()
     $('.alert-message').append('<div class="message-div"><div class="message-alert"><p class="message-content">' + data + '</p><div class="bad-message-line"></div></div></div>');
@@ -110,6 +113,7 @@ function bad_message(data) {
         $('.alert-message').find('.message-div').remove();
     }, 1000)
 }
+
 function doesHttpOnlyCookieExist(cookiename) {
     var d = new Date();
     d.setTime(d.getTime() + (1000));
@@ -122,15 +126,16 @@ function doesHttpOnlyCookieExist(cookiename) {
         return false;
     }
 }
+
 function get(URL) {
     $.ajax({
         url: URL,
         type: 'GET',
-        success:function(data){
-            if (data && data.status !==400){
+        success: function (data) {
+            if (data && data.status !== 400) {
                 redirect(URL);
             }
-            if (data.status===400){
+            if (data.status === 400) {
                 bad_message(data.responseText);
             }
         },
@@ -140,8 +145,7 @@ function get(URL) {
     });
 }
 
-$(document).mouseup(function (e)
-{
+$(document).mouseup(function (e) {
 
     var container = $(".pop");
     var side_container = $(".side-pop");

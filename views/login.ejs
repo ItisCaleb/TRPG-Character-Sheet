@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%include head.ejs%>
+    <% include head.ejs %>
     <link href="/public/css/Auth.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/auth.js " charset="UTF-8"></script>
 
 </head>
 <body>
 <nav>
-<% include header.ejs%>
+    <% include header.ejs %>
 </nav>
-<% include rightmenu.ejs%>
-<div class="content" >
+<% include rightmenu.ejs %>
+<div class="content">
     <h1 class="title">登入</h1>
     <div id="form-box">
-        <form id="form" class="table" action="../api/user/userlogin"  >
+        <form id="form" class="table" action="../api/user/userlogin">
             <label class="input">
-                <input class="email-box" type="email" placeholder="輸入電子郵件" name="email" id="email" required >
+                <input class="email-box" type="email" placeholder="輸入電子郵件" name="email" id="email" required>
                 <span class="check"></span>
             </label>
             <label class="input">
@@ -25,15 +25,16 @@
             </label><br>
             <div style="text-align: left;padding-left:5%">
                 <a style="font-size: 10px" href="/forget_password">忘記密碼?</a>
-            </div><br>
+            </div>
+            <br>
             <label class="remember">
                 <input type="checkbox" name="check" checked="checked">記住我
             </label><br>
             <button id="login" class="check-btn">登入</button>
         </form>
-    <p style="text-align: left;padding-left:5%">還沒註冊嗎?<a href="/signup">點擊這邊註冊</a></p>
+        <p style="text-align: left;padding-left:5%">還沒註冊嗎?<a href="/signup">點擊這邊註冊</a></p>
     </div>
 </div>
-<%include footer.ejs%>
+<% include footer.ejs %>
 </body>
 </html>

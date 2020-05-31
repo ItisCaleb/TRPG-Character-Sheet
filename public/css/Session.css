@@ -1,33 +1,38 @@
-table{
+table {
     border-collapse: collapse;
     width: 100%;
 }
-a{
+
+a {
     text-decoration: none;
     color: black;
 }
-th{
+
+th {
     border: 1px solid lightgray;
     padding: 0;
     background: rgb(240, 240, 240);
 }
-td{
+
+td {
     border: 1px solid lightgray;
     padding: 2%;
     word-break: break-all;
 }
 
-.trpg_session:hover{
-    background:#e8e2d5;
+.trpg_session:hover {
+    background: #e8e2d5;
     cursor: pointer;
 }
-ul.main-tabs{
+
+ul.main-tabs {
     padding: 0;
     list-style: none;
     width: 60%;
     margin-bottom: 0;
 }
-ul.main-tabs li{
+
+ul.main-tabs li {
     background: none;
     color: #222;
     display: inline-block;
@@ -35,32 +40,36 @@ ul.main-tabs li{
     cursor: pointer;
 }
 
-ul.main-tabs li.main-current{
+ul.main-tabs li.main-current {
     background: rgb(224, 224, 224);;
     color: #222;
 }
 
-.main-tab-content{
+.main-tab-content {
     display: none;
-    margin:0 10%;
+    margin: 0 10%;
 }
 
-.main-tab-content.main-current{
+.main-tab-content.main-current {
     display: inherit;
 }
-@media only screen and (max-width: 768px){
-    th{
+
+@media only screen and (max-width: 768px) {
+    th {
         font-size: 20px;
     }
-    td{
+
+    td {
         font-size: 15px;
     }
 }
-@media only screen and (min-width: 768px){
-    th{
+
+@media only screen and (min-width: 768px) {
+    th {
         font-size: 30px;
     }
-    td{
+
+    td {
         font-size: 20px;
     }
 
