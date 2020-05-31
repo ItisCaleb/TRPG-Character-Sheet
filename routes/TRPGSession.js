@@ -51,7 +51,7 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
 
     //check if the player is already in the session
     const playerExist = await Session.findOne({name:req.body.name,player:{$in:[user]}});
-    if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
+    //if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
     //check if the session doesn't exist
     if (!session) return res.status(400).send('此團務不存在');
     //check the password
