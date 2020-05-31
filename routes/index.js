@@ -272,7 +272,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                 if(sheet.author===user._id) {
                     res.render('COC7th_edit', {
                         title: '編輯角色卡',
-                        id: req.params.id
+                        id: req.params.id,
+                        status:"edit"
                     });
                 }
                 if(sheet.author!==user._id){
@@ -281,7 +282,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             var gm = await Session.findOne({_id:session,gm:user.name})
                             if (gm) return res.render('COC7th_show', {
                                         title: '檢視角色卡',
-                                        id: req.params.id
+                                        id: req.params.id,
+                                        status:"view"
                                     });
                         }res.redirect('/charactersheet');
                     }
@@ -290,14 +292,16 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             var player = await Session.findOne({_id:session,player:{$elemMatch:{$in:[user.name]}}})
                             if (player) return res.render('COC7th_show', {
                                     title: '檢視角色卡',
-                                    id: req.params.id
+                                    id: req.params.id,
+                                    status:"view"
                                 });
                         } res.redirect('/charactersheet');
                     }
                     if(sheet.permission==='所有人'){
                         res.render('COC7th_show',{
                             title:'檢視角色卡',
-                            id:req.params.id
+                            id:req.params.id,
+                            status:"view"
                         });
                     }
                 }

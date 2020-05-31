@@ -123,7 +123,12 @@ $(document).ready(function () {
             $(this).find('.extreme').text(Math.floor(sum / 5));
         })
     }
-
+    var disabled="";
+    var btn='<button class="custom-delete">刪除</button></td>\n';
+    if($('#status').length>0) {
+        disabled="disabled";
+        btn="";
+    }
     if ($('#url').length > 0) {
         $.ajax({
             url: '../api/sheet/COC7th/json/' + id,
@@ -172,7 +177,6 @@ $(document).ready(function () {
                 })
                 $('.class-feature').val(sheet.skill.class_feature);
                 var number = 0;
-                console.log(sheet.skill);
                 for (let i = 0; i < Object.keys(sheet.skill.skill).length; i++) {
                     let skill = sheet.skill.skill[i];
                     $('.name').each(function () {
@@ -190,13 +194,13 @@ $(document).ready(function () {
 
                     if (skill.name.includes('自定義技能')) {
 
-                        $('tr').last().prev().after('<tr class="custom-skill">\n' +
-                            '<td class="custom-name name">自定義技能' + (number + 1) + '<button class="custom-delete">刪除</button></td>\n' +
+                        $('.last').last().after('<tr class="custom-skill last">\n' +
+                            '<td class="custom-name name">自定義技能' + (number + 1) + btn +
                             '<td class="td-input custom-skill-name">' + skill.number[3] + '</td>\n' +
                             '<td class="base base-skill custom-base">' + skill.number[4] + '</td>\n' +
-                            '<td class="td-input"><input value="' + skill.number[0] + '" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
-                            '<td class="td-input"><input value="' + skill.number[1] + '" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
-                            '<td class="td-input"><input value="' + skill.number[2] + '" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
+                            '<td class="td-input"><input '+ disabled+' value="' + skill.number[0] + '" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
+                            '<td class="td-input"><input '+ disabled+' value="' + skill.number[1] + '" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
+                            '<td class="td-input"><input '+ disabled+' value="' + skill.number[2] + '" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
                             '<td class="total">\n' +
                             '                                            <table>\n' +
                             '                                                <tr>\n' +
