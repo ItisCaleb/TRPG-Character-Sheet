@@ -1,17 +1,5 @@
 document.write();
 $(document).ready(function () {
-    $('#mobile-option').on('click',function () {
-        $('.mobile-nav-menu') .show();
-    })
-    $('.list-button').on('click',function () {
-        $('.left-list-menu').show();
-    })
-    $('.mobile-permission').on('click',function () {
-        $('.mobile-permission-menu').show();
-    })
-    $('.permission').on('click',function () {
-        $('.right-list-menu').show();
-    })
     setInterval(function () {
         $('.skill').each(function () {
             var num=$(this).text();
@@ -26,6 +14,11 @@ $(document).ready(function () {
         }
         console.log($(this).val())
 
+    })
+    $('input[type=number]').each(function () {
+        if($(this).val()<0){
+            $(this).val(0);
+        }
     })
     $(document).on("click", ".create", function (e){
       e.preventDefault();

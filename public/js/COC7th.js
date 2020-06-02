@@ -1,6 +1,7 @@
 document.write();
 $(document).ready(function () {
     sheetCalculate()
+    optionSetup()
     setInterval(function () {
         $('td').children('input').each(function () {
             $(this).css('height',$(this).parent().css('height'));
@@ -242,23 +243,7 @@ $(document).ready(function () {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    $('#mobile-option').on('click',function () {
-       $('.mobile-nav-menu') .show();
-    })
-    $('.list-button').on('click',function () {
-        $('.left-list-menu').show();
-    })
-    $('.mobile-permission').on('click',function () {
-        $('.mobile-permission-menu').show();
-    })
-    $('.permission').on('click',function () {
-        $('.right-list-menu').show();
-    })
-    $('.permissions').on('click',function () {
-        $('.permissions').removeClass('permissions-choose');
-        $(this).addClass('permissions-choose');
-        $('.permission-status').val($(this).text()).trigger('change')
-    })
+
     $('#cancel-image').on('click',function (e) {
         e.preventDefault();
         if($('#image').val()!=='' || $('#add-image').attr('src') !=='/public/source/iconmonstr-plus-6.svg') {
@@ -362,6 +347,25 @@ function fileChanged(event) {
 }
 function sum_up(bas, adj) {
     return parseInt(bas, 10) + parseInt(adj, 10)
+}
+function optionSetup (){
+    $('#mobile-option').on('click',function () {
+        $('.mobile-nav-menu') .show();
+    })
+    $('.list-button').on('click',function () {
+        $('.left-list-menu').show();
+    })
+    $('.mobile-permission').on('click',function () {
+        $('.mobile-permission-menu').show();
+    })
+    $('.permission').on('click',function () {
+        $('.right-list-menu').show();
+    })
+    $('.permissions').on('click',function () {
+        $('.permissions').removeClass('permissions-choose');
+        $(this).addClass('permissions-choose');
+        $('.permission-status').val($(this).text()).trigger('change')
+    })
 }
 function sheetPush(){
     //push the stat's value to array
