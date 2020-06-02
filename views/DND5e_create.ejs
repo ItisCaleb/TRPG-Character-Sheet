@@ -74,7 +74,7 @@
         </ul>
         <div id="main-tab-1" class="main-tab-content main-current">
             <section style="margin: 50px">
-                    <div>
+                    <div style="width:100%">
                         <p>冒險者資料：</p>
                         <table style="width: 100%">
                             <tr>
@@ -118,19 +118,19 @@
             </section>
             <section style="margin: 50px">
                 <div class="sheet-creat-div" style="text-align: center">
-                    <label>力量<br><input type="number"></label><label><br>調整值：0</label><br>
-                    <label>敏捷<br><input type="number"></label><label><br>調整值：0</label><br>
-                    <label>體魄<br><input type="number"></label><label><br>調整值：0</label><br>
-                    <label>智力<br><input type="number"></label><label><br>調整值：0</label><br>
-                    <label>感知<br><input type="number"></label><label><br>調整值：0</label><br>
-                    <label>魅力<br><input type="number"></label><label><br>調整值：0</label><br>
+                    <label>力量<br><input id="str" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>敏捷<br><input id="dex" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>體魄<br><input id="con" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>智力<br><input id="int" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>感知<br><input id="wis" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>魅力<br><input id="cha" value="10" type="number"></label><br><label class="mod">0</label><br>
                     <label><input type="number">被動感知</label></label>
 
                 </div>
 
                 <div class="sheet-creat-div" style="width: 95%" >
                     <label><input name="inspiration" type="number" style="width: 30%;"></label>激勵值<br>
-                    <label><input name="pro" type="number" style="width: 30%;"></label>熟練加成<br>
+                    <label><input name="pro" id="pro" type="number" style="width: 30%;"></label>熟練加成<br>
 
                     <div id="sheet-creat-skill">
                         <table>
@@ -138,45 +138,46 @@
                                 <th colspan="2">豁免檢定</th>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">力量：</label>
-                                    <p class="chara">0</p>
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">力量：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【力量】</td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">敏捷：</label>
-                                    <p class="chara">0</p>
-
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">敏捷：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【敏捷】</td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">體魄：</label>
-                                    <p class="chara">0</p>
-
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">體魄：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【體魄】</td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">智力：</label>
-                                    <p class="chara">0</p>
-
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">智力：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【智力】</td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">感知：</label>
-                                    <p class="chara">0</p>
-
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">感知：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【感知】</td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <label><input type="checkbox" placeholder="0" size="1">魅力：</label>
-                                    <p class="chara">0</p>
-
+                                <td class="skill-td" colspan="2">
+                                    <label><input type="checkbox" class="check-input" placeholder="0" size="1">魅力：</label>
+                                    <p class="chara skill">0</p>
                                 </td>
+                                <td class="attr" style="display: none">【魅力】</td>
                             </tr>
                             <tr>
                                 <th colspan="2">技能</th>
