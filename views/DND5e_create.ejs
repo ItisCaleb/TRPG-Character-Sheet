@@ -117,18 +117,18 @@
 
             </section>
             <section style="margin: 50px">
-                <div class="sheet-creat-div" style="text-align: center">
-                    <label>力量<br><input id="str" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label>敏捷<br><input id="dex" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label>體魄<br><input id="con" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label>智力<br><input id="int" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label>感知<br><input id="wis" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label>魅力<br><input id="cha" value="10" type="number"></label><br><label class="mod">0</label><br>
-                    <label><input type="number">被動感知</label></label>
+                <div class="sheet-creat-div" style="text-align: center;width: 30%">
+                    <label>力量<br><input class="base-attr" id="str" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>敏捷<br><input class="base-attr" id="dex" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>體魄<br><input class="base-attr" id="con" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>智力<br><input class="base-attr" id="int" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>感知<br><input class="base-attr" id="wis" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label>魅力<br><input class="base-attr" id="cha" value="10" type="number"></label><br><label class="mod">0</label><br>
+                    <label><input class="base-attr" type="number">被動感知</label></label>
 
                 </div>
 
-                <div class="sheet-creat-div" style="width: 95%" >
+                <div class="sheet-creat-div" style="width: 40%" >
                     <label><input name="inspiration" type="number" style="width: 30%;"></label>激勵值<br>
                     <label><input name="pro" id="pro" type="number" style="width: 30%;"></label>熟練加成<br>
 
@@ -321,7 +321,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="sheet-creat-div" style="width: 25%;">
+                <div class="sheet-creat-div" style="width: 50%;">
                     <div class="sheet-creat-div">
                         <section class="sheet-creat-div">
                             <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
@@ -343,34 +343,75 @@
                     </div>
                     <div class="sheet-creat-div">
                         <p>攻擊 &amp; 法術</p>
-                        <section id="sheet-creat-attack-and-spell">
-                            <div class="sheet-creat-div" style="width: 50%">
-                                <p>名稱&amp;攻擊類型</p>
-                                <input class="attack" placeholder="武士刀/揮砍" size="10"><br>
-                            </div>
-                            <div class="sheet-creat-div">
-                                <p>加值</p>
-                                <input class="attack" placeholder="+2" size="4"><br>
-                            </div>
-                            <div class="sheet-creat-div">
-                                <p>攻擊力</p>
-                                <input class="attack" placeholder="1d10" size="6"><br>
-                            </div>
-                        </section>
+                        <table  >
+                            <tr>
+                                <th>名稱&amp;攻擊類型</th>
+                                <th>加值</th>
+                                <th>攻擊力</th>
+                            </tr>
+                            <tr>
+                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack" placeholder="+2"></td>
+                                <td><input class="attack" placeholder="1d10"></td>
+                            </tr>
+                            <tr>
+                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack" placeholder="+2"></td>
+                                <td><input class="attack" placeholder="1d10"></td>
+                            </tr>
+                            <tr>
+                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack" placeholder="+2"></td>
+                                <td><input class="attack" placeholder="1d10"></td>
+                            </tr>
+
+
+                        </table>
                     </div>
-                    <div class="sheet-creat-div" style="height: 50%">
-                        <div class="sheet-creat-div" style="height: 90%">
-                            <label>常備裝備：
-                                <textarea name="equip" style="height: 60%;width: 30%;resize: none"></textarea></label>
-                        </div>
-                    </div>
-                    <div class="sheet-creat-div" style="display: inline-block">
-                        <label>CP：<input class="money" type="number" placeholder="0" size="2"></label><br>
-                        <label>SP：<input class="money" type="number" placeholder="0" size="2"></label><br>
-                        <label>EP：<input class="money" type="number" placeholder="0" size="2"></label><br>
-                        <label>GP：<input class="money" type="number" placeholder="0" size="2"></label><br>
-                        <label>PP：<input class="money" type="number" placeholder="0" size="2"></label><br>
-                    </div>
+                    <table style="width: 100%;text-align: center;">
+                        <tr>
+                           <td>
+                               <label>CP：<input class="money" type="number" placeholder="0"></label><br>
+                           </td>
+                            <td rowspan="5">
+                                <textarea name="equip" style="border: none;
+                                 width: 100%;padding: 0;
+                                 resize: none"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>SP：<input class="money" type="number" placeholder="0"></label><br>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>EP：<input class="money" type="number" placeholder="0" ></label><br>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>GP：<input class="money" type="number" placeholder="0"></label><br>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>PP：<input class="money" type="number" placeholder="0" ></label><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" >
+                                常備裝備
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
 
                 </div>
 
@@ -378,7 +419,7 @@
             </section>
         </div>
         <div id="main-tab-2" class="main-tab-content">
-            <div class="sheet-creat-div" style="height: 100;display: inline-block">
+            <div class="sheet-creat-div" style="height: 100px;display: inline-block">
                 <section class="sheet-creat-div">
                     <label>身高：<input name="height" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>膚色：<input name="skin" placeholder="克爾德"></label><br>
@@ -425,57 +466,63 @@
                 </section>
                 <div style=" display: inline-block;width: 30%">
                     <div>
-                        <h4 style="margin: 0">0 小法術</h4><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                    </div>
-                    <div>
                         <section>
-                            <h4>1</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">0 小法術</h4><br>
+                            <label style="display: none" class="spell-label"><input type="number" class="spell-number"></label>
+                            <label style="display: none" class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8%">
+                        <section>
+                            <h4 class="spell-level">1</h4>
+                            <label style="margin-bottom: 4%" class="spell-label">法術總級：<input type="number" class="spell-number"></label>
+                            <label style="margin-bottom: 4%" class="spell-label">法術用量：<input type="number" class="spell-number"></label>
+                        </section>
+                        <div>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
-                            <h4>2</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">2</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
 
@@ -484,63 +531,63 @@
                     <div>
                         <div>
                             <section>
-                                <h4>3</h4>
-                                <label>法術總級：<input type="number" class="spell-number"></label>
-                                <label>法術用量：<input type="number" class="spell-number"></label>
+                                <h4 class="spell-level">3</h4>
+                                <label class="spell-label"><input type="number" class="spell-number"></label>
+                                <label class="spell-label"><input type="number" class="spell-number"></label>
                             </section>
                             <div>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                                <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                                <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                             </div>
                         </div>
                         <section>
-                            <h4>4</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">4</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
-                            <h4>5</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">5</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
 
@@ -549,70 +596,70 @@
                 <div style="display: inline-block;width: 30%">
                     <div>
                         <section>
-                            <h4>6</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">6</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
                     <div>
                     <section>
-                        <h4>7</h4>
-                        <label>法術總級：<input type="number" class="spell-number"></label>
-                        <label>法術用量：<input type="number" class="spell-number"></label>
+                        <h4 class="spell-level">7</h4>
+                        <label class="spell-label"><input type="number" class="spell-number"></label>
+                        <label class="spell-label"><input type="number" class="spell-number"></label>
                     </section>
                     <div>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                     </div>
                     </div>
                     <div>
                         <section>
-                            <h4>8</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">8</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
-                            <h4>9</h4>
-                            <label>法術總級：<input type="number" class="spell-number"></label>
-                            <label>法術用量：<input type="number" class="spell-number"></label>
+                            <h4 class="spell-level">9</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
                         </section>
                         <div>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
-                            <label><input type="checkbox" class="check-input"><input type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
                         </div>
                     </div>
                 </div>

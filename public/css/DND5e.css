@@ -31,6 +31,7 @@ td> p{
     text-align: right;
     font-size: 80%;
 }
+
 td>label{
     font-size: 80%;
 }
@@ -47,14 +48,28 @@ td>label{
 .chara{
     display: inline;
 }
+.base-attr{
+    width: 20% !important;
+}
+.money{
+    width: 30%;
+}
 .spell-number{
     width: 80%;
+    height: 60%;
+    text-align:center;
+}
+.spell-level{
+    font-size:200% ;
+    margin: 0 2% 0 0;
+}
+.spell-label{
+    margin-top:2% ;
 }
 ul.main-tabs{
     margin-left: 5%;
     padding: 0;
     list-style: none;
-
 }
 ul.main-tabs li{
     background: none;
