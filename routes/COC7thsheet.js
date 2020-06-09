@@ -13,10 +13,7 @@ const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
-const DND5eStat = require('../model/DND5e/Stat');
-const DND5eStory = require('../model/DND5e/Story');
-const DND5eEquip = require('../model/DND5e/Equip');
-const DND5eSpell = require('../model/DND5e/Spell');
+
 
 dotenv.config()
 
@@ -38,7 +35,7 @@ router.post('/COC7th', verify,upload.single('file'), async function (req, res)  
     var image;
     (req.file) ? image=req.file.buffer : image='';
     var cskill = [{}];
-    for (var i=0;i<Object.keys(JSON.parse(cs.skill)).length;i++){
+    for (let i=0;i<Object.keys(JSON.parse(cs.skill)).length;i++){
         var name = Object.keys(JSON.parse(cs.skill))[i];
         cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
     }
@@ -57,7 +54,6 @@ router.post('/COC7th', verify,upload.single('file'), async function (req, res)  
         res.status(400).send(err);
         res.redirect('/charactersheet/create')
     }
-
     //save skill
     const skill = new COC7thSkill({
         _id:sheet._id,

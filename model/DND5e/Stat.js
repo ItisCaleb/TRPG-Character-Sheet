@@ -4,7 +4,6 @@ const  DND5eStatSchema = new mongoose.Schema({
     stat:[Number],
     inspiration:Number,
     pro:Number,
-    saving:Array,
     skills:Array,
     armor:Number,
     initiative:Number,

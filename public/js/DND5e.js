@@ -2,7 +2,6 @@ document.write();
 $(document).ready(function () {
     sheetSetup()
     optionSetup()
-    $('textarea[name=equip]').css('height',$('textarea[name=equip]').parent().css('height'));
     $(document).on('input','input',function () {
         sheetSetup()
     })
@@ -19,9 +18,16 @@ $(document).ready(function () {
       const calSheet =sheetPush();
       const spell =calSheet.spell;
       const skill =calSheet.skill;
-      const sheet = $('#myform').serializeArray();
-      sheet.push(skill);
-      sheet.push(spell);
+      const money =calSheet.money;
+      const stat =calSheet.stat;
+      const attack=calSheet.attack;
+      //const sheet = $('#myform').serializeArray();
+      var sheet = new FormData($('#myform')[0]);
+      sheet.append('skill',JSON.stringify(skill));
+      sheet.append('spell',JSON.stringify(spell));
+      sheet.append('money',JSON.stringify(money));
+      sheet.append('stat',JSON.stringify(stat));
+      sheet.append('attack',JSON.stringify(attack));
       console.log(sheet);
     })
 
@@ -75,7 +81,10 @@ $(document).ready(function () {
                 skill.push(input.text())
             }
         })
-
+        var stat =[];
+        $('.base-attr').each(function () {
+            stat.push($(this).val());
+        })
         $('.spell-level').each(function (index) {
             spell[index]["number"]=[];
             spell[index]["spells"]={};
@@ -88,10 +97,29 @@ $(document).ready(function () {
                 }
             })
         })
+        var attack=[];
+        $('.attack').each(function () {
+            attack.push($(this).val());
+        })
+        var money=[];
+        $('.money').each(function () {
+            money.push($(this).val());
+        })
         this.spell=spell;
         this.skill=skill;
+        this.money=money;
+        this.stat=stat;
+        this.attack=attack;
         return this;
     }
+    $('#cancel-image').on('click',function (e) {
+        e.preventDefault();
+        if($('#image').val()!=='' || $('#add-image').attr('src') !=='/public/source/iconmonstr-plus-6.svg') {
+            $('#image').val('');
+            $('#add-image').attr('src', '/public/source/iconmonstr-plus-6.svg')
+            $('#name').trigger('change')
+        }
+    })
     function optionSetup (){
         $('#mobile-option').on('click',function () {
             $('.mobile-nav-menu') .show();

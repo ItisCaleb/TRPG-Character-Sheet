@@ -4,7 +4,6 @@ const DND5eStorySchema = new mongoose.Schema({
     class: String,
     level: Number,
     background: String,
-    player: String,
     race: String,
     faction: String,
     exp: String,

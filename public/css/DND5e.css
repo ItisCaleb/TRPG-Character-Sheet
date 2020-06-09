@@ -1,6 +1,6 @@
 .sheet-creat-div {
     width: 100%;
-    height: 50%;
+    height: 100%;
     padding: 10px;
 }
 .sheet-creat-div >label>input{
@@ -92,6 +92,14 @@ ul.main-tabs li.main-current{
 
 .main-tab-content.main-current{
     display: inherit;
+}
+#add-image{
+    border: 1px solid lightgray;
+    min-width: 10%;
+    max-width: 40%;
+    min-height: 10%;
+    max-height: 40%;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 768px){
