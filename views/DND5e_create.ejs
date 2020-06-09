@@ -343,26 +343,26 @@
                     </div>
                     <div class="sheet-creat-div">
                         <p>攻擊 &amp; 法術</p>
-                        <table  >
+                        <table>
                             <tr>
                                 <th>名稱&amp;攻擊類型</th>
                                 <th>加值</th>
                                 <th>攻擊力</th>
                             </tr>
                             <tr>
-                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack" placeholder="+2"></td>
-                                <td><input class="attack" placeholder="1d10"></td>
+                                <td><input class="attack aform" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack add" placeholder="+2"></td>
+                                <td><input class="attack aroll" placeholder="1d10"></td>
                             </tr>
                             <tr>
-                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack" placeholder="+2"></td>
-                                <td><input class="attack" placeholder="1d10"></td>
+                                <td><input class="attack aform" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack add" placeholder="+2"></td>
+                                <td><input class="attack aroll" placeholder="1d10"></td>
                             </tr>
                             <tr>
-                                <td><input class="attack" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack" placeholder="+2"></td>
-                                <td><input class="attack" placeholder="1d10"></td>
+                                <td><input class="attack aform" placeholder="武士刀/揮砍"></td>
+                                <td><input class="attack add" placeholder="+2"></td>
+                                <td><input class="attack aroll" placeholder="1d10"></td>
                             </tr>
 
 
@@ -375,7 +375,7 @@
                            </td>
                             <td rowspan="5">
                                 <textarea name="equip" style="border: none;
-                                 width: 100%;padding: 0;
+                                 width: 100%;padding: 0;height: 240px;
                                  resize: none"></textarea>
                             </td>
                         </tr>
@@ -408,14 +408,7 @@
                             </td>
                         </tr>
                     </table>
-
-
-
-
-
                 </div>
-
-
             </section>
         </div>
         <div id="main-tab-2" class="main-tab-content">
@@ -426,9 +419,8 @@
                     <label>年齡：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>體重：<input name="weight" min="0" placeholder="40" size="2" type="number"></label><br>
                     <label>髮色：<input name="hair" placeholder="克爾德"></label><br>
-
                 </section>
-
+                <input name='permission' class="permission-status" value="限團務GM" style="display: none">
             </div>
             <div class="sheet-creat-div" style="width: 45%;display: inline-block">
                     <label>特性：<textarea name="otherTrait"
@@ -454,6 +446,13 @@
                     理念：<textarea name="ideals" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
                     關係：<textarea name="bonds" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
                     缺點：<textarea name="flaws" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                <label for="image">角色圖片:<br></label>
+                <label>
+                    <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
+                    <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)"
+                           accept="image/*" style="display: none">
+                </label>
+                <button id="cancel-image" class="btn session">取消圖片</button>
             </div>
         </div>
         <div id="main-tab-3" class="main-tab-content">
