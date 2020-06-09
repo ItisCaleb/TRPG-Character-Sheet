@@ -4,7 +4,6 @@ const verify = require('../public/js/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
 const dotenv = require('dotenv');
-const GridFsStorage= require('multer-gridfs-storage');
 const multer = require('multer');
 const Session = require('../model/Session');
 
