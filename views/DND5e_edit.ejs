@@ -4,16 +4,24 @@
     <% include model/head.ejs %>
     <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/DND5e.js" charset="UTF-8"></script>
+    <script src="/public/js/DND5e_edit.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
     <% include model/header.ejs %>
-    <% include model/mobile_option_create.ejs%>
+    <% include model/mobile_option_edit.ejs%>
 </nav>
-<% include model/rightmenu.ejs %>
-<% include model/option_create.ejs%>
+<% include model/rightmenu.ejs%>
+<% include model/option_edit.ejs%>
+<div class="list-right-side">
+    <div class="right-list-menu list-menu side-pop pop" style="display: none">
+        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
+        <div class="list-menu-text permissions">團務所有玩家</div>
+        <div class="list-menu-text permissions">所有人</div>
+    </div>
+</div>
 <div class="content">
-    <h1 style="text-align: center;line-height:40px ;">創建角色卡</h1>
+    <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px;">
         框內文字為範例角色卡 系統:DND5e
     </p>
@@ -61,8 +69,6 @@
                                     </table>
                                 </td>
                             </tr>
-
-
                         </table>
                     </div>
 

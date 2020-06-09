@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include head.ejs %>
+    <% include model/head.ejs %>
     <link href="/public/css/Session.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
 <nav>
-    <% include header.ejs %>
+    <% include model/header.ejs %>
 </nav>
-<% include rightmenu.ejs %>
-<% include footer.ejs %>
+<% include model/rightmenu.ejs %>
+<% include model/footer.ejs %>
 <div class="content" style="text-align: center;">
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <div class="content-decribe" id="session" style="text-align: center;line-height:30px ;">

@@ -17,4 +17,4 @@ const  DND5eSpellSchema = new mongoose.Schema({
     nine:Array
 });
 
-module.exports = mongoose.model("DND5eSpell",DND5eSpellSchema);
+module.exports = mongoose.model("DND5e_Spell",DND5eSpellSchema);

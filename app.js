@@ -13,6 +13,7 @@ const https = require('https');
 const indexRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
+const sheetDeleteRoute = require('./routes/sheetDelete');
 const COC7thSheetRoute = require('./routes/COC7thsheet');
 const DND5eSheetRoute = require('./routes/DND5esheet');
 
@@ -38,10 +39,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // route middleware
+app.use('/', indexRoute);
 app.use("/api/user", authRoute);
 app.use('/api/session', TRPGSessionRoute);
-app.use('/', indexRoute);
-app.use('/api/sheet',COC7thSheetRoute,DND5eSheetRoute);
+app.use('/api/sheet',sheetDeleteRoute);
+app.use('/api/sheet',COC7thSheetRoute);
+app.use('/api/sheet',DND5eSheetRoute);
 
 const privateKey = fs.readFileSync(__dirname+'/public/ssl/private.key');
 const certificate = fs.readFileSync(__dirname+'/public/ssl/certificate.crt');

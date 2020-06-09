@@ -267,43 +267,40 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
-            if (sheet.system==="COC7th"){
-
-                if(sheet.author===user._id) {
-                    res.render('COC7th_edit', {
-                        title: '編輯角色卡',
-                        id: req.params.id,
-                        status:"edit"
-                    });
-                }
-                if(sheet.author!==user._id){
-                    if(sheet.permission==='限團務GM' && sheet.session.length !==0){
-                        for (const session of sheet.session){
-                            var gm = await Session.findOne({_id:session,gm:user.name})
-                            if (gm) return res.render('COC7th_show', {
-                                        title: '檢視角色卡',
-                                        id: req.params.id,
-                                        status:"view"
-                                    });
-                        }res.redirect('/charactersheet');
-                    }
-                    if(sheet.permission==='團務所有玩家' && sheet.session.length !==0){
-                        for (const session of sheet.session){
-                            var player = await Session.findOne({_id:session,player:{$elemMatch:{$in:[user.name]}}})
-                            if (player) return res.render('COC7th_show', {
-                                    title: '檢視角色卡',
-                                    id: req.params.id,
-                                    status:"view"
-                                });
-                        } res.redirect('/charactersheet');
-                    }
-                    if(sheet.permission==='所有人'){
-                        res.render('COC7th_show',{
-                            title:'檢視角色卡',
-                            id:req.params.id,
+            if(sheet.author===user._id) {
+                res.render(sheet.system+'_edit', {
+                    title: '編輯角色卡',
+                    id: req.params.id,
+                    status: "edit"
+                });
+            }
+            if(sheet.author!==user._id){
+                if(sheet.permission==='限團務GM' && sheet.session.length !==0){
+                    for (const session of sheet.session){
+                        var gm = await Session.findOne({_id:session,gm:user.name})
+                        if (gm) return res.render(sheet.system+'_show', {
+                            title: '檢視角色卡',
+                            id: req.params.id,
                             status:"view"
                         });
-                    }
+                    }res.redirect('/charactersheet');
+                }
+                if(sheet.permission==='團務所有玩家' && sheet.session.length !==0){
+                    for (const session of sheet.session){
+                        var player = await Session.findOne({_id:session,player:{$elemMatch:{$in:[user.name]}}})
+                        if (player) return res.render(sheet.system+'_show', {
+                            title: '檢視角色卡',
+                            id: req.params.id,
+                            status:"view"
+                        });
+                    } res.redirect('/charactersheet');
+                }
+                if(sheet.permission==='所有人'){
+                    res.render(sheet.system+'_show',{
+                        title:'檢視角色卡',
+                        id:req.params.id,
+                        status:"view"
+                    });
                 }
             }
         }catch (err) {

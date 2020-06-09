@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%include head.ejs%>
+    <%include model/head.ejs%>
     <link href="/public/css/COC7th.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th_get.js" charset="UTF-8"></script>
@@ -9,86 +9,11 @@
 </head>
 <body>
 <nav>
-<% include header.ejs%>
-    <div id="mobile-option">
-    <div class="mobile-nav">
-        <div class="save-icon" style="display: none">
-            儲存中
-            <div class="loader"></div>
-        </div>
-        <div class="success-icon">
-            最新狀態
-            <img class="correct-image" src="/public/source/iconfinder_Tick_Mark_Dark_1398912.png" alt="">
-        </div>
-        <div id=mobile-option style="display: inline;">
-            選項
-            <img id="mobile-img" src="/public/source/angle-arrow-down.svg" alt="">
-        </div>
-    </div>
-    <div class="mobile-nav-menu list-menu side-pop" style="display: none">
-        <div class="list-menu-text mobile-permission">
-            檢視權限
-        </div>
-        <div class="list-menu-text delete-check">
-            刪除角色卡
-        </div>
-    </div>
-    <div class="mobile-permission-menu list-menu side-pop pop" style="display: none">
-        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
-        <div class="list-menu-text permissions">團務所有玩家</div>
-        <div class="list-menu-text permissions">所有人</div>
-    </div>
-    </div>
-    <div id="delete-window" class="message pop" style="top:24px;display: none">
-        <div class="message-div">
-            <div class="message-alert">刪除角色卡
-                <p class="message-content">
-                    你確定要刪除嗎?
-                </p>
-                <span style="display: inline">
-                    <button id="delete" class="btn session">確認</button>
-                    <button id="delete-disable" class="btn session">關閉</button>
-                </span>
-            </div>
-        </div>
-    </div>
+    <% include model/header.ejs%>
+    <% include model/mobile_option_edit.ejs%>
 </nav>
-<% include rightmenu.ejs%>
-<div class="left-side">
-    <div class="list">
-            <div class="list-top">
-                <div>
-                    <div class="save-icon" style="display: none">
-                        儲存中
-                        <div class="loader"></div>
-                    </div>
-                    <div class="success-icon">
-                        最新狀態
-                        <img class="correct-image" src="/public/source/iconfinder_Tick_Mark_Dark_1398912.png" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="list-top">
-                <p class="list-text">編輯選項</p>
-                <img src="../public/source/menu-icon.png" class="list-button" alt="">
-            </div>
-            <div class="left-list-menu list-menu side-pop" style="display: none">
-                <div  class="list-menu-text permission">
-                    檢視權限
-                </div>
-                <div  class="list-menu-text delete-check">
-                    刪除角色卡
-                </div>
-            </div>
-    </div>
-</div>
-<div class="list-right-side">
-    <div class="right-list-menu list-menu side-pop pop" style="display: none">
-        <div class="list-menu-text permissions permissions-choose">限團務GM</div>
-        <div class="list-menu-text permissions">團務所有玩家</div>
-        <div class="list-menu-text permissions">所有人</div>
-    </div>
-</div>
+<% include model/rightmenu.ejs%>
+<% include model/option_edit.ejs%>
 <div class="content">
     <div id="url"></div>
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
@@ -1628,7 +1553,7 @@
     </div>
 </div>
 
-<%include footer.ejs%>
+<%include model/footer.ejs%>
 
 
 </body>

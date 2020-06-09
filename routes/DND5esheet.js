@@ -25,6 +25,7 @@ const upload = multer({
 })
 
 router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
+    console.log('yes');
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
@@ -71,6 +72,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         faction: cs.faction,
         exp: cs.exp,
         personality: cs.personality,
+        trait:cs.trait,
         ideals: cs.ideals,
         bonds: cs.bonds,
         flaws: cs.flaws,
@@ -99,11 +101,19 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         attack:cs.attack,
         money:cs.money,
         armor:cs.armor,
-
     })
+    try{
+        await skill.save();
+        await story.save();
+        await spell.save();
+        await equip.save();
+        await User.updateOne({_id:id},{$inc:{sheet_number:1}})
+        res.send('角色卡創建成功');
+    }catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
 
 })
-
-
 
 module.exports= router

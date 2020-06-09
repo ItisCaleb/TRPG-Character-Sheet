@@ -6,4 +6,4 @@ const  DND5eEquipSchema = new mongoose.Schema({
     armor:String
 });
 
-module.exports = mongoose.model("DND5eEquip",DND5eEquipSchema);
+module.exports = mongoose.model("DND5e_Equip",DND5eEquipSchema);

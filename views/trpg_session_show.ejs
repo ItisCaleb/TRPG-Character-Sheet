@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%include head.ejs%>
+    <%include model/head.ejs%>
     <script src="/public/js/session.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
-<% include header.ejs%>
+<% include model/header.ejs%>
 
     <div id="upload-window" class="message pop" style="top: 24px;display: none">
         <div class="message-div">
@@ -70,7 +70,7 @@
         </div>
     </div>
 </nav>
-<% include rightmenu.ejs%>
+<% include model/rightmenu.ejs%>
 <div class="content">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
 
@@ -98,6 +98,6 @@
 
     </div>
 </div>
-<%include footer.ejs%>
+<%include model/footer.ejs%>
 </body>
 </html>

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const  DND5eStatSchema = new mongoose.Schema({
-    stat:[Number],
+    stat: Array,
     inspiration:Number,
     pro:Number,
     skills:Array,
@@ -16,4 +16,4 @@ const  DND5eStatSchema = new mongoose.Schema({
     death_save:[Number]
 });
 
-module.exports = mongoose.model("DND5eStat",DND5eStatSchema);
+module.exports = mongoose.model("DND5e_Stat",DND5eStatSchema);

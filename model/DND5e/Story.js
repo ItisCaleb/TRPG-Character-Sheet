@@ -13,6 +13,7 @@ const DND5eStorySchema = new mongoose.Schema({
     flaws: String,
     language: String,
     role_description: String,
+    trait:String,
     height: String,
     skin: String,
     age: String,
@@ -24,4 +25,4 @@ const DND5eStorySchema = new mongoose.Schema({
     treasure: String
 });
 
-module.exports = mongoose.model("DND5eStory", DND5eStorySchema);
+module.exports = mongoose.model("DND5e_Story", DND5eStorySchema);

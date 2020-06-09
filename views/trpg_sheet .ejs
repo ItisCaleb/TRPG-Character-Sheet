@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%include head.ejs%>
+    <%include model/head.ejs%>
     <link href="/public/css/Sheet.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/sheet.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
-<% include header.ejs%>
+<% include model/header.ejs%>
     <div id="create-window" class="message pop" style="top: 24px;display: none">
             <div class="message-div">
                 <div class="message-alert">選擇系統
@@ -40,7 +40,7 @@
             </div>
     </div>
 </nav>
-<% include rightmenu.ejs%>
+<% include model/rightmenu.ejs%>
 <div class="content" style="text-align: center;">
     <h1 style="text-align: center;line-height:40px ;"><%=title%></h1>
     <div class="content-decribe" id="session"  style="line-height:30px ;">
@@ -103,6 +103,6 @@
 
 </div>
 
-<%include footer.ejs%>
+<%include model/footer.ejs%>
 </body>
 </html>

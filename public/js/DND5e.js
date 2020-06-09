@@ -21,14 +21,34 @@ $(document).ready(function () {
       const money =calSheet.money;
       const stat =calSheet.stat;
       const attack=calSheet.attack;
-      //const sheet = $('#myform').serializeArray();
       var sheet = new FormData($('#myform')[0]);
       sheet.append('skill',JSON.stringify(skill));
       sheet.append('spell',JSON.stringify(spell));
       sheet.append('money',JSON.stringify(money));
       sheet.append('stat',JSON.stringify(stat));
       sheet.append('attack',JSON.stringify(attack));
+      sheet.append('file',$('input[type=file]')[0].files[0]);
       console.log(sheet);
+      $.ajax({
+          url:'../../api/sheet/DND5e',
+          type:'POST',
+          contentType: false,
+          processData: false, // required
+          data:  sheet,
+          success: function (data) {
+              console.log('yes')
+              good_message(data)
+              setTimeout(function () {
+                  redirect('/charactersheet');
+              }, 1000)
+          }, error: function (data) {
+              console.log('no')
+              bad_message(data.responseText)
+              setTimeout(function () {
+                  $('.create').prop('disabled',false);
+              },1000)
+          }
+      })
     })
 
     function sheetSetup() {

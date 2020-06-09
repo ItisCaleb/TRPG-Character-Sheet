@@ -193,36 +193,5 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
     }
 })
 
-router.post('/DND5e',verify,upload.single('file'),async function (req,res) {
-    const id = jwtDecode(req.cookies.auth_token)._id;
-    const user = await User.findOne({_id:id});
-    if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
-    var cs = req.body;
-})
-
-
-router.delete('/delete/:id',verify,async function (req,res) {
-
-    const sheetId = req.params.id;
-    const user=jwtDecode(req.cookies.auth_token)._id;
-    const info = await Info.findOne({_id:sheetId});
-    if(info.author === user) {
-        await Info.deleteOne({_id: sheetId});
-        await COC7thStat.deleteOne({_id: sheetId});
-        await COC7thStory.deleteOne({_id: sheetId});
-        await COC7thSkill.deleteOne({_id: sheetId});
-        await COC7thEquip.deleteOne({_id: sheetId});
-        await User.updateOne({_id:user},{$inc:{sheet_number:-1}})
-        try {
-            const session = await Session.find({sheet: sheetId})
-            for (const sheet of session) {
-                await Session.updateOne({sheet:req.params.id},{$pull:{sheet:sheetId}})
-            }
-            res.send('已刪除角色卡')
-        }catch (err) {
-
-        }
-    }else return res.send('你並無權限修改此角色卡')
-})
 
 module.exports = router;
