@@ -48,10 +48,10 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     }
     const skill = new DND5eStat({
         _id:sheet._id,
-       stat:cs.stat,
+       stat:JSON.parse(cs.stat),
        inspiration:cs.inspiration,
        pro:cs.pro,
-       skill:cs.skill,
+       skill:JSON.parse(cs.skill),
        armor:cs.armor,
        initiative:cs.initiative,
        speed:cs.speed,
@@ -88,16 +88,16 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     })
     const spell =new DND5eSpell({
         _id:sheet._id,
-        spell_class:cs.spell_class,
-        spell_ability:cs.spell_ability,
-        spell_save:cs.spell_save,
-        spell_bonus:cs.spell_bonus,
-        spell:cs.spell
+        spell_class:cs['spell-class'],
+        spell_ability:cs['spell-ability'],
+        spell_save:cs['spell-save'],
+        spell_bonus:cs['spell-bonus'],
+        spell:JSON.parse(cs.spell)
     })
     const equip =new DND5eEquip({
         _id:sheet._id,
-        attack:cs.attack,
-        money:cs.money,
+        attack:JSON.parse(cs.attack),
+        money:JSON.parse(cs.money),
         armor:cs.armor,
     })
     try{
@@ -118,13 +118,13 @@ router.get('/DND5e/json/:id',async function (req,res) {
     const url = req.params.id;
     var sheet = {};
     const info = await Info.findOne({_id:url}).lean();
-    const skill = await DND5eStat.findOne({_id:url}).lean();
+    const spell = await DND5eSpell.findOne({_id:url}).lean();
     const stat = await DND5eStat.findOne({_id:url}).lean();
     const story = await DND5eStory.findOne({_id:url}).lean();
     const equip = await DND5eEquip.findOne({_id:url}).lean();
 
     sheet.info = info ;
-    sheet.skill = skill ;
+    sheet.spell = spell ;
     sheet.stat = stat ;
     sheet.story = story ;
     sheet.equip = equip ;

@@ -5,6 +5,7 @@
     <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/DND5e.js" charset="UTF-8"></script>
     <script src="/public/js/DND5e_edit.js" charset="UTF-8"></script>
+    <script src="/public/js/DND5e_get.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
@@ -21,10 +22,12 @@
     </div>
 </div>
 <div class="content">
+    <div id="url"></div>
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px;">
         框內文字為範例角色卡 系統:DND5e
     </p>
+
     <form id="myform">
         <ul class="main-tabs">
             <li class="main-tab-link main-current" data-tab="main-tab-1">基本資料</li>
@@ -38,32 +41,32 @@
                         <table style="width: 100%">
                             <tr>
                                 <td>
-                                    <label><input name="name" placeholder="克爾德"><br>角色名稱</label>
+                                    <label><input name="name" class="info"><br>角色名稱</label>
                                 </td>
                                 <td style="width: auto">
                                     <table style="width: 100%">
                                         <tr>
                                             <td>
-                                                <label><input name="class" placeholder="牧師" size="5">
-                                                    <input max="30" min="0" name="level" placeholder="3" step="1"
+                                                <label><input name="class" class="story" size="5">
+                                                    <input max="30" min="0" name="level" class="story" step="1"
                                                            type="number"></label><br>職業/等級</label>
                                             </td>
                                             <td>
-                                                <label><input name="background" placeholder="公會商人"><br>角色背景</label><br>
+                                                <label><input name="background" class="story" ><br>角色背景</label><br>
                                             </td>
                                             <td>
-                                                <label><input name="player" placeholder="ItisCaleb"><br>玩家暱稱</label>
+                                                <label><input name="player" class="info"><br>玩家暱稱</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label><input name="race" placeholder="人類"><br>種族</label>
+                                                <label><input name="race" class="story"><br>種族</label>
                                             </td>
                                             <td>
-                                                <label><input name="faction" placeholder="絕對中立"><br>陣營</label>
+                                                <label><input name="faction" class="story"><br>陣營</label>
                                             </td>
                                             <td>
-                                                <label><input name="exp" placeholder="經驗值"><br>經驗值</label>
+                                                <label><input name="exp" class="story"><br>經驗值</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -371,31 +374,31 @@
         <div id="main-tab-2" class="main-tab-content">
             <div class="sheet-creat-div" style="height: 100px;display: inline-block">
                 <section class="sheet-creat-div">
-                    <label>身高：<input name="height" min="0" placeholder="40" size="2" type="number"></label><br>
-                    <label>膚色：<input name="skin" placeholder="克爾德"></label><br>
-                    <label>年齡：<input name="age" min="0" placeholder="40" size="2" type="number"></label><br>
-                    <label>體重：<input name="weight" min="0" placeholder="40" size="2" type="number"></label><br>
-                    <label>髮色：<input name="hair" placeholder="克爾德"></label><br>
+                    <label>身高：<input name="height" class="story" min="0" placeholder="40" size="2" type="number"></label><br>
+                    <label>膚色：<input name="skin" class="story"></label><br>
+                    <label>年齡：<input name="age" min="0" class="story" size="2" type="number"></label><br>
+                    <label>體重：<input name="weight" min="0" class="story" size="2" type="number"></label><br>
+                    <label>髮色：<input name="hair" class="story"></label><br>
                 </section>
-                <input name='permission' class="permission-status" value="限團務GM" style="display: none">
+                <input name='permission' class="permission-status info" value="限團務GM" style="display: none">
             </div>
             <div class="sheet-creat-div" style="width: 45%;display: inline-block">
-                    <label>特性：<textarea name="trait"
+                    <label>特性：<textarea name="trait" class="story"
                                         style="height: 150px;width: 100%;resize: none"></textarea>
                     </label><br>
                     <label>角色外觀：<br>
-                        <textarea name="role-description"
+                        <textarea name="role-description" class="story"
                                   style="height: 150px;width: 100%;resize: none"></textarea></label><br>
                     <label>同盟 & 組織：<br>
-                        <textarea name="alignment"
+                        <textarea name="alignment" class="story"
                                   style="height: 150px;width: 100%;resize: none"></textarea></label><br>
                     <label>角色背景歷史：<br>
-                        <textarea name="backstory"
+                        <textarea name="backstory" class="story"
                                   style="height: 150px;width: 100%;resize: none"></textarea></label><br>
                     <label>其他特徵＆特性：
-                        <textarea name="otherTrait" style="height: 150px;width: 100%;resize: none"></textarea></label>
+                        <textarea name="otherTrait" class="story"style="height: 150px;width: 100%;resize: none"></textarea></label>
                     <label>寶物：
-                        <textarea name="treasure" style="height: 150px;width: 100%;resize: none"></textarea></label>
+                        <textarea name="treasure" class="story" style="height: 150px;width: 100%;resize: none"></textarea></label>
 
             </div>
             <div class="sheet-creat-div" style="width: 45% ;display: inline-block;vertical-align: top">
