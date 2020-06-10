@@ -25,13 +25,11 @@ const upload = multer({
 })
 
 router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
-    console.log('yes');
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     var cs = req.body;
     var image;
-    var cspell=cs.spell;
     (req.file) ? image=req.file.buffer : image='';
     //save new sheet
     if(!cs.name) return res.status(400).send('請至少填入角色名字');
@@ -94,7 +92,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         spell_ability:cs.spell_ability,
         spell_save:cs.spell_save,
         spell_bonus:cs.spell_bonus,
-        spell:cspell
+        spell:cs.spell
     })
     const equip =new DND5eEquip({
         _id:sheet._id,
@@ -114,6 +112,23 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         res.status(400).send(err);
     }
 
+})
+
+router.get('/DND5e/json/:id',async function (req,res) {
+    const url = req.params.id;
+    var sheet = {};
+    const info = await Info.findOne({_id:url}).lean();
+    const skill = await DND5eStat.findOne({_id:url}).lean();
+    const stat = await DND5eStat.findOne({_id:url}).lean();
+    const story = await DND5eStory.findOne({_id:url}).lean();
+    const equip = await DND5eEquip.findOne({_id:url}).lean();
+
+    sheet.info = info ;
+    sheet.skill = skill ;
+    sheet.stat = stat ;
+    sheet.story = story ;
+    sheet.equip = equip ;
+    await res.json(JSON.stringify(sheet));
 })
 
 module.exports= router

@@ -1,20 +1,20 @@
 document.write('');
 $(document).ready(function () {
-    var sheet = {};
-    var url = $(location).attr('href');
-    var array = url.split('/');
-    var id = array[array.length - 1];
+    let sheet = {};
+    const url = $(location).attr('href');
+    const array = url.split('/');
+    const id = array[array.length - 1];
 
     function sheetCalculate() {
         //calculate the sum of the stat
-        var str = parseInt(($('#str').text(sum_up($('#str-bas').val(), $('#str-adj').val()))).text());
-        var con = parseInt(($('#con').text(sum_up($('#con-bas').val(), $('#con-adj').val()))).text());
-        var dex = parseInt(($('#dex').text(sum_up($('#dex-bas').val(), $('#dex-adj').val()))).text());
-        var app = parseInt(($('#app').text(sum_up($('#app-bas').val(), $('#app-adj').val()))).text());
-        var pow = parseInt(($('#pow').text(sum_up($('#pow-bas').val(), $('#pow-adj').val()))).text());
-        var siz = parseInt(($('#siz').text(sum_up($('#siz-bas').val(), $('#siz-adj').val()))).text());
-        var int = parseInt(($('#int').text(sum_up($('#int-bas').val(), $('#int-adj').val()))).text());
-        var edu = parseInt(($('#edu').text(sum_up($('#edu-bas').val(), $('#edu-adj').val()))).text());
+        const str = parseInt(($('#str').text(sum_up($('#str-bas').val(), $('#str-adj').val()))).text());
+        const con = parseInt(($('#con').text(sum_up($('#con-bas').val(), $('#con-adj').val()))).text());
+        const dex = parseInt(($('#dex').text(sum_up($('#dex-bas').val(), $('#dex-adj').val()))).text());
+        const app = parseInt(($('#app').text(sum_up($('#app-bas').val(), $('#app-adj').val()))).text());
+        const pow = parseInt(($('#pow').text(sum_up($('#pow-bas').val(), $('#pow-adj').val()))).text());
+        const siz = parseInt(($('#siz').text(sum_up($('#siz-bas').val(), $('#siz-adj').val()))).text());
+        const int = parseInt(($('#int').text(sum_up($('#int-bas').val(), $('#int-adj').val()))).text());
+        const edu = parseInt(($('#edu').text(sum_up($('#edu-bas').val(), $('#edu-adj').val()))).text());
         $('#hp-max').text(Math.floor(sum_up(con, siz) / 10));
         $('#mp-max').text(Math.floor(pow / 5));
         $('#san-max').text(sum_up(99, -$('#san-minus').text()));
