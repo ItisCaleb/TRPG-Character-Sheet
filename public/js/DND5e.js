@@ -7,8 +7,10 @@ $(document).ready(function () {
     })
     $('.check-input').on('click',function (e) {
         if($(this).val()==='on') {
+            $(this).prop('checked',true);
             $(this).val('yes');
         }else if($(this).val()==='yes'){
+            $(this).prop('checked',false);
             $(this).val('on')
         }
     })
@@ -28,7 +30,7 @@ $(document).ready(function () {
       sheet.append('stat',JSON.stringify(stat));
       sheet.append('attack',JSON.stringify(attack));
       sheet.append('file',$('input[type=file]')[0].files[0]);
-      console.log(sheet);
+      console.log(skill);
       $.ajax({
           url:'../../api/sheet/DND5e',
           type:'POST',
@@ -52,7 +54,6 @@ $(document).ready(function () {
     })
 
     function sheetSetup() {
-
         $('input[type=number]').each(function () {
             if($(this).val()<0 || $(this).val()===String ||$(this).val()===""){
                 $(this).val(0);
@@ -76,6 +77,9 @@ $(document).ready(function () {
             }
             if($(this).siblings('.attr').text().includes('敏捷')){
                 $(this).children('.skill').text(dex);
+            }
+            if($(this).siblings('.attr').text().includes('體魄')){
+                $(this).children('.skill').text(con);
             }
             if($(this).siblings('.attr').text().includes('智力')){
                 $(this).children('.skill').text(int);
@@ -108,8 +112,9 @@ $(document).ready(function () {
         $('.spell-level').each(function (index) {
             spell[index]["number"]=[];
             spell[index]["spells"]={};
-            spell[index]["number"].push($(this).siblings('label').children('.spell-number').val());
-            spell[index]["number"].push($(this).siblings('label').children('.spell-number').val());
+            $(this).siblings('label').find('.spell-number').each(function () {
+                spell[index]["number"].push($(this).val());
+            });
             $(this).parent().siblings().children('label').each(function (i) {
                 if ($(this).children('.spell-name').val()!==("")){
                     const name=$(this).children('.spell-name').val();
@@ -132,6 +137,24 @@ $(document).ready(function () {
         this.attack=attack;
         return this;
     }
+    $(document).on('change','#image',function (inp) {
+        var input=inp.currentTarget
+        if (input.files && input.files[0]) {
+            $('#error-image').remove();
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            const size=(input.files[0].size/1024)
+            console.log(size +"kb");
+            if(size>=500){
+                $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">檔案過大!請上傳小於500kb的圖像</p>')
+                $('#image').val('');
+            }else{
+                reader.onload = function (e) {
+                    $('#add-image').attr('src', e.target.result)
+                };
+            }
+        }
+    })
     $('#cancel-image').on('click',function (e) {
         e.preventDefault();
         if($('#image').val()!=='' || $('#add-image').attr('src') !=='/public/source/iconmonstr-plus-6.svg') {
@@ -159,4 +182,5 @@ $(document).ready(function () {
             $('.permission-status').val($(this).text()).trigger('change')
         })
     }
+
 })

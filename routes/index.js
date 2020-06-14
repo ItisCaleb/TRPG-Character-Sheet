@@ -239,9 +239,9 @@ router.get('/charactersheet',verify,async function (req,res) {
         number:sheet.name.length
     });
 });
-router.get('/charactersheet/create/:id',verify,async function (req,res) {
+router.get('/charactersheet/create/:system',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
-    const system=req.params.id;
+    const system=req.params.system;
     const sheetNumber = await User.findOne({_id: user._id});
         if (sheetNumber.sheet_number < 20) {
             if (system === 'COC7th') {

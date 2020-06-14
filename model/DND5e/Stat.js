@@ -5,14 +5,14 @@ const  DND5eStatSchema = new mongoose.Schema({
     inspiration:Number,
     pro:Number,
     skills:Array,
-    armor:Number,
+    armorValue:Number,
     initiative:Number,
     speed:Number,
     max_hp:Number,
     hp:Number,
     temp_hp:Number,
-    hitdice:String,
-    hitdicetotal:Number,
+    hit_dice_total:Number,
+    hit_dice:String,
     death_save:[Number]
 });
 

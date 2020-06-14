@@ -126,9 +126,7 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
     await res.json(JSON.stringify(sheet));
 
 });
-router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
-
-    const id = jwtDecode(req.cookies.auth_token)._id
+router.put('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
     const cs = req.body;
     try{
         await Info.updateOne({_id:req.params.id},{
@@ -147,7 +145,6 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
         var name = Object.keys(JSON.parse(cs.skill))[i];
         cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
     }
-
     try{
         await COC7thSkill.updateOne({_id:req.params.id}, {$set:{
             class_feature:cs['class-feature'],

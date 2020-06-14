@@ -28,9 +28,8 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
-    var cs = req.body;
-    var image;
-    (req.file) ? image=req.file.buffer : image='';
+    const cs = req.body;
+    const image=(req.file) ? req.file.buffer : '';
     //save new sheet
     if(!cs.name) return res.status(400).send('請至少填入角色名字');
     const sheet = new Info({
@@ -46,20 +45,20 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         res.status(400).send(err);
         res.redirect('/charactersheet/create')
     }
-    const skill = new DND5eStat({
+    const stat = new DND5eStat({
         _id:sheet._id,
        stat:JSON.parse(cs.stat),
        inspiration:cs.inspiration,
        pro:cs.pro,
-       skill:JSON.parse(cs.skill),
-       armor:cs.armor,
+       skills:JSON.parse(cs.skill),
+       armorValue:cs.armorValue,
        initiative:cs.initiative,
        speed:cs.speed,
-       max_hp:cs.max_hp,
+       max_hp:cs['max-hp'],
        hp:cs.hp,
-       temp_hp:cs.temp_hp,
-       hitdice:cs.hitdice,
-       hitdicetotal:cs.hitdicetotal,
+       temp_hp:cs['temp-hp'],
+       hit_dice_total:cs.hit_dice_total,
+       hit_dice:cs.hit_dice
     });
     const story = new DND5eStory({
         _id:sheet._id,
@@ -69,22 +68,23 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         race: cs.race,
         faction: cs.faction,
         exp: cs.exp,
-        personality: cs.personality,
-        trait:cs.trait,
-        ideals: cs.ideals,
-        bonds: cs.bonds,
-        flaws: cs.flaws,
-        language: cs.language,
-        role_description: cs.role_description,
         height: cs.height,
         skin: cs.skin,
         age: cs.age,
         weight: cs.weight,
         hair: cs.hair,
+        trait:cs.trait,
+        role_description: cs['role-description'],
         alignment: cs.alignment,
         backstory: cs.backstory,
         otherTrait: cs.otherTrait,
-        treasure: cs.treasure
+        treasure: cs.treasure,
+        personality: cs.personality,
+        ideals: cs.ideals,
+        bonds: cs.bonds,
+        flaws: cs.flaws,
+        language: cs.language,
+        avatar:image
     })
     const spell =new DND5eSpell({
         _id:sheet._id,
@@ -98,10 +98,10 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         _id:sheet._id,
         attack:JSON.parse(cs.attack),
         money:JSON.parse(cs.money),
-        armor:cs.armor,
+        equipment:cs.equip,
     })
     try{
-        await skill.save();
+        await stat.save();
         await story.save();
         await spell.save();
         await equip.save();
@@ -130,5 +130,81 @@ router.get('/DND5e/json/:id',async function (req,res) {
     sheet.equip = equip ;
     await res.json(JSON.stringify(sheet));
 })
+
+router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,res) {
+    const cs = req.body;
+    const image= (req.file) ? req.file.buffer : '';
+    //save new sheet
+    if(!cs.name) return res.status(400).send('請至少填入角色名字');
+    try{
+        await Info.updateOne({_id:req.params.id},{
+            name:cs.name,
+            player_name: cs.player,
+            permission:cs.permission,
+        })
+    }catch (err) {
+        res.status(400).send(err);
+    }
+    try{
+        await DND5eStat.updateOne({_id:req.params.id},{
+            stat:JSON.parse(cs.stat),
+            inspiration:cs.inspiration,
+            pro:cs.pro,
+            skills:JSON.parse(cs.skill),
+            armorValue:cs.armorValue,
+            initiative:cs.initiative,
+            speed:cs.speed,
+            max_hp:cs['max-hp'],
+            hp:cs.hp,
+            temp_hp:cs['temp-hp'],
+            hit_dice_total:cs.hit_dice_total,
+            hit_dice:cs.hit_dice
+
+        })
+
+        await DND5eStory.updateOne({_id:req.params.id},{
+            class: cs.class,
+            level: cs.level,
+            background: cs.background,
+            race: cs.race,
+            faction: cs.faction,
+            exp: cs.exp,
+            height: cs.height,
+            skin: cs.skin,
+            age: cs.age,
+            weight: cs.weight,
+            hair: cs.hair,
+            trait:cs.trait,
+            role_description: cs['role-description'],
+            alignment: cs.alignment,
+            backstory: cs.backstory,
+            otherTrait: cs.otherTrait,
+            treasure: cs.treasure,
+            personality: cs.personality,
+            ideals: cs.ideals,
+            bonds: cs.bonds,
+            flaws: cs.flaws,
+            language: cs.language,
+            avatar:image
+        });
+        await DND5eSpell.updateOne({_id:req.params.id},{
+            spell_class:cs['spell-class'],
+            spell_ability:cs['spell-ability'],
+            spell_save:cs['spell-save'],
+            spell_bonus:cs['spell-bonus'],
+            spell:JSON.parse(cs.spell)
+        })
+        await DND5eEquip.updateOne({_id:req.params.id},{
+            attack:JSON.parse(cs.attack),
+            money:JSON.parse(cs.money),
+            equipment:cs.equip,
+        });
+        res.status(200).send()
+    }catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+})
+
 
 module.exports= router

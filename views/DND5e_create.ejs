@@ -44,7 +44,7 @@
                                                 <label><input name="background" placeholder="公會商人"><br>角色背景</label><br>
                                             </td>
                                             <td>
-                                                <label><input name="player" placeholder="ItisCaleb"><br>玩家暱稱</label>
+                                                <label><input name="player" value="<%=player%>"><br>玩家暱稱</label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -275,20 +275,20 @@
                 <div class="sheet-creat-div" style="width: 50%;">
                     <div class="sheet-creat-div">
                         <section class="sheet-creat-div">
-                            <label>防禦值：<input name="armor" type="number" placeholder="0" size="2"></label><br>
-                            <label>先攻調整值：<input name="initiative" type="number" placeholder="0" size="2"></label><br>
-                            <label>速度：<input name="speed" type="number" placeholder="0" size="2"></label><br>
+                            <label>防禦值：<input name="armorValue" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>先攻調整值：<input name="initiative" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>速度：<input name="speed" class="stat" type="number" placeholder="0" size="2"></label><br>
                         </section>
 
                         <div id="sheet-creat-hp" class="sheet-creat-div">
-                            <label>最高血量：<input name="max-hp" type="number" placeholder="0" size="2"></label><br>
-                            <label>目前血量：<input name="hp" type="number" placeholder="0" size="2"></label><br>
-                            <label>暫時血量：<input name="temp-hp" type="number" placeholder="0" size="2"></label><br>
+                            <label>最高血量：<input name="max-hp" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>目前血量：<input name="hp" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>暫時血量：<input name="temp-hp" class="stat" type="number" placeholder="0" size="2"></label><br>
                         </div>
 
                         <section class="sheet-creat-div">
-                            <label>總數：<input name="hitdicetotal" type="number" placeholder="" size="2"></label><br>
-                            <label>生命骰：<input name="hitdice" placeholder="1d10" size="5"></label>
+                            <label>總數：<input name="hit_dice_total" class="stat" type="number" placeholder="" size="2"></label><br>
+                            <label>生命骰：<input name="hit_dice" class="stat" placeholder="1d10" size="5"></label>
                         </section>
 
                     </div>
@@ -393,10 +393,11 @@
 
             </div>
             <div class="sheet-creat-div" style="width: 45% ;display: inline-block;vertical-align: top">
-                    性格：<textarea name="personality" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    理念：<textarea name="ideals" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    關係：<textarea name="bonds" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    缺點：<textarea name="flaws" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                    性格：<textarea name="personality" style="height: 150px;width: 100%;resize: none"></textarea><br>
+                    理念：<textarea name="ideals" style="height: 150px;width: 100%;resize: none"></textarea><br>
+                    關係：<textarea name="bonds" style="height: 150px;width: 100%;resize: none"></textarea><br>
+                    缺點：<textarea name="flaws" style="height: 150px;width: 100%;resize: none"></textarea><br>
+                    其他專長&語言：<textarea name="language" style="height: 150px;width: 100%;resize: none"></textarea><br>
                 <label for="image">角色圖片:<br></label>
                 <label>
                     <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
@@ -615,7 +616,6 @@
                 </div>
             </div>
         </div>
-</div>
 </form>
 </div>
 <% include model/footer.ejs %>

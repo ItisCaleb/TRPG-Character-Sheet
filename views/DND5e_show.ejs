@@ -4,16 +4,12 @@
     <% include model/head.ejs %>
     <link href="/public/css/DND5e.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/DND5e.js" charset="UTF-8"></script>
-    <script src="/public/js/DND5e_edit.js" charset="UTF-8"></script>
     <script src="/public/js/DND5e_get.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
     <% include model/header.ejs %>
-    <% include model/mobile_option_edit.ejs%>
 </nav>
-<% include model/rightmenu.ejs%>
-<% include model/option_edit.ejs%>
 <div class="list-right-side">
     <div class="right-list-menu list-menu side-pop pop" style="display: none">
         <div class="list-menu-text permissions permissions-choose">限團務GM</div>
@@ -25,9 +21,7 @@
     <div id="url"></div>
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
     <p class="content-decribe" style="text-align: center;line-height:30px;">
-        框內文字為範例角色卡 系統:DND5e
     </p>
-
     <form id="myform">
         <ul class="main-tabs">
             <li class="main-tab-link main-current" data-tab="main-tab-1">基本資料</li>
@@ -36,44 +30,44 @@
         </ul>
         <div id="main-tab-1" class="main-tab-content main-current">
             <section style="margin: 50px">
-                    <div style="width:100%">
-                        <p>冒險者資料：</p>
-                        <table style="width: 100%">
-                            <tr>
-                                <td>
-                                    <label><input id="name" name="name" class="info"><br>角色名稱</label>
-                                </td>
-                                <td style="width: auto">
-                                    <table style="width: 100%">
-                                        <tr>
-                                            <td>
-                                                <label><input name="class" class="story" size="5">
-                                                    <input max="30" min="0" name="level" class="story" step="1"
-                                                           type="number"><br>職業/等級</label>
-                                            </td>
-                                            <td>
-                                                <label><input name="background" class="story" ><br>角色背景</label><br>
-                                            </td>
-                                            <td>
-                                                <label><input name="player" class="info"><br>玩家暱稱</label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label><input name="race" class="story"><br>種族</label>
-                                            </td>
-                                            <td>
-                                                <label><input name="faction" class="story"><br>陣營</label>
-                                            </td>
-                                            <td>
-                                                <label><input name="exp" class="story"><br>經驗值</label>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div style="width:100%">
+                    <p>冒險者資料：</p>
+                    <table style="width: 100%">
+                        <tr>
+                            <td>
+                                <label><input id="name" disabled class="info"><br>角色名稱</label>
+                            </td>
+                            <td style="width: auto">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td>
+                                            <label><input disabled class="story" size="5">
+                                                <input max="30" min="0" disabled class="story" step="1"
+                                                       type="number"><br>職業/等級</label>
+                                        </td>
+                                        <td>
+                                            <label><input disabled class="story" ><br>角色背景</label><br>
+                                        </td>
+                                        <td>
+                                            <label><input disabled class="info"><br>玩家暱稱</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label><input disabled class="story"><br>種族</label>
+                                        </td>
+                                        <td>
+                                            <label><input disabled class="story"><br>陣營</label>
+                                        </td>
+                                        <td>
+                                            <label><input disabled class="story"><br>經驗值</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
             </section>
             <section style="margin: 50px">
@@ -89,8 +83,8 @@
                 </div>
 
                 <div class="sheet-creat-div" style="width: 40%" >
-                    <label><input name="inspiration" class="stat" type="number" style="width: 30%;"></label>激勵值<br>
-                    <label><input name="pro" id="pro" class="stat" type="number" style="width: 30%;"></label>熟練加成<br>
+                    <label><input disabled class="stat" type="number" style="width: 30%;"></label>激勵值<br>
+                    <label><input disabled id="pro" class="stat" type="number" style="width: 30%;"></label>熟練加成<br>
 
                     <div id="sheet-creat-skill">
                         <table>
@@ -283,20 +277,20 @@
                 <div class="sheet-creat-div" style="width: 50%;">
                     <div class="sheet-creat-div">
                         <section class="sheet-creat-div">
-                            <label>防禦值：<input name="armorValue" class="stat" type="number" placeholder="0" size="2"></label><br>
-                            <label>先攻調整值：<input name="initiative" class="stat" type="number" placeholder="0" size="2"></label><br>
-                            <label>速度：<input name="speed" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>防禦值：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>先攻調整值：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>速度：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
                         </section>
 
                         <div id="sheet-creat-hp" class="sheet-creat-div">
-                            <label>最高血量：<input name="max-hp" class="stat" type="number" placeholder="0" size="2"></label><br>
-                            <label>目前血量：<input name="hp" class="stat" type="number" placeholder="0" size="2"></label><br>
-                            <label>暫時血量：<input name="temp-hp" class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>最高血量：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>目前血量：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
+                            <label>暫時血量：<input disabled class="stat" type="number" placeholder="0" size="2"></label><br>
                         </div>
 
                         <section class="sheet-creat-div">
-                            <label>總數：<input name="hit_dice_total" class="stat" type="number" size="2"></label><br>
-                            <label>生命骰：<input name="hit_dice" class="stat" size="5"></label>
+                            <label>總數：<input disabled class="stat" type="number" size="2"></label><br>
+                            <label>生命骰：<input disabled class="stat" size="5"></label>
                         </section>
 
                     </div>
@@ -329,11 +323,11 @@
                     </div>
                     <table style="width: 100%;text-align: center;">
                         <tr>
-                           <td>
-                               <label>CP：<input class="money" type="number" placeholder="0"></label><br>
-                           </td>
+                            <td>
+                                <label>CP：<input class="money" type="number" placeholder="0"></label><br>
+                            </td>
                             <td rowspan="5">
-                                <textarea name="equip" id="equipment" style="border: none;
+                                <textarea disabled id="equipment" style="border: none;
                                  width: 100%;padding: 0;height: 240px;
                                  resize: none"></textarea>
                             </td>
@@ -373,39 +367,39 @@
         <div id="main-tab-2" class="main-tab-content">
             <div class="sheet-creat-div" style="height: 100px;display: inline-block">
                 <section class="sheet-creat-div">
-                    <label>身高：<input name="height" class="story" min="0" placeholder="40" size="2" type="number"></label><br>
-                    <label>膚色：<input name="skin" class="story"></label><br>
-                    <label>年齡：<input name="age" min="0" class="story" size="2" type="number"></label><br>
-                    <label>體重：<input name="weight" min="0" class="story" size="2" type="number"></label><br>
-                    <label>髮色：<input name="hair" class="story"></label><br>
+                    <label>身高：<input disabled class="story" min="0" placeholder="40" size="2" type="number"></label><br>
+                    <label>膚色：<input disabled class="story"></label><br>
+                    <label>年齡：<input disabled min="0" class="story" size="2" type="number"></label><br>
+                    <label>體重：<input disabled min="0" class="story" size="2" type="number"></label><br>
+                    <label>髮色：<input disabled class="story"></label><br>
                 </section>
-                <input name='permission' class="permission-status info" value="限團務GM" style="display: none">
+                <input disabled class="permission-status info" value="限團務GM" style="display: none">
             </div>
             <div class="sheet-creat-div" style="width: 45%;display: inline-block">
-                    <label>特性：<textarea name="trait" class="story"
-                                        style="height: 150px;width: 100%;resize: none"></textarea>
-                    </label><br>
-                    <label>角色外觀：<br>
-                        <textarea name="role-description" class="story"
-                                  style="height: 150px;width: 100%;resize: none"></textarea></label><br>
-                    <label>同盟 & 組織：<br>
-                        <textarea name="alignment" class="story"
-                                  style="height: 150px;width: 100%;resize: none"></textarea></label><br>
-                    <label>角色背景歷史：<br>
-                        <textarea name="backstory" class="story"
-                                  style="height: 150px;width: 100%;resize: none"></textarea></label><br>
-                    <label>其他特徵＆特性：
-                        <textarea name="otherTrait" class="story"style="height: 150px;width: 100%;resize: none"></textarea></label>
-                    <label>寶物：
-                        <textarea name="treasure" class="story" style="height: 150px;width: 100%;resize: none"></textarea></label>
+                <label>特性：<textarea disabled class="story"
+                                    style="height: 150px;width: 100%;resize: none"></textarea>
+                </label><br>
+                <label>角色外觀：<br>
+                    <textarea disabled class="story"
+                              style="height: 150px;width: 100%;resize: none"></textarea></label><br>
+                <label>同盟 & 組織：<br>
+                    <textarea disabled class="story"
+                              style="height: 150px;width: 100%;resize: none"></textarea></label><br>
+                <label>角色背景歷史：<br>
+                    <textarea disabled class="story"
+                              style="height: 150px;width: 100%;resize: none"></textarea></label><br>
+                <label>其他特徵＆特性：
+                    <textarea disabled class="story"style="height: 150px;width: 100%;resize: none"></textarea></label>
+                <label>寶物：
+                    <textarea disabled class="story" style="height: 150px;width: 100%;resize: none"></textarea></label>
 
             </div>
             <div class="sheet-creat-div" style="width: 45% ;display: inline-block;vertical-align: top">
-                    性格：<textarea name="personality" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    理念：<textarea name="ideals" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    關係：<textarea name="bonds" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    缺點：<textarea name="flaws" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
-                    其他專長&語言：<textarea name="language" style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                性格：<textarea disabled style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                理念：<textarea disabled style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                關係：<textarea disabled style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                缺點：<textarea disabled style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
+                其他專長&語言：<textarea disabled style="height: 150px;width: 100%;resize: none" class="story"></textarea><br>
                 <label for="image">角色圖片:<br></label>
                 <label>
                     <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
@@ -418,10 +412,10 @@
         <div id="main-tab-3" class="main-tab-content">
             <div style="margin: 50px">
                 <section class="sheet-creat-div">
-                    <label>法術職業：<input class="spell-attr" name="spell-class" placeholder="變化係法師" size="20"></label>
-                    <label>法術施展能力：<input class="spell-attr" name="spell-ability" placeholder="智力" size="10"></label>
-                    <label>法術豁免值：<input class="spell-attr" name="spell-save" type="number" size="2"></label>
-                    <label>法術攻擊加值：<input class="spell-attr" name="spell-bonus" type="number" placeholder="7" size="2"></label>
+                    <label>法術職業：<input class="spell-attr" disabled placeholder="變化係法師" size="20"></label>
+                    <label>法術施展能力：<input class="spell-attr" disabled placeholder="智力" size="10"></label>
+                    <label>法術豁免值：<input class="spell-attr" disabled type="number" size="2"></label>
+                    <label>法術攻擊加值：<input class="spell-attr" disabled type="number" placeholder="7" size="2"></label>
                 </section>
                 <div style=" display: inline-block;width: 30%">
                     <div>
@@ -572,22 +566,22 @@
                         </div>
                     </div>
                     <div>
-                    <section>
-                        <h4 class="spell-level">7</h4>
-                        <label class="spell-label"><input type="number" class="spell-number"></label>
-                        <label class="spell-label"><input type="number" class="spell-number"></label>
-                    </section>
-                    <div class="spell-slot">
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                        <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
-                    </div>
+                        <section>
+                            <h4 class="spell-level">7</h4>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                            <label class="spell-label"><input type="number" class="spell-number"></label>
+                        </section>
+                        <div class="spell-slot">
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                            <label><input type="checkbox" class="check-input"><input class="spell-name" type="text"></label><br>
+                        </div>
                     </div>
                     <div>
                         <section>
@@ -624,7 +618,7 @@
                 </div>
             </div>
         </div>
-</form>
+    </form>
 </div>
 <% include model/footer.ejs %>
 </body>

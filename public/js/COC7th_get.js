@@ -144,9 +144,9 @@ $(document).ready(function () {
                 delete sheet.info.system;
                 delete sheet.info.author;
                 delete sheet.info.session;
-                var stat = sheet.stat.characteristic;
-                var fellow = sheet.story.fellow_investigator;
-                var image = sheet.story.avatar;
+                const stat = sheet.stat.characteristic;
+                const fellow = sheet.story.fellow_investigator;
+                const image = sheet.story.avatar;
                 delete sheet.story.fellow_investigator;
                 delete sheet.stat.characteristic;
                 delete sheet.story.avatar;

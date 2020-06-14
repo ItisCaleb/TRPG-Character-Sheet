@@ -28,7 +28,7 @@ dotenv.config();
 
 // connect Database
 mongoose.connect(process.env.DB_CONNECT,
-    {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true}, () => console.log("DB Started"));
+    {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}, () => console.log("DB Started"));
 
 
 // middleware
@@ -73,7 +73,7 @@ server.listen(port,() => console.log('HTTPS start on port:' + port));
 const httpApp = express();
 const httpRouter = express.Router();
 httpApp.use('/', httpRouter);
-const host = process.env.HOST || '192.168.0.107:3000'
+const host = process.env.HOST || '192.168.0.107:3001'
 httpRouter.get('/', function(req, res){
     // determine the redirect destination
     var destination = ['https://'+ host + req.url];

@@ -155,7 +155,7 @@ ul.main-tabs li.main-current{
 
 }
 
-#loader {
+.loader {
     display: inline-block;
     border: 5px solid #f3f3f3; /* Light grey */
     border-top: 5px solid #3498db; /* Blue */
@@ -166,7 +166,7 @@ ul.main-tabs li.main-current{
 }
 
 .correct-image{
-    width: 2%;
+    width: 15%;
 }
 
 @keyframes spin {
