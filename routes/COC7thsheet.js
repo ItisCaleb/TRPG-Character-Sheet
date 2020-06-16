@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const jwtDecode = require('jwt-decode');
-const verify = require('../public/js/verifyToken');
+const verify = require('./module/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
 const dotenv = require('dotenv');
@@ -112,23 +112,20 @@ router.post('/COC7th', verify,upload.single('file'), async function (req, res)  
 router.get('/COC7th/json/:id',verify,async function (req,res) {
     const url = req.params.id;
     var sheet = {};
-    const info = await Info.findOne({_id:url}).lean();
     const skill = await COC7thSkill.findOne({_id:url}).lean();
     const stat = await COC7thStat.findOne({_id:url}).lean();
     const story = await COC7thStory.findOne({_id:url}).lean();
-    const equip = await COC7thEquip.findOne({_id:url}).lean();
 
-    sheet.info = info ;
     sheet.skill = skill ;
     sheet.stat = stat ;
     sheet.story = story ;
-    sheet.equip = equip ;
     await res.json(JSON.stringify(sheet));
 
 });
 router.put('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
     const cs = req.body;
-    try{
+    console.log(cs)
+    /*try{
         await Info.updateOne({_id:req.params.id},{
             name:cs.name,
             player_name: cs.player,
@@ -186,8 +183,9 @@ router.put('/COC7th/edit/:id',verify,upload.single('file'),async function(req,re
         }});
         res.status(200).send()
     }catch (err) {
+        console.log(err)
         res.status(400).redirect('/charactersheet');
-    }
+    }*/
 })
 
 

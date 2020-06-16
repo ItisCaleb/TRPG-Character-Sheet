@@ -7,8 +7,8 @@ const tempUser=require('../model/tempUser');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
-const verify = require('../public/js/verifyToken');
-
+const verify = require('./module/verifyToken');
+const sheetJSON = require('./module/sheetJSON');
 
 //render main page
 router.get("/", function (req, res) {
@@ -267,11 +267,21 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
     const user = jwtDecode(req.cookies.auth_token);
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
+            var sheetData;
+            await sheetJSON(sheet.system,req.params.id)
+                .then(function (data) {
+                    sheetData=data;
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    return  res.status(404).render('404');
+                })
             if(sheet.author===user._id) {
                 res.render(sheet.system+'_edit', {
                     title: '編輯角色卡',
                     id: req.params.id,
-                    status: "edit"
+                    status: "edit",
+                    data:sheetData
                 });
             }
             if(sheet.author!==user._id){

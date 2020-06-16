@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const jwtDecode = require('jwt-decode');
-const verify = require('../public/js/verifyToken');
+const verify = require('./module/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
 const dotenv = require('dotenv');

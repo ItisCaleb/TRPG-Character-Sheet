@@ -3,8 +3,8 @@ const Session = require('../model/Session');
 const User = require("../model/User");
 const Info = require('../model/Info');
 const jwtDecode = require('jwt-decode');
-const verify = require('../public/js/verifyToken');
-const {sessionValidation} = require("../public/js/validation");
+const verify = require('./module/verifyToken');
+const {sessionValidation} = require("./module/validation");
 
 //create a session
 router.post('/TRPGCreateSession',verify, async function (req,res) {

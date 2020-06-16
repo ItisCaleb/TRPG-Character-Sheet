@@ -41,7 +41,7 @@ $(document).ready(function () {
     }
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
-        $('.adminpost').show();
+        $('.menu').last().after('<li class="menu btn adminpost"><a href=\'/adminpost\'>管理員貼文</a></li>');
     if (document.cookie.indexOf('auth_token') >= 0)
         $('.logged_in').show();
     $('ul.main-tabs li').on('click', function () {

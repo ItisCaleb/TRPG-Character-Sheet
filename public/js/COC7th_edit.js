@@ -30,7 +30,7 @@ $(document).ready(function () {
                 type: 'POST',
                 contentType: false,
                 processData: false, // required
-                data:  sheet,
+                data:  'test',
                 success:function (data) {
                     $('.save-icon').hide();
                     $('.success-icon').show();

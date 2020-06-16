@@ -7,7 +7,7 @@ const info = require('../public/info');
 const nodeMailer = require('nodemailer');
 const ejs = require('ejs');
 const jwtDecode = require('jwt-decode');
-const {registerValidation, loginValidation, passwordValidation, findPasswordValidation} = require("../public/js/validation");
+const {registerValidation, loginValidation, passwordValidation, findPasswordValidation} = require("./module/validation");
 
 const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—【】‘”“。、%]");
 

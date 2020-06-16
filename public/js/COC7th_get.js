@@ -141,34 +141,17 @@ $(document).ready(function () {
                     delete sheet[Object.keys(sheet)[i]]._id;
                     delete sheet[Object.keys(sheet)[i]].__v;
                 }
-                delete sheet.info.system;
-                delete sheet.info.author;
-                delete sheet.info.session;
                 const stat = sheet.stat.characteristic;
                 const fellow = sheet.story.fellow_investigator;
                 const image = sheet.story.avatar;
                 delete sheet.story.fellow_investigator;
                 delete sheet.stat.characteristic;
                 delete sheet.story.avatar;
-
-                $('.info').each(function (index) {
-                    $(this).val(sheet.info[Object.keys(sheet.info)[index]]);
-                });
-                $('.equip').each(function (index) {
-                    $(this).val(sheet.equip[Object.keys(sheet.equip)[index]]);
-                });
                 $('.stat').each(function (index) {
                     $(this).val(stat[index]);
                 });
                 //prevent hp and san from getting 0
-                $('.status').each(function (index) {
-                    $(this).val(sheet.stat[Object.keys(sheet.stat)[index]]);
-                });
-                $('.story').each(function (index) {
-                    $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
-                });
                 (image === '') ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg') : $("#add-image").attr("src", "data:image/;base64," + image);
-
                 $('.permissions').each(function () {
                     $(this).removeClass('permissions-choose');
                     if ($(this).text() === $('.permission-status').val()) {
