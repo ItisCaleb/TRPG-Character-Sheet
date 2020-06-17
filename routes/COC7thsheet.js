@@ -122,10 +122,9 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
     await res.json(JSON.stringify(sheet));
 
 });
-router.put('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
+router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
     const cs = req.body;
-    console.log(cs)
-    /*try{
+    try{
         await Info.updateOne({_id:req.params.id},{
             name:cs.name,
             player_name: cs.player,
@@ -185,7 +184,7 @@ router.put('/COC7th/edit/:id',verify,upload.single('file'),async function(req,re
     }catch (err) {
         console.log(err)
         res.status(400).redirect('/charactersheet');
-    }*/
+    }
 })
 
 

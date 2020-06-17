@@ -45,7 +45,7 @@
                 <section style="display: inline-block;">
                     <p>調查員當前狀態：</p>
                     <div class="sheet_input_div">
-                        <label>HP： <input id="hp" name="hp" class="skill" value="<%=data.stat.hp%>" type="number" min="0" max="40" size="2"/></label>/<p
+                        <label>HP： <input id="hp" name="hp" class="skill" value="<%= data.stat.hp%>" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="hp-max" class="chara"></p> <br>
                         <label>SAN：<input id="san" name="san" class="skill" value="<%=data.stat.san%>" type="number" min="0" max="99" size="2"/></label>/<p
                                 id="san-max" class="chara"></p><br>
@@ -195,7 +195,7 @@
                             創傷與傷疤：<input name="injuries" value="<%=data.story.injuries%>" size="40"/><br>
                             第三類接觸：<input name="encounter" value="<%=data.story.encounter%>" size="40"/><br>
                             恐懼與狂熱：<input name="mania" value="<%=data.story.mania%>" size="40"/><br>
-                            魔法書與咒文：<input name=magic" value="<%=data.story.magic%>" size="40"/><br>
+                            魔法書與咒文：<input name="magic" value="<%=data.story.magic%>" size="40"/><br>
                         </div>
 
                         <div class="" style="width: 50%">

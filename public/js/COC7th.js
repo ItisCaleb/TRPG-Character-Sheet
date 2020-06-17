@@ -1,6 +1,8 @@
 document.write();
 $(document).ready(function () {
-    sheetCalculate()
+    setTimeout(function () {
+        sheetCalculate()
+    },300)
     optionSetup()
     setInterval(function () {
         $('td').children('input').each(function () {
