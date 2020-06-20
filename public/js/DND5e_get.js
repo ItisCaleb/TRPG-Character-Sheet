@@ -10,33 +10,11 @@ $(document).ready(function () {
             contentType: 'application/json; charset=UTF-8',
             success: function (data) {
                 sheet = JSON.parse(data);
-                for (let i = 0; i < Object.keys(sheet).length; i++) {
-                    delete sheet[Object.keys(sheet)[i]]._id;
-                    delete sheet[Object.keys(sheet)[i]].__v;
-                }
-                delete sheet.info.system;
-                delete sheet.info.author;
-                delete sheet.info.session;
-                const death_save = sheet.stat.death_save;
-                const skills = sheet.stat.skills;
-                const stat=sheet.stat.stat;
+                const skills = sheet.spell.skills;
                 const spell_info =sheet.spell.spell;
-                const image = sheet.story.avatar;
-                delete sheet.stat.death_save;
-                delete sheet.stat.skills;
-                delete sheet.stat.stat;
-                delete sheet.spell.spell;
-                delete sheet.story.avatar;
-                (image === '') ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg') : $("#add-image").attr("src", "data:image/;base64," + image);
-                $('.info').each(function (index) {
-                    $(this).val(sheet.info[Object.keys(sheet.info)[index]]);
-                });
-                $('.story').each(function (index) {
-                    $(this).val(sheet.story[Object.keys(sheet.story)[index]]);
-                });
-                $('.stat').each(function (index) {
-                    $(this).val(sheet.stat[Object.keys(sheet.stat)[index]])
-                })
+                //const image = sheet.story.avatar;
+                //(image === '') ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg') : $("#add-image").attr("src", "data:image/;base64," + image);
+
                 $('.skill-name').each(function () {
                     if(skills.length===0) return
                     for(let i=0;i<skills.length;i++){
@@ -46,18 +24,11 @@ $(document).ready(function () {
                         }
                     }
                 })
-                $('.base-attr').each(function (index) {
-                    $(this).val(stat[index])
-                })
-                $('#equipment').val(sheet.equip.equipment);
-                $('.attack').each(function (i) {
-                    $(this).val(sheet.equip.attack[i]);
-                })
-                $('.money').each(function (i) {
-                    $(this).val(sheet.equip.money[i]);
-                })
-                $('.spell-attr').each(function (index) {
-                    $(this).val(sheet.spell[Object.keys(sheet.spell)[index]])
+                $('.permissions').each(function () {
+                    $(this).removeClass('permissions-choose');
+                    if ($(this).text() === $('.permission-status').val()) {
+                        $(this).addClass('permissions-choose');
+                    }
                 })
                 $('.spell-slot').each(function (index) {
                     const spellInfo =spell_info[index];

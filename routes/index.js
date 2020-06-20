@@ -274,7 +274,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                 })
                 .catch(function (err) {
                     console.log(err);
-                    return  res.status(404).render('404');
+                    return res.status(404).render('404');
                 })
             if(sheet.author===user._id) {
                 res.render(sheet.system+'_edit', {
@@ -291,7 +291,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                         if (gm) return res.render(sheet.system+'_show', {
                             title: '檢視角色卡',
                             id: req.params.id,
-                            status:"view"
+                            status:"view",
+                            data:sheetData
                         });
                     }res.redirect('/charactersheet');
                 }
@@ -301,7 +302,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                         if (player) return res.render(sheet.system+'_show', {
                             title: '檢視角色卡',
                             id: req.params.id,
-                            status:"view"
+                            status:"view",
+                            data:sheetData
                         });
                     } res.redirect('/charactersheet');
                 }
@@ -309,11 +311,13 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                     res.render(sheet.system+'_show',{
                         title:'檢視角色卡',
                         id:req.params.id,
-                        status:"view"
+                        status:"view",
+                        data:sheetData
                     });
                 }
             }
         }catch (err) {
+            console.log(err)
             res.status(404).render('404');
         }
 });

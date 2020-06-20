@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const  DND5eStatSchema = new mongoose.Schema({
     stat: Array,
     inspiration:Number,
+    passive_wisdom:Number,
     pro:Number,
-    skills:Array,
     armorValue:Number,
     initiative:Number,
     speed:Number,
@@ -13,7 +13,11 @@ const  DND5eStatSchema = new mongoose.Schema({
     temp_hp:Number,
     hit_dice_total:Number,
     hit_dice:String,
-    death_save:[Number]
+    death_save:[Number],
+    spell_class:String,
+    spell_ability:String,
+    spell_save:String,
+    spell_bonus:String,
 });
 
 module.exports = mongoose.model("DND5e_Stat",DND5eStatSchema);

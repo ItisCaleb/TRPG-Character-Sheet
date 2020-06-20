@@ -48,9 +48,9 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     const stat = new DND5eStat({
         _id:sheet._id,
        stat:JSON.parse(cs.stat),
+       passive_wisdom:cs['passive-wisdom'],
        inspiration:cs.inspiration,
        pro:cs.pro,
-       skills:JSON.parse(cs.skill),
        armorValue:cs.armorValue,
        initiative:cs.initiative,
        speed:cs.speed,
@@ -58,7 +58,11 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
        hp:cs.hp,
        temp_hp:cs['temp-hp'],
        hit_dice_total:cs.hit_dice_total,
-       hit_dice:cs.hit_dice
+       hit_dice:cs.hit_dice,
+       spell_class:cs['spell-class'],
+       spell_ability:cs['spell-ability'],
+       spell_save:cs['spell-save'],
+       spell_bonus:cs['spell-bonus'],
     });
     const story = new DND5eStory({
         _id:sheet._id,
@@ -88,10 +92,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     })
     const spell =new DND5eSpell({
         _id:sheet._id,
-        spell_class:cs['spell-class'],
-        spell_ability:cs['spell-ability'],
-        spell_save:cs['spell-save'],
-        spell_bonus:cs['spell-bonus'],
+        skills:JSON.parse(cs.skill),
         spell:JSON.parse(cs.spell)
     })
     const equip =new DND5eEquip({
@@ -117,17 +118,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
 router.get('/DND5e/json/:id',async function (req,res) {
     const url = req.params.id;
     var sheet = {};
-    const info = await Info.findOne({_id:url}).lean();
-    const spell = await DND5eSpell.findOne({_id:url}).lean();
-    const stat = await DND5eStat.findOne({_id:url}).lean();
-    const story = await DND5eStory.findOne({_id:url}).lean();
-    const equip = await DND5eEquip.findOne({_id:url}).lean();
-
-    sheet.info = info ;
-    sheet.spell = spell ;
-    sheet.stat = stat ;
-    sheet.story = story ;
-    sheet.equip = equip ;
+    sheet.spell = await DND5eSpell.findOne({_id: url}).lean() ;
     await res.json(JSON.stringify(sheet));
 })
 
@@ -148,9 +139,9 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
     try{
         await DND5eStat.updateOne({_id:req.params.id},{
             stat:JSON.parse(cs.stat),
+            passive_wisdom:cs['passive-wisdom'],
             inspiration:cs.inspiration,
             pro:cs.pro,
-            skills:JSON.parse(cs.skill),
             armorValue:cs.armorValue,
             initiative:cs.initiative,
             speed:cs.speed,
@@ -158,7 +149,11 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
             hp:cs.hp,
             temp_hp:cs['temp-hp'],
             hit_dice_total:cs.hit_dice_total,
-            hit_dice:cs.hit_dice
+            hit_dice:cs.hit_dice,
+            spell_class:cs['spell-class'],
+            spell_ability:cs['spell-ability'],
+            spell_save:cs['spell-save'],
+            spell_bonus:cs['spell-bonus'],
 
         })
 
@@ -186,12 +181,10 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
             flaws: cs.flaws,
             language: cs.language,
             avatar:image
+
         });
         await DND5eSpell.updateOne({_id:req.params.id},{
-            spell_class:cs['spell-class'],
-            spell_ability:cs['spell-ability'],
-            spell_save:cs['spell-save'],
-            spell_bonus:cs['spell-bonus'],
+            skills:JSON.parse(cs.skill),
             spell:JSON.parse(cs.spell)
         })
         await DND5eEquip.updateOne({_id:req.params.id},{

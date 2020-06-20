@@ -35,6 +35,7 @@ $(document).ready(function () {
         $('.base-attr').each(function () {
             stat.push($(this).val());
         })
+
         $('.spell-level').each(function (index) {
             spell[index]["number"]=[];
             spell[index]["spells"]={};
