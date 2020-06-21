@@ -113,16 +113,14 @@ router.get('/COC7th/json/:id',verify,async function (req,res) {
     const url = req.params.id;
     var sheet = {};
     const skill = await COC7thSkill.findOne({_id:url}).lean();
-    const stat = await COC7thStat.findOne({_id:url}).lean();
     const story = await COC7thStory.findOne({_id:url}).lean();
 
     sheet.skill = skill ;
-    sheet.stat = stat ;
     sheet.story = story ;
     await res.json(JSON.stringify(sheet));
 
 });
-router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,res) {
+router.post('/COC7th/edit/:id',verify,async function(req,res) {
     const cs = req.body;
     try{
         await Info.updateOne({_id:req.params.id},{
@@ -135,8 +133,6 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
     }
     //transform skill from object to array
     var cskill = [{}];
-    var image;
-    (req.file) ? image=req.file.buffer : image='';
     for (let i = 0; i<Object.keys(JSON.parse(cs.skill)).length; i++){
         var name = Object.keys(JSON.parse(cs.skill))[i];
         cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
@@ -164,7 +160,6 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
                 mania:cs.mania,
                 magic:cs.magic,
                 description:cs.description,
-                avatar:image
         }});
         await COC7thEquip.updateOne({_id:req.params.id},{$set: {
                 equip:cs.equip,
@@ -180,12 +175,20 @@ router.post('/COC7th/edit/:id',verify,upload.single('file'),async function(req,r
                 insane_status:cs.madness,
                 characteristic:JSON.parse(cs.stat)
         }});
-        res.status(200).send()
+        res.send('');
     }catch (err) {
         console.log(err)
         res.status(400).redirect('/charactersheet');
     }
 })
+
+router.post('/COC7th/image/:id',upload.single('file'),verify,async function (req,res) {
+    const image = (req.file) ?req.file.buffer:'';
+    await COC7thStory.updateOne({_id:req.params.id},{
+        avatar:image
+    })
+    res.send('');
+});
 
 
 module.exports = router;

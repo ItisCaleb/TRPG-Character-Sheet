@@ -18,17 +18,11 @@ $(document).ready(function () {
             success: function (data) {
                 sheet = JSON.parse(data);
                 $('input textarea select').prop('readonly', true);
-                const stat = sheet.stat.characteristic;
                 const fellow = sheet.story.fellow_investigator;
                 const image = sheet.story.avatar;
-                delete sheet.story.fellow_investigator;
-                delete sheet.stat.characteristic;
-                delete sheet.story.avatar;
-                $('.stat').each(function (index) {
-                    $(this).val(stat[index]);
-                });
-                //prevent hp and san from getting 0
-                (image === '') ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg') : $("#add-image").attr("src", "data:image/;base64," + image);
+                (image === '')
+                    ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg')
+                    : $("#add-image").attr("src", "data:image/;base64," + image);
                 $('.permissions').each(function () {
                     $(this).removeClass('permissions-choose');
                     if ($(this).text() === $('.permission-status').val()) {

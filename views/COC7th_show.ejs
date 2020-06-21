@@ -5,20 +5,18 @@
     <link href="/public/css/COC7th.css" rel="stylesheet" type="text/css" media="all">
     <script src="/public/js/COC7th.js" charset="UTF-8"></script>
     <script src="/public/js/COC7th_get.js" charset="UTF-8"></script>
+    <script src="/public/js/COC7th_edit.js" charset="UTF-8"></script>
 </head>
 <body>
 <nav>
-<% include model/header.ejs%>
-
+    <% include model/header.ejs%>
 </nav>
 <% include model/rightmenu.ejs%>
-
 <div class="content">
     <div id="url"></div>
     <h1 style="text-align: center;line-height:40px ;"><%= title %></h1>
-    <p class="content-decribe" style="text-align: center;line-height:30px ;">系統:COC7th
-    </p>
     <div>
+        <form id="myform">
             <ul class="main-tabs">
                 <li class="main-tab-link main-current" data-tab="main-tab-1">基本資料</li>
                 <li class="main-tab-link" data-tab="main-tab-2">故事背景</li>
@@ -28,27 +26,27 @@
                 <section style="display: inline-block">
                     <p>調查員基本資料：</p>
                     <div class="sheet_input_div">
-                        <label>姓名：<input disabled class="info"></label><br>
-                        <label>職業：<input disabled class="story"></label> <br>
-                        <label>年齡：<input disabled type="number" class="story"></label><br>
-                        <label>性別：<input disabled class="story"></label><br>
+                        <label>姓名：<input disabled value="<%=data.info.name%>" id="name"></label><br>
+                        <label>職業：<input disabled value="<%=data.story.class%>"></label> <br>
+                        <label>年齡：<input disabled value="<%=data.story.age%>" type="number"></label><br>
+                        <label>性別：<input disabled value="<%=data.story.sex%>"></label><br>
                     </div>
                     <div class="sheet_input_div">
-                        <label>玩家暱稱：<input disabled class="info"></label><br>
-                        <label>現居地：<input disabled class="story"></label><br>
-                        <label>出生地：<input disabled class="story"></label><br>
+                        <label>玩家暱稱：<input disabled value="<%=data.info.player_name%>"></label><br>
+                        <label>現居地：<input disabled value="<%=data.story.residence%>"></label><br>
+                        <label>出生地：<input disabled value="<%=data.story.birthplace%>"></label><br>
                     </div>
                 </section>
                 <section style="display: inline-block;">
                     <p>調查員當前狀態：</p>
                     <div class="sheet_input_div">
-                        <label>HP： <input disabled id="hp" class="skill status" type="number" min="0" max="40" size="2"/></label>/<p
+                        <label>HP： <input id="hp" disabled class="skill" value="<%= data.stat.hp%>" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="hp-max" class="chara"></p> <br>
-                        <label>SAN：<input disabled id="san" class="skill status" type="number" min="0" max="99" size="2"/></label>/<p
+                        <label>SAN：<input id="san" disabled class="skill" value="<%=data.stat.san%>" type="number" min="0" max="99" size="2"/></label>/<p
                                 id="san-max" class="chara"></p><br>
-                        <label>MP： <input disabled id="mp" class="skill status" type="number" min="0" max="40" size="2"/></label>/<p
+                        <label>MP： <input id="mp" disabled class="skill" value="<%=data.stat.mp%>" type="number" min="0" max="40" size="2"/></label>/<p
                                 id="mp-max" class="chara"></p><br>
-                        <label>LUK：<input disabled id="luk" class="attr skill luk status" type="number" min="0" max="99" size="2"/></label>/
+                        <label>LUK：<input id="luk" disabled class="attr skill luk" value="<%=data.stat.luk%>" type="number" min="0" max="99" size="2"/></label>/
                         <p class="chara">99</p><br>
                     </div>
                     <div class="sheet_input_div" style="width: 50%">
@@ -56,136 +54,152 @@
                         機動力(MOV)：<p id="mov" class="chara"></p><br>
                         <label>
                             負傷狀態：
-                            <select disabled class="status">
-                                <option>無</option>
-                                <option>重傷</option>
-                                <option>瀕死</option>
-                                <option>暫時穩定</option>
+                            <select disabled>
+                                <%
+                                const options = [ "無", "重傷", "瀕死", "暫時穩定"];
+                                for ( var i = 0; i < options.length; i++ )
+                                {
+                                    var selected = ( data.stat.injured_status===options[i] ) ? "selected" : "";
+                                %><option <%=selected %>><%=options[i] %></option><%
+                                }
+                                %>
                             </select></label><br>
                         <label>
                             瘋狂狀態：<select disabled class="status">
-                                <option>無</option>
-                                <option>臨時瘋狂</option>
-                                <option>不定性瘋狂</option>
-                                <option>潛在瘋狂</option>
+                                <%
+                                const madOptions = [ "無", "臨時瘋狂", "不定性瘋狂", "潛在瘋狂"];
+                                for ( var j = 0; j < madOptions.length; j++ )
+                                {
+                                    var madSelected = ( data.stat.insane_status===madOptions[j] ) ? "selected" : "";
+                                %><option <%=madSelected %>><%=madOptions[j] %></option><%
+                                }
+                                %>
+
                             </select></label><br>
                     </div>
                     <section>
                         <div class="" style="width: 50%">
                             <p>調查員物品：</p>
-                            <label>攜帶物品:<textarea disabled class="equip"></textarea></label><br>
-                            <label>金錢：<input disabled class="equip"></label><br>
-                            <label>武器：<input disabled class="equip"></label><br>
+                            <label>攜帶物品:<textarea disabled ><%=data.equip.equip%></textarea></label><br>
+                            <label>金錢：<input disabled><%=data.equip.cash%></label><br>
+                            <label>武器：<input disabled><%=data.equip.weapon%></label><br>
                         </div>
                     </section>
                 </section>
                 <section>
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
-                        <div>ＳＴＲ(力量)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="str-bas"
-                                                  class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="str-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="str"
-                                                                                                   class="chara attr"></p>
+                        <div>ＳＴＲ(力量)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[0]%>" id="str-bas"
+                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="str-adj"
+                                                                                  class="attr-add stat " <%=data.stat.characteristic[1]%>
+                                                                                  size="2"/></label> 總值:<p id="str"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＣＯＮ(體質)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="con-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="con-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="con"
-                                                                                                   class="chara attr"></p>
+                        <div>ＣＯＮ(體質)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[2]%>" id="con-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="con-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[3]%>"
+                                                                                  size="2"/></label>總值:<p id="con"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>
-                            ＤＥＸ(敏捷)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="dex-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="dex-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="dex"
-                                                                                                   class="chara attr"></p>
+                        <div>ＤＥＸ(敏捷)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[4]%>" id="dex-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="dex-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[5]%>"
+                                                                                  size="2"/></label>總值:<p id="dex"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＡＰＰ(外貌)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="app-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="app-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="app"
-                                                                                                   class="chara attr"></p>
+                        <div>ＡＰＰ(外貌)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[6]%>" id="app-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="app-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[7]%>"
+                                                                                  size="2"/></label>總值:<p id="app"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＰＯＷ(意志)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="pow-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="pow-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="pow"
-                                                                                                   class="chara attr"></p>
+                        <div>ＰＯＷ(意志)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[8]%>" id="pow-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="pow-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[9]%>"
+                                                                                  size="2"/></label>總值:<p id="pow"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＳＩＺ(體型)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="siz-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="siz-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="siz"
-                                                                                                   class="chara attr"></p>
+                        <div>ＳＩＺ(體型)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[10]%>" id="siz-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="siz-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[11]%>"
+                                                                                  size="2"/></label>總值:<p id="siz"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＩＮＴ(智力)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="int-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="int-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="int"
-                                                                                                   class="chara attr"></p>
+                        <div>ＩＮＴ(智力)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[12]%>" id="int-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="int-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[13]%>"
+                                                                                  size="2"/></label>總值:<p id="int"
+                                                                                                  class="chara attr"></p>
                         </div>
-                        <div>ＥＤＵ(教育)：<label><input disabled type="number" step="1" min="0" max="100" value="0" id="edu-bas"
-                                           class="attr stat " size="2"/></label>調整值：<label><input disabled type="number" step="1" min="-50"
-                                                                                   max="100" id="edu-adj"
-                                                                                   class="attr-add stat " value="0"
-                                                                                   size="2"/></label>總值:<p id="edu"
-                                                                                                   class="chara attr"></p>
+                        <div>ＥＤＵ(教育)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[14]%>" id="edu-bas"
+                                           class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
+                                                                                  max="100" id="edu-adj"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[15]%>"
+                                                                                  size="2"/></label>總值:<p id="edu"
+                                                                                                  class="chara attr"></p>
                         </div>
-                    </div></section>
+                    </div>
+                </section>
             </div>
             <div id="main-tab-2" class="main-tab-content">
                 <section>
                     <div class="sheet_creat_div" >
                         <div >
                             <label>角色形容：<br>
-                                <textarea disabled style="height: 200px;width: 90%;resize: none" class="story"></textarea></label>
+                                <textarea style="height: 200px;width: 90%;resize: none" disabled><%=data.story.role_description%></textarea></label>
                         </div>
                         <label for="image">角色圖片:<br></label>
                         <label>
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
                         </label>
+
                     </div>
                     <div class="" style="width: 50%">
                         <p>調查員經歷：</p><br>
-                        <label> 思念與信念：<textarea disabled class="story"></textarea></label><br>
-                        <label> 重要之人：<textarea disabled class="story"></textarea></label><br>
-                        <label> 意義非凡之地：<textarea disabled class="story"></textarea></label><br>
-                        <label> 寶貴之物：<textarea disabled class="story"></textarea></label><br>
-                        <label> 特點：<textarea disabled class="story"></textarea></label><br>
+                        <label> 思念與信念：<textarea disabled><%=data.story.belief%></textarea></label><br>
+                        <label> 重要之人：<textarea disabled><%=data.story.significant_people%></textarea></label><br>
+                        <label> 意義非凡之地：<textarea disabled><%=data.story.meaningful_location%></textarea></label><br>
+                        <label> 寶貴之物：<textarea disabled><%=data.story.treasured_possession%></textarea></label><br>
+                        <label> 特點：<textarea disabled><%=data.story.trait%></textarea></label><br>
 
                     </div>
                 </section>
-                <p id="status" style="display: none"><%=status%></p>
                 <div class="sheet_creat_div">
                     <section>
                         <div class="" style="width: 50%">
                             <p>調查員背景：</p>
                             神話相信者：<select disabled class="story">
-                                <option>否</option>
-                                <option>是</option>
+                                <%
+                                const mythOptions = [ "否", "是"];
+                                for ( var k = 0; k < mythOptions.length; k++ )
+                                {
+                                    var mythSelected = ( data.story.myth===mythOptions[k] ) ? "selected" : "";
+                                %><option <%=mythSelected %>><%=mythOptions[k] %></option><%
+                                }
+                                %>
                             </select><br>
-                            創傷與傷疤：<input disabled class="story" size="40"/><br>
-                            第三類接觸：<input disabled class="story" size="40"/><br>
-                            恐懼與狂熱：<input disabled class="story" size="40"/><br>
-                            魔法書與咒文：<input disabled class="story" size="40"/><br>
+                            創傷與傷疤：<input disabled value="<%=data.story.injuries%>" size="40"/><br>
+                            第三類接觸：<input disabled value="<%=data.story.encounter%>" size="40"/><br>
+                            恐懼與狂熱：<input disabled value="<%=data.story.mania%>" size="40"/><br>
+                            魔法書與咒文：<input disabled value="<%=data.story.magic%>" size="40"/><br>
                         </div>
 
                         <div class="" style="width: 50%">
                             <label>調查員個人描述：
-                                <textarea disabled class="story" cols="30" rows="10"></textarea></label>
+                            <textarea disabled cols="30" rows="10"><%=data.story.description%></textarea></label>
                         </div>
                     </section>
                 </div>
             </div>
-            <input disabled name='permission' class="permission-status info" style="display: none">
+
+            <input disabled value="<%=data.info.permission%>" class="permission-status" style="display: none">
             <div id="main-tab-3" class="main-tab-content">
                 <div class="sheet_creat_div">
                     <div class="container">
@@ -196,7 +210,7 @@
                         </ul>
                         <div id="tab-1" class="tab-content current" >
 
-                            <table border="1">
+                            <table>
                                 <tr>
                                     <td colspan="6" style="text-align: center">調查員技能</td>
                                 </tr>
@@ -234,155 +248,155 @@
                                 <tr>
                                     <td class="name">會計<br>(Accounting)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">人類學<br>(Anthropology)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">估價<br>(Appraise)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">考古學<br>(Archaeology)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">魅惑<br>(Charm)</td>
                                     <td class="base base-skill">15</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">攀爬<br>(Climb)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">電腦使用<br>(Computer Use)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">信用評級<br>(Credit Rating)</td>
                                     <td class="base-skill" style="display:none">-1</td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">克蘇魯神話<br>(Cthulhu Mythos)</td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
                                         <table>
                                             <tr>
@@ -398,274 +412,274 @@
                                 <tr>
                                     <td class="name">喬裝<br>(Disguise)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">閃避<br>(Dodge)</td>
                                     <td class="base-skill" style="display:none">-1</td>
                                     <td class="base" id="dodge">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">自動車駕駛<br>(Drive Auto)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">電器維修<br>(Electrical Repair)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">電子學<br>(Electronics)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">話術<br>(Fast-Talk)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">急救<br>(First Aid)</td>
                                     <td class="base base-skill">30</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">歷史<br>(History)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">威嚇<br>(Intimidate)</td>
                                     <td class="base base-skill">15</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td class="name">跳躍<br>(Jump)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">法律<br>(Law)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">圖書館使用<br>(Library Use)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">聆聽<br>(Listen)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">鎖匠<br>(Locksmith)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <div id="tab-2" class="tab-content">
-                            <table border="1">
+                            <table>
                                 <tr>
                                     <td colspan="6" style="text-align: center">調查員技能</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">職業特徵：
-                                        <select disabled class='class-feature'>
+                                        <select  class='class-feature'>
                                             <option>EDU</option>
                                             <option>EDU+STR</option>
                                             <option>EDU+DEX</option>
@@ -697,409 +711,409 @@
                                 <tr>
                                     <td class="name">機器維修<br>(Mechanical Repair)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">醫學<br>(Medicine)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">自然學<br>(Natural World)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">導航<br>(Navigate)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">神祕學<br>(Occult)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">操縱重型機器<br>(Operate Heavy Machinery)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">說服<br>(Persuade)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">心理分析<br>(Psychoanalysis)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">心理學<br>(Psychology)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">騎術<br>(Ride)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">巧手<br>(Sleight of Hand)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">偵查<br>(Spot Hidden)</td>
                                     <td class="base base-skill">25</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">隱密行動<br>(Stealth)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">游泳<br>(Swim)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">投擲<br>(Throw)</td>
                                     <td class="base base-skill">20</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">追蹤<br>(Track)</td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">動物馴養<br>(Animal Handling)</td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">炮術<br>(Artillery)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">爆破<br>(Demolitions)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">潛水<br>(Diving)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">催眠<br>(Hypnosis)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">讀唇<br>(Read Lips)</td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <div id="tab-3" class="tab-content">
-                            <table border="1">
+                            <table>
                                 <tr>
                                     <td colspan="7" style="text-align: center">調查員技能</td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">職業特徵：
-                                        <select disabled class='class-feature'>
+                                        <select  class='class-feature'>
                                             <option>EDU</option>
                                             <option>EDU+STR</option>
                                             <option>EDU+DEX</option>
@@ -1131,403 +1145,403 @@
                                 </tr>
                                 <tr>
                                     <td class="name">專業駕駛<br>(Pilot)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">求生<br>(Survival)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">10</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" rowspan="3">藝術與工藝<br>(Art and Craft)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">藝術與工藝1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">藝術與工藝2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">5</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3">戰鬥<br>(Fighting)</td>
                                     <td class="name">鬥毆</td>
                                     <td class="base base-skill">25</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">戰鬥1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">戰鬥2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" rowspan="3">火器<br>(Firearms)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">火器1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">火器2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" rowspan="3">他國語言<br>(Language (Other))</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">他國語言1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">他國語言2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name">母語<br>(Language (Own))</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base-skill" style="display:none">-1</td>
                                     <td id="mother-language" class="base"></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" rowspan="3">科學<br>(Science)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">科學1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">科學2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">0</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" rowspan="3">偏門學問<br>(Lore)</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="name" style="display: none">偏門學問1</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                                 <tr class="last">
                                     <td class="name" style="display: none">偏門學問2</td>
-                                    <td class="td-input"><input disabled class="custom" placeholder="自定義" size="10"/></td>
+                                    <td class="td-input"><input class="custom" placeholder="自定義" size="10"/></td>
                                     <td class="base base-skill">1</td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input class" /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="0" class="skill base-input interest " /></td>
-                                    <td class="td-input"><input disabled type="number" max="100" min="-50" class="skill base-input" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input class" /></td>
+                                    <td class="td-input"><input type="number" max="100" min="0" class="skill base-input interest " /></td>
+                                    <td class="td-input"><input type="number" max="100" min="-50" class="skill base-input" /></td>
                                     <td class="total">
-                                            <table>
-                                                <tr>
-                                                    <td rowspan="2" class="max"></td>
-                                                    <td class="hard"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="extreme"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <table>
+                                            <tr>
+                                                <td rowspan="2" class="max"></td>
+                                                <td class="hard"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="extreme"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -1535,8 +1549,12 @@
                 </div>
             </div>
 
+
+
+        </form>
     </div>
 </div>
+
 <%include model/footer.ejs%>
 
 

@@ -94,59 +94,59 @@
                 <section>
                     <div class="sheet_input_div2">
                         <p>調查員基本屬性：</p>
-                        <div>ＳＴＲ(力量)：<label><input type="number" step="1" min="0" max="100" value="0" id="str-bas"
+                        <div>ＳＴＲ(力量)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[0]%>" id="str-bas"
                                             class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="str-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " <%=data.stat.characteristic[1]%>
                                                                                   size="2"/></label> 總值:<p id="str"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＣＯＮ(體質)：<label><input type="number" step="1" min="0" max="100" value="0" id="con-bas"
+                        <div>ＣＯＮ(體質)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[2]%>" id="con-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="con-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[3]%>"
                                                                                   size="2"/></label>總值:<p id="con"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＤＥＸ(敏捷)：<label><input type="number" step="1" min="0" max="100" value="0" id="dex-bas"
+                        <div>ＤＥＸ(敏捷)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[4]%>" id="dex-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="dex-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[5]%>"
                                                                                   size="2"/></label>總值:<p id="dex"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＡＰＰ(外貌)：<label><input type="number" step="1" min="0" max="100" value="0" id="app-bas"
+                        <div>ＡＰＰ(外貌)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[6]%>" id="app-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="app-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[7]%>"
                                                                                   size="2"/></label>總值:<p id="app"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＰＯＷ(意志)：<label><input type="number" step="1" min="0" max="100" value="0" id="pow-bas"
+                        <div>ＰＯＷ(意志)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[8]%>" id="pow-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="pow-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[9]%>"
                                                                                   size="2"/></label>總值:<p id="pow"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＳＩＺ(體型)：<label><input type="number" step="1" min="0" max="100" value="0" id="siz-bas"
+                        <div>ＳＩＺ(體型)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[10]%>" id="siz-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="siz-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[11]%>"
                                                                                   size="2"/></label>總值:<p id="siz"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＩＮＴ(智力)：<label><input type="number" step="1" min="0" max="100" value="0" id="int-bas"
+                        <div>ＩＮＴ(智力)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[12]%>" id="int-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="int-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[13]%>"
                                                                                   size="2"/></label>總值:<p id="int"
                                                                                                   class="chara attr"></p>
                         </div>
-                        <div>ＥＤＵ(教育)：<label><input type="number" step="1" min="0" max="100" value="0" id="edu-bas"
+                        <div>ＥＤＵ(教育)：<label><input type="number" step="1" min="0" max="100" value="<%=data.stat.characteristic[14]%>" id="edu-bas"
                                            class="attr stat " size="2"/></label>調整值：<label><input type="number" step="1" min="-50"
                                                                                   max="100" id="edu-adj"
-                                                                                  class="attr-add stat " value="0"
+                                                                                  class="attr-add stat " value="<%=data.stat.characteristic[15]%>"
                                                                                   size="2"/></label>總值:<p id="edu"
                                                                                                   class="chara attr"></p>
                         </div>
@@ -165,6 +165,7 @@
                             <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
                             <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)" accept="image/*" style="display: none">
                         </label>
+                        <button id="save">儲存圖片</button>
                         <button id="cancel-image" class="btn session">取消圖片</button>
 
                     </div>

@@ -11,6 +11,38 @@ $(document).ready(function () {
     },0);
     //repeat
     function sheetCalculate () {
+        $('.attr-add').each(function () {
+            if ($(this).val() > 99)
+                $(this).val(99);
+            if ($(this).val() === '' || $(this).val() === String)
+                $(this).val(0);
+            if ($(this).val() < -50)
+                $(this).val(-50);
+        });
+        $('.attr').each(function () {
+            if ($(this).val() > 99)
+                $(this).val(99);
+            if ($(this).val() === '' || $(this).val() === String)
+                $(this).val(0);
+            if ($(this).val() < 0)
+                $(this).val(0);
+        });
+        $('.skill').each(function () {
+            if ($(this).val() > 99)
+                $(this).val(99);
+            if ($(this).val() === '' || $(this).val() === String)
+                $(this).val(0);
+            if ($(this).val() < 0)
+                $(this).val(0);
+        });
+        if (parseInt($('#hp').val()) > parseInt($('#hp-max').text()) || parseInt($('#hp').val()) < 0)
+            $('#hp').val($('#hp-max').text());
+        if (parseInt($('#mp').val()) > parseInt($('#mp-max').text()) || parseInt($('#mp').val()) < 0)
+            $('#mp').val($('#mp-max').text());
+        if (parseInt($('#san').val()) > parseInt($('#san-max').text()))
+            $('#san').val($('#san-max').text());
+        if (parseInt($('#luk').val()) > 99 || parseInt($('#luk').val()) < 0)
+            $('#luk').val(99);
         //calculate the sum of the stat
         var str = parseInt(($('#str').text(sum_up($('#str-bas').val(), $('#str-adj').val()))).text());
         var con = parseInt(($('#con').text(sum_up($('#con-bas').val(), $('#con-adj').val()))).text());
@@ -79,38 +111,7 @@ $(document).ready(function () {
             $('#build').text(Math.floor((((str + siz) - 205) / 80) + 2) + 'd6 & ' + Math.floor((((str + siz) - 205) / 80) + 3));
 
 
-        $('.attr-add').each(function () {
-            if ($(this).val() > 99)
-                $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String)
-                $(this).val(0);
-            if ($(this).val() < -50)
-                $(this).val(-50);
-        });
-        $('.attr').each(function () {
-            if ($(this).val() > 99)
-                $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String)
-                $(this).val(0);
-            if ($(this).val() < 0)
-                $(this).val(0);
-        });
-        $('.skill').each(function () {
-            if ($(this).val() > 99)
-                $(this).val(99);
-            if ($(this).val() === '' || $(this).val() === String)
-                $(this).val(0);
-            if ($(this).val() < 0)
-                $(this).val(0);
-        });
-        if (parseInt($('#hp').val()) > parseInt($('#hp-max').text()) || parseInt($('#hp').val()) < 0)
-            $('#hp').val($('#hp-max').text());
-        if (parseInt($('#mp').val()) > parseInt($('#mp-max').text()) || parseInt($('#mp').val()) < 0)
-            $('#mp').val($('#mp-max').text());
-        if (parseInt($('#san').val()) > parseInt($('#san-max').text()))
-            $('#san').val($('#san-max').text());
-        if (parseInt($('#luk').val()) > 99 || parseInt($('#luk').val()) < 0)
-            $('#luk').val(99);
+
 
         //async slider's number and input's
         $('.add-number').text(parseInt($('#add-slider').val()))
@@ -251,7 +252,6 @@ $(document).ready(function () {
         if($('#image').val()!=='' || $('#add-image').attr('src') !=='/public/source/iconmonstr-plus-6.svg') {
             $('#image').val('');
             $('#add-image').attr('src', '/public/source/iconmonstr-plus-6.svg')
-            $('#name').trigger('change')
         }
     })
     $('ul.tabs li').on('click',function () {

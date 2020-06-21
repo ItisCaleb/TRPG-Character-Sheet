@@ -10,10 +10,12 @@ $(document).ready(function () {
             contentType: 'application/json; charset=UTF-8',
             success: function (data) {
                 sheet = JSON.parse(data);
+                const image = sheet.story.avatar;
                 const skills = sheet.spell.skills;
                 const spell_info =sheet.spell.spell;
-                //const image = sheet.story.avatar;
-                //(image === '') ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg') : $("#add-image").attr("src", "data:image/;base64," + image);
+                (image === '')
+                    ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg')
+                    : $("#add-image").attr("src", "data:image/;base64," + image);
 
                 $('.skill-name').each(function () {
                     if(skills.length===0) return

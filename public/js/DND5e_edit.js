@@ -64,7 +64,7 @@ $(document).ready(function () {
         this.attack=attack;
         return this;
     }
-    $(document).on('change','input, textarea,select',function () {
+    $(document).on('change','input[type=text], input[type=number], textarea,select',function () {
         if($('#name').val()===''){
             return bad_message('冒險者姓名不得為空')
         }
@@ -77,23 +77,16 @@ $(document).ready(function () {
             const money =calSheet.money;
             const stat =calSheet.stat;
             const attack=calSheet.attack;
-            var sheet = new FormData($('#myform')[0]);
-            sheet.append('skill',JSON.stringify(skill));
-            sheet.append('spell',JSON.stringify(spell));
-            sheet.append('money',JSON.stringify(money));
-            sheet.append('stat',JSON.stringify(stat));
-            sheet.append('attack',JSON.stringify(attack));
-            var image;
-            if ($('input[type=file]')[0].files[0]===undefined){
-                image=$('#add-image').attr('src')
-            }else image=$('input[type=file]')[0].files[0];
-            sheet.append('file',image);
+            var sheet = $('#myform').serializeArray();
+            sheet.push('skill',JSON.stringify(skill));
+            sheet.push('spell',JSON.stringify(spell));
+            sheet.push('money',JSON.stringify(money));
+            sheet.push('stat',JSON.stringify(stat));
+            sheet.push('attack',JSON.stringify(attack));
             $.ajax({
                 url:'../api/sheet/DND5e/edit/'+ id,
                 type: 'POST',
-                contentType: false,
-                processData: false, // required
-                data:  sheet,
+                data:  $.param(sheet),
                 success:function (data) {
                     $('.save-icon').hide();
                     $('.success-icon').show();
@@ -103,5 +96,48 @@ $(document).ready(function () {
                 }
             });
         },2000)
+    })
+    $('#save').on('click',function (e){
+        e.preventDefault();
+        if($('input[type=file]')[0].files[0]===undefined){
+            $('#error-image').remove();
+            $('#add-image').parent('label').append('<p id="error-image" style="color: red;font-size: 10px">你並沒有上傳任何圖片或改變任何東西!</p>')
+        }else {
+            $('#error-image').remove();
+            const data=new FormData;
+            data.append('file',$('input[type=file]')[0].files[0]);
+            $.ajax({
+                url:'../api/sheet/COC7th/image/'+ id,
+                type: 'POST',
+                contentType: false,
+                processData: false, // required
+                data:  data,
+                success:function (data) {
+                    $('#add-image').parent('label').append('<p id="error-image" style="color: greenyellow;font-size: 10px">圖片儲存成功!</p>')
+                },
+                error:function (res) {
+                    bad_message(res.responseText);
+                }
+            });
+        }
+    })
+    $('#cancel-image').on('click',function (e){
+        e.preventDefault();
+        $('#error-image').remove();
+        const data=new FormData;
+        data.append('file',$('input[type=file]')[0].files[0]);
+        $.ajax({
+            url:'../api/sheet/COC7th/image/'+ id,
+            type: 'POST',
+            contentType: false,
+            processData: false, // required
+            data:  data,
+            success:function (data) {
+                $('#add-image').parent('label').append('<p id="error-image" style="color: greenyellow;font-size: 10px">圖片已刪除!</p>')
+            },
+            error:function (res) {
+                bad_message(res.responseText);
+            }
+        });
     })
 });

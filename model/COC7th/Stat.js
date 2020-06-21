@@ -1,12 +1,30 @@
 const mongoose = require("mongoose");
 
 const COC7thStatSchema = new mongoose.Schema({
-    hp:Number,
-    san:Number,
-    mp:Number,
-    luk:Number,
-    insane_status:String,
-    injured_status:String,
+    hp:{
+        type:Number,
+        max:40
+    },
+    san:{
+        type:Number,
+        max:100
+    },
+    mp:{
+        type:Number,
+        max:40
+    },
+    luk:{
+        type:Number,
+        max:100
+    },
+    insane_status:{
+        type:String,
+        max:20
+    },
+    injured_status:{
+        type:String,
+        max:20
+    },
     characteristic:Array
 });
 

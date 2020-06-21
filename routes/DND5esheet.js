@@ -118,6 +118,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
 router.get('/DND5e/json/:id',async function (req,res) {
     const url = req.params.id;
     var sheet = {};
+    sheet.story = await DND5eStory.findOne({_id: url}).lean() ;
     sheet.spell = await DND5eSpell.findOne({_id: url}).lean() ;
     await res.json(JSON.stringify(sheet));
 })
@@ -192,7 +193,7 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
             money:JSON.parse(cs.money),
             equipment:cs.equip,
         });
-        res.status(200).send()
+        res.send('');
     }catch (err) {
         console.log(err);
         res.status(400).send(err);
