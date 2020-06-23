@@ -34,7 +34,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 # Todo List
 
 ## FrontEnd
-* 角色卡創建頁面(擲骰及自動換算)(目前只做COC7th跟DND5e)(COC完工)
+* 角色卡創建頁面(擲骰及自動換算)(COC完工)(DND完工?)
 * ~~角色卡管理頁面~~(完工)
 * 404彩蛋
 * 自訂背景
@@ -46,14 +46,14 @@ A project for the TRPG player and GM who suffering from managing character sheet
 * Bug回報機制
 
 ## BackEnd
-* 角色卡MongoDB schema
+* ~~角色卡MongoDB schema~~ (完工)
 * ~~團務系統優化 (可進行管理操作)(等待角卡創建頁面及管理頁面完工)~~(已完工，等待介面優化)
-* 角色卡創建系統(COC7th完成)
-* 資料庫轉移(可選)(再觀察)
+* ~~角色卡創建系統~~(完工)
+* 資料庫轉移(可選)(等待資料庫建好)
 
 
 ## Web Design
-* 網頁Icon
+* ~~網頁Icon~~
 * 主要風格(以後再說)
 * 角色卡創建頁面重新排版
 

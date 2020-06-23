@@ -23,12 +23,14 @@ $(document).ready(function () {
       const money =calSheet.money;
       const stat =calSheet.stat;
       const attack=calSheet.attack;
+      const death_save = calSheet.death_save;
       var sheet = new FormData($('#myform')[0]);
       sheet.append('skill',JSON.stringify(skill));
       sheet.append('spell',JSON.stringify(spell));
       sheet.append('money',JSON.stringify(money));
       sheet.append('stat',JSON.stringify(stat));
       sheet.append('attack',JSON.stringify(attack));
+      sheet.append('death_save',JSON.stringify(death_save));
       sheet.append('file',$('input[type=file]')[0].files[0]);
       console.log(skill);
       $.ajax({
@@ -130,11 +132,16 @@ $(document).ready(function () {
         $('.money').each(function () {
             money.push($(this).val());
         })
+        var death_save=[];
+        $('.death-save').each(function () {
+            death_save.push($(this).val());
+        })
         this.spell=spell;
         this.skill=skill;
         this.money=money;
         this.stat=stat;
         this.attack=attack;
+        this.death_save=death_save;
         return this;
     }
     $(document).on('change','#image',function (inp) {

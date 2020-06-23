@@ -107,7 +107,7 @@ $(document).ready(function () {
             const data=new FormData;
             data.append('file',$('input[type=file]')[0].files[0]);
             $.ajax({
-                url:'../api/sheet/COC7th/image/'+ id,
+                url:'../api/sheet/DND5e/image/'+ id,
                 type: 'POST',
                 contentType: false,
                 processData: false, // required
@@ -127,7 +127,7 @@ $(document).ready(function () {
         const data=new FormData;
         data.append('file',$('input[type=file]')[0].files[0]);
         $.ajax({
-            url:'../api/sheet/COC7th/image/'+ id,
+            url:'../api/sheet/DNDE5e/image/'+ id,
             type: 'POST',
             contentType: false,
             processData: false, // required

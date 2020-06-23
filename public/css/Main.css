@@ -544,5 +544,13 @@
     margin-top: 10px;
     cursor: pointer;
 }
-
+.check-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 8px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
 

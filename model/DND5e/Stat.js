@@ -46,7 +46,6 @@ const  DND5eStatSchema = new mongoose.Schema({
         type: String,
         max: 20
     },
-    death_save:[Number],
     spell_class:{
         type: String,
         max: 30

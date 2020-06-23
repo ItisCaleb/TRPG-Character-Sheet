@@ -13,6 +13,7 @@ $(document).ready(function () {
                 const image = sheet.story.avatar;
                 const skills = sheet.spell.skills;
                 const spell_info =sheet.spell.spell;
+                const death_save = sheet.spell.death_save;
                 (image === '')
                     ? $("#add-image").attr("src", '/public/source/iconmonstr-plus-6.svg')
                     : $("#add-image").attr("src", "data:image/;base64," + image);
@@ -24,6 +25,12 @@ $(document).ready(function () {
                             $(this).children('input').val('yes');
                             $(this).children('input').prop('checked',true);
                         }
+                    }
+                })
+                $('.death-save').each(function (i) {
+                    if(death_save[i]==='yes'){
+                        $(this).val('yes');
+                        $(this).prop('checked',true);
                     }
                 })
                 $('.permissions').each(function () {

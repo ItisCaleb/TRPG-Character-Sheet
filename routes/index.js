@@ -4,6 +4,7 @@ const Session = require('../model/Session');
 const Sheet = require('../model/Info');
 const User = require('../model/User');
 const tempUser=require('../model/tempUser');
+const announcement = require('../model/announcement');
 //decode auth_token
 const jwtDecode = require('jwt-decode');
 //verify if auth_token is correct and user is logged in
@@ -99,6 +100,28 @@ router.get('/adminpost', verify,async function (req, res) {
         res.status(400).render('404');
     }
 });
+//post things
+router.post('/admin/post', verify,async function (req, res) {
+    const user = jwtDecode(req.cookies.auth_token);
+    const admin = await User.findOne({_id:user._id})
+
+    if (admin.admin===true) {
+        try {
+            const announce = new announcement({
+                owner:user.name,
+                content:req.body.content
+            })
+            await announce.save();
+            res.send('你成功發出了公告!')
+        }catch (e) {
+            res.status(400).send('字數太少!');
+        }
+
+    } else {
+        res.status(400).send('你沒有權限')
+    }
+});
+
 
 //render session page
 router.get('/trpgsession',verify,async function (req,res) {
@@ -236,7 +259,7 @@ router.get('/charactersheet',verify,async function (req,res) {
         content:sheet.name,
         system:sheet.system,
         url:sheet.url,
-        number:sheet.name.length
+        number:sheet.url.length
     });
 });
 router.get('/charactersheet/create/:system',verify,async function (req,res) {

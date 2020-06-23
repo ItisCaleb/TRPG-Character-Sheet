@@ -92,6 +92,7 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     })
     const spell =new DND5eSpell({
         _id:sheet._id,
+        death_save:JSON.parse(cs.death_save),
         skills:JSON.parse(cs.skill),
         spell:JSON.parse(cs.spell)
     })
@@ -123,9 +124,8 @@ router.get('/DND5e/json/:id',async function (req,res) {
     await res.json(JSON.stringify(sheet));
 })
 
-router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,res) {
+router.post('/DND5e/edit/:id',verify,async function (req,res) {
     const cs = req.body;
-    const image= (req.file) ? req.file.buffer : '';
     //save new sheet
     if(!cs.name) return res.status(400).send('請至少填入角色名字');
     try{
@@ -149,6 +149,7 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
             max_hp:cs['max-hp'],
             hp:cs.hp,
             temp_hp:cs['temp-hp'],
+
             hit_dice_total:cs.hit_dice_total,
             hit_dice:cs.hit_dice,
             spell_class:cs['spell-class'],
@@ -181,10 +182,9 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
             bonds: cs.bonds,
             flaws: cs.flaws,
             language: cs.language,
-            avatar:image
-
         });
         await DND5eSpell.updateOne({_id:req.params.id},{
+            death_save:JSON.parse(cs.death_save),
             skills:JSON.parse(cs.skill),
             spell:JSON.parse(cs.spell)
         })
@@ -199,6 +199,13 @@ router.post('/DND5e/edit/:id',verify,upload.single('file'),async function (req,r
         res.status(400).send(err);
     }
 })
+router.post('/DND5e/image/:id',upload.single('file'),verify,async function (req,res) {
+    const image = (req.file) ?req.file.buffer:'';
+    await DND5eStory.updateOne({_id:req.params.id},{
+        avatar:image
+    })
+    res.send('');
+});
 
 
 module.exports= router
