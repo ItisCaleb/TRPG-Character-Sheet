@@ -12,10 +12,19 @@ const verify = require('./module/verifyToken');
 const sheetJSON = require('./module/sheetJSON');
 
 //render main page
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
+    const announce = await announcement.find();
+    var data={owner:[],content:[],time:[]};
+
+    announce.forEach(function (datas) {
+        data.owner.push(datas.owner);
+        data.content.push(datas.content);
+        data.time.push(datas.date);
+    })
     res.render('index', {
         title: info.title[0],
-        content: info.news
+        content: info.news,
+        data:data
     });
 });
 

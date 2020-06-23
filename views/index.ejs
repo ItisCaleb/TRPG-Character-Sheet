@@ -14,6 +14,11 @@
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
         <%- content.replace(/\r\n/g, "<br />") %>
     </p>
+    <%for(let i=0;i<data.owner.length;i++) {%>
+        <div style="margin:auto; line-height:30px ;">
+            <div style="margin: auto"><%-data.content[i].replace(/\r\n/g, "<br />")%></div>
+        </div>
+    <% }%>
 </div>
 
 <%include model/footer.ejs%>
