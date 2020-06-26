@@ -67,16 +67,7 @@ form{
     100% { transform: rotate(360deg); }
 }
 @media only screen and (max-width:768px) {
-    .mobile-nav{
-        margin-top: 4%;
-        padding:0.5% ;
-        width: 100%;
-        background: white;
-        border: 1px solid lightgray;
-    }
-    #mobile-option{
-        width: 45%;
-    }
+
     .loader {
         display: inline-block;
         border: 5px solid #f3f3f3; /* Light grey */
@@ -106,9 +97,6 @@ form{
         width: 15%;
         vertical-align: middle
     }
-    .list-menu{
-        width: 60%;
-    }
 
     .main-tab-content{
         font-size: 10px;
@@ -135,7 +123,7 @@ form{
     }
 
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
     #mobile-option{
         display: none;
     }

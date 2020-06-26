@@ -5,7 +5,7 @@ const fs = require('fs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const http =require('http')
+const http =require('http');
 const https = require('https');
 
 
@@ -21,14 +21,20 @@ const DND5eSheetRoute = require('./routes/DND5esheet');
 //set view engine
 
 app.engine('ejs',require('ejs-locals'));
-app.set('views', __dirname + '/views')
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 dotenv.config();
 
 
 // connect Database
-mongoose.connect(process.env.DB_CONNECT,
-    {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}, () => console.log("DB Started"));
+mongoose.connect(process.env.DB_CONNECT || " mongodb://127.0.0.1:27017/test?retryWrites=true&w=majority",
+    {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+    .then(function (res) {
+        console.log('DB started');
+    })
+    .catch(function (err) {
+        console.log(err)
+    });
 
 
 // middleware
@@ -65,7 +71,7 @@ app.use(function (err, req, res, next) {
 
 // start server
 const port = process.env.PORT || 3000;
-const server = https.createServer(credentials,app)
+const server = https.createServer(credentials,app);
 
 server.listen(port,() => console.log('HTTPS start on port:' + port));
 
@@ -73,7 +79,7 @@ server.listen(port,() => console.log('HTTPS start on port:' + port));
 const httpApp = express();
 const httpRouter = express.Router();
 httpApp.use('/', httpRouter);
-const host = process.env.HOST || '192.168.0.107:3001'
+const host = process.env.HOST || '192.168.0.107:3001';
 httpRouter.get('/', function(req, res){
     // determine the redirect destination
     var destination = ['https://'+ host + req.url];

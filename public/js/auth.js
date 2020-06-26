@@ -33,7 +33,7 @@ $(document).ready(function () {
     $('.input-box').on('input',function () {
         $(this).each(function () {
             const input_box = $(this).parent('.input');
-            const input = $(this)
+            const input = $(this);
             const check = $(this).siblings('.check');
             if(input.val().length===0){
                 check.text('');

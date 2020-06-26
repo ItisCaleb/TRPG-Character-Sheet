@@ -102,7 +102,7 @@ router.post('/COC7th', verify,upload.single('file'), async function (req, res)  
         await stat.save();
         await story.save();
         await equip.save();
-        await User.updateOne({_id:id},{$inc:{sheet_number:1}})
+        await User.updateOne({_id:id},{$inc:{sheet_number:1}});
         res.send('角色卡創建成功');
     }catch (err) {
         res.status(400).send(err);
@@ -180,7 +180,7 @@ router.post('/COC7th/edit/:id',verify,async function(req,res) {
         console.log(err)
         res.status(400).redirect('/charactersheet');
     }
-})
+});
 
 router.post('/COC7th/image/:id',upload.single('file'),verify,async function (req,res) {
     const image = (req.file) ?req.file.buffer:'';
