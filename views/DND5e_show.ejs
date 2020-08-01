@@ -39,32 +39,32 @@
                         <table style="width: 100%">
                             <tr>
                                 <td>
-                                    <label><input id="name" disabled value="<%=data.info.name%>"><br>角色名稱</label>
+                                    <label><input data-input="1" id="name"  readonly value="<%=data.info.name%>"><br>角色名稱</label>
                                 </td>
                                 <td style="width: auto">
                                     <table style="width: 100%">
                                         <tr>
                                             <td>
-                                                <label><input disabled value="<%=data.story.class%>" size="5">
-                                                    <input max="30" min="0" disabled value="<%=data.story.level%>" step="1"
+                                                <label><input data-input="2"  readonly value="<%=data.story.class%>" size="5">
+                                                    <input data-input="3" max="30" min="0"  readonly value="<%=data.story.level%>" step="1"
                                                            type="number"><br>職業/等級</label>
                                             </td>
                                             <td>
-                                                <label><input disabled value="<%=data.story.background%>" ><br>角色背景</label><br>
+                                                <label><input data-input="4"  readonly value="<%=data.story.background%>" ><br>角色背景</label><br>
                                             </td>
                                             <td>
-                                                <label><input disabled value="<%=data.info.player_name%>"><br>玩家暱稱</label>
+                                                <label><input data-input="5"  readonly value="<%=data.info.player_name%>"><br>玩家暱稱</label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label><input disabled value="<%=data.story.race%>"><br>種族</label>
+                                                <label><input data-input="6"  readonly value="<%=data.story.race%>"><br>種族</label>
                                             </td>
                                             <td>
-                                                <label><input disabled value="<%=data.story.faction%>"><br>陣營</label>
+                                                <label><input data-input="7"  readonly value="<%=data.story.faction%>"><br>陣營</label>
                                             </td>
                                             <td>
-                                                <label><input disabled value="<%=data.story.exp%>"><br>經驗值</label>
+                                                <label><input data-input="8"  readonly value="<%=data.story.exp%>"><br>經驗值</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -76,19 +76,19 @@
             </section>
             <section style="margin: 50px">
                 <div class="sheet-creat-div" style="text-align: center;width: 30%">
-                    <label>力量<br><input disabled class="base-attr" value="<%=data.stat.stat[0]%>" id="str" type="number"></label><br><label class="mod">0</label><br>
-                    <label>敏捷<br><input disabled class="base-attr" value="<%=data.stat.stat[1]%>" id="dex" type="number"></label><br><label class="mod">0</label><br>
-                    <label>體魄<br><input disabled class="base-attr" value="<%=data.stat.stat[2]%>" id="con" type="number"></label><br><label class="mod">0</label><br>
-                    <label>智力<br><input disabled class="base-attr" value="<%=data.stat.stat[3]%>" id="int" type="number"></label><br><label class="mod">0</label><br>
-                    <label>感知<br><input disabled class="base-attr" value="<%=data.stat.stat[4]%>" id="wis" type="number"></label><br><label class="mod">0</label><br>
-                    <label>魅力<br><input disabled class="base-attr" value="<%=data.stat.stat[5]%>" id="cha" type="number"></label><br><label class="mod">0</label><br>
-                    <label><inputdisabled value="<%=data.stat.passive_wisdom%>" class="base-attr" type="number">被動感知</label>
+                    <label>力量<br><input data-input="9"  readonly class="base-attr" value="<%=data.stat.stat[0]%>" id="str" type="number"></label><br><label class="mod">0</label><br>
+                    <label>敏捷<br><input data-input="10"  readonly class="base-attr" value="<%=data.stat.stat[1]%>" id="dex" type="number"></label><br><label class="mod">0</label><br>
+                    <label>體魄<br><input data-input="11"  readonly class="base-attr" value="<%=data.stat.stat[2]%>" id="con" type="number"></label><br><label class="mod">0</label><br>
+                    <label>智力<br><input data-input="12"  readonly class="base-attr" value="<%=data.stat.stat[3]%>" id="int" type="number"></label><br><label class="mod">0</label><br>
+                    <label>感知<br><input data-input="13"  readonly class="base-attr" value="<%=data.stat.stat[4]%>" id="wis" type="number"></label><br><label class="mod">0</label><br>
+                    <label>魅力<br><input data-input="14"  readonly class="base-attr" value="<%=data.stat.stat[5]%>" id="cha" type="number"></label><br><label class="mod">0</label><br>
+                    <label><input data-input="15" readonly value="<%=data.stat.passive_wisdom%>" class="base-attr" type="number">被動感知</label>
 
                 </div>
 
                 <div class="sheet-creat-div" style="width: 40%" >
-                    <label><input disabled value="<%=data.stat.inspiration%>" type="number" style="width: 30%;"></label>激勵值<br>
-                    <label><input disabled id="pro" value="<%=data.stat.pro%>" type="number" style="width: 30%;"></label>熟練加成<br>
+                    <label><input data-input="16"  readonly value="<%=data.stat.inspiration%>" type="number" style="width: 30%;"></label>激勵值<br>
+                    <label><input data-input="17"  readonly id="pro" value="<%=data.stat.pro%>" type="number" style="width: 30%;"></label>熟練加成<br>
 
                     <div id="sheet-creat-skill">
                         <table>
@@ -97,42 +97,42 @@
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">力量：</label>
+                                    <label class="skill-name"><input data-input="18"  readonly type="checkbox" class="check-input" size="1">力量：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【力量】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">敏捷：</label>
+                                    <label class="skill-name"><input data-input="19"  readonly type="checkbox" class="check-input" size="1">敏捷：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【敏捷】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">體魄：</label>
+                                    <label class="skill-name"><input data-input="20"  readonly type="checkbox" class="check-input" size="1">體魄：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【體魄】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">智力：</label>
+                                    <label class="skill-name"><input data-input="21"  readonly type="checkbox" class="check-input" size="1">智力：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【智力】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">感知：</label>
+                                    <label class="skill-name"><input data-input="22"  readonly type="checkbox" class="check-input" size="1">感知：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【感知】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td" colspan="2">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">魅力：</label>
+                                    <label class="skill-name"><input data-input="23"  readonly type="checkbox" class="check-input" size="1">魅力：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr" style="display: none">【魅力】</td>
@@ -142,28 +142,28 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">運動：</label>
+                                    <label class="skill-name"><input data-input="24"  readonly type="checkbox" class="check-input" size="1">運動：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【力量】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">扒手：</label>
+                                    <label class="skill-name"><input data-input="25"  readonly type="checkbox" class="check-input" size="1">扒手：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【敏捷】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">隱藏：</label>
+                                    <label class="skill-name"><input data-input="26"  readonly type="checkbox" class="check-input" size="1">隱藏：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【敏捷】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">特技動作：</label>
+                                    <label class="skill-name"><input data-input="27"  readonly type="checkbox" class="check-input" size="1">特技動作：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -171,7 +171,7 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">調查：</label>
+                                    <label class="skill-name"><input data-input="28"  readonly type="checkbox" class="check-input" size="1">調查：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -179,7 +179,7 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">歷史：</label>
+                                    <label class="skill-name"><input data-input="29"  readonly type="checkbox" class="check-input" size="1">歷史：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -187,21 +187,21 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">奧術：</label>
+                                    <label class="skill-name"><input data-input="30"  readonly type="checkbox" class="check-input" size="1">奧術：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【智力】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">自然：</label>
+                                    <label class="skill-name"><input data-input="31"  readonly type="checkbox" class="check-input" size="1">自然：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【智力】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">宗教：</label>
+                                    <label class="skill-name"><input data-input="32"  readonly type="checkbox" class="check-input" size="1">宗教：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -209,7 +209,7 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">馴服動物：</label>
+                                    <label class="skill-name"><input data-input="33"  readonly type="checkbox" class="check-input" size="1">馴服動物：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -217,22 +217,14 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">察言觀色：</label>
+                                    <label class="skill-name"><input data-input="34"  readonly type="checkbox" class="check-input" size="1">察言觀色：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【感知】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">醫術：</label>
-                                    <p class="chara skill">0</p>
-
-                                </td>
-                                <td class="attr">【感知】</td>
-                            </tr>
-                            <tr>
-                                <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">觀察：</label>
+                                    <label class="skill-name"><input data-input="35"  readonly type="checkbox" class="check-input" size="1">醫術：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -240,7 +232,7 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">求生：</label>
+                                    <label class="skill-name"><input data-input="36"  readonly type="checkbox" class="check-input" size="1">觀察：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -248,14 +240,22 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">欺瞞：</label>
+                                    <label class="skill-name"><input data-input="37"  readonly type="checkbox" class="check-input" size="1">求生：</label>
+                                    <p class="chara skill">0</p>
+
+                                </td>
+                                <td class="attr">【感知】</td>
+                            </tr>
+                            <tr>
+                                <td class="skill-td">
+                                    <label class="skill-name"><input data-input="38"  readonly type="checkbox" class="check-input" size="1">欺瞞：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【魅力】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">威嚇：</label>
+                                    <label class="skill-name"><input data-input="39"  readonly type="checkbox" class="check-input" size="1">威嚇：</label>
                                     <p class="chara skill">0</p>
 
                                 </td>
@@ -263,14 +263,14 @@
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">表演：</label>
+                                    <label class="skill-name"><input data-input="40"  readonly type="checkbox" class="check-input" size="1">表演：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【魅力】</td>
                             </tr>
                             <tr>
                                 <td class="skill-td">
-                                    <label class="skill-name"><input disabled type="checkbox" class="check-input" size="1">說服：</label>
+                                    <label class="skill-name"><input data-input="41"  readonly type="checkbox" class="check-input" size="1">說服：</label>
                                     <p class="chara skill">0</p>
                                 </td>
                                 <td class="attr">【魅力】</td>
@@ -278,23 +278,24 @@
                         </table>
                     </div>
                 </div>
+                <div id="status" data-status="<%=status%>"></div>
                 <div class="sheet-creat-div" style="width: 50%;">
                     <div class="sheet-creat-div">
                         <section class="sheet-creat-div">
-                            <label>防禦值：<input disabled value="<%=data.stat.armorValue%>" type="number" placeholder="0" size="2"></label><br>
-                            <label>先攻調整值：<input disabled value="<%=data.stat.initiative%>" type="number" placeholder="0" size="2"></label><br>
-                            <label>速度：<input disabled value="<%=data.stat.speed%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>防禦值：<input data-input="42"  readonly value="<%=data.stat.armorValue%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>先攻調整值：<input data-input="43"  readonly value="<%=data.stat.initiative%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>速度：<input data-input="44"  readonly value="<%=data.stat.speed%>" type="number" placeholder="0" size="2"></label><br>
                         </section>
 
                         <div id="sheet-creat-hp" class="sheet-creat-div">
-                            <label>最高血量：<input disabled value="<%=data.stat.max_hp%>" type="number" placeholder="0" size="2"></label><br>
-                            <label>目前血量：<input disabled value="<%=data.stat.hp%>" type="number" placeholder="0" size="2"></label><br>
-                            <label>暫時血量：<input disabled value="<%=data.stat.temp_hp%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>最高血量：<input data-input="45"  readonly value="<%=data.stat.max_hp%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>目前血量：<input data-input="46"  readonly value="<%=data.stat.hp%>" type="number" placeholder="0" size="2"></label><br>
+                            <label>暫時血量：<input data-input="47"  readonly value="<%=data.stat.temp_hp%>" type="number" placeholder="0" size="2"></label><br>
                         </div>
 
                         <section class="sheet-creat-div">
-                            <label>總數：<input disabled value="<%=data.stat.hit_dice_total%>" type="number" size="2"></label><br>
-                            <label>生命骰：<input disabled value="<%=data.stat.hit_dice%>" size="5"></label>
+                            <label>總數：<input data-input="48"  readonly value="<%=data.stat.hit_dice_total%>" type="number" size="2"></label><br>
+                            <label>生命骰：<input data-input="49"  readonly value="<%=data.stat.hit_dice%>" size="5"></label>
                         </section>
                         <section style="width: 50%">
                             <table>
@@ -304,13 +305,13 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input disabled class="check-input death-save"  type="checkbox">
+                                            <input data-input="50"  readonly class="check-input death-save"  type="checkbox">
                                         </label>
                                         <label>
-                                            <input disabled class="check-input death-save" type="checkbox">
+                                            <input data-input="51"  readonly class="check-input death-save" type="checkbox">
                                         </label>
                                         <label>
-                                            <input disabled class="check-input death-save" type="checkbox">
+                                            <input data-input="52"  readonly class="check-input death-save" type="checkbox">
                                         </label>
                                     </td>
                                 </tr>
@@ -320,13 +321,13 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input disabled class="check-input death-save" type="checkbox">
+                                            <input data-input="53"  readonly class="check-input death-save" type="checkbox">
                                         </label>
                                         <label>
-                                            <input disabled class="check-input death-save" type="checkbox">
+                                            <input data-input="54"  readonly class="check-input death-save" type="checkbox">
                                         </label>
                                         <label>
-                                            <input disabled class="check-input death-save" type="checkbox">
+                                            <input data-input="55"  readonly class="check-input death-save" type="checkbox">
                                         </label>
                                     </td>
                                 </tr>
@@ -343,19 +344,19 @@
                                 <th>攻擊力</th>
                             </tr>
                             <tr>
-                                <td><input class="attack aform" value="<%=data.equip.attack[0]%>" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack add" value="<%=data.equip.attack[1]%>" placeholder="+2"></td>
-                                <td><input class="attack aroll" value="<%=data.equip.attack[2]%>" placeholder="1d10"></td>
+                                <td><input data-input="56" readonly class="attack aform" value="<%=data.equip.attack[0]%>" placeholder="武士刀/揮砍"></td>
+                                <td><input data-input="57" readonly class="attack add" value="<%=data.equip.attack[1]%>" placeholder="+2"></td>
+                                <td><input data-input="58" readonly class="attack aroll" value="<%=data.equip.attack[2]%>" placeholder="1d10"></td>
                             </tr>
                             <tr>
-                                <td><input class="attack aform" value="<%=data.equip.attack[3]%>" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack add" value="<%=data.equip.attack[4]%>" placeholder="+2"></td>
-                                <td><input class="attack aroll" value="<%=data.equip.attack[5]%>" placeholder="1d10"></td>
+                                <td><input data-input="59" readonly class="attack aform" value="<%=data.equip.attack[3]%>" placeholder="武士刀/揮砍"></td>
+                                <td><input data-input="60" readonly class="attack add" value="<%=data.equip.attack[4]%>" placeholder="+2"></td>
+                                <td><input data-input="61" readonly class="attack aroll" value="<%=data.equip.attack[5]%>" placeholder="1d10"></td>
                             </tr>
                             <tr>
-                                <td><input class="attack aform" value="<%=data.equip.attack[6]%>" placeholder="武士刀/揮砍"></td>
-                                <td><input class="attack add" value="<%=data.equip.attack[7]%>" placeholder="+2"></td>
-                                <td><input class="attack aroll" value="<%=data.equip.attack[8]%>" placeholder="1d10"></td>
+                                <td><input data-input="62" readonly class="attack aform" value="<%=data.equip.attack[6]%>" placeholder="武士刀/揮砍"></td>
+                                <td><input data-input="63" readonly class="attack add" value="<%=data.equip.attack[7]%>" placeholder="+2"></td>
+                                <td><input data-input="64" readonly class="attack aroll" value="<%=data.equip.attack[8]%>" placeholder="1d10"></td>
                             </tr>
 
 
@@ -364,34 +365,34 @@
                     <table style="width: 100%;text-align: center;">
                         <tr>
                            <td>
-                               <label>CP：<input class="money" value="<%=data.equip.money[0]%>" type="number" placeholder="0"></label><br>
+                               <label>CP：<input data-input="65" class="money" value="<%=data.equip.money[0]%>" type="number" placeholder="0"></label><br>
                            </td>
                             <td rowspan="5">
-                                <textarea disabled id="equipment" style="border: none;
+                                <textarea data-textarea="1" readonly id="equipment" style="border: none;
                                  width: 100%;padding: 0;height: 240px;
                                  resize: none"><%=data.equip.equipment%></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>SP：<input class="money" value="<%=data.equip.money[1]%>" type="number" placeholder="0"></label><br>
+                                <label>SP：<input data-input="66" readonly class="money" value="<%=data.equip.money[1]%>" type="number" placeholder="0"></label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>EP：<input class="money" value="<%=data.equip.money[2]%>" type="number" placeholder="0" ></label><br>
+                                <label>EP：<input data-input="67" readonly class="money" value="<%=data.equip.money[2]%>" type="number" placeholder="0" ></label><br>
 
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>GP：<input class="money" value="<%=data.equip.money[3]%>" type="number" placeholder="0"></label><br>
+                                <label>GP：<input data-input="68" readonly class="money" value="<%=data.equip.money[3]%>" type="number" placeholder="0"></label><br>
 
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>PP：<input class="money" value="<%=data.equip.money[4]%>" type="number" placeholder="0" ></label><br>
+                                <label>PP：<input data-input="69" readonly class="money" value="<%=data.equip.money[4]%>" type="number" placeholder="0" ></label><br>
                             </td>
                         </tr>
                         <tr>
@@ -406,43 +407,43 @@
         <div id="main-tab-2" class="main-tab-content">
             <div class="sheet-creat-div" style="height: 100px;display: inline-block">
                 <section class="sheet-creat-div">
-                    <label>身高：<input disabled value="<%=data.story.height%>" min="0" placeholder="40" size="2" type="number"></label><br>
-                    <label>膚色：<input disabled value="<%=data.story.skin%>"></label><br>
-                    <label>年齡：<input disabled min="0" value="<%=data.story.age%>" size="2" type="number"></label><br>
-                    <label>體重：<input disabled min="0" value="<%=data.story.weight%>" size="2" type="number"></label><br>
-                    <label>髮色：<input disabled value="<%=data.story.hair%>"></label><br>
+                    <label>身高：<input data-input="70"  readonly value="<%=data.story.height%>" min="0" placeholder="40" size="2" type="number"></label><br>
+                    <label>膚色：<input data-input="71"  readonly value="<%=data.story.skin%>"></label><br>
+                    <label>年齡：<input data-input="72"  readonly min="0" value="<%=data.story.age%>" size="2" type="number"></label><br>
+                    <label>體重：<input data-input="73"  readonly min="0" value="<%=data.story.weight%>" size="2" type="number"></label><br>
+                    <label>髮色：<input data-input="74"  readonly value="<%=data.story.hair%>"></label><br>
                 </section>
-                <input disabled class="permission-status info" value="<%=data.info.permission%>" style="display: none">
+                <input data-input="75"  readonly class="permission-status info" value="<%=data.info.permission%>" style="display: none">
             </div>
             <div class="sheet-creat-div" style="width: 45%;display: inline-block">
-                    <label>特性：<textarea disabled
+                    <label>特性：<textarea data-textarea="2"  readonly
                                         style="height: 150px;width: 100%;resize: none"><%=data.story.trait%></textarea>
                     </label><br>
                     <label>角色外觀：<br>
-                        <textarea disabled
+                        <textarea data-textarea="3"  readonly
                                   style="height: 150px;width: 100%;resize: none"><%=data.story.role_description%></textarea></label><br>
                     <label>同盟 & 組織：<br>
-                        <textarea disabled
+                        <textarea data-textarea="4"  readonly
                                   style="height: 150px;width: 100%;resize: none"><%=data.story.alignment%></textarea></label><br>
                     <label>角色背景歷史：<br>
-                        <textarea disabled
+                        <textarea data-textarea="5"  readonly
                                   style="height: 150px;width: 100%;resize: none"><%=data.story.backstory%></textarea></label><br>
                     <label>其他特徵＆特性：
-                        <textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.otherTrait%></textarea></label>
+                        <textarea data-textarea="6"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.otherTrait%></textarea></label>
                     <label>寶物：
-                        <textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.treasure%></textarea></label>
+                        <textarea data-textarea="7"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.treasure%></textarea></label>
 
             </div>
             <div class="sheet-creat-div" style="width: 45% ;display: inline-block;vertical-align: top">
-                    性格：<textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.personality%></textarea><br>
-                    理念：<textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.ideals%></textarea><br>
-                    關係：<textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.bonds%></textarea><br>
-                    缺點：<textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.flaws%></textarea><br>
-                    其他專長&語言：<textarea disabled style="height: 150px;width: 100%;resize: none"><%=data.story.language%></textarea><br>
+                    性格：<textarea data-textarea="8"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.personality%></textarea><br>
+                    理念：<textarea data-textarea="9"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.ideals%></textarea><br>
+                    關係：<textarea data-textarea="10"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.bonds%></textarea><br>
+                    缺點：<textarea data-textarea="11"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.flaws%></textarea><br>
+                    其他專長&語言：<textarea data-textarea="12"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.language%></textarea><br>
                 <label for="image">角色圖片:<br></label>
                 <label>
                     <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
-                    <input type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)"
+                    <input data-input="76" type="file" id="image" onclick="fileClicked(event)" onchange="fileChanged(event)"
                            accept="image/*" style="display: none">
                 </label>
                 <button id="save">儲存圖片</button>
@@ -452,69 +453,69 @@
         <div id="main-tab-3" class="main-tab-content">
             <div style="margin: 50px">
                 <section class="sheet-creat-div">
-                    <label>法術職業：<input value="<%=data.stat.spell_class%>" disabled placeholder="變化係法師" size="20"></label>
-                    <label>法術施展能力：<input value="<%=data.stat.spell_ability%>" disabled placeholder="智力" size="10"></label>
-                    <label>法術豁免值：<input value="<%=data.stat.spell_save%>" disabled type="number" size="2"></label>
-                    <label>法術攻擊加值：<input value="<%=data.stat.spell_bonus%>" disabled type="number" placeholder="7" size="2"></label>
+                    <label>法術職業：<input data-input="77" value="<%=data.stat.spell_class%>"  readonly placeholder="變化係法師" size="20"></label>
+                    <label>法術施展能力：<input data-input="78" value="<%=data.stat.spell_ability%>"  readonly placeholder="智力" size="10"></label>
+                    <label>法術豁免值：<input data-input="79" value="<%=data.stat.spell_save%>"  readonly type="number" size="2"></label>
+                    <label>法術攻擊加值：<input data-input="80" value="<%=data.stat.spell_bonus%>"  readonly type="number" placeholder="7" size="2"></label>
                 </section>
                 <div style=" display: inline-block;width: 30%">
                     <div>
                         <section>
                             <h4 class="spell-level">0 小法術</h4><br>
-                            <label style="display: none" class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label style="display: none" class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label style="display: none" class="spell-label"><input data-input="81"  readonly type="number" class="spell-number"></label>
+                            <label style="display: none" class="spell-label"><input data-input="82"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="83" type="checkbox"  readonly class="check-input"><input data-input="84" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="85" type="checkbox"  readonly class="check-input"><input data-input="86" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="87" type="checkbox"  readonly class="check-input"><input data-input="88" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="89" type="checkbox"  readonly class="check-input"><input data-input="90" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="91" type="checkbox"  readonly class="check-input"><input data-input="92" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="93" type="checkbox"  readonly class="check-input"><input data-input="94" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="95" type="checkbox"  readonly class="check-input"><input data-input="96" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                     <div style="margin-top: 8%">
                         <section>
                             <h4 class="spell-level">1</h4>
-                            <label style="margin-bottom: 4%" class="spell-label">法術總級：<input disabled type="number" class="spell-number"></label>
-                            <label style="margin-bottom: 4%" class="spell-label">法術用量：<input disabled type="number" class="spell-number"></label>
+                            <label style="margin-bottom: 4%" class="spell-label">法術總級：<input data-input="97"  readonly type="number" class="spell-number"></label>
+                            <label style="margin-bottom: 4%" class="spell-label">法術用量：<input data-input="98"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="99" type="checkbox"  readonly class="check-input"><input data-input="100" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="101" type="checkbox"  readonly class="check-input"><input data-input="102" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="103" type="checkbox"  readonly class="check-input"><input data-input="104" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="105" type="checkbox"  readonly class="check-input"><input data-input="106" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="107" type="checkbox"  readonly class="check-input"><input data-input="108" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="109" type="checkbox"  readonly class="check-input"><input data-input="110" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="111" type="checkbox"  readonly class="check-input"><input data-input="112" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="113" type="checkbox"  readonly class="check-input"><input data-input="114" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="115" type="checkbox"  readonly class="check-input"><input data-input="116" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="117" type="checkbox"  readonly class="check-input"><input data-input="118" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="119" type="checkbox"  readonly class="check-input"><input data-input="120" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="121" type="checkbox"  readonly class="check-input"><input data-input="122" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
                             <h4 class="spell-level">2</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="123"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="124"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="125" type="checkbox"  readonly class="check-input"><input data-input="126" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="127" type="checkbox"  readonly class="check-input"><input data-input="128" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="129" type="checkbox"  readonly class="check-input"><input data-input="130" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="131" type="checkbox"  readonly class="check-input"><input data-input="132" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="133" type="checkbox"  readonly class="check-input"><input data-input="134" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="135" type="checkbox"  readonly class="check-input"><input data-input="136" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="137" type="checkbox"  readonly class="check-input"><input data-input="138" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="139" type="checkbox"  readonly class="check-input"><input data-input="140" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="141" type="checkbox"  readonly class="check-input"><input data-input="142" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="143" type="checkbox"  readonly class="check-input"><input data-input="144" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="145" type="checkbox"  readonly class="check-input"><input data-input="146" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="147" type="checkbox"  readonly class="check-input"><input data-input="148" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="149" type="checkbox"  readonly class="check-input"><input data-input="150" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
 
@@ -524,62 +525,62 @@
                         <div>
                             <section>
                                 <h4 class="spell-level">3</h4>
-                                <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                                <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                                <label class="spell-label"><input data-input="151"  readonly type="number" class="spell-number"></label>
+                                <label class="spell-label"><input data-input="152"  readonly type="number" class="spell-number"></label>
                             </section>
                             <div class="spell-slot">
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                                <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                                <label><input data-input="153" type="checkbox"  readonly class="check-input"><input data-input="154" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="155" type="checkbox"  readonly class="check-input"><input data-input="156" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="157" type="checkbox"  readonly class="check-input"><input data-input="158" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="159" type="checkbox"  readonly class="check-input"><input data-input="160" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="161" type="checkbox"  readonly class="check-input"><input data-input="162" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="163" type="checkbox"  readonly class="check-input"><input data-input="164" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="165" type="checkbox"  readonly class="check-input"><input data-input="166" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="167" type="checkbox"  readonly class="check-input"><input data-input="168" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="169" type="checkbox"  readonly class="check-input"><input data-input="170" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="171" type="checkbox"  readonly class="check-input"><input data-input="172" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="173" type="checkbox"  readonly class="check-input"><input data-input="174" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="175" type="checkbox"  readonly class="check-input"><input data-input="176" class="spell-name"  readonly type="text"></label><br>
+                                <label><input data-input="177" type="checkbox"  readonly class="check-input"><input data-input="178" class="spell-name"  readonly type="text"></label><br>
                             </div>
                         </div>
                         <section>
                             <h4 class="spell-level">4</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="179"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="180"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="181" type="checkbox"  readonly class="check-input"><input data-input="182" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="183" type="checkbox"  readonly class="check-input"><input data-input="184" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="185" type="checkbox"  readonly class="check-input"><input data-input="186" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="187" type="checkbox"  readonly class="check-input"><input data-input="188" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="189" type="checkbox"  readonly class="check-input"><input data-input="190" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="191" type="checkbox"  readonly class="check-input"><input data-input="192" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="193" type="checkbox"  readonly class="check-input"><input data-input="194" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="195" type="checkbox"  readonly class="check-input"><input data-input="196" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="197" type="checkbox"  readonly class="check-input"><input data-input="198" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="199" type="checkbox"  readonly class="check-input"><input data-input="200" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="201" type="checkbox"  readonly class="check-input"><input data-input="202" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="203" type="checkbox"  readonly class="check-input"><input data-input="204" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="205" type="checkbox"  readonly class="check-input"><input data-input="206" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
                             <h4 class="spell-level">5</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="207"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="208"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="209" type="checkbox"  readonly class="check-input"><input data-input="210" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="211" type="checkbox"  readonly class="check-input"><input data-input="212" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="213" type="checkbox"  readonly class="check-input"><input data-input="214" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="215" type="checkbox"  readonly class="check-input"><input data-input="216" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="217" type="checkbox"  readonly class="check-input"><input data-input="218" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="219" type="checkbox"  readonly class="check-input"><input data-input="220" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="221" type="checkbox"  readonly class="check-input"><input data-input="222" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="223" type="checkbox"  readonly class="check-input"><input data-input="224" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="225" type="checkbox"  readonly class="check-input"><input data-input="226" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
 
@@ -589,69 +590,69 @@
                     <div>
                         <section>
                             <h4 class="spell-level">6</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="227"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="228"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="229" type="checkbox"  readonly class="check-input"><input data-input="230" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="231" type="checkbox"  readonly class="check-input"><input data-input="232" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="233" type="checkbox"  readonly class="check-input"><input data-input="234" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="235" type="checkbox"  readonly class="check-input"><input data-input="236" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="237" type="checkbox"  readonly class="check-input"><input data-input="238" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="239" type="checkbox"  readonly class="check-input"><input data-input="240" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="241" type="checkbox"  readonly class="check-input"><input data-input="242" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="243" type="checkbox"  readonly class="check-input"><input data-input="244" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="245" type="checkbox"  readonly class="check-input"><input data-input="246" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                     <div>
                     <section>
                         <h4 class="spell-level">7</h4>
-                        <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                        <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                        <label class="spell-label"><input data-input="247"  readonly type="number" class="spell-number"></label>
+                        <label class="spell-label"><input data-input="248"  readonly type="number" class="spell-number"></label>
                     </section>
                     <div class="spell-slot">
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                        <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                        <label><input data-input="249" type="checkbox"  readonly class="check-input"><input data-input="250" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="251" type="checkbox"  readonly class="check-input"><input data-input="252" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="253" type="checkbox"  readonly class="check-input"><input data-input="254" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="255" type="checkbox"  readonly class="check-input"><input data-input="256" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="257" type="checkbox"  readonly class="check-input"><input data-input="258" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="259" type="checkbox"  readonly class="check-input"><input data-input="260" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="261" type="checkbox"  readonly class="check-input"><input data-input="262" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="263" type="checkbox"  readonly class="check-input"><input data-input="264" class="spell-name"  readonly type="text"></label><br>
+                        <label><input data-input="265" type="checkbox"  readonly class="check-input"><input data-input="266" class="spell-name"  readonly type="text"></label><br>
                     </div>
                     </div>
                     <div>
                         <section>
                             <h4 class="spell-level">8</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="267"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="268"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="269" type="checkbox"  readonly class="check-input"><input data-input="270" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="271" type="checkbox"  readonly class="check-input"><input data-input="272" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="273" type="checkbox"  readonly class="check-input"><input data-input="274" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="275" type="checkbox"  readonly class="check-input"><input data-input="276" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="277" type="checkbox"  readonly class="check-input"><input data-input="278" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="279" type="checkbox"  readonly class="check-input"><input data-input="280" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="281" type="checkbox"  readonly class="check-input"><input data-input="282" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                     <div>
                         <section>
                             <h4 class="spell-level">9</h4>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
-                            <label class="spell-label"><input disabled type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="283"  readonly type="number" class="spell-number"></label>
+                            <label class="spell-label"><input data-input="284"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
-                            <label><input type="checkbox" disabled class="check-input"><input class="spell-name" disabled type="text"></label><br>
+                            <label><input data-input="285" type="checkbox"  readonly class="check-input"><input data-input="286" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="287" type="checkbox"  readonly class="check-input"><input data-input="288" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="289" type="checkbox"  readonly class="check-input"><input data-input="290" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="291" type="checkbox"  readonly class="check-input"><input data-input="292" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="293" type="checkbox"  readonly class="check-input"><input data-input="294" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="295" type="checkbox"  readonly class="check-input"><input data-input="296" class="spell-name"  readonly type="text"></label><br>
+                            <label><input data-input="297" type="checkbox"  readonly class="check-input"><input data-input="298" class="spell-name"  readonly type="text"></label><br>
                         </div>
                     </div>
                 </div>

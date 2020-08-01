@@ -307,7 +307,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                 .catch(function (err) {
                     console.log(err);
                     return res.status(404).render('404');
-                })
+                });
             if(sheet.author===user._id) {
                 res.render(sheet.system+'_edit', {
                     title: '編輯角色卡',
@@ -319,7 +319,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
             if(sheet.author!==user._id){
                 if(sheet.permission==='限團務GM' && sheet.session.length !==0){
                     for (const session of sheet.session){
-                        var gm = await Session.findOne({_id:session,gm:user.name})
+                        var gm = await Session.findOne({_id:session,gm:user.name});
                         if (gm) return res.render(sheet.system+'_show', {
                             title: '檢視角色卡',
                             id: req.params.id,
@@ -349,7 +349,7 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                 }
             }
         }catch (err) {
-            console.log(err)
+            console.log(err);
             res.status(404).render('404');
         }
 });

@@ -1,8 +1,32 @@
 document.write();
 $(document).ready(function () {
-    var url = $(location).attr('href')
+    const socket=io();
+
+    var url = $(location).attr('href');
     var array = url.split('/');
     var id = array[array.length-1];
+
+    socket.emit('join',id);
+    socket.on('asyncInput',(data)=>{
+        if(data.key === 'input'){
+            let input=$(`${data.key}[data-${data.key}=${data.index}]`);
+            input.val(data.payload);
+            if(input.attr('type')==='checkbox' && data.payload ==='yes'){
+                input.prop('checked',true);
+            }else if  (input.attr('type')==='checkbox'){
+                input.prop('checked',false);
+            }
+            $('.permissions').each(function () {
+                $(this).removeClass('permissions-choose');
+                if ($(this).text() === $('.permission-status').val()) {
+                    $(this).addClass('permissions-choose');
+                }
+            });
+        }else {
+            $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
+        }
+        sheetSetup()
+    });
     $('.delete-check').on('click',function () {
         $('#delete-window').css('display','block');
     });
@@ -21,55 +45,24 @@ $(document).ready(function () {
                 }, 1000)
             }
         })
-    })
-    function sheetPush() {
-        var skill=[];
-        var spell={0:{},1:{},2:{},3:{},4:{},5:{},6:{},7:{},8:{},9:{}};
-        $('.skill').each(function () {
-            const input = $(this).siblings('label');
-            if($(this).siblings('label').find('input').val()==='yes'){
-                skill.push(input.text())
-            }
-        })
-        var stat =[];
-        $('.base-attr').each(function () {
-            stat.push($(this).val());
-        })
+    });
 
-        $('.spell-level').each(function (index) {
-            spell[index]["number"]=[];
-            spell[index]["spells"]={};
-            $(this).siblings('label').find('.spell-number').each(function () {
-                spell[index]["number"].push($(this).val());
-            });
-            $(this).parent().siblings().children('label').each(function (i) {
-                if ($(this).children('.spell-name').val()!==("")){
-                    const name=$(this).children('.spell-name').val();
-                    spell[index]["spells"][name]=($(this).children('.check-input').val());
-                }
-            })
-        })
-        var attack=[];
-        $('.attack').each(function () {
-            attack.push($(this).val());
-        })
-        var money=[];
-        $('.money').each(function () {
-            money.push($(this).val());
-        })
-        this.spell=spell;
-        this.skill=skill;
-        this.money=money;
-        this.stat=stat;
-        this.attack=attack;
-        return this;
-    }
-    $(document).on('change','input[type=text], input[type=number], textarea,select',function () {
+    $(document).on('change',':input:not([type=button]):not([type=range]), textarea',function () {
         if($('#name').val()===''){
             return bad_message('冒險者姓名不得為空')
         }
         $('.save-icon').show();
         $('.success-icon').hide();
+        var payload;
+        if($(this).is('input')) payload =$(this).val();
+        else if($(this).is('textarea')) payload = $(this).text();
+        const input = {
+            url:id,
+            key:Object.keys($(this).data())[0],
+            index:$(this).data(Object.keys($(this).data())[0]),
+            payload:payload
+        };
+        socket.emit('input',input);
         setTimeout(function () {
             const calSheet =sheetPush();
             const spell =calSheet.spell;
@@ -77,12 +70,14 @@ $(document).ready(function () {
             const money =calSheet.money;
             const stat =calSheet.stat;
             const attack=calSheet.attack;
+            const death_save=calSheet.death_save;
             var sheet = $('#myform').serializeArray();
-            sheet.push('skill',JSON.stringify(skill));
-            sheet.push('spell',JSON.stringify(spell));
-            sheet.push('money',JSON.stringify(money));
-            sheet.push('stat',JSON.stringify(stat));
-            sheet.push('attack',JSON.stringify(attack));
+            sheet.push({name:'skill',value:JSON.stringify(skill)});
+            sheet.push({name:'spell',value:JSON.stringify(spell)});
+            sheet.push({name:'money',value:JSON.stringify(money)});
+            sheet.push({name:'stat',value:JSON.stringify(stat)});
+            sheet.push({name:'attack',value:JSON.stringify(attack)});
+            sheet.push({name:'death_save',value:JSON.stringify(death_save)});
             $.ajax({
                 url:'../api/sheet/DND5e/edit/'+ id,
                 type: 'POST',
@@ -96,7 +91,7 @@ $(document).ready(function () {
                 }
             });
         },2000)
-    })
+    });
     $('#save').on('click',function (e){
         e.preventDefault();
         if($('input[type=file]')[0].files[0]===undefined){
@@ -120,7 +115,7 @@ $(document).ready(function () {
                 }
             });
         }
-    })
+    });
     $('#cancel-image').on('click',function (e){
         e.preventDefault();
         $('#error-image').remove();

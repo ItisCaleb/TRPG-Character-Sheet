@@ -12,7 +12,7 @@ const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
 
-dotenv.config()
+dotenv.config();
 
 const upload = multer({
     limit:{
@@ -22,7 +22,7 @@ const upload = multer({
         console.log(file.originalname);
         cb(null,true);
     }
-})
+});
 
 router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
     const id = jwtDecode(req.cookies.auth_token)._id;
@@ -89,32 +89,32 @@ router.post('/DND5e',verify,upload.single('file'), async function (req,res) {
         flaws: cs.flaws,
         language: cs.language,
         avatar:image
-    })
+    });
     const spell =new DND5eSpell({
         _id:sheet._id,
         death_save:JSON.parse(cs.death_save),
         skills:JSON.parse(cs.skill),
         spell:JSON.parse(cs.spell)
-    })
+    });
     const equip =new DND5eEquip({
         _id:sheet._id,
         attack:JSON.parse(cs.attack),
         money:JSON.parse(cs.money),
         equipment:cs.equip,
-    })
+    });
     try{
         await stat.save();
         await story.save();
         await spell.save();
         await equip.save();
-        await User.updateOne({_id:id},{$inc:{sheet_number:1}})
+        await User.updateOne({_id:id},{$inc:{sheet_number:1}});
         res.send('角色卡創建成功');
     }catch (err) {
         console.log(err);
         res.status(400).send(err);
     }
 
-})
+});
 
 router.get('/DND5e/json/:id',async function (req,res) {
     const url = req.params.id;
@@ -122,7 +122,7 @@ router.get('/DND5e/json/:id',async function (req,res) {
     sheet.story = await DND5eStory.findOne({_id: url}).lean() ;
     sheet.spell = await DND5eSpell.findOne({_id: url}).lean() ;
     await res.json(JSON.stringify(sheet));
-})
+});
 
 router.post('/DND5e/edit/:id',verify,async function (req,res) {
     const cs = req.body;
@@ -157,7 +157,7 @@ router.post('/DND5e/edit/:id',verify,async function (req,res) {
             spell_save:cs['spell-save'],
             spell_bonus:cs['spell-bonus'],
 
-        })
+        });
 
         await DND5eStory.updateOne({_id:req.params.id},{
             class: cs.class,
@@ -187,7 +187,7 @@ router.post('/DND5e/edit/:id',verify,async function (req,res) {
             death_save:JSON.parse(cs.death_save),
             skills:JSON.parse(cs.skill),
             spell:JSON.parse(cs.spell)
-        })
+        });
         await DND5eEquip.updateOne({_id:req.params.id},{
             attack:JSON.parse(cs.attack),
             money:JSON.parse(cs.money),
@@ -198,14 +198,14 @@ router.post('/DND5e/edit/:id',verify,async function (req,res) {
         console.log(err);
         res.status(400).send(err);
     }
-})
+});
 router.post('/DND5e/image/:id',upload.single('file'),verify,async function (req,res) {
     const image = (req.file) ?req.file.buffer:'';
     await DND5eStory.updateOne({_id:req.params.id},{
         avatar:image
-    })
+    });
     res.send('');
 });
 
 
-module.exports= router
+module.exports= router;

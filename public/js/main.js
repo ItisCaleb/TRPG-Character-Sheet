@@ -16,7 +16,7 @@ $(document).ready(function () {
     });
     $('#overlay').on('click', function () {
         $(this).hide();
-    })
+    });
 
     //if user is already logged in, switch login and sign in button to user page and log out button
     if (document.cookie.indexOf("auth_token") >= 0) {

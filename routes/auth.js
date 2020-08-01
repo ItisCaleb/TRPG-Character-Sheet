@@ -54,7 +54,7 @@ router.post('/authed', async (req, res) => {
             user: process.env.VBOT,
             pass: process.env.VPASS,
         }
-    })
+    });
     //validate register infomation
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -93,7 +93,7 @@ router.post('/authed', async (req, res) => {
                     to: temp.email,
                     subject: '電子郵件驗證',
                     html: html
-                }
+                };
                 mailTransport.sendMail(mail);
             });
         await temp.save();
@@ -101,7 +101,7 @@ router.post('/authed', async (req, res) => {
     } catch (err) {
         res.status(400).send(err);
     }
-})
+});
 //Login
 router.post('/userlogin', async (req, res) => {
 

@@ -15,7 +15,7 @@ form{
 .list-menu{
     display: inline-block;
     margin-top:5px ;
-    width: 90%;
+    width: 100%;
     border:1px solid lightgray;
     border-bottom:none ;
     background: white;

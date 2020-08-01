@@ -1,15 +1,40 @@
 document.write('');
 $(document).ready(function () {
+
     let sheet = {};
     const url = $(location).attr('href');
     const array = url.split('/');
     const id = array[array.length - 1];
+
     var disabled="";
     var btn='<button class="custom-delete">刪除</button></td>\n';
-    if($('#status').length>0) {
+    var socket;
+    if($('#status').data('status')==='view') {
+        socket = io();
+        socket.emit('join',id);
+
         disabled="disabled";
         btn="";
     }
+    try{
+        socket.on('asyncInput',(data)=>{
+            if(data.key === 'input' || data.key === 'select'){
+                $(`${data.key}[data-${data.key}=${data.index}]`).val(data.payload);
+                $('.permissions').each(function () {
+                    $(this).removeClass('permissions-choose');
+                    if ($(this).text() === $('.permission-status').val()) {
+                        $(this).addClass('permissions-choose');
+                    }
+                });
+            }else {
+                $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
+            }
+        });
+    }catch (err) {
+
+    }
+
+
     if ($('#url').length > 0) {
         $.ajax({
             url: '../api/sheet/COC7th/json/' + id,
@@ -28,7 +53,7 @@ $(document).ready(function () {
                     if ($(this).text() === $('.permission-status').val()) {
                         $(this).addClass('permissions-choose');
                     }
-                })
+                });
                 $('.class-feature').val(sheet.skill.class_feature);
                 var number = 0;
                 for (let i = 0; i < Object.keys(sheet.skill.skill).length; i++) {
@@ -44,17 +69,17 @@ $(document).ready(function () {
                                 })
                             }
                         }
-                    })
+                    });
 
                     if (skill.name.includes('自定義技能')) {
-
+                        const data_number = $('.last').children('.td-input:last').children('input').data('input');
                         $('.last').last().after('<tr class="custom-skill last">\n' +
                             '<td class="custom-name name">自定義技能' + (number + 1) + btn +
                             '<td class="td-input custom-skill-name">' + skill.number[3] + '</td>\n' +
                             '<td class="base base-skill custom-base">' + skill.number[4] + '</td>\n' +
-                            '<td class="td-input"><input ' + disabled + ' value="' + skill.number[0] + '" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
-                            '<td class="td-input"><input ' + disabled + ' value="' + skill.number[1] + '" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
-                            '<td class="td-input"><input ' + disabled + ' value="' + skill.number[2] + '" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
+                            '<td class="td-input"><input data-input="'+data_number+1+'"' + disabled + ' value="' + skill.number[0] + '" type="number" max="100" min="0" class="skill base-input class" /></td>\n' +
+                            '<td class="td-input"><input data-input="'+data_number+2+'"' + disabled + ' value="' + skill.number[1] + '" type="number" max="100" min="0" class="skill base-input interest " /></td>\n' +
+                            '<td class="td-input"><input data-input="'+data_number+3+'"' + disabled + ' value="' + skill.number[2] + '" type="number" max="100" min="-50" class="skill base-input" /></td>\n' +
                             '<td class="total">\n' +
                             '                                            <table>\n' +
                             '                                                <tr>\n' +

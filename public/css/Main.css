@@ -102,6 +102,9 @@ html,button,input,select,textarea{
         color: #46A3FF;
         border-bottom-color: #46A3FF;
     }
+    .btn{
+        cursor: pointer;
+    }
 
     #menu {
         padding: .25rem .75rem;
@@ -113,6 +116,9 @@ html,button,input,select,textarea{
         cursor: pointer;
         display: none;
         float: right;
+    }
+    #mobile-menu{
+        display: none;
     }
 
     .message {
@@ -248,7 +254,6 @@ html,button,input,select,textarea{
         border-radius: 4px;
         padding: 4px 10px;
         cursor: pointer;
-
     }
 
     .content {
@@ -468,15 +473,22 @@ html,button,input,select,textarea{
         text-align: center;
         animation: right-menu-in 0.5s;
     }
+    #mobile-menu{
+        width: 25%;
+        top: 10%;
+        position: fixed;
+    }
+
     .mobile-nav{
         margin-top: 4%;
         padding:0.5% ;
         width: 100%;
         background: white;
         border: 1px solid lightgray;
+        text-align: center;
     }
     #mobile-option{
-        width: 30%;
+        width: 100%;
     }
 
     @keyframes right-menu-in {

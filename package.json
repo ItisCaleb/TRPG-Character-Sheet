@@ -27,6 +27,7 @@
     "multer-gridfs-storage": "^4.0.3",
     "nodemailer": "^6.4.6",
     "nodemon": "^2.0.3",
+    "socket.io": "^2.3.0",
     "vhost": "^3.0.2"
   }
 }

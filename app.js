@@ -73,7 +73,14 @@ app.use(function (err, req, res, next) {
 const port = process.env.PORT || 3000;
 const server = https.createServer(credentials,app);
 
+
+
 server.listen(port,() => console.log('HTTPS start on port:' + port));
+const io = require('socket.io').listen(server);
+io.sockets.on('connect',(socket)=>{
+   require('./routes/module/asyncEdit')(socket);
+});
+
 
 // Secondary http app
 const httpApp = express();
@@ -87,3 +94,4 @@ httpRouter.get('/', function(req, res){
 });
 const httpServer = http.createServer(httpApp);
 httpServer.listen(3001,() => console.log('HTTP start on port:' + 3001));
+

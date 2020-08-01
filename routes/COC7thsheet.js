@@ -15,7 +15,7 @@ const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
 
 
-dotenv.config()
+dotenv.config();
 
 // image filter middleware
 const upload = multer({
@@ -26,7 +26,7 @@ const upload = multer({
         console.log(file.originalname);
         cb(null,true);
     }
-})
+});
 router.post('/COC7th', verify,upload.single('file'), async function (req, res)  {
     const id = jwtDecode(req.cookies.auth_token)._id;
     const user = await User.findOne({_id:id});
