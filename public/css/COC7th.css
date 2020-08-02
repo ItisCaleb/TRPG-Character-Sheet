@@ -2,6 +2,7 @@
 form{
     width: auto;
 }
+
 .sheet_creat_div {
     width: 100%;
     padding: 1%;
@@ -68,35 +69,6 @@ form{
 }
 @media only screen and (max-width:768px) {
 
-    .loader {
-        display: inline-block;
-        border: 5px solid #f3f3f3; /* Light grey */
-        border-top: 5px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        animation: spin 2s linear infinite;
-    }
-    .success-icon{
-        width: 60%;
-        display: inline;
-    }
-    .save-icon{
-        width: 70%;
-        display: inline;
-    }
-    #mobile-img{
-        width: 10%;
-        right: 0;
-        display: inline-block;
-        vertical-align: middle;
-        cursor: pointer;
-    }
-    .correct-image{
-        width: 15%;
-        vertical-align: middle
-    }
 
     .main-tab-content{
         font-size: 10px;
@@ -109,9 +81,6 @@ form{
     }
     .add-menu{
         width: 9%;
-    }
-    .left-side{
-        display: none;
     }
     .add-menu{
         position: fixed;
@@ -150,19 +119,7 @@ form{
     .add-menu {
         width: 5%;
     }
-    .left-side{
-        height: 70%;
-        width: 10%;
-        max-width: 20%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: -1%;
-        overflow-x: hidden;
-        margin-top: 10%;
-        margin-right: -10%;
-        text-align: center;
-    }
+
 
     .list{
         width: 100%;
@@ -205,6 +162,8 @@ form{
         border: 1px solid lightgray;
         background-color: white;
     }
+
+
 }
 .create{
     border: 0;
@@ -297,84 +256,4 @@ input{
 }
 
 
-ul.tabs{
-    margin: 0;
-    padding: 0;
-    list-style: none;
 
-}
-ul.tabs li{
-    background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-ul.tabs li.current{
-    background: #ededed;
-    color: #222;
-}
-
-.tab-content{
-    display: none;
-    width:auto;
-}
-
-.tab-content.current{
-    display: inherit;
-}
-ul.tabs{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-}
-ul.tabs li{
-    background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-ul.tabs li.current{
-    background: #ededed;
-    color: #222;
-}
-
-.tab-content{
-    display: none;
-}
-
-.tab-content.current{
-    display: inherit;
-}
-ul.main-tabs{
-    margin-left: 5%;
-    padding: 0;
-    list-style: none;
-
-}
-ul.main-tabs li{
-    background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-ul.main-tabs li.main-current{
-    background: lightgray;
-    color: #222;
-}
-
-.main-tab-content{
-    border: 1px solid lightgray;
-    display: none;
-    padding: 15px;
-}
-
-.main-tab-content.main-current{
-    display: inherit;
-}

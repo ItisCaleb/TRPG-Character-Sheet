@@ -16,18 +16,18 @@ $(document).ready(function () {
     });
     $(document).on('change', '.class-feature', function () {
         $('.class-feature').val($(this).val());
-        skill()
+        skillSet()
     });
     $(document).on('input', '#add-slider', function () {
         $(this).parent('.add-menu').siblings('.skill').val($(this).val());
-        skill()
+        skillSet()
     });
     $(document).on('change', '#add-slider', function () {
         $(this).parent('.add-menu').siblings('.skill').trigger('change');
     });
     $(document).on('input','.skill',function () {
         $(this).siblings('.add-menu').find('#add-slider').val($(this).val());
-        skill()
+        skillSet()
     });
     $(document).on('mousedown', '#add', function () {
         var sum=parseInt($(this).siblings('#add-slider').val()) +1;
@@ -286,10 +286,10 @@ function sheetCalculate () {
         $('#build').text('+2d6 & 3');
     if (str + siz >= 285)
         $('#build').text(Math.floor((((str + siz) - 205) / 80) + 2) + 'd6 & ' + Math.floor((((str + siz) - 205) / 80) + 3));
-    skill()
+    skillSet()
 
 }
-function skill(){
+function skillSet(){
     $('.skill').each(function () {
         if ($(this).val() > 99)
             $(this).val(99);

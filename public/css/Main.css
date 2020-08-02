@@ -5,6 +5,7 @@ html,button,input,select,textarea{
 }
 
 @media only screen and (min-width: 768px) {
+
     .head {
         background-color: antiquewhite;
         color: black;
@@ -102,9 +103,7 @@ html,button,input,select,textarea{
         color: #46A3FF;
         border-bottom-color: #46A3FF;
     }
-    .btn{
-        cursor: pointer;
-    }
+
 
     #menu {
         padding: .25rem .75rem;
@@ -291,6 +290,19 @@ html,button,input,select,textarea{
 
     button:hover {
         opacity: 0.8;
+    }
+    .left-side{
+        height: 70%;
+        width: 10%;
+        max-width: 20%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: -1%;
+        overflow-x: hidden;
+        margin-top: 10%;
+        margin-right: -10%;
+        text-align: center;
     }
 
 
@@ -546,6 +558,43 @@ html,button,input,select,textarea{
         position: absolute;
         overflow: hidden;
     }
+    .left-side{
+        display: none;
+    }
+
+    .loader {
+        display: inline-block;
+        border: 5px solid #f3f3f3; /* Light grey */
+        border-top: 5px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        animation: spin 2s linear infinite;
+    }
+    .success-icon{
+        width: 60%;
+        display: inline;
+    }
+    .save-icon{
+        width: 70%;
+        display: inline;
+    }
+    #mobile-img{
+        width: 10%;
+        right: 0;
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+    .correct-image{
+        width: 15%;
+        vertical-align: middle
+    }
+    .mobile-nav-menu{
+        vertical-align: top;
+    }
+
 }
 
 .topic-img {
@@ -573,4 +622,88 @@ html,button,input,select,textarea{
     cursor: pointer;
     width: 100%;
 }
+ul.tabs{
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
+}
+ul.tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    display: none;
+    width:auto;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+ul.tabs{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+ul.tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+}
+
+.tab-content{
+    display: none;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+ul.main-tabs{
+    margin-left: 5%;
+    padding: 0;
+    list-style: none;
+
+}
+ul.main-tabs li{
+    background: none;
+    color: #222;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul.main-tabs li.main-current{
+    background: lightgray;
+    color: #222;
+}
+
+.main-tab-content{
+    border: 1px solid lightgray;
+    display: none;
+    padding: 15px;
+}
+
+.main-tab-content.main-current{
+    display: inherit;
+}
+
+.btn{
+    cursor: pointer;
+}

@@ -110,7 +110,7 @@ router.get('/adminpost', verify,async function (req, res) {
     }
 });
 //post things
-router.post('/admin/post', verify,async function (req, res) {
+/*router.post('/admin/post', verify,async function (req, res) {
     const user = jwtDecode(req.cookies.auth_token);
     const admin = await User.findOne({_id:user._id})
 
@@ -129,7 +129,7 @@ router.post('/admin/post', verify,async function (req, res) {
     } else {
         res.status(400).send('你沒有權限')
     }
-});
+});*/
 
 
 //render session page

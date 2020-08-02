@@ -163,7 +163,7 @@ router.post('/forget_password', async function (req, res) {
             user: process.env.VBOT,
             pass: process.env.VPASS,
         }
-    })
+    });
     try {
         ejs.renderFile(__dirname + '/../views/verify_email.ejs',
             {
@@ -184,7 +184,7 @@ router.post('/forget_password', async function (req, res) {
     } catch (err) {
         res.status(400).send(err)
     }
-})
+});
 
 //find password
 router.post('/find_password/:email', async (req, res) => {

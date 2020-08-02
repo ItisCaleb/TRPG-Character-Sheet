@@ -417,29 +417,29 @@
             </div>
             <div class="sheet-creat-div" style="width: 45%;display: inline-block">
                     <label>特性：<textarea data-textarea="2"  readonly
-                                        style="height: 150px;width: 100%;resize: none"><%=data.story.trait%></textarea>
+                                        class="story-text"><%=data.story.trait%></textarea>
                     </label><br>
                     <label>角色外觀：<br>
                         <textarea data-textarea="3"  readonly
-                                  style="height: 150px;width: 100%;resize: none"><%=data.story.role_description%></textarea></label><br>
+                                  class="story-text"><%=data.story.role_description%></textarea></label><br>
                     <label>同盟 & 組織：<br>
                         <textarea data-textarea="4"  readonly
-                                  style="height: 150px;width: 100%;resize: none"><%=data.story.alignment%></textarea></label><br>
+                                  class="story-text"><%=data.story.alignment%></textarea></label><br>
                     <label>角色背景歷史：<br>
                         <textarea data-textarea="5"  readonly
-                                  style="height: 150px;width: 100%;resize: none"><%=data.story.backstory%></textarea></label><br>
+                                  class="story-text"><%=data.story.backstory%></textarea></label><br>
                     <label>其他特徵＆特性：
-                        <textarea data-textarea="6"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.otherTrait%></textarea></label>
+                        <textarea data-textarea="6"  readonly class="story-text"><%=data.story.otherTrait%></textarea></label>
                     <label>寶物：
-                        <textarea data-textarea="7"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.treasure%></textarea></label>
+                        <textarea data-textarea="7"  readonly class="story-text"><%=data.story.treasure%></textarea></label>
 
             </div>
             <div class="sheet-creat-div" style="width: 45% ;display: inline-block;vertical-align: top">
-                    性格：<textarea data-textarea="8"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.personality%></textarea><br>
-                    理念：<textarea data-textarea="9"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.ideals%></textarea><br>
-                    關係：<textarea data-textarea="10"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.bonds%></textarea><br>
-                    缺點：<textarea data-textarea="11"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.flaws%></textarea><br>
-                    其他專長&語言：<textarea data-textarea="12"  readonly style="height: 150px;width: 100%;resize: none"><%=data.story.language%></textarea><br>
+                    性格：<textarea data-textarea="8"  readonly class="story-text"><%=data.story.personality%></textarea><br>
+                    理念：<textarea data-textarea="9"  readonly class="story-text"><%=data.story.ideals%></textarea><br>
+                    關係：<textarea data-textarea="10"  readonly class="story-text"><%=data.story.bonds%></textarea><br>
+                    缺點：<textarea data-textarea="11"  readonly class="story-text"><%=data.story.flaws%></textarea><br>
+                    其他專長&語言：<textarea data-textarea="12"  readonly class="story-text"><%=data.story.language%></textarea><br>
                 <label for="image">角色圖片:<br></label>
                 <label>
                     <img id="add-image" src="/public/source/iconmonstr-plus-6.svg" alt="">
@@ -451,14 +451,14 @@
             </div>
         </div>
         <div id="main-tab-3" class="main-tab-content">
-            <div style="margin: 50px">
+            <div class="spell-content">
                 <section class="sheet-creat-div">
                     <label>法術職業：<input data-input="77" value="<%=data.stat.spell_class%>"  readonly placeholder="變化係法師" size="20"></label>
                     <label>法術施展能力：<input data-input="78" value="<%=data.stat.spell_ability%>"  readonly placeholder="智力" size="10"></label>
                     <label>法術豁免值：<input data-input="79" value="<%=data.stat.spell_save%>"  readonly type="number" size="2"></label>
                     <label>法術攻擊加值：<input data-input="80" value="<%=data.stat.spell_bonus%>"  readonly type="number" placeholder="7" size="2"></label>
                 </section>
-                <div style=" display: inline-block;width: 30%">
+                <div class="spell-slots" style=" display: inline-block;width: 30%">
                     <div>
                         <section>
                             <h4 class="spell-level">0 小法術</h4><br>
@@ -478,8 +478,8 @@
                     <div style="margin-top: 8%">
                         <section>
                             <h4 class="spell-level">1</h4>
-                            <label style="margin-bottom: 4%" class="spell-label">法術總級：<input data-input="97"  readonly type="number" class="spell-number"></label>
-                            <label style="margin-bottom: 4%" class="spell-label">法術用量：<input data-input="98"  readonly type="number" class="spell-number"></label>
+                            <label style="margin-bottom: 4%" class="spell-label">法術總級：<br><input data-input="97"  readonly type="number" class="spell-number"></label>
+                            <label style="margin-bottom: 4%" class="spell-label">法術用量：<br><input data-input="98"  readonly type="number" class="spell-number"></label>
                         </section>
                         <div class="spell-slot">
                             <label><input data-input="99" type="checkbox"  readonly class="check-input"><input data-input="100" class="spell-name"  readonly type="text"></label><br>
