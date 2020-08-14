@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const COC7thSkillSchema = new mongoose.Schema({
     class_feature: {
         type:String,
-        max:20
+        max:20,
+        default:'EDU'
     },
     skill: Array
 });

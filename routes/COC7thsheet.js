@@ -27,86 +27,42 @@ const upload = multer({
         cb(null,true);
     }
 });
-router.post('/COC7th', verify,upload.single('file'), async function (req, res)  {
-    const id = jwtDecode(req.cookies.auth_token)._id;
+router.get('/COC7th/create/:name', verify, async function (req, res)  {
+    const creator = jwtDecode(req.cookies['auth_token']);
     const user = await User.findOne({_id:id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
-    var cs = req.body;
-    var image;
-    (req.file) ? image=req.file.buffer : image='';
-    var cskill = [{}];
-    for (let i=0;i<Object.keys(JSON.parse(cs.skill)).length;i++){
-        var name = Object.keys(JSON.parse(cs.skill))[i];
-        cskill[i] = {name :name,number:Object.values(JSON.parse(cs.skill))[i]};
-    }
     //save new sheet
-    if(!cs.name) return res.status(400).send('請至少填入角色名字');
+    const name= req.params.name;
     const sheet = new Info({
-        name:cs.name,
-        player_name: cs.player,
+        name:name,
+        player_name: creator.name,
         system:"COC7th",
-        permission:cs.permission,
-        author:id
+        author:creator._id
     });
-    try{
-       await sheet.save();
-    }catch (err) {
-        res.status(400).send(err);
-        res.redirect('/charactersheet/create')
-    }
     //save skill
     const skill = new COC7thSkill({
         _id:sheet._id,
-        class_feature:cs['class-feature'],
-        skill:cskill
     });
     const stat = new COC7thStat({
         _id:sheet._id,
-        hp:cs.hp,
-        san:cs.san,
-        mp:cs.mp,
-        luk:cs.luk,
-        injured_status:cs.injury,
-        insane_status:cs.madness,
-        characteristic:JSON.parse(cs.stat)
     });
     const story = new COC7thStory({
         _id:sheet._id,
-        class:cs.class,
-        age:cs.age,
-        sex:cs.sex,
-        residence:cs.residence,
-        birthplace:cs.birthplace,
-        role_description:cs.role_description,
-        belief:cs.belief,
-        significant_people:cs.significant_people,
-        meaningful_location:cs.meaningful_location,
-        treasured_possession:cs.treasured_possession,
-        trait:cs.trait,
-        myth:cs.myth,
-        injuries:cs.injuries,
-        encounter:cs.encounter,
-        mania:cs.mania,
-        magic:cs.magic,
-        description:cs.description,
-        avatar:image
     });
     const equip = new COC7thEquip({
         _id:sheet._id,
-        equip:cs.equip,
-        cash:cs.money,
-        weapon:cs.weapon
     });
     try{
+        await sheet.save();
         await skill.save();
         await stat.save();
         await story.save();
         await equip.save();
         await User.updateOne({_id:id},{$inc:{sheet_number:1}});
-        res.send('角色卡創建成功');
+        res.send(sheet._id);
     }catch (err) {
+        console.log(err)
         res.status(400).send(err);
-        res.redirect('/charactersheet/create');
     }
 });
 router.get('/COC7th/json/:id',verify,async function (req,res) {

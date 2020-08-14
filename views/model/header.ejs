@@ -5,13 +5,25 @@
 <ul>
     <li class="menu btn" id="btn"><a href="/">首頁</a></li>
     <li class="menu btn"><a href="/about">關於我們</a></li>
-    <li class="menu btn logged_in" style="display: none"><a href='/trpgsession'>團務</a></li>
-    <li class="menu btn logged_in" style="display: none"><a href='/charactersheet'>角色卡管理</a></li>
+    <%const userData = authData || {
+        auth:false
+    }%>
+    <%if(userData.auth===true) {%>
 
+        <li class="menu btn logged_in" style="display: none"><a href='/trpgsession'>團務</a></li>
+        <li class="menu btn logged_in" style="display: none"><a href='/charactersheet'>角色卡管理</a>
+    <%}%>
 </ul>
 <div class="submenu">
-    <button class="subbtn btn validation login">登入</button>
-    <button class="subbtn btn validation signup">註冊</button>
+    <%if (userData.auth===true) {%>
+        <button class="subbtn btn validation"><a href='/user'>歡迎!<%=authData.user%></a></button>
+        <button class="subbtn btn validation exit">登出</button>
+    <%}else {%>
+        <button class="subbtn btn validation"><a href='/login'>登入</a></button>
+        <button class="subbtn btn validation"><a href='/signup'>註冊</a></button>
+    <%}%>
+
+
 </div>
 <div id="overlay"></div>
 <div class="alert-message" style="top: 24px;"></div>

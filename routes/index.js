@@ -12,6 +12,8 @@ const verify = require('./module/verifyToken');
 const sheetJSON = require('./module/sheetJSON');
 
 //render main page
+router.use(verify);
+
 router.get("/", async function (req, res) {
     const announce = await announcement.find();
     var data={owner:[],content:[],time:[]};
@@ -24,15 +26,17 @@ router.get("/", async function (req, res) {
     res.render('index', {
         title: info.title[0],
         content: info.news,
-        data:data
+        data:data,
+        authData:req.data
     });
 });
 
 //render create page and check if the user is already login
-router.get("/create", verify, function (req, res) {
+router.get("/create", function (req, res) {
     res.render('edit_character_sheet', {
         title: info.title[1],
-        content: info.create
+        content: info.create,
+        authData:req.data
     });
 });
 
@@ -40,37 +44,43 @@ router.get("/create", verify, function (req, res) {
 router.get("/about", function (req, res) {
     res.render('about', {
         title: info.title[2],
-        content: info.info
+        content: info.info,
+        authData:req.data
     });
 });
 
 //render sign up page
 router.get("/signup", function (req, res) {
-    const token = req.cookies.auth_token;
-    if (token) return res.redirect('/');
-    res.render('register');
+    if(req.data.auth === true) return res.redirect('/');
+    res.render('register',{
+        authData:req.data
+    });
 });
 
 //render login page
 router.get("/login", function (req, res) {
-    const token = req.cookies.authed;
-    if (token) return res.redirect('/');
-    res.render('login');
+    if(req.data.auth === true ) return res.redirect('/');
+    res.render('login',{
+        authData:req.data
+    });
 });
 router.get('/forget_password',function (req,res) {
-    const token= req.cookies.authed;
-    if (token) return res.redirect('/');
-    res.render('forget_password');
+    if(req.data.auth === true ) return res.redirect('/');
+    res.render('forget_password',{
+        authData:req.data
+    });
 })
 
 router.get('/authed/:id',function (req,res) {
     if (req.params.id==='error') return res.render('index', {
         title: '你的驗證已經逾時或是失效!',
-        content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次'
+        content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次',
+        authData:req.data
     });
     res.render('index', {
         title: '你已經驗證成功!',
-        content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能'
+        content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能',
+        authData:req.data
     });
 })
 router.get('/find_password/:email',async function (req,res) {
@@ -79,39 +89,46 @@ router.get('/find_password/:email',async function (req,res) {
         title: '你的修改密碼已經逾時或是失效!',
         content: '這個網址已經失效\r\n如只是逾時請再請求發送電子郵件',
         email:'',
-        pstatus:'false'
+        pstatus:'false',
+        authData:req.data
     });
     res.render('find_password', {
         title: '修改密碼',
         content: '',
         email:findExpire.email,
-        pstatus:'true'
+        pstatus:'true',
+        authData:req.data
     });
 })
 //render user page and check if the user is already login
-router.get("/user", verify,async function (req, res) {
-    const user = jwtDecode(req.cookies.auth_token);
+router.get("/user", async function (req, res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const user = jwtDecode(req.cookies['auth_token']);
     const userInfo = await User.findOne({_id:user._id})
     res.render('user', {
         title: userInfo.name + info.title[3],
         email: userInfo.email,
-        number:userInfo.sheet_number
+        number:userInfo.sheet_number,
+        authData:req.data
     });
 });
 
 //render adminpost page
-router.get('/adminpost', verify,async function (req, res) {
-    const user = jwtDecode(req.cookies.auth_token);
+router.get('/adminpost',async function (req, res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const user = jwtDecode(req.cookies['auth_token']);
     const admin = await User.findOne({_id:user._id})
     if (admin.admin===true) {
-        res.render('admin');
+        res.render('admin',{
+            authData:req.data
+        });
     } else {
         res.status(400).render('404');
     }
 });
 //post things
 /*router.post('/admin/post', verify,async function (req, res) {
-    const user = jwtDecode(req.cookies.auth_token);
+    const user = jwtDecode(req.cookies['auth_token']);
     const admin = await User.findOne({_id:user._id})
 
     if (admin.admin===true) {
@@ -133,8 +150,9 @@ router.get('/adminpost', verify,async function (req, res) {
 
 
 //render session page
-router.get('/trpgsession',verify,async function (req,res) {
-    const name = jwtDecode(req.cookies.auth_token).name;
+router.get('/trpgsession',async function (req,res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const name = jwtDecode(req.cookies['auth_token']).name;
     const SessionFind = await Session.findOne({player:name});
     const cursor =  await Session.find({ player: {$in:[name]} });
     const session = {name:[],gm:[],url:[],player:[]};
@@ -154,21 +172,27 @@ router.get('/trpgsession',verify,async function (req,res) {
         content:session.name,
         gm:session.gm,
         url:session.url,
-        player:session.player
+        player:session.player,
+        authData:req.data
     });
 });
 
 
 //render the specific session page
-router.get('/trpgsession/:id',verify, async function (req,res) {
-    const username=jwtDecode(req.cookies.auth_token);
+router.get('/trpgsession/:id', async function (req,res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const username=jwtDecode(req.cookies['auth_token']);
     const url=req.params.id;
     const UserSheet={name:[],system:[],sheet_id:[],status:''};
     const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:'',access:[]};
     //render session join page
-    if (url === 'join') return res.render('trpg_session_join');
+    if (url === 'join') return res.render('trpg_session_join', {
+        authData:req.data
+    });
     //render session create page
-    if (url === 'create') return res.render('trpg_session_create');
+    if (url === 'create') return res.render('trpg_session_create',{
+        authData:req.data
+    });
     if (url !=='join'|| url !== 'create') {
         try {
             //find current session
@@ -240,7 +264,8 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
                 session_sheet_id:SessionSheet.sheet_id,
                 session_status:SessionSheet.status,
                 session_sheet_player:SessionSheet.player,
-                session_sheet_access:SessionSheet.access
+                session_sheet_access:SessionSheet.access,
+                authData:req.data
             })
         } catch (err) {
             res.status(404).render('404')
@@ -249,8 +274,9 @@ router.get('/trpgsession/:id',verify, async function (req,res) {
     }
 });
 
-router.get('/charactersheet',verify,async function (req,res) {
-    const id = jwtDecode(req.cookies.auth_token)._id;
+router.get('/charactersheet',async function (req,res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const id = jwtDecode(req.cookies['auth_token'])._id;
     const SheetFind = await Sheet.findOne({author:id});
     const cursor =  await Sheet.find({author: {$in:[id]} });
     const sheet={name:[],system:[],url:[]};
@@ -268,35 +294,14 @@ router.get('/charactersheet',verify,async function (req,res) {
         content:sheet.name,
         system:sheet.system,
         url:sheet.url,
-        number:sheet.url.length
+        number:sheet.url.length,
+        authData:req.data
     });
 });
-router.get('/charactersheet/create/:system',verify,async function (req,res) {
-    const user = jwtDecode(req.cookies.auth_token);
-    const system=req.params.system;
-    const sheetNumber = await User.findOne({_id: user._id});
-        if (sheetNumber.sheet_number < 20) {
-            if (system === 'COC7th') {
-                res.render('COC7th_create', {
-                    title: '創建角色卡',
-                    player: user.name
-                });
-            }else if (system === 'DND5e') {
-                res.render('DND5e_create', {
-                    title: '創建角色卡',
-                    player: user.name
-                });
-            }else {
-                res.status(404).render('404');
-            }
 
-        }
-        if (sheetNumber.sheet_number >= 20) return  res.status(400).send('你的角色卡已經達到上限');
-
-});
-
-router.get('/charactersheet/:id',verify,async function (req,res) {
-    const user = jwtDecode(req.cookies.auth_token);
+router.get('/charactersheet/:id',async function (req,res) {
+    if(req.data.auth === false ) return res.redirect('/');
+    const user = jwtDecode(req.cookies['auth_token']);
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
             var sheetData;
@@ -313,7 +318,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                     title: '編輯角色卡',
                     id: req.params.id,
                     status: "edit",
-                    data:sheetData
+                    data:sheetData,
+                    authData:req.data
                 });
             }
             if(sheet.author!==user._id){
@@ -324,7 +330,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             title: '檢視角色卡',
                             id: req.params.id,
                             status:"view",
-                            data:sheetData
+                            data:sheetData,
+                            authData:req.data
                         });
                     }res.redirect('/charactersheet');
                 }
@@ -335,7 +342,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                             title: '檢視角色卡',
                             id: req.params.id,
                             status:"view",
-                            data:sheetData
+                            data:sheetData,
+                            authData:req.data
                         });
                     } res.redirect('/charactersheet');
                 }
@@ -344,7 +352,8 @@ router.get('/charactersheet/:id',verify,async function (req,res) {
                         title:'檢視角色卡',
                         id:req.params.id,
                         status:"view",
-                        data:sheetData
+                        data:sheetData,
+                        authData:req.data
                     });
                 }
             }

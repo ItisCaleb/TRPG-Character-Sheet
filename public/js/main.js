@@ -18,32 +18,16 @@ $(document).ready(function () {
         $(this).hide();
     });
 
-    //if user is already logged in, switch login and sign in button to user page and log out button
-    if (document.cookie.indexOf("auth_token") >= 0) {
-        $('.login').addClass('user').text('個人主頁');
-        $('.signup').addClass('exit').text('登出');
-        $('.user').on('click', function () {
-            redirect('/user')
-        });
-        //log out and clear cookies
-        $('.exit').on('click', function () {
-            Cookies.remove('auth_token', '');
-            Cookies.remove('admin', '');
-            redirect('/');
-        })
-    } else {
-        $('.login').on('click', function () {
-            redirect('/login');
-        });
-        $('.signup').on('click', function () {
-            redirect('/signup')
-        });
-    }
+    $('.exit').on('click', function () {
+        Cookies.remove('auth_token', '');
+        Cookies.remove('admin', '');
+        redirect('/');
+    })
+
     //if user is admin, show admin post button
     if (document.cookie.indexOf('admin') >= 0 && Cookies.get('admin') === 'True')
         $('.menu').last().after('<li class="menu btn adminpost"><a href=\'/adminpost\'>管理員貼文</a></li>');
-    if (document.cookie.indexOf('auth_token') >= 0)
-        $('.logged_in').show();
+
     $('ul.main-tabs li').on('click', function () {
         var tab_id = $(this).attr('data-tab');
 

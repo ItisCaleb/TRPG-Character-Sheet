@@ -1,6 +1,6 @@
 document.write("");
 $(document).ready(function () {
-    var choose_value = '/charactersheet/create/COC7th'
+    var choose_value = 'COC7th'
     $('.systems-title-tile').on('click', function () {
         $('.systems-title-tile').removeClass('systems-choose')
         $(this).addClass('systems-choose')
@@ -9,17 +9,35 @@ $(document).ready(function () {
             $(this).find('.green-dot').show()
             $('#info-dnd5e').hide();
             $('#info-coc7th').show()
-            choose_value = '/charactersheet/create/COC7th'
+            choose_value = 'COC7th'
         }
         if ($(this).attr('id') === 'choose-dnd5e') {
             $('.green-dot').hide();
             $(this).find('.green-dot').show()
             $('#info-coc7th').hide()
             $('#info-dnd5e').show();
-            choose_value = '/charactersheet/create/DND5e'
+            choose_value = 'DND5e'
         }
     })
-    $('#create-button').on('click', function () {
-        get(choose_value)
+    $('#create-button').on('click', function (e) {
+        e.preventDefault();
+        const name = $('#name').val();
+        $.ajax({
+            url:`/api/sheet/${choose_value}/create/${name}`,
+            type:'GET',
+            success:function(data){
+                good_message('角色卡創建成功!')
+                setTimeout(function(){
+                    redirect(`/charactersheet/${data}`);
+                },1000)
+            },
+            error:function(data){
+                bad_message(data.responseText);
+                setTimeout(function () {
+                    $('.player-delete').prop('disabled',false);
+                },1000)
+            },
+
+        })
     })
 })

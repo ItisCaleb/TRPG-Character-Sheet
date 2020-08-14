@@ -18,7 +18,7 @@ const DND5eSpell = require('../model/DND5e/Spell');
 router.delete('/delete/:id',verify,async function (req,res) {
 
     const sheetId = req.params.id;
-    const user=jwtDecode(req.cookies.auth_token)._id;
+    const user=jwtDecode(req.cookies['auth_token'])._id;
     const info = await Info.findOne({_id:sheetId});
     if(info.author === user) {
         if(info.system==='COC7th'){

@@ -5,7 +5,8 @@ const  DND5eEquipSchema = new mongoose.Schema({
     money:Array,
     equipment:{
         type: String,
-        max: 1024
+        max: 1024,
+        default:''
     },
 });
 

@@ -214,7 +214,7 @@ router.post('/password', async (req, res) => {
             return res.status(400).send('你的資料含有特殊字元')
         }
     }
-    const username = jwtDecode(req.cookies.auth_token).name;
+    const username = jwtDecode(req.cookies['auth_token']).name;
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findOne({name: username});
     const validPass = await bcrypt.compare(req.body.old_password, user.password);

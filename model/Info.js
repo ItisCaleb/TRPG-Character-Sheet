@@ -20,7 +20,8 @@ const InfoSchema = new mongoose.Schema({
     },
     permission:{
         type: String,
-        required:true
+        required:true,
+        default:'限團務GM'
     },
     session:Array
 });
