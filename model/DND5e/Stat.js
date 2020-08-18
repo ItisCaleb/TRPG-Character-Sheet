@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const  DND5eStatSchema = new mongoose.Schema({
-    stat: Array,
+    stat: {
+        type:Array,
+        default:[10,10,10,10,10,10]
+    },
     inspiration:{
         type: Number,
         max: 50,

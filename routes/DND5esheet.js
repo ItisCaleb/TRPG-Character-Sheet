@@ -24,9 +24,9 @@ const upload = multer({
     }
 });
 
-router.post('/DND5e/create/:name',verify,upload.single('file'), async function (req,res) {
+router.get('/DND5e/create/:name',verify,async function (req,res) {
     const creator = jwtDecode(req.cookies['auth_token']);
-    const user = await User.findOne({_id:id});
+    const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     const sheet = new Info({
         name:req.params.name,
@@ -53,7 +53,7 @@ router.post('/DND5e/create/:name',verify,upload.single('file'), async function (
         await story.save();
         await spell.save();
         await equip.save();
-        await User.updateOne({_id:id},{$inc:{sheet_number:1}});
+        await User.updateOne({_id:creator._id},{$inc:{sheet_number:1}});
         res.send(sheet._id);
     }catch (err) {
         console.log(err);

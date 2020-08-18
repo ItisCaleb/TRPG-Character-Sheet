@@ -29,7 +29,7 @@ const upload = multer({
 });
 router.get('/COC7th/create/:name', verify, async function (req, res)  {
     const creator = jwtDecode(req.cookies['auth_token']);
-    const user = await User.findOne({_id:id});
+    const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     //save new sheet
     const name= req.params.name;
@@ -58,7 +58,7 @@ router.get('/COC7th/create/:name', verify, async function (req, res)  {
         await stat.save();
         await story.save();
         await equip.save();
-        await User.updateOne({_id:id},{$inc:{sheet_number:1}});
+        await User.updateOne({_id:creator._id},{$inc:{sheet_number:1}});
         res.send(sheet._id);
     }catch (err) {
         console.log(err)
