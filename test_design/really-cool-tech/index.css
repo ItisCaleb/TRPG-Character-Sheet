@@ -1,0 +1,52 @@
+body {
+    background-image: url("asset/bg-1.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    margin: 0;
+}
+
+section {
+    display: -webkit-flex;
+    display: flex;
+}
+
+#header {
+    margin: 0;
+    padding: 30px;
+    max-width: 100%;
+    justify-items: center;
+    text-align: center;
+    background-color: white;
+    font-size: 40px;
+    overflow-x: hidden;
+}
+
+#sub_header {
+    margin-top: -60px;
+    font-size: 30px;
+}
+
+#header > section> p {
+    float: right;
+    margin: 20px;
+}
+
+.pusher {
+    display: flex;
+    flex-grow: 1;
+}
+
+#intro {
+    padding: 50px;
+    color: white;
+    font-size: 220px;
+    text-align: left;
+}
+
+#how {
+    background-color: white;
+    padding: 100px 200px;
+    font-size: 35px;
+}

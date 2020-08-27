@@ -1,0 +1,164 @@
+<html>
+<head>
+    <title>really-cool-tech</title>
+    <style type="text/css">
+        body {
+            height: 100%;
+            
+            margin: 0;
+        }
+        canvas {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script type="application/javascript">
+        function game() {
+            var canvas = document.getElementById("canvas");
+            var body = document.body,
+                html = document.documentElement;
+
+            var height = Math.max( body.scrollHeight, body.offsetHeight,
+                html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+            var width = Math.max( body.scrollWidth, body.offsetWidth,
+                html.clientWidth, html.scrollWidth, html.offsetWidth );
+            // body.css("overflow", "hidden");
+            var tick = 0;
+
+            
+            var ball = {
+                x: 100,
+                xp: 0,
+                y: 100,
+                yp: 0,
+                vx: 5,
+                vy: 1,
+                radius: 25,
+                color: 'blue',
+                draw: function() {
+
+                    ctx.beginPath();
+                    this.radius = (((this.x - this.xp) ** 2 + (this.y - this.yp) ** 2) ** (1/5));
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgb(255, 255, 255)';
+                    ctx.fill();
+                    this.xp = this.x;
+                    this.yp = this.y;
+                }
+            };
+
+            
+
+            setInterval(function do_ticking() {ticking()}, 1);
+
+
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+
+            function clear() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            /*
+            function draw() {
+                clear();
+                ball.draw();
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
+                    ball.vy = -ball.vy;
+                }
+                if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
+                    ball.vx = -ball.vx;
+                }
+
+            }   
+            */
+
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+
+                ctx.canvas.height = height;
+                ctx.canvas.width = width;
+
+                ctx.fillStyle = "rgb(0,0,0)";
+                ctx.fillRect(0, 0, width, height);
+
+            }
+
+            var base_lifetime = 100;
+            var random_lifetime = 100;
+            var fade_time = 100;
+
+            var point_num = 10;
+
+            var points_x = [];
+            var points_y = [];
+
+            var points_vx = [];
+            var points_vy = [];
+
+
+            function init_points() {
+                points_x = [];
+                points_y = [];
+                points_vx = [];
+                points_vy = [];
+
+                for (i=0;i<point_num;i++) {
+                    points_x.push(getRandomInt(width));
+                    points_y.push(getRandomInt(height));
+                    points_vx.push(getRandomInt(20) - 10);
+                    points_vy.push(getRandomInt(20) - 10);
+                }
+            }
+
+            function run_points() {
+                for (i=0;i<point_num;i++){
+                    points_x[i] = points_x[i] + points_vx[i];
+                    points_y[i] = points_y[i] + points_vy[i];
+                }
+            }
+
+            function draw_points() {
+                ctx.beginPath();
+                ctx.moveTo(points_x[0], points_y[0]);
+                for (i=1;i<point_num;i++){
+                    ctx.lineTo(points_x[i], points_y[i]);
+                }
+                ctx.closePath();
+                ctx.fillStyle = "rgb(255,255,255)";
+                ctx.fill();
+            }
+
+            function ticking() {
+                tick = tick + 1;
+                /*console.log(tick);*/
+                life_time = base_lifetime + getRandomInt(random_lifetime);
+
+                if (tick < life_time){
+                    clear();
+                    run_points();
+                    draw_points();
+                } else {
+                    if (tick > life_time + fade_time){
+                        init_points();
+                        tick = 0;
+                    } else {
+                        /*fade code*/
+                    }
+                }
+            }
+            
+        }
+    </script>
+</head>
+<body onload="game();">
+<canvas id="canvas"></canvas>
+</body>
+</html>
