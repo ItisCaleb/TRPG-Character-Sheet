@@ -63,6 +63,12 @@
                 ctx.fillStyle = 'rgba(0, 0, 0, 1)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
+
+            function fade_clear() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
             /*
             function draw() {
                 clear();
@@ -92,10 +98,12 @@
             }
 
             var base_lifetime = 100;
-            var random_lifetime = 100;
-            var fade_time = 100;
+            var random_lifetime = 2000;
+            var fade_time = 500;
 
             var point_num = 10;
+
+            var point_basespeed = 2;
 
             var points_x = [];
             var points_y = [];
@@ -113,8 +121,8 @@
                 for (i=0;i<point_num;i++) {
                     points_x.push(getRandomInt(width));
                     points_y.push(getRandomInt(height));
-                    points_vx.push(getRandomInt(20) - 10);
-                    points_vy.push(getRandomInt(20) - 10);
+                    points_vx.push(getRandomInt(point_basespeed*2) - point_basespeed);
+                    points_vy.push(getRandomInt(point_basespeed*2) - point_basespeed);
                 }
             }
 
@@ -122,6 +130,12 @@
                 for (i=0;i<point_num;i++){
                     points_x[i] = points_x[i] + points_vx[i];
                     points_y[i] = points_y[i] + points_vy[i];
+                    if (points_y[i] > canvas.height || points_y[i] < 0) {
+                        points_vy[i] = -points_vy[i];
+                    }   
+                    if (points_x[i] > canvas.width || points_x[i] < 0) {
+                        points_vx[i] = -points_vx[i];
+                    }
                 }
             }
 
@@ -132,7 +146,7 @@
                     ctx.lineTo(points_x[i], points_y[i]);
                 }
                 ctx.closePath();
-                ctx.fillStyle = "rgb(255,255,255)";
+                ctx.fillStyle = "rgb(10,10,10)";
                 ctx.fill();
             }
 
@@ -150,7 +164,7 @@
                         init_points();
                         tick = 0;
                     } else {
-                        /*fade code*/
+                        fade_clear();
                     }
                 }
             }
