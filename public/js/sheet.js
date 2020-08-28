@@ -22,6 +22,11 @@ $(document).ready(function () {
     $('#create-button').on('click', function (e) {
         e.preventDefault();
         const name = $('#name').val();
+        console.log(name)
+        if(name == null || name==='') {
+            $('#name').after('<br><span id="error" style="color: red;font-size: 16px;">請輸入名稱</span><br>');
+            return ;
+        }
         $.ajax({
             url:`/api/sheet/${choose_value}/create/${name}`,
             type:'GET',

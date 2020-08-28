@@ -7,13 +7,19 @@ $(document).ready(function () {
     var id = array[array.length-1];
     socket.emit('join',id);
     socket.on('asyncInput',(data)=>{
-       console.log(data);
        if(data.key === 'input' || data.key === 'select'){
            $(`${data.key}[data-${data.key}=${data.index}]`).val(data.payload);
        }else {
            $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
        }
+       sheetCalculate()
     });
+    socket.on('delete',()=>{
+        good_message('此角卡已被刪除');
+        setTimeout( ()=>{
+            redirect('/trpgsession');
+        },1000)
+    })
     $(document).on('click', '.custom-delete', function (e) {
         e.preventDefault();
         $('input').first().trigger('change');
@@ -22,9 +28,7 @@ $(document).ready(function () {
         if($('#name').val()===''){
             return bad_message('調查員姓名不得為空')
         }
-        var payload;
-        if($(this).is('input') || $(this).is('select')) payload =$(this).val();
-        else if($(this).is('textarea')) payload = $(this).text();
+        const payload = $(this).val();
         const input = {
             url:id,
             key:Object.keys($(this).data())[0],
@@ -106,6 +110,7 @@ $(document).ready(function () {
     });
     $('#delete').on('click',function () {
         $('#delete-window').css('display','none');
+        socket.emit('delete',id);
         $.ajax({
             url:'../api/sheet/delete/'+ id,
             type:'DELETE',

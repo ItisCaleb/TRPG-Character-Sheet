@@ -88,6 +88,7 @@ $(document).ready(function () {
 
     //easy adding slider
     $(document).on('click','.skill',function () {
+        if($(this).prop('readonly')===true) return ;
         $('.slider-pop').remove();
         var name;
         if($(this).parent().siblings('.td-input').find('.custom').length>0){
