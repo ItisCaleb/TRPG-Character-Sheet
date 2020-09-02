@@ -26,10 +26,17 @@ $(document).ready(function () {
                         $(this).addClass('permissions-choose');
                     }
                 });
+                sheetCalculate()
             }else {
-                $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
+                $(`${data.key}[data-${data.key}=${data.index}]`).val(data.payload);
             }
         });
+        socket.on('delete',()=>{
+            good_message('此角卡已被刪除');
+            setTimeout( ()=>{
+                redirect('/trpgsession');
+            },1000)
+        })
     }catch (err) {
 
     }

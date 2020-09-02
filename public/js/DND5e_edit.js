@@ -22,11 +22,17 @@ $(document).ready(function () {
                     $(this).addClass('permissions-choose');
                 }
             });
+            sheetSetup();
         }else {
-            $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
+            $(`${data.key}[data-${data.key}=${data.index}]`).val(data.payload);
         }
-        sheetSetup()
     });
+    socket.on('delete',()=>{
+        good_message('此角卡已被刪除');
+        setTimeout( ()=>{
+            redirect('/trpgsession');
+        },1000)
+    })
     $('.delete-check').on('click',function () {
         $('#delete-window').css('display','block');
     });
@@ -35,6 +41,7 @@ $(document).ready(function () {
     });
     $('#delete').on('click',function () {
         $('#delete-window').css('display','none');
+        socket.emit('delete',id);
         $.ajax({
             url:'../api/sheet/delete/'+ id,
             type:'DELETE',
@@ -71,6 +78,7 @@ $(document).ready(function () {
             const stat =calSheet.stat;
             const attack=calSheet.attack;
             const death_save=calSheet.death_save;
+            console.log(spell)
             var sheet = $('#myform').serializeArray();
             sheet.push({name:'skill',value:JSON.stringify(skill)});
             sheet.push({name:'spell',value:JSON.stringify(spell)});

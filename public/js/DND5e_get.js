@@ -25,11 +25,18 @@ $(document).ready(function () {
                         $(this).addClass('permissions-choose');
                     }
                 });
+                sheetSetup();
             }else {
-                $(`${data.key}[data-${data.key}=${data.index}]`).text(data.payload);
+                $(`${data.key}[data-${data.key}=${data.index}]`).val(data.payload);
             }
-            sheetSetup()
+
         });
+        socket.on('delete',()=>{
+            good_message('此角卡已被刪除');
+            setTimeout( ()=>{
+                redirect('/trpgsession');
+            },1000)
+        })
     }catch (err) {
 
     }
@@ -69,6 +76,7 @@ $(document).ready(function () {
                     }
                 });
                 $('.spell-slot').each(function (index) {
+                    if(spell_info==null) return;
                     const spellInfo =spell_info[index];
                     $(this).siblings('section').find('input').each(function (i) {
                         $(this).val(spellInfo.number[i])

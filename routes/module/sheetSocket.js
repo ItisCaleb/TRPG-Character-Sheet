@@ -3,7 +3,10 @@ module.exports = function (socket) {
         socket.join(url);
     });
     socket.on('input',function (data) {
-        socket.broadcast.in(data.url).emit('asyncInput',data)
+        socket.broadcast.in(data.url).emit('asyncInput',data);
+    })
+    socket.on('delete',function (id){
+        socket.broadcast.in(id).emit('delete');
     })
 
 };

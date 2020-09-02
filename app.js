@@ -52,10 +52,11 @@ app.use('/api/sheet',sheetDeleteRoute);
 app.use('/api/sheet',COC7thSheetRoute);
 app.use('/api/sheet',DND5eSheetRoute);
 
-const privateKey = fs.readFileSync(__dirname+'/public/ssl/private.key');
-const certificate = fs.readFileSync(__dirname+'/public/ssl/certificate.crt');
-
-const credentials ={key:privateKey, cert:certificate};
+const credentials ={
+    ca: fs.readFileSync(__dirname+'/public/ssl/ca_bundle.crt'),
+    key:fs.readFileSync(__dirname+'/public/ssl/private.key'),
+    cert:fs.readFileSync(__dirname+'/public/ssl/certificate.crt')
+};
 
 app.use(function (req, res, next) {
     next(res.createError(404));
@@ -80,7 +81,7 @@ const server = https.createServer(credentials,app);
 server.listen(port,() => console.log('HTTPS start on port:' + port));
 const io = require('socket.io').listen(server);
 io.sockets.on('connect',(socket)=>{
-   require('./routes/module/asyncEdit')(socket);
+   require('./routes/module/sheetSocket')(socket);
 });
 
 
