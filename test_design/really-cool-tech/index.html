@@ -15,7 +15,7 @@
     </style>
     <script type="application/javascript">
         function game() {
-            var canvas = document.getElementById("canvas");
+            var canvas = document.getElementById("bg-anime");
             var body = document.body,
                 html = document.documentElement;
 
@@ -24,35 +24,8 @@
 
             var width = Math.max( body.scrollWidth, body.offsetWidth,
                 html.clientWidth, html.scrollWidth, html.offsetWidth );
-            // body.css("overflow", "hidden");
-            var tick = 0;
 
-            
-            var ball = {
-                x: 100,
-                xp: 0,
-                y: 100,
-                yp: 0,
-                vx: 5,
-                vy: 1,
-                radius: 25,
-                color: 'blue',
-                draw: function() {
-
-                    ctx.beginPath();
-                    this.radius = (((this.x - this.xp) ** 2 + (this.y - this.yp) ** 2) ** (1/5));
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-                    ctx.closePath();
-                    ctx.fillStyle = 'rgb(255, 255, 255)';
-                    ctx.fill();
-                    this.xp = this.x;
-                    this.yp = this.y;
-                }
-            };
-
-            
-
-            setInterval(function do_ticking() {ticking()}, 1);
+            setInterval(function do_ticking() {ticking();}, 3);
 
 
             function getRandomInt(max) {
@@ -60,31 +33,14 @@
             }
 
             function clear() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+                ctx.fillStyle = 'rgb(0, 0, 0)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
 
             function fade_clear() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
-
-            /*
-            function draw() {
-                clear();
-                ball.draw();
-                ball.x += ball.vx;
-                ball.y += ball.vy;
-
-                if (ball.y + ball.vy > canvas.height || ball.y + ball.vy < 0) {
-                    ball.vy = -ball.vy;
-                }
-                if (ball.x + ball.vx > canvas.width || ball.x + ball.vx < 0) {
-                    ball.vx = -ball.vx;
-                }
-
-            }   
-            */
 
             if (canvas.getContext) {
                 var ctx = canvas.getContext("2d");
@@ -97,11 +53,7 @@
 
             }
 
-            var base_lifetime = 100;
-            var random_lifetime = 2000;
-            var fade_time = 500;
-
-            var point_num = 10;
+            var point_num = 20;
 
             var point_basespeed = 2;
 
@@ -150,29 +102,19 @@
                 ctx.fill();
             }
 
-            function ticking() {
-                tick = tick + 1;
-                /*console.log(tick);*/
-                life_time = base_lifetime + getRandomInt(random_lifetime);
+            init_points();
 
-                if (tick < life_time){
-                    clear();
-                    run_points();
-                    draw_points();
-                } else {
-                    if (tick > life_time + fade_time){
-                        init_points();
-                        tick = 0;
-                    } else {
-                        fade_clear();
-                    }
-                }
+            function ticking() {    
+                clear();
+                run_points();
+                draw_points();
+                
             }
             
         }
     </script>
 </head>
 <body onload="game();">
-<canvas id="canvas"></canvas>
+<canvas id="bg-anime"></canvas>
 </body>
 </html>
