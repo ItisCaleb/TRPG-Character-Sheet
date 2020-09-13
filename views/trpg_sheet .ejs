@@ -34,7 +34,7 @@
                                 <div style="font-size: 14px">使用龍與地下城5版的系統<br>創建屬於你的冒險者</div>
                             </div>
                             <label>輸入角色名稱:<input id="name" type="text"></label>
-                            <button id="create-button" class="btn session">選擇</button>
+                            <button id="create-button" class="btn session">創建</button>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,9 @@
         一人可擁有的角色卡上限為20張<br>
         你現在共擁有<%=number%>張角色卡<br>
         直接點擊文字來檢閱或編輯角色卡<br>
-        <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
+        <% if (content[0] !=='你還沒創建角色卡' ) { %>
+            <button class="btn session" onclick="$('#create-window').show()">創建角色卡</button>
+        <% } %>
     </div>
     <% if (content[0] !=='你還沒創建角色卡' ) { %>
         <ul class="main-tabs">
@@ -60,9 +62,9 @@
     <% } %>
     <div style="width: 100%;">
         <div id="main-tab-1" class="main-tab-content main-current">
-            <div style="text-align: center;">
+            <div style="text-align: center;width: 100%;height: 100%">
                 <% if (content[0] =='你還沒創建角色卡' ) { %>
-                    <div style="font-size: 20px;margin:3% 0"><%=content[0]%></div>
+                    <p style="width: 100%;height: 100%;font-size: 30px" class="btn" onclick="$('#create-window').show()">創建角色卡</p>
                 <% }else{ %>
                 <table>
                     <tr>
