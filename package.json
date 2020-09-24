@@ -22,7 +22,6 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.9.3",
-    "mongoose-gridfs": "^1.2.38",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.0.3",
     "nodemailer": "^6.4.6",
