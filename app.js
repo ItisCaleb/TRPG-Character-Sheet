@@ -1,13 +1,10 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const fs = require('fs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const http =require('http');
-const https = require('https');
-
+const http = require('http');
 
 //import routes
 const indexRoute = require("./routes/index");
@@ -52,12 +49,6 @@ app.use('/api/sheet',sheetDeleteRoute);
 app.use('/api/sheet',COC7thSheetRoute);
 app.use('/api/sheet',DND5eSheetRoute);
 
-const credentials ={
-    ca: fs.readFileSync(__dirname+'/public/ssl/ca_bundle.crt'),
-    key:fs.readFileSync(__dirname+'/public/ssl/private.key'),
-    cert:fs.readFileSync(__dirname+'/public/ssl/certificate.crt')
-};
-
 app.use(function (req, res, next) {
     next(res.createError(404));
 });
@@ -74,27 +65,13 @@ app.use(require('./routes/module/verifyToken'),function (err, req, res, next) {
 
 // start server
 const port = process.env.PORT || 3000;
-const server = https.createServer(credentials,app);
-
-
-
-server.listen(port,() => console.log('HTTPS start on port:' + port));
+const server = http.createServer(app)
 const io = require('socket.io').listen(server);
 io.sockets.on('connect',(socket)=>{
    require('./routes/module/sheetSocket')(socket);
 });
 
 
-// Secondary http app
-const httpApp = express();
-const httpRouter = express.Router();
-httpApp.use('/', httpRouter);
-const host = process.env.HOST || '192.168.0.107:3001';
-httpRouter.get('/', function(req, res){
-    // determine the redirect destination
-    var destination = ['https://'+ host + req.url];
-    return res.redirect(destination);
-});
-const httpServer = http.createServer(httpApp);
-httpServer.listen(3001,() => console.log('HTTP start on port:' + 3001));
+
+server.listen(port,() => console.log('HTTP start on port:' + port));
 
