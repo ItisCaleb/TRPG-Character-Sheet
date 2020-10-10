@@ -2,9 +2,32 @@ const router = require('express').Router();
 const Session = require('../model/Session');
 const User = require("../model/User");
 const Info = require('../model/Info');
-const jwtDecode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const {sessionValidation} = require("./module/validation");
+
+
+router.get('/getSession',async function (req,res) {
+    const name = jwt.decode(req.cookies['auth_token']).name;
+    const SessionFind = await Session.findOne({player:name});
+    const cursor =  await Session.find({ player: {$in:[name]} });
+    if (!SessionFind) {
+        res.send('你還沒創建團務')
+
+    }else {
+        const session = [];
+        cursor.forEach(function (Session) {
+            session.push({
+                name:Session.name,
+                gm:Session.gm,
+                id:Session._id,
+                player:Session.player.length
+            })
+        });
+        res.status(200).send(session)
+    }
+
+});
 
 //create a session
 router.post('/TRPGCreateSession',verify, async function (req,res) {
@@ -19,7 +42,7 @@ router.post('/TRPGCreateSession',verify, async function (req,res) {
     if (sessionExist) return res.status(400).send('此名稱已存在');
 
     //decode auth_token to get user information
-    const user = jwtDecode(req.cookies['auth_token']).name;
+    const user = jwt.decode(req.cookies['auth_token']).name;
     //get the user information in the database
     const gm = await User.findOne({name:user});
 
@@ -46,7 +69,7 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
     if(error) return res.status(400).send(error.details[0].message);
 
     //decode
-    const user = jwtDecode(req.cookies['auth_token']).name;
+    const user = jwt.decode(req.cookies['auth_token']).name;
     const session= await Session.findOne({name:req.body.name});
 
     //check if the player is already in the session
@@ -68,7 +91,7 @@ router.post('/TRPGJoinSession',verify, async function (req,res) {
 
 router.post('/sheet_upload/:id',verify,async function (req,res) {
 
-    const user=jwtDecode(req.cookies['auth_token']).name;
+    const user=jwt.decode(req.cookies['auth_token']).name;
     const sheet=req.body.upload;
     try {
         if(Array.isArray(sheet) && sheet !== undefined) {
@@ -91,7 +114,7 @@ router.post('/sheet_upload/:id',verify,async function (req,res) {
     }
 });
 router.get('/sheetdelete/:id',verify,async function (req,res) {
-    const user =jwtDecode(req.cookies['auth_token']);
+    const user =jwt.decode(req.cookies['auth_token']);
     const sheet=req.params.id;
     const session=req.query.session;
     const sheetOwn= await Info.findOne({_id:sheet ,author:user._id});
@@ -107,7 +130,7 @@ router.get('/sheetdelete/:id',verify,async function (req,res) {
 })
 router.get('/playerdelete/:id',verify,async function (req,res) {
     //get current user
-    const user =jwtDecode(req.cookies['auth_token']);
+    const user =jwt.decode(req.cookies['auth_token']);
     //check if the user is gm
     //get delete player
     const player=req.params.id;
@@ -137,7 +160,7 @@ router.get('/playerdelete/:id',verify,async function (req,res) {
 //leave or dismiss a session if you are the gm
 router.get('/delete/:id',verify, async function (req,res) {
 
-    const user=jwtDecode(req.cookies['auth_token']);
+    const user=jwt.decode(req.cookies['auth_token']);
     const session = await Session.findOne({_id:req.params.id});
     const sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}}});
     const user_sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}},author:user._id});

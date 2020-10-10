@@ -54,7 +54,7 @@ const loginValidation = data => {
                     message:"密碼長度為6到15個字元"
                 }
             }),
-        check:Joi.string()
+        check:Joi.boolean()
     };
     return Joi.validate(data,schema);
 };

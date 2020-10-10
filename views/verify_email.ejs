@@ -3,23 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>電子郵件驗證</title>
-    <link href="/public/css/Main.css" rel="stylesheet" type="text/css" media="all"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/public/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="/public/js/main.js" charset="UTF-8"></script>
 </head>
 <body>
 <div class="content" style="text-align: center">
+    <h1>TRPG Toaster</h1>
     <p class="content-decribe" style="text-align: center;line-height:30px ;">
         <%- content.replace(/\r\n/g, "<br />") %>
     </p>
-    <% if(pstatus==='verify') { %>
-    <a href="https://trpgtoaster.com/api/user/register/<%=email%>">點擊這邊驗證</a>
-    <% } %>
-    <% if(pstatus==='password') { %>
-    <a href="https://trpgtoaster.com/find_password/<%=email%>">點擊這邊來修改密碼</a>
-    <% } %>
+    <a href="http://localhost:8080/verify/<%=id%>">點擊這邊驗證</a>
 </div><br>
 <div class="footer" style="text-align: center" >
     Copyright © 2020 trpgtoaster.com. All rights reserved.

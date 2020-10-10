@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const jwtDecode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
@@ -16,21 +16,23 @@ const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
 
 router.delete('/delete/:id',verify,async function (req,res) {
-
     const sheetId = req.params.id;
-    const user=jwtDecode(req.cookies['auth_token'])._id;
+    const user=jwt.decode(req.cookies['auth_token'])._id;
     const info = await Info.findOne({_id:sheetId});
     if(info.author === user) {
-        if(info.system==='COC7th'){
-            await COC7thStat.deleteOne({_id: sheetId});
-            await COC7thStory.deleteOne({_id: sheetId});
-            await COC7thSkill.deleteOne({_id: sheetId});
-            await COC7thEquip.deleteOne({_id: sheetId});
-        }if(info.system==='DND5e'){
-            await DND5eStat.deleteOne({_id: sheetId});
-            await DND5eStory.deleteOne({_id: sheetId});
-            await DND5eSpell.deleteOne({_id: sheetId});
-            await DND5eEquip.deleteOne({_id: sheetId});
+        switch (info.system){
+            case "COC7th":
+                await COC7thStat.deleteOne({_id: sheetId});
+                await COC7thStory.deleteOne({_id: sheetId});
+                await COC7thSkill.deleteOne({_id: sheetId});
+                await COC7thEquip.deleteOne({_id: sheetId});
+                break;
+            case "DND5e":
+                await DND5eStat.deleteOne({_id: sheetId});
+                await DND5eStory.deleteOne({_id: sheetId});
+                await DND5eSpell.deleteOne({_id: sheetId});
+                await DND5eEquip.deleteOne({_id: sheetId});
+                break;
         }
         await Info.deleteOne({_id: sheetId});
         await User.updateOne({_id:user},{$inc:{sheet_number:-1}})

@@ -3,21 +3,19 @@ const User = require("../model/User");
 const tempUser = require('../model/tempUser')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const info = require('../public/info');
 const nodeMailer = require('nodemailer');
 const ejs = require('ejs');
-const jwtDecode = require('jwt-decode');
 const {registerValidation, loginValidation, passwordValidation, findPasswordValidation} = require("./module/validation");
 
 const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—【】‘”“。、%]");
 
 
 //send register information to db
-router.get("/register/:email", async (req, res) => {
+router.get("/register/:id", async (req, res) => {
     //create new user
-    const email = req.params.email;
-    const user = await tempUser.findOne({email: email});
-    if (!user) return res.redirect('/authed/error');
+    const id = req.params.id;
+    const user = await tempUser.findOne({_id: id});
+    if (!user) return res.sendStatus(404);
     const newUser = new User({
         name: user.name,
         email: user.email,
@@ -26,21 +24,11 @@ router.get("/register/:email", async (req, res) => {
     });
     try {
         //await user.save();
-        await tempUser.deleteOne({email: email});
+        await tempUser.deleteOne({_id: id});
         await newUser.save();
-        const day = 86490000;
-        const token = jwt.sign(
-            {
-                iss: 'trpgtoaster.com',
-                exp: (Date.now() + (7 * day)) / 1000,
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-            }, process.env.JWT_SECRET);
-        res.cookie('auth_token', token, {expires: new Date(Date.now() + (7 * day)), sameSite: 'Lax'});
-        res.redirect('/authed/' + email);
+        res.status(200).send(newUser.email)
     } catch (err) {
-        res.status(400).send(err).redirect('/register');
+        res.sendStatus(404)
     }
 });
 
@@ -84,9 +72,8 @@ router.post('/authed', async (req, res) => {
     try {
         ejs.renderFile(__dirname + '/../views/verify_email.ejs',
             {
-                email: temp.email,
-                content: info.verify_email,
-                pstatus: "verify"
+                id: temp._id,
+                content: "驗證你的電子郵件!\n同時也祝你有個美好的一天!",
             }, (err, html) => {
                 const mail = {
                     from: 'TRPG Toaster <verifybot@trpgtoaster.com>',
@@ -104,14 +91,8 @@ router.post('/authed', async (req, res) => {
 });
 //Login
 router.post('/userlogin', async (req, res) => {
-
     //validate login infomation
     const {error} = loginValidation(req.body);
-    for (let key in req.body) {
-        if (req.body[key].match(pattern)) {
-            return res.status(400).send('你的資料含有特殊字元')
-        }
-    }
     if (error) return res.status(400).send(error.details[0].message);
     //check if user exist
     const user = await User.findOne({email: req.body.email});
@@ -130,18 +111,47 @@ router.post('/userlogin', async (req, res) => {
             email: user.email,
         }, process.env.JWT_SECRET);
     (user.admin === true && req.body.check)
-        ? res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'Lax'})
-        : res.cookie('admin', 'True', {sameSite: 'Lax'});
+        ? res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
+        : res.cookie('admin', 'True', {sameSite: 'lax'});
     if (req.body.check) {
         res.cookie('auth_token', token, {
             expires: new Date(Date.now() + (7 * day)),
-            sameSite: 'Lax',
-            secure: true
-        }).send('登入成功');
+            sameSite: 'lax'
+        }).send(jwt.decode(token));
     } else {
-        res.cookie('auth_token', token, {sameSite: 'Lax'}).send('登入成功');
+        res.cookie('auth_token', token, {
+            sameSite: 'lax',
+            httpOnly: true,
+            secure: false
+        }).send(jwt.decode(token))
     }
 });
+
+router.get('/authVerify', (req, res) => {
+    const token = req.cookies['auth_token'];
+    if (!token) return res.sendStatus(401)
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+        res.sendStatus(200)
+    } catch (err) {
+        res.clearCookie('auth_token').clearCookie('admin').status(403).send('cookie不合規格')
+    }
+})
+
+router.get('/getUser/:name', async (req, res) => {
+    const user = await User.findOne({name: req.params.name}).lean()
+    if (user) {
+        const data = Object.assign({},user)
+        delete data.password
+        return res.status(200).send(data)
+    } else return res.sendStatus(404)
+
+
+})
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('auth_token').clearCookie('admin').send('已登出')
+})
 
 //forget password
 router.post('/forget_password', async function (req, res) {
@@ -168,7 +178,7 @@ router.post('/forget_password', async function (req, res) {
         ejs.renderFile(__dirname + '/../views/verify_email.ejs',
             {
                 email: emailExist.email,
-                content: info.find_password,
+                content: "改密碼",
                 pstatus: 'password'
             }, (err, html) => {
                 const mail = {
@@ -214,7 +224,7 @@ router.post('/password', async (req, res) => {
             return res.status(400).send('你的資料含有特殊字元')
         }
     }
-    const username = jwtDecode(req.cookies['auth_token']).name;
+    const username = jwt.decode(req.cookies['auth_token']).name;
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findOne({name: username});
     const validPass = await bcrypt.compare(req.body.old_password, user.password);

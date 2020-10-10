@@ -1,88 +1,20 @@
 const router = require('express').Router();
-const info = require('../public/info');
 const Session = require('../model/Session');
 const Sheet = require('../model/Info');
 const User = require('../model/User');
 const tempUser=require('../model/tempUser');
 const announcement = require('../model/announcement');
 //decode auth_token
-const jwtDecode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 //verify if auth_token is correct and user is logged in
 const verify = require('./module/verifyToken');
 const sheetJSON = require('./module/sheetJSON');
 
-//render main page
-router.use(verify);
 
-router.get("/", async function (req, res) {
-    const announce = await announcement.find();
-    var data={owner:[],content:[],time:[]};
-
-    announce.forEach(function (datas) {
-        data.owner.push(datas.owner);
-        data.content.push(datas.content);
-        data.time.push(datas.date);
-    })
-    res.render('index', {
-        title: info.title[0],
-        content: info.news,
-        data:data,
-        authData:req.data
-    });
-});
-
-//render create page and check if the user is already login
-router.get("/create", function (req, res) {
-    res.render('edit_character_sheet', {
-        title: info.title[1],
-        content: info.create,
-        authData:req.data
-    });
-});
-
-//render about page
-router.get("/about", function (req, res) {
-    res.render('about', {
-        title: info.title[2],
-        content: info.info,
-        authData:req.data
-    });
-});
-
-//render sign up page
-router.get("/signup", function (req, res) {
-    if(req.data.auth === true) return res.redirect('/');
-    res.render('register',{
-        authData:req.data
-    });
-});
-
-//render login page
-router.get("/login", function (req, res) {
-    if(req.data.auth === true ) return res.redirect('/');
-    res.render('login',{
-        authData:req.data
-    });
-});
-router.get('/forget_password',function (req,res) {
-    if(req.data.auth === true ) return res.redirect('/');
-    res.render('forget_password',{
-        authData:req.data
-    });
+router.get('/',(req, res) => {
+    res.send('yes')
 })
 
-router.get('/authed/:id',function (req,res) {
-    if (req.params.id==='error') return res.render('index', {
-        title: '你的驗證已經逾時或是失效!',
-        content: '這封認證信已經失效或是已經被認證了\r\n如只是逾時請再重新註冊一次',
-        authData:req.data
-    });
-    res.render('index', {
-        title: '你已經驗證成功!',
-        content: '你的電子郵件:'+req.params.id+'已經被認證了!\r\n現在你可以使用這網站的完整功能',
-        authData:req.data
-    });
-})
 router.get('/find_password/:email',async function (req,res) {
     const findExpire= await tempUser.findOne({email:req.params.email});
     if(!findExpire) return res.render('find_password', {
@@ -99,36 +31,13 @@ router.get('/find_password/:email',async function (req,res) {
         pstatus:'true',
         authData:req.data
     });
-})
-//render user page and check if the user is already login
-router.get("/user", async function (req, res) {
-    if(req.data.auth === false ) return res.redirect('/');
-    const user = jwtDecode(req.cookies['auth_token']);
-    const userInfo = await User.findOne({_id:user._id})
-    res.render('user', {
-        title: userInfo.name + info.title[3],
-        email: userInfo.email,
-        number:userInfo.sheet_number,
-        authData:req.data
-    });
-});
 
-//render adminpost page
-router.get('/adminpost',async function (req, res) {
-    if(req.data.auth === false ) return res.redirect('/');
-    const user = jwtDecode(req.cookies['auth_token']);
-    const admin = await User.findOne({_id:user._id})
-    if (admin.admin===true) {
-        res.render('admin',{
-            authData:req.data
-        });
-    } else {
-        res.status(400).render('404');
-    }
-});
+})
+
+
 //post things
 /*router.post('/admin/post', verify,async function (req, res) {
-    const user = jwtDecode(req.cookies['auth_token']);
+    const user = jwt.decode(req.cookies['auth_token']);
     const admin = await User.findOne({_id:user._id})
 
     if (admin.admin===true) {
@@ -150,38 +59,13 @@ router.get('/adminpost',async function (req, res) {
 
 
 //render session page
-router.get('/trpgsession',async function (req,res) {
-    if(req.data.auth === false ) return res.redirect('/');
-    const name = jwtDecode(req.cookies['auth_token']).name;
-    const SessionFind = await Session.findOne({player:name});
-    const cursor =  await Session.find({ player: {$in:[name]} });
-    const session = {name:[],gm:[],url:[],player:[]};
 
-    if (!SessionFind) {
-        session.name.push('你還沒創建團務');
-    }else {
-        cursor.forEach(function (Session) {
-            session.name.push(Session.name);
-            session.gm.push(Session.gm);
-            session.url.push(Session._id)
-            session.player.push(Session.player.length);
-        });
-    }
-    res.render('trpg_session', {
-        title: info.title[4],
-        content:session.name,
-        gm:session.gm,
-        url:session.url,
-        player:session.player,
-        authData:req.data
-    });
-});
 
 
 //render the specific session page
 router.get('/trpgsession/:id', async function (req,res) {
     if(req.data.auth === false ) return res.redirect('/');
-    const username=jwtDecode(req.cookies['auth_token']);
+    const username=jwt.decode(req.cookies['auth_token']);
     const url=req.params.id;
     const UserSheet={name:[],system:[],sheet_id:[],status:''};
     const SessionSheet={name:[],system:[],sheet_id:[],player:[],status:'',access:[]};
@@ -276,7 +160,7 @@ router.get('/trpgsession/:id', async function (req,res) {
 
 router.get('/charactersheet',async function (req,res) {
     if(req.data.auth === false ) return res.redirect('/');
-    const id = jwtDecode(req.cookies['auth_token'])._id;
+    const id = jwt.decode(req.cookies['auth_token'])._id;
     const SheetFind = await Sheet.findOne({author:id});
     const cursor =  await Sheet.find({author: {$in:[id]} });
     const sheet={name:[],system:[],url:[]};
@@ -290,7 +174,6 @@ router.get('/charactersheet',async function (req,res) {
         });
     }
     res.render('trpg_sheet ',{
-        title:info.title[5],
         content:sheet.name,
         system:sheet.system,
         url:sheet.url,
@@ -301,7 +184,7 @@ router.get('/charactersheet',async function (req,res) {
 
 router.get('/charactersheet/:id',async function (req,res) {
     if(req.data.auth === false ) return res.redirect('/');
-    const user = jwtDecode(req.cookies['auth_token']);
+    const user = jwt.decode(req.cookies['auth_token']);
         try{
             const sheet = await Sheet.findOne({_id:req.params.id});
             var sheetData;

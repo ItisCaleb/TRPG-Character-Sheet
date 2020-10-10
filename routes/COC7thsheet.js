@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const jwtDecode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
@@ -28,7 +28,7 @@ const upload = multer({
     }
 });
 router.get('/COC7th/create/:name', verify, async function (req, res)  {
-    const creator = jwtDecode(req.cookies['auth_token']);
+    const creator = jwt.decode(req.cookies['auth_token']);
     const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     //save new sheet
