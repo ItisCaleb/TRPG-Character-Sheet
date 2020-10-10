@@ -51,24 +51,14 @@ const corsOptions ={
 app.use(cors(corsOptions))
 // route middleware
 const history = require('connect-history-api-fallback');
-app.use(express.static(path.join(__dirname,'dist')))
+
 app.use(history())
+app.use(express.static(path.join(__dirname,'dist')))
 app.use("/api/user", authRoute);
 app.use('/api/session', TRPGSessionRoute);
 app.use('/api/sheet',sheetDeleteRoute);
 app.use('/api/sheet',COC7thSheetRoute);
 app.use('/api/sheet',DND5eSheetRoute);
-
-app.use(function (req, res, next) {
-    next(res.createError(404));
-});
-
-// error handler
-app.use(require('./routes/module/verifyToken'),function (err, req, res, next) {
-    // render the error page
-    res.status(err.status || 500);
-    res.sendStatus(404)
-});
 
 
 // start server
