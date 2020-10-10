@@ -1,9 +1,9 @@
-
 .DS_Store
 *.xml
 *.iml
 #hide .env
 .env
+dist
 node_modules
 views/index.html
 python/test.py
