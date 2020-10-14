@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "start npm run dev && start npm run serve --prefix trpg-fe",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build": "npm run  build --prefix trpg-fe"
+    "build": "npm run build --prefix trpg-fe"
   },
   "author": "ItisCaleb",
   "license": "ISC",

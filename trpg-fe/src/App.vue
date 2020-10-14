@@ -27,8 +27,8 @@ html{
   color: #2c3e50;
   font-size: 18px;
   margin: auto ;
-  @include phone-width{
-    font-size: 18px;
+  @include pad-width{
+    font-size: 25px;
   }
 }
 #content {

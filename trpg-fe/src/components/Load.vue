@@ -23,7 +23,7 @@ name: "Load"
   opacity: 1;
   transform: translateY(0);
 }
-.load-leave{
+.load-leave,.load-leave-active,.load-leave-to{
   opacity: 0;
 }
 </style>

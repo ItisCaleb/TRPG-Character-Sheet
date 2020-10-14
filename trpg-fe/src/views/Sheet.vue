@@ -1,11 +1,38 @@
 <template>
-  <div id="sheet">
-    <Tab :page="['COC7th','DND5e']">
+  <div style="text-align: center">
+    <Title>角色卡</Title>
+    <div>
+      <button class="btn btn-primary" @click="$refs.boxShow.$data.show=true">創建角色卡</button>
+    </div>
+    <Msgbox ref="boxShow">
+      <ChooseSystem></ChooseSystem>
+    </Msgbox>
+    <Tab :page="['COC7th','DND5e']" style="text-align: center">
       <div slot="COC7th">
-        <div>COC</div>
+        <div v-if="!COC7thExist">{{ COC7thFound }}</div>
+        <table v-else>
+          <tr>
+            <th>角色名稱</th>
+            <th>玩家名稱</th>
+          </tr>
+          <tr v-for="sheet in COC7th" :key="sheet.name">
+            <td>{{ sheet.name }}</td>
+            <td>{{ sheet.player }}</td>
+          </tr>
+        </table>
       </div>
       <div slot="DND5e">
-        <div>DND</div>
+        <div v-if="!DND5eExist">{{ DND5eFound }}</div>
+        <table v-else>
+          <tr>
+            <th>角色名稱</th>
+            <th>玩家名稱</th>
+          </tr>
+          <tr v-for="sheet in DND5e" :key="sheet.name">
+            <td>{{ sheet.name }}</td>
+            <td>{{ sheet.player }}</td>
+          </tr>
+        </table>
       </div>
     </Tab>
   </div>
@@ -13,12 +40,89 @@
 
 <script>
 import Tab from "@/components/Tab";
+import Title from "@/components/Title";
+import Msgbox from "@/components/Msgbox";
+import ChooseSystem from "@/components/Sheet/ChooseSystem";
+
+
 export default {
   name: "Sheet",
-  components: {Tab}
+  components: {ChooseSystem, Msgbox, Title, Tab},
+  data() {
+    return {
+      sheet: "",
+      COC7th: [],
+      DND5e: [],
+      COC7thExist: false,
+      DND5eExist: false,
+      createBoxShow: false
+    }
+  },
+  mounted() {
+    this.sheet = this.$store.getters.getSheet
+    console.log(this.sheet)
+    if (this.sheet === 'NotFound') return
+    for (let item of this.sheet) {
+      switch (item.system) {
+        case 'COC7th':
+          this.COC7th.push(item)
+          this.COC7thExist = true
+          break
+        case 'DND5e':
+          this.DND5e.push(item)
+          this.DND5eExist = true
+          break
+      }
+    }
+  },
+  updated() {
+    this.sheet = this.$store.getters.getSheet
+  },
+  computed: {
+    COC7thFound() {
+      if (!this.COC7thExist) {
+        return '你沒有COC7th的角色卡'
+      } else return ''
+    },
+    DND5eFound() {
+      if (!this.DND5eExist) {
+        return '你沒有DND5e的角色卡'
+      } else return ''
+    }
+  }
+
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "public/main";
+
+table {
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid lightgray;
+  height: 100%;
+  border-collapse: collapse;
+  padding: .75rem;
+  @include phone-width {
+    font-size: 14px;
+  }
+}
+
+td {
+  @include phone-width {
+    font-size: 14px;
+  }
+}
+
+th {
+  font-size: 25px;
+  @include phone-width {
+    font-size: 20px;
+  }
+}
+
 
 </style>

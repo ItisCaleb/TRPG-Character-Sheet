@@ -8,21 +8,25 @@ Vue.use(Vuex)
 const getDefaultState = () => {
     return {
         LoggedIn: false,
-        user:{},
-        session:""
+        user: {},
+        session: "",
+        sheet: ""
     }
 }
 
 export default new Vuex.Store({
     state: getDefaultState,
-    plugins:[createPersistedState()],
+    plugins: [createPersistedState()],
     mutations: {
         login(state, user) {
             state.LoggedIn = true
             state.user = user
         },
-        session(state,session){
-          state.session = session
+        session(state, session) {
+            state.session = session
+        },
+        sheet(state, sheet) {
+            state.sheet = sheet
         },
         reset(state) {
             Object.assign(state, getDefaultState())
@@ -32,19 +36,28 @@ export default new Vuex.Store({
         loginActions({commit}, user) {
             commit('login', user)
         },
-        setSession({commit},session){
-          commit('session',session)
+        setSession({commit}, session) {
+            commit('session', session)
+        },
+        setSheet({commit},sheet) {
+            commit('sheet',sheet)
         },
         logoutActions({commit}) {
             commit('reset')
         }
     },
     getters: {
-        getLogin: function (state) {
+        getLogin(state) {
             return state.LoggedIn
         },
-        getSession: function (state){
+        getSession(state) {
             return state.session
+        },
+        getSheet(state){
+            return state.sheet
+        },
+        getUser(state){
+            return state.user
         }
     }
 })

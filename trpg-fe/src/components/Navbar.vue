@@ -10,9 +10,6 @@
           <router-link class="nav-link" to="/about">關於</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/help">幫助</router-link>
-        </li>
-        <li class="nav-item">
           <router-link v-if="$store.getters.getLogin" class="nav-link" to="/session">團務</router-link>
         </li>
         <li class="nav-item">
@@ -39,7 +36,7 @@
     <div class="navbar-toggler" style="border: none">
       <i v-if="!sidebar" @click="SideBarOn" class="fa fa-navicon fa-lg" style="cursor: pointer"></i>
     </div>
-    <div v-if="sidebar" @click="SideBarOn" id="black-layout"></div>
+    <div v-if="sidebar" @click="SideBarOn" class="black-layout"></div>
     <transition>
       <div v-if="sidebar" id="sidebar-nav" :class="{'nav-show':sidebar}">
         <ul class="navbar-nav" style="display: inline-block;width: 100%">
@@ -48,9 +45,6 @@
           </li>
           <li @click="SideBarOn" class="nav-item sidebar-item">
             <router-link class="sidebar-link" to="/about">關於</router-link>
-          </li>
-          <li @click="SideBarOn" class="nav-item sidebar-item">
-            <router-link class="sidebar-link" to="/help">幫助</router-link>
           </li>
           <li @click="SideBarOn" v-if="this.$store.state.LoggedIn" class="nav-item sidebar-item">
             <router-link class="sidebar-link" to="/session">團務</router-link>
@@ -139,12 +133,12 @@ export default {
 
 }
 
-#black-layout {
+.black-layout {
   position: fixed;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
 }
@@ -153,7 +147,7 @@ export default {
   position: fixed;
   top: 0;
   background: white;
-  z-index: 2;
+  z-index: 3;
   width: 35%;
   height: 100%;
   text-align: center;

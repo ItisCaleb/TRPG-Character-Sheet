@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:2100/api'
+const host = process.env.VUE_APP_BACKEND_URL || 'https://trpgtoaster.com'
+axios.defaults.baseURL = `${host}/api`
 
 export default {
     login(data) {
@@ -12,23 +13,35 @@ export default {
     logout() {
         return ajax('user/logout', 'get')
     },
-    mailVerify(id){
-        return ajax(`user/register/${id}`,'get')
+    mailVerify(id) {
+        return ajax(`user/register/${id}`, 'get')
     },
     authVerify() {
         return ajax('user/authVerify', 'get')
     },
     getUser(name) {
-        return ajax(`user/getUser/${name}`,'get')
+        return ajax(`user/getUser/${name}`, 'get')
     },
-    getSession(){
-        return ajax('session/getSession','get')
+    getSessions() {
+        return ajax('session/getSessions', 'get')
     },
-    createSession(data){
-        return ajax('session/TRPGCreateSession','post',data)
+    getSessionInfo(id) {
+        return ajax(`session/getInfo/${id}`,'get')
     },
-    joinSession(data){
-        return ajax('session/TRPGJoinSession','post',data)
+    createSession(data) {
+        return ajax('session/TRPGCreateSession', 'post', data)
+    },
+    joinSession(data) {
+        return ajax('session/TRPGJoinSession', 'post', data)
+    },
+    deleteSession(id) {
+        return ajax(`session/deleteSession/${id}`,'get')
+    },
+    getSheets() {
+        return ajax('sheet/getSheets', 'get')
+    },
+    createSheet(system, name) {
+        return ajax(`sheet/${system}/create/${name}`)
     }
 
 }

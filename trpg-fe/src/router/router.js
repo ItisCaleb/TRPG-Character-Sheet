@@ -37,7 +37,7 @@ const routes = [
     {
         path: '/verify/:id',
         name: 'MailVerify',
-        component: ()=>import('../views/User/MailVerify')
+        component: () => import('../views/User/MailVerify')
     },
     {
         path: '/home/:name',
@@ -52,11 +52,15 @@ const routes = [
     },
     {
         path: '/session/create',
-        component: () => import('../views/Session/Create')
+        component: () => import('../views/Session/SessionCreate')
     },
     {
         path: '/session/join',
-        component: () => import('../views/Session/Join')
+        component: () => import('../views/Session/SessionJoin')
+    },
+    {
+        path: '/session/info/:id',
+        component: () => import('../views/Session/SessionInfo')
     },
     {
         path: '/sheet',
@@ -66,7 +70,7 @@ const routes = [
     {
         path: '/help',
         name: 'Help',
-        component: () => import('../views/Help')
+        component: () => import('../views/About')
     },
     {
         path: '*',

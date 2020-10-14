@@ -158,29 +158,7 @@ router.get('/trpgsession/:id', async function (req,res) {
     }
 });
 
-router.get('/charactersheet',async function (req,res) {
-    if(req.data.auth === false ) return res.redirect('/');
-    const id = jwt.decode(req.cookies['auth_token'])._id;
-    const SheetFind = await Sheet.findOne({author:id});
-    const cursor =  await Sheet.find({author: {$in:[id]} });
-    const sheet={name:[],system:[],url:[]};
-    if (!SheetFind) {
-        sheet.name.push('你還沒創建角色卡');
-    }else {
-        cursor.forEach(function (Sheet) {
-            sheet.name.push(Sheet.name);
-            sheet.system.push(Sheet.system);
-            sheet.url.push(Sheet._id)
-        });
-    }
-    res.render('trpg_sheet ',{
-        content:sheet.name,
-        system:sheet.system,
-        url:sheet.url,
-        number:sheet.url.length,
-        authData:req.data
-    });
-});
+
 
 router.get('/charactersheet/:id',async function (req,res) {
     if(req.data.auth === false ) return res.redirect('/');

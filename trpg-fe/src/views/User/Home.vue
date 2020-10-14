@@ -3,6 +3,7 @@
     <Load>
       <div v-if="success" id="user">
         <Title>{{ user.name }}的頁面</Title>
+        <div></div>
       </div>
     </Load>
   </div>

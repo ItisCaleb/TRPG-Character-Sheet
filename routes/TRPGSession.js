@@ -7,13 +7,12 @@ const verify = require('./module/verifyToken');
 const {sessionValidation} = require("./module/validation");
 
 
-router.get('/getSession',async function (req,res) {
+router.get('/getSessions',async function (req,res) {
     const name = jwt.decode(req.cookies['auth_token']).name;
     const SessionFind = await Session.findOne({player:name});
-    const cursor =  await Session.find({ player: {$in:[name]} });
+    const cursor =  await Session.find({ player: {$in:[name]}});
     if (!SessionFind) {
         res.send('你還沒創建團務')
-
     }else {
         const session = [];
         cursor.forEach(function (Session) {
@@ -21,13 +20,19 @@ router.get('/getSession',async function (req,res) {
                 name:Session.name,
                 gm:Session.gm,
                 id:Session._id,
-                player:Session.player.length
             })
         });
         res.status(200).send(session)
     }
-
 });
+router.get('/getInfo/:id',async function (req,res){
+    const id=req.params.id
+    const info = await Session.findOne({_id:id})
+    if(!info) return res.sendStatus(404)
+    const name = jwt.decode(req.cookies['auth_token']).name;
+    if(name!==info.gm) delete info.password
+    res.status(200).send(info)
+})
 
 //create a session
 router.post('/TRPGCreateSession',verify, async function (req,res) {
@@ -158,8 +163,7 @@ router.get('/playerdelete/:id',verify,async function (req,res) {
 
 
 //leave or dismiss a session if you are the gm
-router.get('/delete/:id',verify, async function (req,res) {
-
+router.get('/deleteSession/:id',verify, async function (req,res) {
     const user=jwt.decode(req.cookies['auth_token']);
     const session = await Session.findOne({_id:req.params.id});
     const sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}}});

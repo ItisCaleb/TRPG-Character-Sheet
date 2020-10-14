@@ -4,6 +4,7 @@ const verify = require('./module/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/Info');
 const Session = require('../model/Session');
+const Sheet = require('../model/Info');
 
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
@@ -14,6 +15,27 @@ const DND5eStat = require('../model/DND5e/Stat');
 const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
+
+router.get('/getSheets',async function (req,res) {
+    const id = jwt.decode(req.cookies['auth_token'])._id;
+    const SheetFind = await Sheet.findOne({author:id});
+    const cursor =  await Sheet.find({author: {$in:[id]} });
+    if (!SheetFind) {
+        res.send('NotFound')
+    }else {
+        const sheet=[];
+        cursor.forEach(function (Sheet) {
+            sheet.push({
+                name:Sheet.name,
+                system:Sheet.system,
+                player:Sheet.player_name,
+                url:Sheet._id
+            })
+        });
+        res.status(200).send(sheet)
+    }
+
+});
 
 router.delete('/delete/:id',verify,async function (req,res) {
     const sheetId = req.params.id;

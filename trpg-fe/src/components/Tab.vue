@@ -1,14 +1,14 @@
 <template>
   <div id="tab">
     <ul style="padding-left:3%">
-      <li v-for="(pageName,index) in page" @click="changePage" :class="{'active':currentPage[index]}"
-          :data-tab="pageName" :key="pageName" class="tab-name">{{ pageName }}
+      <li v-for="pageName in page" @click="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
+           :key="pageName" class="tab-name">{{ pageName }}
       </li>
     </ul>
     <br>
     <div id="tab-container">
-      <Load v-for="(pageName,index) in page"  :key="pageName">
-        <div v-if="currentPage[index]" class="tab-content">
+      <Load v-for="pageName in page"  :key="pageName">
+        <div v-if="isCurrent(pageName)" class="tab-content">
           <slot :name="pageName"></slot>
         </div>
       </Load>
@@ -29,32 +29,31 @@ export default {
   },
   data() {
     return {
-      currentPage: []
+      currentPage: ""
     }
   },
   methods: {
-    changePage(event) {
-      const name = event.target.getAttribute('data-tab')
-      for (let i in this.page) {
-        this.$set(this.currentPage, i, false)
-        if (this.page[i] == name) {
-          this.$set(this.currentPage, i, true)
-        }
-      }
+    changePage(name) {
+      this.currentPage=name
+    },
+    isCurrent(name){
+      return this.currentPage===name
     }
   },
   mounted() {
-    for (let i in this.page) {
-      this.$set(this.currentPage, i, false)
-    }
-    this.$set(this.currentPage, 0, true)
+    this.currentPage=this.page[0]
   }
 }
 </script>
 <style scoped lang="scss">
+@import "public/main";
 #tab {
-  width: 85%;
+  width: 90%;
   margin: auto;
+
+  @include pc-width{
+    width: 60%;
+  }
 }
 
 .active {

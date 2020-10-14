@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Title>創建團務</Title>
-    <Form @submit="createSession" btn="創建">
+    <Title>加入團務</Title>
+    <Form @submit="createSession" btn="加入">
       <Input
           v-model="data.name"
           :input="data.password"
@@ -14,6 +14,10 @@
           id="password"
           type="password" ph="輸入密碼"
       ></Input>
+      <div class="form-group" style="font-size: 15px;margin-bottom: 2%">
+        還是你其實要
+        <router-link to="/session/create">創建團務?</router-link>
+      </div>
     </Form>
   </div>
 </template>
@@ -25,8 +29,8 @@ import Input from "@/components/User/Input";
 import api from "@/api";
 
 export default {
-  name: "Create",
-  components: {Form, Title, Input},
+  name: "SessionJoin",
+  components: {Title, Input, Form},
   data() {
     return {
       data: {
@@ -37,14 +41,14 @@ export default {
   },
   methods: {
     createSession() {
-      api.createSession(this.data)
+      api.joinSession(this.data)
           .then(res => {
-            alert(res)
-            api.getSession()
+            api.getSessions()
                 .then(session => {
-                  this.$store.dispatch('setSession',session)
+                  alert(res)
+                  this.$store.dispatch('setSession', session)
+                  this.$router.replace('/session')
                 })
-            this.$router.replace('/session')
           })
           .catch(err => {
             console.log(err)

@@ -1,12 +1,6 @@
 <template>
   <div style="text-align: center">
     <Title>團務</Title>
-    <div id="intro">
-      團務系統可以讓你上傳你的角色卡<br>
-      方便跑團時的GM以及團員檢閱<br>
-      一個團務的玩家上限是15人<br>
-
-    </div>
     <div>
       <router-link class="btn btn-primary" to="/session/create">創建團務</router-link>
       <router-link class="btn btn-primary" to="/session/join">加入團務</router-link>
@@ -18,14 +12,14 @@
         <tr>
           <th>團務名稱</th>
           <th>GM</th>
-          <th>進入</th>
+          <th>選項</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in session.slice((n-1)*10,9+((n-1)*10))" :key="item.name">
           <td>{{ item.name }}</td>
           <td>{{ item.gm }}</td>
-          <td></td>
+          <td><router-link class="btn btn-primary" :to="'/session/info/'+item.id">進入</router-link></td>
         </tr>
         </tbody>
       </table>
@@ -60,7 +54,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "public/main";
 a {
   margin-right: 1%;
 }
@@ -74,9 +69,19 @@ td, th {
   height: 100%;
   border-collapse:collapse;
   padding: .75rem;
+
+}
+
+td{
+  @include phone-width{
+    font-size: 14px;
+  }
 }
 
 th {
   font-size: 25px;
+  @include phone-width{
+    font-size: 20px;
+  }
 }
 </style>

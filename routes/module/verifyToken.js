@@ -4,16 +4,8 @@ module.exports = function (req, res, next) {
     const token = req.cookies['auth_token'];
     try {
         jwt.verify(token, process.env.JWT_SECRET);
-        req.data = {
-            auth:true,
-            user:jwt.decode(token).name
-        }
         next();
     } catch (err) {
-        req.data = {
-            auth:false
-        }
-        res.clearCookie('auth_token');
-        next();
+        res.send(401).send('請先登入')
     }
 };
