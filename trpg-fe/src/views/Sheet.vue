@@ -15,7 +15,7 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr v-for="sheet in COC7th" :key="sheet.name">
+          <tr v-for="sheet in COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -28,7 +28,7 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr v-for="sheet in DND5e" :key="sheet.name">
+          <tr v-for="sheet in DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -58,6 +58,15 @@ export default {
       createBoxShow: false
     }
   },
+  methods: {
+    toCOC7th(url) {
+      this.$router.replace(`/sheet/COC7th/${url}`)
+    },
+    toDND5e(url) {
+      this.$router.replace(`/sheet/DND5e/${url}`)
+    }
+  }
+  ,
   mounted() {
     this.sheet = this.$store.getters.getSheet
     console.log(this.sheet)

@@ -8,7 +8,7 @@
     <br>
     <div id="tab-container">
       <Load v-for="pageName in page"  :key="pageName">
-        <div v-if="isCurrent(pageName)" class="tab-content">
+        <div v-show="isCurrent(pageName)" class="tab-content">
           <slot :name="pageName"></slot>
         </div>
       </Load>

@@ -27,17 +27,21 @@ router.get('/getSessions',async function (req,res) {
 });
 router.get('/getInfo/:id',async function (req,res){
     const id=req.params.id
-    const info = await Session.findOne({_id:id})
+    const info = await Session.findOne({_id:id}).lean()
     if(!info) return res.sendStatus(404)
+    const sheets=[]
+    for (let sheet_id of info.sheet){
+        sheets.push(await Info.findOne({_id:sheet_id}).lean())
+    }
     const name = jwt.decode(req.cookies['auth_token']).name;
-    if(name!==info.gm) delete info.password
-    res.status(200).send(info)
+    const data= Object.assign({},info)
+    data.sheetInfos = sheets
+    if(name!==data.gm) delete data.password
+    res.status(200).send(data)
 })
 
 //create a session
 router.post('/TRPGCreateSession',verify, async function (req,res) {
-
-
     //check if the format is correct
     const {error}= sessionValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);

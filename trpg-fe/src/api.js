@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const host = process.env.VUE_APP_BACKEND_URL || 'https://trpgtoaster.com'
+const host = process.env.VUE_APP_BACKEND_URL || ''
 axios.defaults.baseURL = `${host}/api`
 
 export default {

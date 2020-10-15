@@ -20,6 +20,7 @@ const  TRPGSessionSchema = new mongoose.Schema({
     player:{
         type:Array,
     },
+    invite:String,
     sheet:[String],
     date:{
         type:Date,
