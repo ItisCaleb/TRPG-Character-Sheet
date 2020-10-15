@@ -122,7 +122,7 @@ router.post('/sheet_upload/:id',verify,async function (req,res) {
         res.status(400).send('上傳角卡失敗');
     }
 });
-router.get('/sheetdelete/:id',verify,async function (req,res) {
+router.delete('/sheetdelete/:id',verify,async function (req,res) {
     const user =jwt.decode(req.cookies['auth_token']);
     const sheet=req.params.id;
     const session=req.query.session;

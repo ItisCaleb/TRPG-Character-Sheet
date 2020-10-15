@@ -36,6 +36,9 @@ html{
   margin-top: 10%;
   margin-bottom: 5%;
   font-family: Arial,serif;
+  @include big-pc-width{
+    margin-top: 3%;
+  }
   @include pad-width{
     margin-top: 6%;
   }

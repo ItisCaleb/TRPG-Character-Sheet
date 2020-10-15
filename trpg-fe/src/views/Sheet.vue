@@ -69,7 +69,6 @@ export default {
   ,
   mounted() {
     this.sheet = this.$store.getters.getSheet
-    console.log(this.sheet)
     if (this.sheet === 'NotFound') return
     for (let item of this.sheet) {
       switch (item.system) {

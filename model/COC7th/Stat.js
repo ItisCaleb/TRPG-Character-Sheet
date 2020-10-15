@@ -31,7 +31,10 @@ const COC7thStatSchema = new mongoose.Schema({
         max:20,
         default:'無'
     },
-    characteristic:Array
+    characteristic: {
+        type:Array,
+        default:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    }
 });
 
 module.exports = mongoose.model("COC7th_Stat",COC7thStatSchema);

@@ -54,11 +54,12 @@ export default {
       if(this.created) return
       this.created = true
       api.createSheet(this.choose,this.name)
-      .then(()=>{
+      .then((id)=>{
         api.getSheets()
         .then(sheets=>{
           this.$store.dispatch('setSheet',sheets)
           this.created = false
+          this.$router.replace(`/sheet/${this.choose}/${id}`)
         })
       }).catch(err=>{
         console.log(err)

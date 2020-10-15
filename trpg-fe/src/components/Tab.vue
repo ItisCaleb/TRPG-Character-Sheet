@@ -51,6 +51,9 @@ export default {
   width: 90%;
   margin: auto;
 
+  @include big-pc-width{
+    width: 60%;
+  }
   @include pc-width{
     width: 60%;
   }
@@ -80,7 +83,7 @@ export default {
 
 #tab-container {
   border-top: 1px lightgray solid;
-  margin-top: 10px;
+
   padding-top:2%;
   width: 100%;
   overflow: hidden;

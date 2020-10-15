@@ -82,18 +82,15 @@ export default {
         this.formSend = true
         api.login(this.userData)
             .then((user) => {
-              alert('登入成功')
               this.$store.dispatch('loginActions', user)
-              api.getSessions()
-                  .then(sessions => {
-                    this.$store.dispatch('setSession', sessions)
-                  })
-              api.getSheets()
-                  .then(sheets => {
-                    this.$store.dispatch('setSheet', sheets)
-                  })
-              this.$router.replace({
-                path: '/'
+              Promise.all([api.getSessions(),api.getSheets()])
+              .then(data=>{
+                this.$store.dispatch('setSession', data[0])
+                this.$store.dispatch('setSheet', data[1])
+                alert('登入成功')
+                this.$router.replace({
+                  path: '/'
+                })
               })
             })
             .catch(err => {

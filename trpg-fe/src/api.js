@@ -35,13 +35,19 @@ export default {
         return ajax('session/TRPGJoinSession', 'post', data)
     },
     deleteSession(id) {
-        return ajax(`session/deleteSession/${id}`,'get')
+        return ajax(`session/deleteSession/${id}`,'delete')
     },
     getSheets() {
         return ajax('sheet/getSheets', 'get')
     },
+    getSheetData(id) {
+        return ajax(`sheet/getSheetData/${id}`,'get')
+    },
+    deleteSheet(id){
+        return ajax(`sheet/delete/${id}`,'delete')
+    },
     createSheet(system, name) {
-        return ajax(`sheet/${system}/create/${name}`)
+        return ajax(`sheet/${system}/create/${name}`,'get')
     }
 
 }

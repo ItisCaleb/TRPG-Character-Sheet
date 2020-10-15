@@ -1,3 +1,4 @@
+$pcb-media:1025px;
 $pc-media:960px;
 $pcs-media:959px;
 $pad-media:760px;
@@ -5,9 +6,15 @@ $pads-media:759px;
 $phone-media:480px;
 $phones-media:479px;
 
+
+@mixin big-pc-width(){
+  @media all and (min-width: $pcb-media){
+    @content;
+  }
+}
 //電腦
 @mixin pc-width() {
-  @media all and (min-width: $pc-media) {
+  @media all and (min-width: $pc-media) and (max-width: $pcb-media){
     @content;
   }
 }
