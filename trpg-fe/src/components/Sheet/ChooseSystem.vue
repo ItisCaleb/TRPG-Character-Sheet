@@ -40,7 +40,7 @@ export default {
     return {
       choose: "COC7th",
       name: "",
-      created:false
+      created: false
     }
   },
   methods: {
@@ -50,18 +50,17 @@ export default {
     isCurrent(name) {
       return this.choose === name
     },
-    createSheet(){
-      if(this.created) return
+    createSheet() {
+      if (this.created) return
       this.created = true
-      api.createSheet(this.choose,this.name)
-      .then((id)=>{
-        api.getSheets()
-        .then(sheets=>{
-          this.$store.dispatch('setSheet',sheets)
-          this.created = false
-          this.$router.replace(`/sheet/${this.choose}/${id}`)
-        })
-      }).catch(err=>{
+      api.createSheet(this.choose, this.name)
+          .then((id) => {
+            this.$store.dispatch('setSheet')
+                .then(() => {
+                  this.created = false
+                  this.$router.replace(`/sheet/${this.choose}/${id}`)
+                })
+          }).catch(err => {
         console.log(err)
         this.created = false
       })

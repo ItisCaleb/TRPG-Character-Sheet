@@ -15,7 +15,8 @@
           type="password" ph="輸入密碼"
       ></Input>
       <div class="form-group" style="font-size: 15px;margin-bottom: 2%">
-        還是你其實要<router-link to="/session/join">加入團務?</router-link>
+        還是你其實要
+        <router-link to="/session/join">加入團務?</router-link>
       </div>
     </Form>
   </div>
@@ -42,12 +43,11 @@ export default {
     createSession() {
       api.createSession(this.data)
           .then(res => {
-            api.getSessions()
-                .then(session => {
-                  alert(res)
-                  this.$store.dispatch('setSession',session)
-                  this.$router.replace('/session')
-                })
+            this.$store.dispatch('setSession')
+            .then(()=>{
+              alert(res)
+              this.$router.replace('/session')
+            })
           })
           .catch(err => {
             console.log(err)

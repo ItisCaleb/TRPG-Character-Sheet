@@ -43,10 +43,9 @@ export default {
     createSession() {
       api.joinSession(this.data)
           .then(res => {
-            api.getSessions()
-                .then(session => {
+            this.$store.dispatch('setSession')
+                .then(()=>{
                   alert(res)
-                  this.$store.dispatch('setSession', session)
                   this.$router.replace('/session')
                 })
           })

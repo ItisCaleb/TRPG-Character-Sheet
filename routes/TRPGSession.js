@@ -167,7 +167,7 @@ router.get('/playerdelete/:id',verify,async function (req,res) {
 
 
 //leave or dismiss a session if you are the gm
-router.get('/deleteSession/:id',verify, async function (req,res) {
+router.delete('/deleteSession/:id',verify, async function (req,res) {
     const user=jwt.decode(req.cookies['auth_token']);
     const session = await Session.findOne({_id:req.params.id});
     const sheet = await Info.find({session:{$elemMatch:{$in:[req.params.id]}}});

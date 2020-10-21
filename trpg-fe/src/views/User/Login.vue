@@ -50,7 +50,7 @@ export default {
       },
       mailVerified: false,
       pwdVerified: false,
-      formSend:false
+      formSend: false
     }
   },
   methods: {
@@ -75,26 +75,26 @@ export default {
     },
     ...mapActions(['loginActions']),
     UserLogin() {
-      if(this.formSend) return
+      if (this.formSend) return
       this.emailVerify()
       this.pwdVerify()
       if (this.mailVerified && this.pwdVerified) {
         this.formSend = true
         api.login(this.userData)
             .then((user) => {
-              this.$store.dispatch('loginActions', user)
-              Promise.all([api.getSessions(),api.getSheets()])
-              .then(data=>{
-                this.$store.dispatch('setSession', data[0])
-                this.$store.dispatch('setSheet', data[1])
+              Promise.all([
+                this.$store.dispatch('setSession'),
+                this.$store.dispatch('setSheet')
+              ]).then(() => {
                 alert('登入成功')
+                this.$store.dispatch('loginActions', user)
                 this.$router.replace({
                   path: '/'
                 })
               })
             })
             .catch(err => {
-              this.formSend=false
+              this.formSend = false
               alert(err)
             })
       } else {

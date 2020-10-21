@@ -11,7 +11,8 @@
           <div v-for="sheet in Session.sheetInfos" :key="sheet._id">
             {{ sheet.name }}
             {{ sheet.system }}
-            {{sheet.player_name}}</div>
+            {{ sheet.player_name }}
+          </div>
         </div>
         <div slot="選項">
           <button class="btn btn-danger" @click="deleteSession">{{ leaveOption }}</button>
@@ -40,12 +41,9 @@ export default {
     deleteSession() {
       api.deleteSession(this.$route.params.id)
           .then(res => {
-            api.getSessions()
-                .then(sessions => {
-                  alert(res)
-                  this.$store.dispatch('setSession', sessions)
-                  this.$router.replace('/session')
-                })
+            alert(res)
+            this.$store.dispatch('setSession')
+            this.$router.replace('/session')
           })
           .catch(err => {
             console.log(err)

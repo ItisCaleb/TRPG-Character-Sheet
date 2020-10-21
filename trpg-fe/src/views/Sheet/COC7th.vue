@@ -1,8 +1,8 @@
 <template>
   <Load v-show="success">
     <div>
-      <Title><span>{{info.name}}</span><br>COC7th</Title>
-      <Tab :page="['一般','背景','技能','選項']" >
+      <Title><span>{{ info.name || '無名' }}</span></Title>
+      <Tab class="tab" :page="['一般','背景','技能','選項']">
         <COC7thInfo ref="info" slot="一般">
         </COC7thInfo>
         <div slot="背景"></div>
@@ -41,25 +41,24 @@ export default {
     deleteSheet() {
       api.deleteSheet(this.$route.params.id)
           .then(res => {
-            api.getSheets()
-                .then((sheets) => {
-                  this.$store.dispatch('setSheet', sheets)
+            this.$store.dispatch('setSheet')
+                .then(() => {
                   alert(res)
                   this.$router.replace('/sheet')
                 })
-
           })
           .catch(err => {
             alert(err)
           })
     }
   },
-  beforeMount() {
+  beforeCreate() {
     api.getSheetData(this.$route.params.id)
         .then(data => {
           this.info = data.info
           this.$refs.info.$data.info = data.info
           this.$refs.info.$data.stat = data.stat
+          this.$refs.info.$data.story = data.story
           this.success = true
         })
         .catch(err => {
@@ -69,6 +68,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+.tab {
+  width: 90% !important;
+
+  input{
+    font-size: 15px;
+  }
+}
 
 </style>

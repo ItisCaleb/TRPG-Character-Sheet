@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import api from "@/api";
 
 
 Vue.use(Vuex)
@@ -36,11 +37,27 @@ export default new Vuex.Store({
         loginActions({commit}, user) {
             commit('login', user)
         },
-        setSession({commit}, session) {
-            commit('session', session)
+        setSession({commit}) {
+            return new Promise((resolve, reject) => {
+                api.getSessions()
+                    .then(session => {
+                        commit('session', session)
+                        resolve()
+                    })
+                    .catch(()=>reject())
+            })
+
         },
-        setSheet({commit},sheet) {
-            commit('sheet',sheet)
+        setSheet({commit}) {
+            return new Promise((resolve, reject) => {
+                api.getSheets()
+                    .then(sheet => {
+                        commit('sheet', sheet)
+                        resolve()
+                    })
+                    .catch(()=>{reject()})
+            })
+
         },
         logoutActions({commit}) {
             commit('reset')

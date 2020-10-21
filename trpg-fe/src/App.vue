@@ -11,7 +11,7 @@
 <style lang="scss">
 @import "public/main";
 
-html{
+html {
   position: relative;
   min-height: 100%;
 }
@@ -26,20 +26,18 @@ html{
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 18px;
-  margin: auto ;
-  @include pad-width{
-    font-size: 25px;
-  }
+  margin: auto;
 }
+
 #content {
   width: 90%;
   margin-top: 10%;
   margin-bottom: 5%;
-  font-family: Arial,serif;
-  @include big-pc-width{
+  font-family: Arial, serif;
+  @include big-pc-width {
     margin-top: 3%;
   }
-  @include pad-width{
+  @include pad-width {
     margin-top: 6%;
   }
 }
@@ -52,11 +50,15 @@ import api from "@/api";
 export default {
   components: {Footer, Navbar},
   beforeCreate() {
-    if(this.$store.getters.getLogin)
-    api.authVerify()
-    .catch(()=>{
-      this.$store.dispatch('logoutActions')
-    })
+    if (this.$store.getters.getLogin)
+      api.authVerify()
+          .then(() => {
+            this.$store.dispatch('setSheet')
+            this.$store.dispatch('setSession')
+          })
+          .catch(() => {
+            this.$store.dispatch('logoutActions')
+          })
   }
 }
 </script>
