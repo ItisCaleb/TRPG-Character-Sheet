@@ -5,6 +5,7 @@
         :value="value"
         @input="$emit('input',$event.target.value)"
     >
+
   </label>
 </template>
 
@@ -14,7 +15,11 @@ export default {
   props: {
     name: String,
     ph: String,
-    value:String
+    value:String,
+    type:{
+      type:String,
+      default:"text"
+    }
   }
 }
 </script>

@@ -59,6 +59,7 @@ export default {
           this.$refs.info.$data.info = data.info
           this.$refs.info.$data.stat = data.stat
           this.$refs.info.$data.story = data.story
+          console.log(data.stat)
           this.success = true
         })
         .catch(err => {
