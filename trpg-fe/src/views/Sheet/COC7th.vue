@@ -58,8 +58,9 @@ export default {
           this.info = data.info
           this.$refs.info.$data.info = data.info
           this.$refs.info.$data.stat = data.stat
+          data.story.avatar+="data:image/jpeg;base64,"
           this.$refs.info.$data.story = data.story
-          console.log(data.stat)
+          console.log(data.story)
           this.success = true
         })
         .catch(err => {

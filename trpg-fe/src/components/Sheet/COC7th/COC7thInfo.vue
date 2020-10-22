@@ -3,17 +3,20 @@
     <table class="stat ta" style="width: 100%">
       <tr class="tr">
         <td class="td" v-for="(value,key) in stat.characteristic" :key="key">
-          <table >
+          <table>
             <tr>
-              <td class="td-font">{{key}}</td>
-              <td class="td-input"><input style="width: 100%" :value="value"></td>
-              <td >
+              <td class="td-font">{{ key }}</td>
+              <td class="td-input">
+                <input type="number" @input="calStat(key)"
+                       class="form-control input-group" v-model.number="stat.characteristic[key]">
+              </td>
+              <td class="td-cal">
                 <table>
                   <tr>
-                    <td>{{value/2}}</td>
+                    <td>{{ Math.floor(value / 2) }}</td>
                   </tr>
                   <tr>
-                    <td>{{value/5}}</td>
+                    <td>{{ Math.floor(value / 5) }}</td>
                   </tr>
                 </table>
               </td>
@@ -27,7 +30,7 @@
       <SheetInput name="姓名" v-model="info.name"/>
       <SheetInput name="玩家" v-model="info.player_name"/>
       <SheetInput name="職業" v-model="story.class"/>
-      <div id="body">
+      <div class="two">
         <SheetInput name="年齡" v-model="story.age"/>
         <SheetInput name="性別" v-model="story.sex"/>
       </div>
@@ -38,15 +41,22 @@
       <h4>調查員狀態：</h4>
       <div style="display: flex">
         <div class="status">
-          <SheetInput name="HP"></SheetInput>
-          <SheetInput name="SAN"></SheetInput>
-          <SheetInput name="MP"></SheetInput>
-          <SheetInput name="LUK"></SheetInput>
+          <div class="two">
+            <SheetInput name="HP" type="number" v-model.number="stat.hp"></SheetInput>
+            <div class="max">/0</div>
+            <SheetInput name="SAN" type="number" v-model.number="stat.san"></SheetInput>
+            <div class="max">/{{ stat.characteristic.pow }}</div>
+          </div>
+          <div class="two">
+            <SheetInput name="MP" type="number" v-model.number="stat.mp"></SheetInput>
+            <div class="max">/0</div>
+            <SheetInput name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
+          </div>
           <div>傷害加成與體格(DB & Build)</div>
           <div>機動力(MOV)</div>
           <label>
             負傷狀態
-            <select>
+            <select v-model="stat.injured_status">
               <option selected="">無</option>
               <option>重傷</option>
               <option>瀕死</option>
@@ -55,7 +65,7 @@
           </label>
           <label>
             瘋狂狀態
-            <select>
+            <select v-model="stat.injured_status">
               <option selected="">無</option>
               <option>臨時瘋狂</option>
               <option>不定性瘋狂</option>
@@ -64,8 +74,21 @@
           </label>
         </div>
       </div>
+    </div>
+    <div class="basic-info">
+      <h4>調查員形象</h4>
+      <img style="margin-bottom: 5%" :src="story.avatar"><br>
+      <div style="margin-bottom: 5%" class="custom-file">
+        <input @change="previewImage" type="file" accept="image/*" class="custom-file-input">
+        <label class="custom-file-label">選擇圖片</label>
+      </div>
+      <div style="display: flex;justify-content: space-around">
+        <button style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
+        <button class="btn btn-primary">取消圖片</button>
+      </div>
 
     </div>
+
   </div>
 
 </template>
@@ -81,10 +104,52 @@ export default {
       info: {
         name: "",
       },
-      stat: "",
+      stat: {
+        characteristic: {
+          str: 0,
+          con: 0,
+          dex: 0,
+          app: 0,
+          pow: 0,
+          siz: 0,
+          int: 0,
+          edu: 0
+        },
+        hp: 0,
+        san: 0,
+        mp: 0,
+        luk: 0,
+        insane_status: "無",
+        injured_status: "無"
+      },
       story: "",
     }
+  },
+  methods: {
+    calStat(key) {
+      let val = this.stat.characteristic[key]
+      if (!Number.isInteger(val)) {
+        Math.floor(this.stat.characteristic[key]);
+        return;
+      }
+      if (val > 100) {
+        this.stat.characteristic[key] = 100;
+      } else if (val < 0) this.stat.characteristic[key] = 0;
+    },
+    previewImage(event) {
+      const image = event.target.files[0];
+      var reader = new FileReader();
+      console.log(image)
+      reader.readAsDataURL(image);
+      const size=(image.size/1024);
+      console.log(size +"kb");
+      reader.onload=(e)=>{
+        this.story.avatar=e.target.result
+      }
+
+    }
   }
+
 }
 </script>
 
@@ -93,11 +158,15 @@ export default {
 
 .basic-info {
   height: 80%;
-  width: 25%;
+  width: 22%;
   margin-right: 10%;
   margin-bottom: 5%;
   @include phone-width {
     width: 100%;
+  }
+  @include small-pad-width {
+    width: 40%;
+    margin-right: 5%;
   }
   display: inline-block;
   vertical-align: top;
@@ -108,53 +177,105 @@ h4 {
   font-weight: bold;
 }
 
-#body {
+.two {
   display: flex;
+  align-items: center;
 }
 
-.ta .tr .td{
-  width: 50%;
-  @include pc-width {
-    width: 10%;
+.max {
+  width: 10%;
+  vertical-align: center;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.ta .tr .td {
+  width: 12.5%;
+  @include phone-width {
+    width: 50%;
   }
-  @include big-pc-width {
-    width: 12%;
+
+  @include pad-width {
+    width: 25%;
+  }
+  @include small-pad-width {
+    width: 25%;
   }
   word-wrap: break-word;
-}
-.ta .tr .td{
   display: inline-block;
   margin-top: 2px;
 }
 
 .stat {
   flex: 1 1 auto;
+  margin-bottom: 2%;
 }
-.td-font{
-  border: 1px lightgray solid;
+
+.td-font {
+
   font-size: 20px;
+  font-weight: bold;
+  text-align: center;
   width: 30%;
-  @include pc-width{
+  @include pc-width {
     width: 50%;
   }
-  @include big-pc-width{
+  @include big-pc-width {
     width: 50%;
 
   }
 }
-.td-input{
+
+.td-input {
   border: 1px lightgray solid;
+  border-right: none;
+  padding: 0;
+  height: 5px;
   width: 30%;
-  padding:0;
-  input{
-    height:100%;
-    display:inline-block;
-    position:relative;
+
+  input {
+    border: none;
+    padding: 0;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    box-shadow: none !important;
+  }
+}
+
+.td-cal {
+  padding: 0;
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+
+  tr {
+    width: 100%;
+  }
+
+  td {
+    margin: 0;
+    border-collapse: collapse;
+    padding: 0;
+    border: 1px lightgray solid;
+    width: 30px;
+    text-align: center;
   }
 }
 
 .status {
   flex: 1 2 auto;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 </style>

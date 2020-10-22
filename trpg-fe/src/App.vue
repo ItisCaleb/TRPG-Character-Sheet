@@ -40,6 +40,9 @@ html {
   @include pad-width {
     margin-top: 6%;
   }
+  @include phone-width{
+    margin-bottom: 20%;
+  }
 }
 </style>
 <script>
