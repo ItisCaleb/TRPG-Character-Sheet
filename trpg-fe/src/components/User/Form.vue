@@ -26,7 +26,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../public/main";
 
 form {
   @include pc-width{

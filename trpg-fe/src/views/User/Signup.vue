@@ -128,7 +128,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
   #repwd{
     margin-bottom: 4% !important;
     @include phone-width{

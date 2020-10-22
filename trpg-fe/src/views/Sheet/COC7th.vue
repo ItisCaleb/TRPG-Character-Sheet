@@ -3,16 +3,9 @@
     <div>
       <Title><span>{{ info.name || '無名' }}</span></Title>
       <Tab class="tab" :page="['一般','背景','技能','選項']">
-        <COC7thInfo ref="info" slot="一般">
-        </COC7thInfo>
-        <div slot="背景"></div>
-        <div slot="技能">
-          <Tab :page="[1,2,3]">
-            <div slot="1"></div>
-            <div slot="2"></div>
-            <div slot="3"></div>
-          </Tab>
-        </div>
+        <COC7thInfo ref="info" slot="一般"></COC7thInfo>
+        <COC7thBackground ref="background" slot="背景"></COC7thBackground>
+        <COC7thSkill ref="skill" slot="技能"></COC7thSkill>
         <div slot="選項" v-if="$store.getters.getUser._id === info.author">
           <button class="btn btn-danger" @click="deleteSheet">刪除</button>
         </div>
@@ -27,10 +20,12 @@ import Tab from "@/components/Tab";
 import api from "@/api";
 import COC7thInfo from "@/components/Sheet/COC7th/COC7thInfo";
 import Load from "@/components/Load";
+import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
+import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
 
 export default {
   name: "COC7th",
-  components: {Load, COC7thInfo, Tab, Title},
+  components: {COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   data() {
     return {
       info: "",
@@ -58,10 +53,22 @@ export default {
           this.info = data.info
           this.$refs.info.$data.info = data.info
           this.$refs.info.$data.stat = data.stat
-          data.story.avatar+="data:image/jpeg;base64,"
           this.$refs.info.$data.story = data.story
+          this.$refs.background.$data.story=data.story
           console.log(data.story)
           this.success = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  },
+  beforeMount() {
+    api.getSheetData(this.$route.params.id)
+        .then(data => {
+          this.info = data.info
+          this.$refs.info.$data.info = data.info
+          this.$refs.info.$data.stat = data.stat
+          this.$refs.info.$data.story = data.story
         })
         .catch(err => {
           console.log(err)
@@ -74,7 +81,7 @@ export default {
 .tab {
   width: 90% !important;
 
-  input{
+  input {
     font-size: 15px;
   }
 }

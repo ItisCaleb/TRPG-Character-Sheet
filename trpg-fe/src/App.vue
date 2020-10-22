@@ -9,13 +9,11 @@
 </template>
 
 <style lang="scss">
-@import "public/main";
 
 html {
   position: relative;
   min-height: 100%;
 }
-
 #app {
   display: flex;
   justify-content: space-around;
@@ -26,6 +24,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 18px;
+
   margin: auto;
 }
 
@@ -33,6 +32,7 @@ html {
   width: 90%;
   margin-top: 10%;
   margin-bottom: 5%;
+
   font-family: Arial, serif;
   @include big-pc-width {
     margin-top: 3%;

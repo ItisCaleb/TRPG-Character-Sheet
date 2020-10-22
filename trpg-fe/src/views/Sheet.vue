@@ -103,7 +103,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
 
 table {
   width: 100%;

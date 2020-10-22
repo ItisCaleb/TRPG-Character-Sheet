@@ -62,27 +62,27 @@ const COC7thStorySchema = new mongoose.Schema({
     },
     myth: {
         type: String,
-        max: 512,
-        default:''
+        max: 5,
+        default:"否"
     },
     injuries: {
         type: String,
-        max: 512,
+        max: 256,
         default:''
     },
     mania: {
         type: String,
-        max: 512,
+        max: 256,
         default:''
     },
     magic: {
         type: String,
-        max: 512,
+        max: 256,
         default:''
     },
     encounter: {
         type: String,
-        max: 512,
+        max: 256,
         default:''
     },
     fellow_investigator: Array,

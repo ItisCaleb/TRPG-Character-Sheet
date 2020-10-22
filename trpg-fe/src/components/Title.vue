@@ -11,7 +11,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
   #title{
     margin-bottom: 2%;
     text-align: center;

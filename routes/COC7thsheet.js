@@ -143,7 +143,7 @@ router.post('/COC7th/image/:id',upload.single('file'),verify,async function (req
     await COC7thStory.updateOne({_id:req.params.id},{
         avatar:image
     })
-    res.send('');
+    res.sendStatus(200);
 });
 
 

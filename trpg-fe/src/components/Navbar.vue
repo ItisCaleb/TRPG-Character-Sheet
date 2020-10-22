@@ -89,7 +89,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
 #nav {
   padding: 15px;
   width: 100%;

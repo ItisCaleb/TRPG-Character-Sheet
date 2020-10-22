@@ -53,7 +53,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../../public/main";
 .input{
   position: relative;
   height: 50px;

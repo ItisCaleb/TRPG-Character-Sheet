@@ -25,8 +25,7 @@
         </td>
       </tr>
     </table>
-    <div class="basic-info">
-      <h4>調查員基本資料：</h4>
+    <COC7thSection title="調查員基本資料：">
       <SheetInput name="姓名" v-model="info.name"/>
       <SheetInput name="玩家" v-model="info.player_name"/>
       <SheetInput name="職業" v-model="story.class"/>
@@ -36,9 +35,8 @@
       </div>
       <SheetInput name="出生地" v-model="story.birthplace"/>
       <SheetInput name="現居地" v-model="story.residence"/>
-    </div>
-    <div class="basic-info">
-      <h4>調查員狀態：</h4>
+    </COC7thSection>
+    <COC7thSection title="調查員狀態：">
       <div style="display: flex">
         <div class="status">
           <div class="two">
@@ -74,20 +72,22 @@
           </label>
         </div>
       </div>
-    </div>
-    <div class="basic-info">
-      <h4>調查員形象</h4>
-      <img style="margin-bottom: 5%" :src="story.avatar"><br>
+    </COC7thSection>
+    <COC7thSection title="調查員形象：">
+      <img v-if="story.avatar"
+           style="margin-bottom: 5%;width: 100%;height: 100%"
+           :src="`data:image/jpeg;base64,${story.avatar}`" alt="角色圖片"><br>
       <div style="margin-bottom: 5%" class="custom-file">
-        <input @change="previewImage" type="file" accept="image/*" class="custom-file-input">
+        <input ref="image" @change="previewImage" type="file" accept="image/*" class="custom-file-input">
         <label class="custom-file-label">選擇圖片</label>
       </div>
       <div style="display: flex;justify-content: space-around">
-        <button style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
-        <button class="btn btn-primary">取消圖片</button>
+        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
+        <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
       </div>
+      <div></div>
 
-    </div>
+    </COC7thSection>
 
   </div>
 
@@ -95,14 +95,17 @@
 
 <script>
 import SheetInput from "@/components/Sheet/SheetInput";
+import api from "@/api";
+import COC7thSection from "@/components/Sheet/COC7th/COC7thSection";
 
 export default {
   name: "COC7thInfo",
-  components: {SheetInput},
+  components: {COC7thSection, SheetInput},
   data() {
     return {
       info: {
         name: "",
+        player_name:""
       },
       stat: {
         characteristic: {
@@ -122,14 +125,21 @@ export default {
         insane_status: "無",
         injured_status: "無"
       },
-      story: "",
+      story: {
+        class:"",
+        age:"",
+        sex:"",
+        residence:"",
+        birthplace:"",
+        avatar:""
+      },
     }
   },
   methods: {
     calStat(key) {
       let val = this.stat.characteristic[key]
-      if (!Number.isInteger(val)) {
-        Math.floor(this.stat.characteristic[key]);
+      if (!val) {
+        this.stat.characteristic[key]=0
         return;
       }
       if (val > 100) {
@@ -139,14 +149,24 @@ export default {
     previewImage(event) {
       const image = event.target.files[0];
       var reader = new FileReader();
-      console.log(image)
       reader.readAsDataURL(image);
       const size=(image.size/1024);
       console.log(size +"kb");
       reader.onload=(e)=>{
-        this.story.avatar=e.target.result
+        this.story.avatar=e.target.result.split(',').pop();
       }
-
+    },
+    cancelImage(){
+      this.story.avatar=""
+    },
+    uploadImage(){
+      const data = new FormData();
+      console.log(this.$refs.image.files[0])
+      data.append("file",this.$refs.image.files[0])
+      api.uploadImage('COC7th',this.$route.params.id,data)
+      .then(()=>{
+        console.log('yes')
+      })
     }
   }
 
@@ -154,28 +174,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
-
-.basic-info {
-  height: 80%;
-  width: 22%;
-  margin-right: 10%;
-  margin-bottom: 5%;
-  @include phone-width {
-    width: 100%;
-  }
-  @include small-pad-width {
-    width: 40%;
-    margin-right: 5%;
-  }
-  display: inline-block;
-  vertical-align: top;
-  flex-wrap: wrap;
-}
-
-h4 {
-  font-weight: bold;
-}
 
 .two {
   display: flex;

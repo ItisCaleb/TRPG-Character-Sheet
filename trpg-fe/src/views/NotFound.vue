@@ -19,7 +19,6 @@ name: "NotFound",
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
 #not-found{
   font-size: 240px;
   @include phone-width{

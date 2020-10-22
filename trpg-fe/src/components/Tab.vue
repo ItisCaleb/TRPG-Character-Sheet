@@ -46,7 +46,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "public/main";
 #tab {
   width: 90%;
   margin: auto;

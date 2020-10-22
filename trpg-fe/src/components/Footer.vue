@@ -12,7 +12,6 @@ name: "Footer"
 </script>
 
 <style scoped lang="scss">
-@import "public/main";
   #footer{
     width: 100%;
     text-align: center;

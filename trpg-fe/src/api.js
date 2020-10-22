@@ -26,7 +26,7 @@ export default {
         return ajax('session/getSessions', 'get')
     },
     getSessionInfo(id) {
-        return ajax(`session/getInfo/${id}`,'get')
+        return ajax(`session/getInfo/${id}`, 'get')
     },
     createSession(data) {
         return ajax('session/TRPGCreateSession', 'post', data)
@@ -35,30 +35,33 @@ export default {
         return ajax('session/TRPGJoinSession', 'post', data)
     },
     deleteSession(id) {
-        return ajax(`session/deleteSession/${id}`,'delete')
+        return ajax(`session/deleteSession/${id}`, 'delete')
     },
     getSheets() {
         return ajax('sheet/getSheets', 'get')
     },
     getSheetData(id) {
-        return ajax(`sheet/getSheetData/${id}`,'get')
+        return ajax(`sheet/getSheetData/${id}`, 'get')
     },
-    deleteSheet(id){
-        return ajax(`sheet/delete/${id}`,'delete')
+    deleteSheet(id) {
+        return ajax(`sheet/delete/${id}`, 'delete')
     },
     createSheet(system, name) {
-        return ajax(`sheet/${system}/create/${name}`,'get')
+        return ajax(`sheet/${system}/create/${name}`, 'get')
+    },
+    uploadImage(system, id, data){
+        return ajax(`sheet/${system}/image/${id}`,'post',data,'multipart/form-data;')
     }
 
 }
 
-function ajax(url, method, data) {
+function ajax(url, method, data, type) {
     return new Promise((resolve, reject) => {
         axios({
             url: url,
             method: method,
             data: data,
-            'Content-Type': 'application/json',
+            'Content-Type': type || 'application/json',
             withCredentials: true
         }).then(res => {
             resolve(res.data)
