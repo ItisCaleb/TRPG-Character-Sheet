@@ -11,8 +11,13 @@ const COC7thSkill = require('../../model/COC7th/Skill');
 
 module.exports = function (id,author) {
     return new Promise(async (resolve, reject) => {
-
-        const info = await Info.findOne({_id:id}).lean()
+        let info;
+        try {
+            info = await Info.findOne({_id:id}).lean()
+        }catch {
+            reject()
+        }
+        if(!info) return reject()
         const perm = info.permission
         switch (perm){
             case '所有人':

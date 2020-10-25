@@ -39,13 +39,18 @@ router.get('/getSheets', async function (req, res) {
 router.get('/getSheetData/:id', function (req, res) {
     const id = req.params.id
     const user = jwt.decode(req.cookies['auth_token'])
-    getTRPGSheet(id, user._id)
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => {
-            res.status(400).send(err)
-        })
+    try{
+        getTRPGSheet(id, user._id)
+            .then(data => {
+                res.send(data)
+            })
+            .catch(err => {
+                res.status(400).send(err)
+            })
+    }catch(err) {
+        res.status(400).send(err)
+    }
+
 
 })
 

@@ -7,6 +7,7 @@
         <COC7thBackground ref="background" slot="背景"></COC7thBackground>
         <COC7thSkill ref="skill" slot="技能"></COC7thSkill>
         <div slot="選項" v-if="$store.getters.getUser._id === info.author">
+          <button class="btn btn-primary" @click="uploadSheet">上傳</button>
           <button class="btn btn-danger" @click="deleteSheet">刪除</button>
         </div>
       </Tab>
@@ -45,6 +46,31 @@ export default {
           .catch(err => {
             alert(err)
           })
+    },
+    uploadSheet(){
+      const skills = Object.assign({},this.$refs.skill.$data.skills)
+      console.log(skills)
+      for(let key in skills.skill){
+        if (Object.keys(skills.skill[key]).length==0){
+          delete skills.skill[key]
+        }
+      }
+      const sheet={
+        info:this.$refs.info.$data.info,
+        stat:this.$refs.info.$data.stat,
+        story:Object.assign(this.$refs.info.$data.story,this.$refs.background.$data.story),
+        equip: {},
+        skill:skills
+      }
+      console.log(sheet)
+      api.editSheet("COC7th",this.$route.params.id,sheet)
+      .then(res=>{
+        console.log(res)
+        alert("上傳成功")
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
   },
   beforeCreate() {
@@ -53,25 +79,18 @@ export default {
           this.info = data.info
           this.$refs.info.$data.info = data.info
           this.$refs.info.$data.stat = data.stat
-          this.$refs.info.$data.story = data.story
+          this.$refs.info.$data.story = Object.assign({},data.story)
+          delete data.story.class
+          delete data.story.age
+          delete data.story.sex
+          delete data.story.residence
+          delete data.story.birthplace
           this.$refs.background.$data.story=data.story
-          console.log(data.story)
+          this.$refs.skill.$data.skills=data.skill
           this.success = true
         })
-        .catch(err => {
-          console.log(err)
-        })
-  },
-  beforeMount() {
-    api.getSheetData(this.$route.params.id)
-        .then(data => {
-          this.info = data.info
-          this.$refs.info.$data.info = data.info
-          this.$refs.info.$data.stat = data.stat
-          this.$refs.info.$data.story = data.story
-        })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          this.$router.replace('/404')
         })
   }
 }

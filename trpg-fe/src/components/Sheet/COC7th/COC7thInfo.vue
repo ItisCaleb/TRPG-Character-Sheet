@@ -41,17 +41,17 @@
         <div class="status">
           <div class="two">
             <SheetInput name="HP" type="number" v-model.number="stat.hp"></SheetInput>
-            <div class="max">/0</div>
+            <div class="max">/{{ getHpMax }}</div>
             <SheetInput name="SAN" type="number" v-model.number="stat.san"></SheetInput>
-            <div class="max">/{{ stat.characteristic.pow }}</div>
+            <div class="max">/{{ 99 }}</div>
           </div>
           <div class="two">
             <SheetInput name="MP" type="number" v-model.number="stat.mp"></SheetInput>
-            <div class="max">/0</div>
+            <div class="max">/{{ getMpMax }}</div>
             <SheetInput name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
           </div>
-          <div>傷害加成與體格(DB & Build)</div>
-          <div>機動力(MOV)</div>
+          <div>傷害加成與體格(DB & Build)：{{ getDb }}</div>
+          <div>機動力(MOV)：{{ calMov }}</div>
           <label>
             負傷狀態
             <select v-model="stat.injured_status">
@@ -74,12 +74,13 @@
       </div>
     </COC7thSection>
     <COC7thSection title="調查員形象：">
-      <img v-if="story.avatar"
+      <img v-if="avatar"
            style="margin-bottom: 5%;width: 100%;height: 100%"
-           :src="`data:image/jpeg;base64,${story.avatar}`" alt="角色圖片"><br>
+           :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
+      <div :style="{'color':image_success.color}" v-if="image_success.msg">{{ image_success.msg }}</div>
       <div style="margin-bottom: 5%" class="custom-file">
         <input ref="image" @change="previewImage" type="file" accept="image/*" class="custom-file-input">
-        <label class="custom-file-label">選擇圖片</label>
+        <label class="custom-file-label">{{ image_name }}</label>
       </div>
       <div style="display: flex;justify-content: space-around">
         <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
@@ -105,7 +106,7 @@ export default {
     return {
       info: {
         name: "",
-        player_name:""
+        player_name: ""
       },
       stat: {
         characteristic: {
@@ -126,20 +127,34 @@ export default {
         injured_status: "無"
       },
       story: {
-        class:"",
-        age:"",
-        sex:"",
-        residence:"",
-        birthplace:"",
-        avatar:""
+        class: "",
+        age: "",
+        sex: "",
+        residence: "",
+        birthplace: "",
       },
+      avatar: "",
+      image_name: "選擇圖片",
+      image_success: {
+        color: "",
+        msg: ""
+      }
     }
+  },
+  mounted() {
+    api.getImage('COC7th', this.$route.params.id)
+        .then(res => {
+          this.avatar = res
+        })
+        .catch(err => {
+          console.log(err)
+        })
   },
   methods: {
     calStat(key) {
       let val = this.stat.characteristic[key]
       if (!val) {
-        this.stat.characteristic[key]=0
+        this.stat.characteristic[key] = 0
         return;
       }
       if (val > 100) {
@@ -150,26 +165,68 @@ export default {
       const image = event.target.files[0];
       var reader = new FileReader();
       reader.readAsDataURL(image);
-      const size=(image.size/1024);
-      console.log(size +"kb");
-      reader.onload=(e)=>{
-        this.story.avatar=e.target.result.split(',').pop();
+      const size = (image.size / 1024);
+      console.log(size + "kb");
+      reader.onload = (e) => {
+        this.image_name = image.name;
+        this.avatar = e.target.result.split(',').pop();
       }
     },
-    cancelImage(){
-      this.story.avatar=""
+    cancelImage() {
+      if (!this.avatar) return
+      this.avatar = ""
+      api.removeImage('COC7th', this.$route.params.id)
+          .then(() => {
+            this.image_success.msg = "成功移除"
+            this.image_success.color = "#10a36a"
+          })
+          .catch(err => {
+            this.image_success.msg = err
+            this.image_success.color = "red"
+          })
     },
-    uploadImage(){
+    uploadImage() {
       const data = new FormData();
-      console.log(this.$refs.image.files[0])
-      data.append("file",this.$refs.image.files[0])
-      api.uploadImage('COC7th',this.$route.params.id,data)
-      .then(()=>{
-        console.log('yes')
-      })
+      data.append("file", this.$refs.image.files[0])
+      api.uploadImage("COC7th", this.$route.params.id, data)
+          .then(() => {
+            this.image_success.msg = "上傳成功"
+            this.image_success.color = "#10a36a"
+          })
+          .catch(err => {
+            this.image_success.msg = err
+            this.image_success.color = "red"
+          })
+    }
+  },
+  computed: {
+    getHpMax() {
+      return Math.floor((this.stat.characteristic.siz + this.stat.characteristic.con) / 10)
+    },
+    getMpMax() {
+      return this.stat.characteristic.pow / 5
+    },
+    calMov() {
+      const dex = this.stat.characteristic.dex
+      const str = this.stat.characteristic.str
+      const siz = this.stat.characteristic.siz
+      if (dex < siz && str < siz) {
+        return 7
+      } else if (dex > siz && str > siz) {
+        return 9
+      } else return 8
+    },
+    getDb() {
+      const total = this.stat.characteristic.str + this.stat.characteristic.siz
+      if (total >= 2 && total <= 64) return "-2 & -2"
+      else if (total >= 64 && total <= 84) return "-1 & -1"
+      else if (total >= 85 && total <= 124) return "0 & 0"
+      else if (total >= 125 && total <= 164) return "+1d4 & 1"
+      else if (total >= 165 && total <= 204) return "+1d6 & 2"
+      else if (total >= 205 && total <= 284) return "+2d6 & 3"
+      else return "請先填入屬性"
     }
   }
-
 }
 </script>
 

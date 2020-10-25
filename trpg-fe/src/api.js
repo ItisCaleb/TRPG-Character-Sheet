@@ -49,8 +49,17 @@ export default {
     createSheet(system, name) {
         return ajax(`sheet/${system}/create/${name}`, 'get')
     },
+    editSheet(system,id,data){
+        return ajax(`sheet/${system}/edit/${id}`,"post",data)
+    },
+    getImage(type,id){
+        return ajax(`image/getImage/${type}/${id}`)
+    },
     uploadImage(system, id, data){
-        return ajax(`sheet/${system}/image/${id}`,'post',data,'multipart/form-data;')
+        return ajax(`image/uploadImage/${system}/${id}`,'post',data,'multipart/form-data;')
+    },
+    removeImage(system, id){
+        return ajax(`image/removeImage/${system}/${id}`,'get')
     }
 
 }

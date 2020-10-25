@@ -2,7 +2,7 @@
   <form>
     <slot></slot>
     <div class="form-group">
-      <button @click.prevent="callSubmit" type="submit" class="btn btn-primary mb-2">{{ btn }}</button>
+      <button @click.prevent.once="callSubmit" type="submit" class="btn btn-primary mb-2">{{ btn }}</button>
     </div>
 
   </form>

@@ -85,11 +85,7 @@ const COC7thStorySchema = new mongoose.Schema({
         max: 256,
         default:''
     },
-    fellow_investigator: Array,
-    avatar: {
-        type: Buffer,
-        default:''
-    }
+    fellow_investigator: Array
 });
 
 module.exports = mongoose.model("COC7th_Story", COC7thStorySchema);

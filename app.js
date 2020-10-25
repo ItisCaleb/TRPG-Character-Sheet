@@ -14,6 +14,7 @@ const TRPGSessionRoute = require('./routes/TRPGSession');
 const TRPGSheetRoute = require('./routes/TRPGSheet');
 const COC7thSheetRoute = require('./routes/COC7thsheet');
 const DND5eSheetRoute = require('./routes/DND5esheet');
+const ImageRoute = require('./routes/Image');
 
 
 //set view engine
@@ -60,6 +61,7 @@ app.use('/api/session', TRPGSessionRoute);
 app.use('/api/sheet',TRPGSheetRoute);
 app.use('/api/sheet',COC7thSheetRoute);
 app.use('/api/sheet',DND5eSheetRoute);
+app.use('/api/image',ImageRoute);
 
 
 // start server

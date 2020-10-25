@@ -1,6 +1,6 @@
 <template>
   <div class="sheet-background">
-    <COC7thSection title="調查員背景" style="width: 45%">
+    <COC7thSection class="bsection" title="調查員背景">
       <SheetInput v-model="story.injuries" name="創傷與傷疤"></SheetInput>
       <SheetInput v-model="story.encounter" name="第三類接觸"></SheetInput>
       <SheetInput v-model="story.mania" name="恐懼與狂熱"></SheetInput>
@@ -16,7 +16,7 @@
         <textarea v-model="story.description" class="sheet-textarea" style="height: 200px"></textarea>
       </label>
     </COC7thSection>
-    <COC7thSection id="tx" title="調查員經歷" style="width: 45%">
+    <COC7thSection class="bsection" id="tx" title="調查員經歷">
       <label>
         思念與信念
         <textarea v-model="story.belief" class="sheet-textarea"> </textarea>
@@ -69,15 +69,30 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .sheet-textarea {
   resize: none;
   height: 100%;
   width: 100%;
+  border: 1px lightgray solid;
+  border-radius: 0.25rem;
+  &:focus{
+    border-color: #80bdff;
+    outline: 0;
+  }
 }
 
 #tx label {
   width: 100%;
 
+}
+.bsection{
+  width: 45%;
+  @include phone-width{
+    width: 100%;
+  }
+  @include small-pad-width{
+    width: 100%;
+  }
 }
 </style>

@@ -110,10 +110,6 @@ const DND5eStorySchema = new mongoose.Schema({
         type: String,
         max: 1024,
         default:''
-    },
-    avatar:{
-        type:Buffer,
-        default:''
     }
 });
 
