@@ -7,8 +7,8 @@
             <tr>
               <td class="td-font">{{ key }}</td>
               <td class="td-input">
-                <input type="number" @input="calStat(key)"
-                       class="form-control input-group" v-model.number="stat.characteristic[key]">
+                <SheetGridInput type="number" @input="calStat(key)"
+                                v-model.number="stat.characteristic[key]"></SheetGridInput>
               </td>
               <td class="td-cal">
                 <table>
@@ -40,13 +40,16 @@
       <div style="display: flex">
         <div class="status">
           <div class="two">
-            <SheetInput name="HP" type="number" v-model.number="stat.hp"></SheetInput>
+            <SheetInput :min="0" :max="getHpMax" name="HP" type="number"
+                        v-model.number="stat.hp"></SheetInput>
             <div class="max">/{{ getHpMax }}</div>
-            <SheetInput name="SAN" type="number" v-model.number="stat.san"></SheetInput>
-            <div class="max">/{{ 99 }}</div>
+            <SheetInput :min="0" :max="getSanMax" name="SAN" type="number"
+                        v-model.number="stat.san"></SheetInput>
+            <div class="max">/{{ getSanMax }}</div>
           </div>
           <div class="two">
-            <SheetInput name="MP" type="number" v-model.number="stat.mp"></SheetInput>
+            <SheetInput :min="0" :max="getMpMax" name="MP" type="number"
+                        v-model.number="stat.mp"></SheetInput>
             <div class="max">/{{ getMpMax }}</div>
             <SheetInput name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
           </div>
@@ -98,41 +101,31 @@
 import SheetInput from "@/components/Sheet/SheetInput";
 import api from "@/api";
 import COC7thSection from "@/components/Sheet/COC7th/COC7thSection";
+import SheetGridInput from "@/components/Sheet/SheetGridInput";
 
 export default {
   name: "COC7thInfo",
-  components: {COC7thSection, SheetInput},
+  components: {SheetGridInput, COC7thSection, SheetInput},
+  props: {
+    info: {
+      type: Object,
+      required: true
+    },
+    stat: {
+      type: Object,
+      required: true
+    },
+    story: {
+      type: Object,
+      required: true
+    },
+    mytho: {
+      type: Number
+    }
+  },
+
   data() {
     return {
-      info: {
-        name: "",
-        player_name: ""
-      },
-      stat: {
-        characteristic: {
-          str: 0,
-          con: 0,
-          dex: 0,
-          app: 0,
-          pow: 0,
-          siz: 0,
-          int: 0,
-          edu: 0
-        },
-        hp: 0,
-        san: 0,
-        mp: 0,
-        luk: 0,
-        insane_status: "無",
-        injured_status: "無"
-      },
-      story: {
-        class: "",
-        age: "",
-        sex: "",
-        residence: "",
-        birthplace: "",
-      },
       avatar: "",
       image_name: "選擇圖片",
       image_success: {
@@ -204,7 +197,7 @@ export default {
       return Math.floor((this.stat.characteristic.siz + this.stat.characteristic.con) / 10)
     },
     getMpMax() {
-      return this.stat.characteristic.pow / 5
+      return Math.floor(this.stat.characteristic.pow / 5)
     },
     calMov() {
       const dex = this.stat.characteristic.dex
@@ -225,6 +218,9 @@ export default {
       else if (total >= 165 && total <= 204) return "+1d6 & 2"
       else if (total >= 205 && total <= 284) return "+2d6 & 3"
       else return "請先填入屬性"
+    },
+    getSanMax() {
+      return 99 - this.mytho
     }
   }
 }

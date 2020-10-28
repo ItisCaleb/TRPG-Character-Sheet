@@ -4,9 +4,10 @@
     <input class="form-control input-group"
            :type="type"
            :value="value"
-           @input="$emit('input',$event.target.value)"
+           :min="min"
+           :max="max"
+           @input="emitInput"
     >
-
   </label>
 </template>
 
@@ -19,10 +20,31 @@ export default {
     value: {
       type:[String,Number]
     },
+    min:{
+      type:Number,
+      default: 0
+    },
+    max: {
+      type:Number,
+      default: 100
+    },
     type: {
       type: String,
       default: "text"
     }
+  },
+  methods:{
+    emitInput(event){
+      this.calMinMax(event)
+      this.$emit('input',event.target.value)
+    },
+    calMinMax(event){
+      if (this.type==="number"){
+        if(event.target.value<this.min) event.target.value=this.min
+        else if (event.target.value>this.max) event.target.value=this.max
+      }
+    }
+
   }
 }
 </script>

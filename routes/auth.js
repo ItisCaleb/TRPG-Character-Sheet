@@ -150,6 +150,7 @@ router.get('/getUser/:name', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
+    console.log('wer')
     res.clearCookie('auth_token').clearCookie('admin').send('已登出')
 })
 

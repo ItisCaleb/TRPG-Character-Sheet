@@ -5,9 +5,17 @@
         <th colspan="7">調查員技能</th>
       </tr>
       <tr>
-        <td colspan="1">職業特徵</td>
-        <td colspan="3">職業點:0</td>
-        <td colspan="3">興趣點:0</td>
+        <td colspan="1">職業特徵
+          <select v-model="skills['class_feature']">
+            <option>EDU</option>
+            <option>EDU+STR</option>
+            <option>EDU+DEX</option>
+            <option>EDU+APP</option>
+            <option>EDU+POW</option>
+          </select>
+        </td>
+        <td colspan="3">職業點:{{ getClassPoint }}</td>
+        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
       </tr>
       <tr>
         <td>技能名稱</td>
@@ -33,21 +41,21 @@
           ({{ key }})
         </td>
         <td>{{ skill.default }}</td>
-        <td class="skill"><input type="number"
+        <td class="skill"><input :ref="key+'_interest'" type="number"
                                  @input="incSkill($event,'interest',key)" class="form-control input-group"></td>
-        <td class="skill"><input type="number"
+        <td class="skill"><input :ref="key+'_class'" type="number"
                                  @input="incSkill($event,'class',key)" class="form-control input-group"></td>
-        <td class="skill"><input type="number"
+        <td class="skill"><input :ref="key+'_grow'" type="number"
                                  @input="incSkill($event,'grow',key)" class="form-control input-group">
         </td>
         <td class="skill-max">
           <table>
             <tr>
-              <td rowspan="2">0</td>
-              <td>0</td>
+              <td class="max" rowspan="2">{{ getTotal(key, skill.default) }}</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 2) }}</td>
             </tr>
             <tr>
-              <td>0</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 5) }}</td>
             </tr>
           </table>
         </td>
@@ -58,13 +66,21 @@
         <th colspan="7">調查員技能</th>
       </tr>
       <tr>
-        <td colspan="1">職業特徵</td>
-        <td colspan="3">職業點:0</td>
-        <td colspan="3">興趣點:0</td>
+        <td colspan="1">職業特徵
+          <select v-model="skills['class_feature']">
+            <option>EDU</option>
+            <option>EDU+STR</option>
+            <option>EDU+DEX</option>
+            <option>EDU+APP</option>
+            <option>EDU+POW</option>
+          </select>
+        </td>
+        <td colspan="3">職業點:{{ getClassPoint }}</td>
+        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
       </tr>
       <tr>
         <td>技能名稱</td>
-        <td>初始值</td>
+        <td>初始</td>
         <td>興趣</td>
         <td>職業</td>
         <td>成長</td>
@@ -86,20 +102,20 @@
           ({{ key }})
         </td>
         <td>{{ skill.default }}</td>
-        <td class="skill"><input type="number"
+        <td class="skill"><input :ref="key+'_interest'" type="number"
                                  @input="incSkill($event,'interest',key)" class="form-control input-group"></td>
-        <td class="skill"><input type="number" @input="incSkill($event,'class',key)"
+        <td class="skill"><input :ref="key+'_class'" type="number" @input="incSkill($event,'class',key)"
                                  class="form-control input-group"></td>
-        <td class="skill"><input type="number" @input="incSkill($event,'grow',key)"
+        <td class="skill"><input :ref="key+'_grow'" type="number" @input="incSkill($event,'grow',key)"
                                  class="form-control input-group"></td>
         <td class="skill-max">
           <table>
             <tr>
-              <td rowspan="2">0</td>
-              <td>0</td>
+              <td class="max" rowspan="2">{{ getTotal(key, skill.default) }}</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 2) }}</td>
             </tr>
             <tr>
-              <td>0</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 5) }}</td>
             </tr>
           </table>
         </td>
@@ -110,13 +126,22 @@
         <th colspan="7">調查員技能</th>
       </tr>
       <tr>
-        <td colspan="2">職業特徵</td>
-        <td colspan="3">職業點:0</td>
-        <td colspan="3">興趣點:0</td>
+        <td colspan="2">職業特徵
+          <select v-model="skills['class_feature']">
+            <option>EDU</option>
+            <option>EDU+STR</option>
+            <option>EDU+DEX</option>
+            <option>EDU+APP</option>
+            <option>EDU+POW</option>
+          </select>
+        </td>
+        <td colspan="3">職業點:{{ getClassPoint }}</td>
+        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
       </tr>
       <tr>
         <td>技能名稱</td>
-        <td>初始值</td>
+        <td>自定義</td>
+        <td>初始</td>
         <td>興趣</td>
         <td>職業</td>
         <td>成長</td>
@@ -138,20 +163,21 @@
           ({{ key }})
         </td>
         <td class="base-skill"><input class="form-control input-group" placeholder="自定義"></td>
-        <td class="skill"><input type="number"
+        <td>{{ skill.default }}</td>
+        <td class="skill"><input :ref="key+'_interest'" type="number"
                                  @input="incSkill($event,'interest',key)" class="form-control input-group"></td>
-        <td class="skill"><input type="number" @input="incSkill($event,'class',key)"
+        <td class="skill"><input :ref="key+'_class'" type="number" @input="incSkill($event,'class',key)"
                                  class="form-control input-group"></td>
-        <td class="skill"><input type="number" @input="incSkill($event,'grow',key)"
+        <td class="skill"><input :ref="key+'_grow'" type="number" @input="incSkill($event,'grow',key)"
                                  class="form-control input-group"></td>
         <td class="skill-max">
           <table>
             <tr>
-              <td rowspan="2">0</td>
-              <td>0</td>
+              <td class="max" rowspan="2">{{ getTotal(key, skill.default) }}</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 2) }}</td>
             </tr>
             <tr>
-              <td>0</td>
+              <td>{{ Math.floor(getTotal(key, skill.default) / 5) }}</td>
             </tr>
           </table>
         </td>
@@ -167,12 +193,18 @@ import Tab from "@/components/Tab";
 export default {
   name: "COC7thSkill",
   components: {Tab},
+  props: {
+    skills: {
+      type: Object,
+      required: true
+    },
+    stat: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      skills: {
-        class_feature: "",
-        skill: {}
-      },
       page1: {
         "Accounting": {default: 5, name: "會計"},
         "Anthropology": {default: 1, name: "人類學"},
@@ -223,27 +255,27 @@ export default {
         "Read Lips": {default: 1, name: "讀唇"}
       },
       page3: {
-        "Pilot": {name: "專業駕駛"},
-        "Survival": {name: "求生"},
-        "Art and Craft": {name: "藝術與工藝", rows: 3},
-        "ac1": {name: "", dep: true},
-        "ac2": {name: "", dep: true},
-        "Fighting": {name: "鬥毆", rows: 3},
-        "f1": {name: "", dep: true},
-        "f2": {name: "", dep: true},
-        "Firearms": {name: "火器", rows: 3},
-        "fire1": {name: "", dep: true},
-        "fire2": {name: "", dep: true},
-        "Language (Other)": {name: "他國語言", rows: 3},
-        "l1": {name: "", dep: true},
-        "l2": {name: "", dep: true},
-        "Language (Own)": {name: "母語"},
-        "Science": {name: "科學", rows: 3},
-        "s1": {name: "", dep: true},
-        "s2": {name: "", dep: true},
-        "Lore": {name: "偏門學問", rows: 3},
-        "lore1": {name: "", dep: true},
-        "lore2": {name: "", dep: true}
+        "Pilot": {default: 0, name: "專業駕駛"},
+        "Survival": {default: 10, name: "求生"},
+        "Art and Craft": {default: 5, name: "藝術與工藝", rows: 3},
+        "ac1": {default: 5, name: "", dep: true},
+        "ac2": {default: 5, name: "", dep: true},
+        "Fighting": {default: 25, name: "鬥毆", rows: 3},
+        "f1": {default: 0, name: "", dep: true},
+        "f2": {default: 0, name: "", dep: true},
+        "Firearms": {default: 0, name: "火器", rows: 3},
+        "fire1": {default: 0, name: "", dep: true},
+        "fire2": {default: 0, name: "", dep: true},
+        "Language (Other)": {default: 1, name: "他國語言", rows: 3},
+        "l1": {default: 1, name: "", dep: true},
+        "l2": {default: 1, name: "", dep: true},
+        "Language (Own)": {default: 0, name: "母語"},
+        "Science": {default: 0, name: "科學", rows: 3},
+        "s1": {default: 0, name: "", dep: true},
+        "s2": {default: 0, name: "", dep: true},
+        "Lore": {default: 1, name: "偏門學問", rows: 3},
+        "lore1": {default: 1, name: "", dep: true},
+        "lore2": {default: 1, name: "", dep: true}
       }
     }
   },
@@ -255,15 +287,85 @@ export default {
       } else if (value > 100) {
         event.currentTarget.value = 100
       }
-      value = event.currentTarget.value;
-      event.currentTarget.value = parseInt(value);
-      if (!this.skills.skill) this.skills.skill = {};
-      if (!this.skills.skill[key]) this.skills.skill[key] = {}
-      Object.assign(this.skills.skill[key], {
-        [type]: value
-      })
-      if (value == 0) {
+      event.currentTarget.value = parseInt(event.currentTarget.value);
+      if (!this.skills.skill[key]) this.$set(this.skills.skill, key, {})
+      this.$set(this.skills.skill[key], type, event.currentTarget.value)
+      if (event.currentTarget.value == 0) {
         this.$delete(this.skills.skill[key], type)
+        if (Object.keys(this.skills.skill[key]).length == 0) {
+          this.$delete(this.skills.skill, key)
+        }
+      }
+    },
+    getTotal(key, origin) {
+      let total = origin;
+      if (!this.skills.skill[key]) return total
+      for (let type in this.skills.skill[key]) {
+        total += parseInt(this.skills.skill[key][type])
+      }
+      return total
+    }
+  },
+  mounted() {
+    for (let key in this.$refs) {
+      let skill = key.split('_')
+      let prefix = skill[0]
+      let last = skill[1]
+      if (!this.$props.skills.skill[prefix]) {
+        this.$refs[key][0].value = 0;
+        continue;
+      }
+      this.$refs[key][0].value = this.$props.skills.skill[prefix][last] || 0
+    }
+  },
+  computed: {
+    setDodge() {
+      if (!this.stat) return 0
+      else return Math.floor(this.stat.characteristic.dex / 2)
+    },
+    setMotherLanguage() {
+      if (!this.stat) return 0
+      else return this.stat.characteristic.edu
+    },
+    getClassPoint() {
+      let total = 0;
+      for (let key in this.skills.skill) {
+        if (!this.skills.skill[key]['class']) continue
+        total += parseInt(this.skills.skill[key]['class'])
+      }
+      switch (this.skills['class_feature']) {
+        case 'EDU':
+          return this.stat.characteristic.edu * 4 - total
+        case 'EDU+STR':
+          return (this.stat.characteristic.edu + this.stat.characteristic.str) * 2 - total
+        case 'EDU+DEX':
+          return (this.stat.characteristic.edu + this.stat.characteristic.dex) * 2 - total
+        case 'EDU+APP':
+          return (this.stat.characteristic.edu + this.stat.characteristic.app) * 2 - total
+        case 'EDU+POW':
+          return (this.stat.characteristic.edu + this.stat.characteristic.pow) * 2 - total
+        default:
+          return 0
+      }
+    },
+    getInterestPoint() {
+      let total = 0;
+      for (let key in this.skills.skill) {
+        if (!this.skills.skill[key]['interest']) continue
+        total += parseInt(this.skills.skill[key]['interest'])
+      }
+      return this.stat.characteristic.int * 2 - total
+    }
+  },
+  watch: {
+    setDodge: {
+      handler() {
+        this.page1.Dodge.default = this.setDodge
+      }
+    },
+    setMotherLanguage: {
+      handler() {
+        this.page3["Language (Own)"].default = this.setMotherLanguage
       }
     }
   }
@@ -274,6 +376,7 @@ export default {
 table {
   width: 99%;
   text-align: center;
+  height: 100%;
 
 }
 
@@ -287,9 +390,21 @@ td {
 
 .skill-max {
   padding: 0;
+  height: 100%;
 
   table {
+    height: 100%;
+    overflow: hidden;
     width: 100%;
+    border: none;
+
+    td {
+      border-bottom: none;
+    }
+  }
+
+  .max {
+    width: 50%;
   }
 }
 
@@ -317,6 +432,7 @@ input {
   text-align: center;
   height: 100%;
   width: 100%;
+  background: transparent;
   box-shadow: none !important;
 }
 

@@ -1,13 +1,18 @@
 <template>
-  <Load v-show="success">
+  <Load v-show="success.all">
     <div>
-      <Title><span>{{ info.name || '無名' }}</span></Title>
+      <Title>
+        <span>{{ info.name || '無名' }}</span>
+        <i :style="{color:getSuccessColor}" class="fa"
+           :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
+      </Title>
+
       <Tab class="tab" :page="['一般','背景','技能','選項']">
-        <COC7thInfo ref="info" slot="一般"></COC7thInfo>
-        <COC7thBackground ref="background" slot="背景"></COC7thBackground>
-        <COC7thSkill ref="skill" slot="技能"></COC7thSkill>
+        <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :story="story" :mytho="getMytho"
+                    slot="一般"></COC7thInfo>
+        <COC7thBackground :story="story" slot="背景"></COC7thBackground>
+        <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="技能"></COC7thSkill>
         <div slot="選項" v-if="$store.getters.getUser._id === info.author">
-          <button class="btn btn-primary" @click="uploadSheet">上傳</button>
           <button class="btn btn-danger" @click="deleteSheet">刪除</button>
         </div>
       </Tab>
@@ -23,14 +28,67 @@ import COC7thInfo from "@/components/Sheet/COC7th/COC7thInfo";
 import Load from "@/components/Load";
 import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
 import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
+import debounce from "lodash.debounce"
 
 export default {
   name: "COC7th",
   components: {COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   data() {
     return {
-      info: "",
-      success: false
+      info: {
+        author: "",
+        name: ""
+      },
+      stat: {
+        hp: 0,
+        san: 0,
+        mp: 0,
+        luk: 0,
+        insane_status: "無",
+        injured_status: "無",
+        characteristic: {
+          str: 0,
+          con: 0,
+          dex: 0,
+          app: 0,
+          pow: 0,
+          siz: 0,
+          int: 0,
+          edu: 0
+        }
+      },
+      skills: {
+        class_feature: "EDU",
+        skill: {}
+      },
+      story: {
+        class: "",
+        age: "",
+        sex: "",
+        residence: "",
+        birthplace: "",
+        description: "",
+        belief: "",
+        significant_people: "",
+        meaningful_location: "",
+        treasured_possession: "",
+        trait: "",
+        myth: "",
+        injuries: "",
+        mania: "",
+        magic: "",
+        encounter: "",
+        fellow_investigator: ""
+      },
+      success: {
+        info: false,
+        stat: false,
+        skill: false,
+        story: false,
+        all: false,
+        not_init: false,
+        upload: true
+      }
     }
   },
   methods: {
@@ -47,50 +105,69 @@ export default {
             alert(err)
           })
     },
-    uploadSheet(){
-      const skills = Object.assign({},this.$refs.skill.$data.skills)
-      console.log(skills)
-      for(let key in skills.skill){
-        if (Object.keys(skills.skill[key]).length==0){
-          delete skills.skill[key]
-        }
-      }
-      const sheet={
-        info:this.$refs.info.$data.info,
-        stat:this.$refs.info.$data.stat,
-        story:Object.assign(this.$refs.info.$data.story,this.$refs.background.$data.story),
+    updateSheet: debounce(function (sheet) {
+      api.editSheet("COC7th", this.$route.params.id, sheet)
+          .then(res => {
+            console.log(res)
+            this.success.upload = true
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    }, 3000)
+  },
+  computed: {
+    getSheet() {
+      return {
+        info: this.info,
+        stat: this.stat,
+        story: this.story,
         equip: {},
-        skill:skills
+        skill: this.skills
       }
-      console.log(sheet)
-      api.editSheet("COC7th",this.$route.params.id,sheet)
-      .then(res=>{
-        console.log(res)
-        alert("上傳成功")
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+    },
+    getSuccessColor(){
+      if(this.success.upload){
+        return '#42b983'
+      }else return '#28a1dc'
+    },
+    getMytho() {
+      if (!this.skills.skill["Cthulhu Mythos"]) return 0
+      else {
+        let total = 0
+        for (let type in this.skills.skill["Cthulhu Mythos"]) {
+          total += parseInt(this.skills.skill["Cthulhu Mythos"][type])
+        }
+        return total
+      }
+    }
+  },
+  watch: {
+    getSheet: {
+      handler(sheet) {
+        if (this.success.not_init) {
+          this.success.upload = false
+          this.updateSheet(sheet)
+        } else this.success.not_init = true
+      },
+      deep: true
     }
   },
   beforeCreate() {
     api.getSheetData(this.$route.params.id)
         .then(data => {
           this.info = data.info
-          this.$refs.info.$data.info = data.info
-          this.$refs.info.$data.stat = data.stat
-          this.$refs.info.$data.story = Object.assign({},data.story)
-          delete data.story.class
-          delete data.story.age
-          delete data.story.sex
-          delete data.story.residence
-          delete data.story.birthplace
-          this.$refs.background.$data.story=data.story
-          this.$refs.skill.$data.skills=data.skill
-          this.success = true
+          this.success.info = true
+          this.stat = data.stat
+          this.success.stat = true
+          this.story = data.story
+          this.success.story = true
+          this.skills = data.skill
+          this.success.skill = true
+          this.success.all = true
         })
         .catch(() => {
-          this.$router.replace('/404')
+
         })
   }
 }

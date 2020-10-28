@@ -44,26 +44,13 @@
 <script>
 import COC7thSection from "@/components/Sheet/COC7th/COC7thSection";
 import SheetInput from "@/components/Sheet/SheetInput";
-
 export default {
   name: "COC7thBackground",
   components: {SheetInput, COC7thSection},
-  data() {
-    return {
-      story: {
-        description: "",
-        belief: "",
-        significant_people: "",
-        meaningful_location: "",
-        treasured_possession: "",
-        trait: "",
-        myth: "",
-        injuries: "",
-        mania: "",
-        magic: "",
-        encounter: "",
-        fellow_investigator: ""
-      }
+  props:{
+    story:{
+      type:Object,
+      required:true
     }
   }
 }

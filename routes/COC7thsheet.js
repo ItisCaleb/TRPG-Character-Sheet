@@ -62,17 +62,12 @@ router.get('/COC7th/create/:name', verify, async function (req, res)  {
 });
 router.post('/COC7th/edit/:id',verify,async function(req,res) {
     const cs = req.body;
-    console.log(req.body)
     try{
         await Info.updateOne({_id:req.params.id},{$set: {
                 name:cs.info.name,
                 player_name: cs.info.player_name,
                 permission:cs.info.permission
             }});
-    }catch (err) {
-        res.status(400).send(err);
-    }
-    try{
         await COC7thSkill.updateOne({_id:req.params.id}, {$set:cs.skill});
         await COC7thStory.updateOne({_id:req.params.id},{$set:cs.story});
         await COC7thEquip.updateOne({_id:req.params.id},{$set: cs.equip});
