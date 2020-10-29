@@ -34,6 +34,9 @@ export default {
     joinSession(data) {
         return ajax('session/TRPGJoinSession', 'post', data)
     },
+    uploadSheet(data,id){
+        return ajax(`session/uploadSheet/${id}`,'post',data)
+    },
     deleteSession(id) {
         return ajax(`session/deleteSession/${id}`, 'delete')
     },

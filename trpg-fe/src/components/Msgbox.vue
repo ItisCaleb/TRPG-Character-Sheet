@@ -2,12 +2,12 @@
   <div>
     <keep-alive>
       <transition name="box">
-        <div v-if="show" class="box">
+        <div v-show="show" class="box">
           <slot class="box-content"></slot>
         </div>
       </transition>
     </keep-alive>
-    <div v-if="show" @click="MsgboxOn" class="black-layout"></div>
+    <div v-show="show" @click="MsgboxOn" class="black-layout"></div>
   </div>
 
 </template>
@@ -30,7 +30,6 @@ export default {
 
 <style scoped lang="scss">
 .box {
-  min-width: 30%;
   min-height: 20%;
   z-index: 2;
   border: 1px solid lightgray;
@@ -42,11 +41,20 @@ export default {
   transform: translateX(-50%);
   place-items: center;
   @include phone-width{
-    min-width: 80%
+    min-width: 90%
   }
   @include pad-width{
     min-width: 70%;
   };
+  @include small-pad-width{
+    min-width: 70%;
+  };
+  @include pc-width{
+    min-width: 60%;
+  }
+  @include big-pc-width{
+    min-width: 45%;
+  }
 }
 
 .black-layout {

@@ -6,7 +6,10 @@ const COC7thSkillSchema = new mongoose.Schema({
         max:20,
         default:'EDU'
     },
-    skill: Object
+    skill: {
+        type:Object,
+        default: {}
+    }
 });
 
 module.exports = mongoose.model("COC7th_Skill", COC7thSkillSchema);

@@ -299,6 +299,7 @@ export default {
     },
     getTotal(key, origin) {
       let total = origin;
+      if(!this.skills.skill) return total
       if (!this.skills.skill[key]) return total
       for (let type in this.skills.skill[key]) {
         total += parseInt(this.skills.skill[key][type])
@@ -311,7 +312,7 @@ export default {
       let skill = key.split('_')
       let prefix = skill[0]
       let last = skill[1]
-      if (!this.$props.skills.skill[prefix]) {
+      if (!this.$props.skills.skill || !this.$props.skills.skill[prefix]) {
         this.$refs[key][0].value = 0;
         continue;
       }

@@ -42,6 +42,10 @@ export default {
       if (this.type==="number"){
         if(event.target.value<this.min) event.target.value=this.min
         else if (event.target.value>this.max) event.target.value=this.max
+      }else if(this.type==="text"){
+        if(event.target.value.length>this.max){
+          event.target.value=event.target.value.slice(0,this.max)
+        }
       }
     }
 

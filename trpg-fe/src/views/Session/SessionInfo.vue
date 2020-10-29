@@ -3,17 +3,24 @@
     <Title>團務{{ Session.name }}</Title>
     <Msgbox ref="boxShow">
       <div id="box-content">
-        <Title>上傳角色卡</Title>
-        <h3 v-if="!noSheet">你還沒有角色卡</h3>
+        <Title>
+          上傳角色卡
+          <button v-if="!noSheet" class="btn btn-primary" @click="uploadSheet">上傳</button>
+        </Title>
+        <h3 v-if="noSheet">{{ this.noSheet }}</h3>
         <div v-else>
-          <table class="table" style="width: 100%">
+          <table class="table" style="width: 100%;height: 100%">
             <tr>
               <td>角色卡</td>
               <td>系統</td>
+              <td>選取</td>
             </tr>
-            <tr v-for="sheet in sheets" :key="sheet.id">
-              <td>{{sheet.name}}</td>
-              <td>{{sheet.system}}</td>
+            <tr v-for="sheet in sheets" :key="sheet.id" style="height: 100%; ">
+              <td>{{ sheet.name }}</td>
+              <td>{{ sheet.system }}</td>
+              <td><input :value="sheet.url" v-model="selectSheet" style="width: 100%;height: 18px" type="checkbox"
+                         class="custom-checkbox">
+              </td>
             </tr>
           </table>
         </div>
@@ -55,8 +62,9 @@ export default {
     return {
       Session: {},
       sheets: {},
+      selectSheet: [],
       success: false,
-      noSheet:true
+      noSheet: ""
     }
   },
   methods: {
@@ -73,6 +81,16 @@ export default {
           .catch(err => {
             console.log(err)
           })
+    },
+    uploadSheet() {
+      api.uploadSheet(this.selectSheet, this.$route.params.id)
+          .then(res => {
+            console.log(res)
+            this.$router.go(0)
+          })
+          .catch(err => {
+            console.log(err)
+          })
     }
   },
   computed: {
@@ -81,8 +99,7 @@ export default {
         return "解散"
       } else return "離開"
     }
-  }
-  ,
+  },
   beforeCreate() {
     api.getSessionInfo(this.$route.params.id)
         .then(res => {
@@ -90,7 +107,16 @@ export default {
           this.Session.player.shift()
           this.success = true
           this.sheets = this.$store.getters.getSheet
-          if(this.sheets==="NotFound") this.noSheet= false
+          if (this.sheets === "NotFound") {
+            this.noSheet = "你還未擁有角色卡"
+            return
+          }
+          for (let i in this.Session.sheet) {
+            this.sheets= this.sheets.filter((s) =>{
+              return  s.url !== this.Session.sheet[i]
+            })
+          }
+          if (this.sheets.length === 0) this.noSheet = "你的角色卡已經全部上傳了"
         })
         .catch(() => {
           this.$router.replace('/404')
@@ -103,7 +129,24 @@ export default {
 .players {
   display: block;
 }
-#box-content{
-  margin: 7%;
+
+#box-content {
+  margin: 5%;
+}
+
+td {
+  font-size: 20px;
+  padding: 1%
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=checkbox] {
+  -moz-appearance: textfield;
 }
 </style>

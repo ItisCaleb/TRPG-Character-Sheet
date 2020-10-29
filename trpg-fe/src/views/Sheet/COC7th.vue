@@ -8,7 +8,7 @@
       </Title>
 
       <Tab class="tab" :page="['一般','背景','技能','選項']">
-        <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :story="story" :mytho="getMytho"
+        <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story" :mytho="getMytho"
                     slot="一般"></COC7thInfo>
         <COC7thBackground :story="story" slot="背景"></COC7thBackground>
         <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="技能"></COC7thSkill>
@@ -57,6 +57,11 @@ export default {
           edu: 0
         }
       },
+      equip: {
+        equip: "",
+        cash: "",
+        weapon: ""
+      },
       skills: {
         class_feature: "EDU",
         skill: {}
@@ -84,6 +89,7 @@ export default {
         info: false,
         stat: false,
         skill: false,
+        equip: false,
         story: false,
         all: false,
         not_init: false,
@@ -122,16 +128,17 @@ export default {
         info: this.info,
         stat: this.stat,
         story: this.story,
-        equip: {},
+        equip: this.equip,
         skill: this.skills
       }
     },
-    getSuccessColor(){
-      if(this.success.upload){
+    getSuccessColor() {
+      if (this.success.upload) {
         return '#42b983'
-      }else return '#28a1dc'
+      } else return '#28a1dc'
     },
     getMytho() {
+      if (!this.skills.skill) return 0
       if (!this.skills.skill["Cthulhu Mythos"]) return 0
       else {
         let total = 0
@@ -148,6 +155,7 @@ export default {
         if (this.success.not_init) {
           this.success.upload = false
           this.updateSheet(sheet)
+          this.$socket.emit('input',sheet)
         } else this.success.not_init = true
       },
       deep: true
@@ -160,6 +168,8 @@ export default {
           this.success.info = true
           this.stat = data.stat
           this.success.stat = true
+          this.equip = data.equip
+          this.success.equip = true
           this.story = data.story
           this.success.story = true
           this.skills = data.skill
@@ -167,7 +177,7 @@ export default {
           this.success.all = true
         })
         .catch(() => {
-
+          this.$router.replace('/404')
         })
   }
 }

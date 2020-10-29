@@ -27,14 +27,14 @@
     </table>
     <COC7thSection title="調查員基本資料：">
       <SheetInput name="姓名" v-model="info.name"/>
-      <SheetInput name="玩家" v-model="info.player_name"/>
-      <SheetInput name="職業" v-model="story.class"/>
+      <SheetInput :max="64" name="玩家" v-model="info.player_name"/>
+      <SheetInput :max="64" name="職業" v-model="story.class"/>
       <div class="two">
-        <SheetInput name="年齡" v-model="story.age"/>
-        <SheetInput name="性別" v-model="story.sex"/>
+        <SheetInput :max="64" name="年齡" v-model="story.age"/>
+        <SheetInput :max="64" name="性別" v-model="story.sex"/>
       </div>
-      <SheetInput name="出生地" v-model="story.birthplace"/>
-      <SheetInput name="現居地" v-model="story.residence"/>
+      <SheetInput :max="64" name="出生地" v-model="story.birthplace"/>
+      <SheetInput :max="64" name="現居地" v-model="story.residence"/>
     </COC7thSection>
     <COC7thSection title="調查員狀態：">
       <div style="display: flex">
@@ -75,6 +75,12 @@
           </label>
         </div>
       </div>
+      <div>
+        <h4 style="font-weight: bold">調查員裝備：</h4>
+        <SheetInput :max="128" name="金錢" v-model="equip.money"></SheetInput>
+        <SheetInput :max="256" name="武器" v-model="equip.weapon"></SheetInput>
+        <SheetTextArea name="攜帶物品" :max="512" v-model="equip.equip" :height="110"></SheetTextArea>
+      </div>
     </COC7thSection>
     <COC7thSection title="調查員形象：">
       <img v-if="avatar"
@@ -90,7 +96,6 @@
         <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
       </div>
       <div></div>
-
     </COC7thSection>
 
   </div>
@@ -102,10 +107,11 @@ import SheetInput from "@/components/Sheet/SheetInput";
 import api from "@/api";
 import COC7thSection from "@/components/Sheet/COC7th/COC7thSection";
 import SheetGridInput from "@/components/Sheet/SheetGridInput";
+import SheetTextArea from "@/components/Sheet/SheetTextArea";
 
 export default {
   name: "COC7thInfo",
-  components: {SheetGridInput, COC7thSection, SheetInput},
+  components: {SheetTextArea, SheetGridInput, COC7thSection, SheetInput},
   props: {
     info: {
       type: Object,
@@ -116,6 +122,10 @@ export default {
       required: true
     },
     story: {
+      type: Object,
+      required: true
+    },
+    equip: {
       type: Object,
       required: true
     },

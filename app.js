@@ -67,6 +67,11 @@ app.use('/api/image',ImageRoute);
 // start server
 const port = process.env.PORT || 3000;
 const server = http.createServer(app)
+const io = require('socket.io')(server);
+
+io.on('connection',(socket)=>{
+    require('./routes/module/sheetSocket')(socket)
+})
 
 server.listen(port,() => console.log('HTTP start on port:' + port));
 

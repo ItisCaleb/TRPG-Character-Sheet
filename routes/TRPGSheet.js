@@ -61,30 +61,30 @@ router.delete('/delete/:id', verify, async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])._id;
     const info = await Info.findOne({_id: sheetId});
     if (info.author === user) {
-        switch (info.system) {
-            case "COC7th":
-                await COC7thStat.deleteOne({_id: sheetId});
-                await COC7thStory.deleteOne({_id: sheetId});
-                await COC7thSkill.deleteOne({_id: sheetId});
-                await COC7thEquip.deleteOne({_id: sheetId});
-                break;
-            case "DND5e":
-                await DND5eStat.deleteOne({_id: sheetId});
-                await DND5eStory.deleteOne({_id: sheetId});
-                await DND5eSpell.deleteOne({_id: sheetId});
-                await DND5eEquip.deleteOne({_id: sheetId});
-                break;
+        try {
+            switch (info.system) {
+                case "COC7th":
+                    await COC7thStat.deleteOne({_id: sheetId});
+                    await COC7thStory.deleteOne({_id: sheetId});
+                    await COC7thSkill.deleteOne({_id: sheetId});
+                    await COC7thEquip.deleteOne({_id: sheetId});
+                    break;
+                case "DND5e":
+                    await DND5eStat.deleteOne({_id: sheetId});
+                    await DND5eStory.deleteOne({_id: sheetId});
+                    await DND5eSpell.deleteOne({_id: sheetId});
+                    await DND5eEquip.deleteOne({_id: sheetId});
+                    break;
+            }
+            await Image.deleteOne({_id: sheetId, type: info.system})
+            await Info.deleteOne({_id: sheetId});
+            await User.updateOne({_id: user}, {$inc: {sheet_number: -1}})
+            await Session.updateMany({sheet: req.params.id}, {$pull: {sheet: req.params.id}})
+            res.send('已刪除角色卡')
+        } catch (err) {
+            console.log(err)
+            res.status(400).send(err)
         }
-        await Image.deleteOne({_id: sheetId, type: info.system})
-        await Info.deleteOne({_id: sheetId});
-        await User.updateOne({_id: user}, {$inc: {sheet_number: -1}})
-
-        const session = await Session.find({sheet: sheetId})
-        for (const sheet of session) {
-            await Session.updateOne({sheet: req.params.id}, {$pull: {sheet: sheetId}})
-        }
-        res.send('已刪除角色卡')
-
     } else return res.status(403).send('你並無權限修改此角色卡')
 })
 

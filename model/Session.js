@@ -21,10 +21,7 @@ const  TRPGSessionSchema = new mongoose.Schema({
         type:Array,
     },
     invite:String,
-    sheet:[{
-        _id:mongoose.ObjectId,
-        name:String
-    }],
+    sheet:[mongoose.ObjectId],
     date:{
         type:Date,
         default:Date.now()

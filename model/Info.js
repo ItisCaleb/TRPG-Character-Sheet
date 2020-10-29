@@ -8,7 +8,7 @@ const InfoSchema = new mongoose.Schema({
     },
     player_name:{
         type: String,
-        max: 128
+        max: 64
     },
     author:{
         type: String,

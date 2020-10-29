@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const COC7thEquipSchema = new mongoose.Schema({
     equip: {
         type:String,
-        max:1024,
+        max:512,
         default:''
     },
     cash: {
         type:String,
-        max:512,
+        max:128,
         default:''
     },
     weapon: {
         type:String,
-        max:1024,
+        max:256,
         default:''
     },
 });
