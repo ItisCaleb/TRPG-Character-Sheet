@@ -5,6 +5,7 @@ const User = require('../model/User');
 const Info = require('../model/Info');
 const Session = require('../model/Session');
 const Sheet = require('../model/Info');
+const Image = require('../model/Avatar')
 const getTRPGSheet = require('./module/sheetJSON')
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
@@ -39,7 +40,7 @@ router.get('/getSheets', async function (req, res) {
 router.get('/getSheetData/:id', function (req, res) {
     const id = req.params.id
     const user = jwt.decode(req.cookies['auth_token'])
-    try{
+    try {
         getTRPGSheet(id, user._id)
             .then(data => {
                 res.send(data)
@@ -47,7 +48,7 @@ router.get('/getSheetData/:id', function (req, res) {
             .catch(err => {
                 res.status(400).send(err)
             })
-    }catch(err) {
+    } catch (err) {
         res.status(400).send(err)
     }
 
@@ -74,6 +75,7 @@ router.delete('/delete/:id', verify, async function (req, res) {
                 await DND5eEquip.deleteOne({_id: sheetId});
                 break;
         }
+        await Image.deleteOne({_id: sheetId, type: info.system})
         await Info.deleteOne({_id: sheetId});
         await User.updateOne({_id: user}, {$inc: {sheet_number: -1}})
 

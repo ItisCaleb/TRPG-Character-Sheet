@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .box {
   min-width: 30%;
   min-height: 20%;
@@ -40,8 +40,13 @@ export default {
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  display: grid;
   place-items: center;
+  @include phone-width{
+    min-width: 80%
+  }
+  @include pad-width{
+    min-width: 70%;
+  };
 }
 
 .black-layout {
@@ -59,7 +64,7 @@ export default {
 }
 
 .box-enter-active,.box-leave-active {
-  transition: all ease 0.7s;
+  transition: all ease 0.5s;
 }
 
 .box-enter-to, .box-leave {

@@ -15,7 +15,7 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr v-for="sheet in COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -28,7 +28,7 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr v-for="sheet in DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -103,6 +103,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.sheets{
+  cursor: pointer;
+  &:hover{
+    border-left: #42b983 solid 5px;
+  }
+}
 
 table {
   width: 100%;

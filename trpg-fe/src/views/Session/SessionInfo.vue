@@ -1,6 +1,25 @@
 <template>
-  <div v-if="success">
+  <div v-if="success" style="text-align: center">
     <Title>團務{{ Session.name }}</Title>
+    <Msgbox ref="boxShow">
+      <div id="box-content">
+        <Title>上傳角色卡</Title>
+        <h3 v-if="!noSheet">你還沒有角色卡</h3>
+        <div v-else>
+          <table class="table" style="width: 100%">
+            <tr>
+              <td>角色卡</td>
+              <td>系統</td>
+            </tr>
+            <tr v-for="sheet in sheets" :key="sheet.id">
+              <td>{{sheet.name}}</td>
+              <td>{{sheet.system}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </Msgbox>
+    <button class="btn btn-primary" @click="$refs.boxShow.$data.show=true">上傳角色卡</button>
     <Load>
       <Tab style="text-align: center" :page="['資訊','角色卡','選項']">
         <div slot="資訊">
@@ -27,14 +46,17 @@ import Title from "@/components/Title";
 import Tab from "@/components/Tab";
 import api from "@/api";
 import Load from "@/components/Load";
+import Msgbox from "@/components/Msgbox";
 
 export default {
   name: "SessionInfo",
-  components: {Load, Tab, Title},
+  components: {Msgbox, Load, Tab, Title},
   data() {
     return {
       Session: {},
-      success: false
+      sheets: {},
+      success: false,
+      noSheet:true
     }
   },
   methods: {
@@ -43,7 +65,10 @@ export default {
           .then(res => {
             alert(res)
             this.$store.dispatch('setSession')
-            this.$router.replace('/session')
+                .then(() => {
+                  this.$router.replace('/session')
+                })
+
           })
           .catch(err => {
             console.log(err)
@@ -64,6 +89,8 @@ export default {
           this.Session = res
           this.Session.player.shift()
           this.success = true
+          this.sheets = this.$store.getters.getSheet
+          if(this.sheets==="NotFound") this.noSheet= false
         })
         .catch(() => {
           this.$router.replace('/404')
@@ -75,5 +102,8 @@ export default {
 <style scoped>
 .players {
   display: block;
+}
+#box-content{
+  margin: 7%;
 }
 </style>
