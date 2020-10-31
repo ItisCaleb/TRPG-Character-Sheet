@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const Session = require('../model/Session');
 const User = require("../model/User");
-const Info = require('../model/Info');
+const Info = require('../model/sheetInfo');
 const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const {sessionValidation} = require("./module/validation");
 
 
 router.get('/getSessions', async function (req, res) {
-    const name = jwt.decode(req.cookies['auth_token']).name;
-    const SessionFind = await Session.findOne({player: name});
-    const cursor = await Session.find({player: {$in: [name]}});
+    const userName = jwt.decode(req.cookies['auth_token']).name;
+    const SessionFind = await Session.findOne({player: userName});
+    const cursor = await Session.find({player: {$in: [userName]}});
     if (!SessionFind) {
         res.send('你還沒創建團務')
     } else {
@@ -19,7 +19,7 @@ router.get('/getSessions', async function (req, res) {
             session.push({
                 name: Session.name,
                 gm: Session.gm,
-                id: Session._id,
+                id: Session._id
             })
         });
         res.status(200).send(session)
@@ -30,13 +30,28 @@ router.get('/getInfo/:id', async function (req, res) {
     const info = await Session.findOne({_id: id}).lean()
     if (!info) return res.sendStatus(404)
     const sheets = []
+    const userName = jwt.decode(req.cookies['auth_token']).name;
     for (let sheet_id of info.sheet) {
-        sheets.push(await Info.findOne({_id: sheet_id}).lean())
+        let sheet = await Info.findOne({_id: sheet_id})
+        let access
+        switch (sheet.permission) {
+            case "限團務GM":
+                access = (userName === info.gm)
+                break
+            default :
+                access = true
+        }
+        sheets.push({
+            id:sheet._id,
+            name:sheet.name,
+            system:sheet.system,
+            player_name:sheet.player_name,
+            access:access
+        })
     }
-    const name = jwt.decode(req.cookies['auth_token']).name;
     const data = Object.assign({}, info)
     data.sheetInfos = sheets
-    if (name !== data.gm) delete data.password
+    if (userName !== data.gm) delete data.password
     res.status(200).send(data)
 })
 
@@ -110,7 +125,7 @@ router.post('/uploadSheet/:id', verify, async function (req, res) {
         }
         for (let index in sheet) {
             await Info.updateOne({_id: sheet[index]}, {$addToSet: {session: req.params.id}});
-            await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet:sheet[index] }});
+            await Session.updateOne({_id: req.params.id}, {$addToSet: {sheet: sheet[index]}});
         }
         res.send('上傳成功');
     } catch (err) {

@@ -2,9 +2,9 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const User = require('../model/User');
-const Info = require('../model/Info');
+const Info = require('../model/sheetInfo');
 const Session = require('../model/Session');
-const Sheet = require('../model/Info');
+const Sheet = require('../model/sheetInfo');
 const Image = require('../model/Avatar')
 const getTRPGSheet = require('./module/sheetJSON')
 //import sheet schema
@@ -37,6 +37,32 @@ router.get('/getSheets', async function (req, res) {
     }
 
 });
+router.get('/checkAccess/:id',async function (req,res){
+    const user = jwt.decode(req.cookies['auth_token'])
+    const sheet =await Info.findOne({_id:req.params.id})
+    if(user._id===sheet.author.toString()) return res.send('author')
+    else if(sheet.session.length===0) {
+        if(sheet.permission==='所有人') return res.send('view')
+        return res.send('noPerm')
+    }
+    else {
+        for (let id in sheet.session){
+            const session = await Session.findOne({_id:sheet.session[id]})
+            switch (sheet.permission){
+                case "限團務GM":{
+                    if(user.name === session.gm) return res.send('view')
+                    break;
+                }
+                case "團務所有人":{
+                    if (session.player.includes(user.name)) return res.send('view')
+                    break;
+                }
+            }
+        }
+        return res.send('noPerm')
+    }
+})
+
 router.get('/getSheetData/:id', function (req, res) {
     const id = req.params.id
     const user = jwt.decode(req.cookies['auth_token'])
@@ -60,7 +86,7 @@ router.delete('/delete/:id', verify, async function (req, res) {
     const sheetId = req.params.id;
     const user = jwt.decode(req.cookies['auth_token'])._id;
     const info = await Info.findOne({_id: sheetId});
-    if (info.author === user) {
+    if (info.author.toString() === user) {
         try {
             switch (info.system) {
                 case "COC7th":

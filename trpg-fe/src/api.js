@@ -55,6 +55,9 @@ export default {
     editSheet(system,id,data){
         return ajax(`sheet/${system}/edit/${id}`,"post",data)
     },
+    checkSheetAccess(id){
+        return ajax(`sheet/checkAccess/${id}`,'get')
+    },
     getImage(type,id){
         return ajax(`image/getImage/${type}/${id}`)
     },

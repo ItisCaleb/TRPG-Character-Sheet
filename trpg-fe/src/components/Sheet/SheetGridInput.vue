@@ -1,5 +1,6 @@
 <template>
   <input class="form-control input-group"
+         :readonly="view"
          :type="type"
          :value="value"
          :min="min"
@@ -27,6 +28,10 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    view:{
+      type:Boolean,
+      default: false
     }
   },
   methods: {

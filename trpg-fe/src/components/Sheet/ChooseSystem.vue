@@ -14,16 +14,17 @@
     </div>
     <div style="display: inline-block;text-align: center;padding: 4px">
       <Title>選擇系統</Title>
-      <div v-if="isCurrent('COC7th')" class="systems-info systems-coc7th" id="info-coc7th">
+      <div v-show="isCurrent('COC7th')" class="systems-info systems-coc7th" id="info-coc7th">
         <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
         <div class="system-text">使用克蘇魯的召喚7版的系統<br>創建屬於你的調查員</div>
       </div>
-      <div v-if="isCurrent('DND5e')" class="systems-info systems-dnd5e" id="info-dnd5e">
+      <div v-show="isCurrent('DND5e')" class="systems-info systems-dnd5e" id="info-dnd5e">
         <img class="systems-picture" src="../../../static/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
-        <div class="system-text">使用龍與地下城5版的系統<br>創建屬於你的冒險者</div>
+        <div class="system-text">使用龍與地下城5版的系統(施工中)<br>創建屬於你的冒險者</div>
       </div>
       <Input v-model="name" type="text" id="name" ph="角色名稱"></Input>
-      <button @click="createSheet" class="btn btn-primary">創建</button>
+      <button :disabled="isCurrent('DND5e')" @click="createSheet" class="btn btn-primary">創建</button>
+      <small v-if="small"></small>
     </div>
   </div>
 </template>
@@ -40,7 +41,8 @@ export default {
     return {
       choose: "COC7th",
       name: "",
-      created: false
+      created: false,
+      small:""
     }
   },
   methods: {
@@ -52,6 +54,7 @@ export default {
     },
     createSheet() {
       if (this.created) return
+      this.small=""
       this.created = true
       api.createSheet(this.choose, this.name)
           .then((id) => {
@@ -60,10 +63,11 @@ export default {
                   this.created = false
                   this.$router.replace(`/sheet/${this.choose}/${id}`)
                 })
-          }).catch(err => {
-        console.log(err)
-        this.created = false
-      })
+          })
+          .catch(err => {
+            this.small=err
+            this.created = false
+          })
     }
   }
 }

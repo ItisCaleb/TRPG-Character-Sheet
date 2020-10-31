@@ -1,4 +1,4 @@
-const Info = require('../../model/Info')
+const Info = require('../../model/sheetInfo')
 const DND5eStat = require('../../model/DND5e/Stat');
 const DND5eStory = require('../../model/DND5e/Story');
 const DND5eEquip = require('../../model/DND5e/Equip');
@@ -9,24 +9,15 @@ const COC7thEquip = require('../../model/COC7th/Equip');
 const COC7thSkill = require('../../model/COC7th/Skill');
 
 
-module.exports = function (id,author) {
+module.exports = function (id) {
     return new Promise(async (resolve, reject) => {
         let info;
         try {
             info = await Info.findOne({_id:id}).lean()
-        }catch {
-            reject()
+        }catch(err) {
+            reject(err)
         }
-        if(!info) return reject()
-        const perm = info.permission
-        switch (perm){
-            case '所有人':
-                break;
-            case '限團務GM':
-                if(author!==info.author) reject('你不是角色卡的主人')
-                break;
-        }
-
+        if(!info) return reject("notFound")
         const system=info.system
         let sheet = {}
         switch (system) {

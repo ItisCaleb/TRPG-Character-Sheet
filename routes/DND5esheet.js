@@ -2,7 +2,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const verify = require('./module/verifyToken');
 const User = require('../model/User');
-const Info = require('../model/Info');
+const Info = require('../model/sheetInfo');
 const dotenv = require('dotenv');
 const multer = require('multer');
 const Session = require('../model/Session');
@@ -14,18 +14,11 @@ const DND5eSpell = require('../model/DND5e/Spell');
 
 dotenv.config();
 
-const upload = multer({
-    limit:{
-        fileSize:500000
-    },
-    fileFilter(req,file,cb){
-        console.log(file.originalname);
-        cb(null,true);
-    }
-});
+
 
 router.get('/DND5e/create/:name',verify,async function (req,res) {
-    const creator = jwt.decode(req.cookies['auth_token']);
+    res.status(400).send('還在施工中')
+    /*const creator = jwt.decode(req.cookies['auth_token']);
     const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     const sheet = new Info({
@@ -58,17 +51,10 @@ router.get('/DND5e/create/:name',verify,async function (req,res) {
     }catch (err) {
         console.log(err);
         res.status(400).send(err);
-    }
+    }*/
 
 });
 
-router.get('/DND5e/json/:id',async function (req,res) {
-    const url = req.params.id;
-    var sheet = {};
-    sheet.story = await DND5eStory.findOne({_id: url}).lean() ;
-    sheet.spell = await DND5eSpell.findOne({_id: url}).lean() ;
-    await res.json(JSON.stringify(sheet));
-});
 
 router.post('/DND5e/edit/:id',verify,async function (req,res) {
     const cs = req.body;
@@ -145,13 +131,7 @@ router.post('/DND5e/edit/:id',verify,async function (req,res) {
         res.status(400).send(err);
     }
 });
-router.post('/DND5e/image/:id',upload.single('file'),verify,async function (req,res) {
-    const image = (req.file) ?req.file.buffer:'';
-    await DND5eStory.updateOne({_id:req.params.id},{
-        avatar:image
-    });
-    res.send('');
-});
+
 
 
 module.exports= router;

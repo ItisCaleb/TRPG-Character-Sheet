@@ -1,12 +1,12 @@
 module.exports = function (socket) {
-    socket.on('join',function (url) {
+    socket.on('joinSheet',function (url) {
         socket.join(url);
     });
-    socket.on('input',function (data) {
-        console.log(data)
+    socket.on('clientInput',function (data,key,url) {
+        socket.to(url).emit('syncInput', data,key)
     })
-    socket.on('delete',function (id){
-
+    socket.on('clientDelete',function (id){
+        socket.to(id).emit('deleteSheet')
     })
 
 };

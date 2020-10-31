@@ -86,7 +86,6 @@ export default {
                 this.$store.dispatch('setSession'),
                 this.$store.dispatch('setSheet')
               ]).then(() => {
-                alert('登入成功')
                 this.$store.dispatch('loginActions', user)
                 this.$router.replace({
                   path: '/'

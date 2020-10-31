@@ -9,26 +9,26 @@
     </Msgbox>
     <Tab :page="['COC7th','DND5e']" style="text-align: center">
       <div slot="COC7th">
-        <div v-if="!COC7thExist">{{ COC7thFound }}</div>
+        <div v-if="!sheetInfos.COC7thExist">{{ COC7thFound }}</div>
         <table v-else>
           <tr>
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr class="sheets" v-for="sheet in COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in sheetInfos.COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
         </table>
       </div>
       <div slot="DND5e">
-        <div v-if="!DND5eExist">{{ DND5eFound }}</div>
+        <div v-if="!sheetInfos.DND5eExist">{{ DND5eFound }}</div>
         <table v-else>
           <tr>
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr class="sheets" v-for="sheet in DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in sheetInfos.DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -51,10 +51,12 @@ export default {
   data() {
     return {
       sheet: "",
-      COC7th: [],
-      DND5e: [],
-      COC7thExist: false,
-      DND5eExist: false,
+      sheetInfos:{
+        COC7th: [],
+        DND5e: [],
+        COC7thExist: false,
+        DND5eExist: false
+      },
       createBoxShow: false
     }
   },
@@ -64,36 +66,47 @@ export default {
     },
     toDND5e(url) {
       this.$router.replace(`/sheet/DND5e/${url}`)
-    }
-  }
-  ,
-  mounted() {
-    this.sheet = this.$store.getters.getSheet
-    if (this.sheet === 'NotFound') return
-    for (let item of this.sheet) {
-      switch (item.system) {
-        case 'COC7th':
-          this.COC7th.push(item)
-          this.COC7thExist = true
-          break
-        case 'DND5e':
-          this.DND5e.push(item)
-          this.DND5eExist = true
-          break
+    },
+    showSheet(){
+      Object.assign(this.$data.sheetInfos , this.$options.data().sheetInfos)
+      this.sheet = this.getSheet
+      if (this.sheet === 'NotFound') return
+      for (let item of this.sheet) {
+        switch (item.system) {
+          case 'COC7th':
+            this.sheetInfos.COC7th.push(item)
+            this.sheetInfos.COC7thExist = true
+            break
+          case 'DND5e':
+            this.sheetInfos.DND5e.push(item)
+            this.sheetInfos.DND5eExist = true
+            break
+        }
       }
     }
   },
-  updated() {
-    this.sheet = this.$store.getters.getSheet
+  watch:{
+    getSheet:{
+      handler(){
+        this.showSheet()
+      },
+      deep:true
+    }
+  },
+  mounted() {
+    this.showSheet()
   },
   computed: {
+    getSheet(){
+      return this.$store.getters.getSheet
+    },
     COC7thFound() {
-      if (!this.COC7thExist) {
+      if (!this.sheetInfos.COC7thExist) {
         return '你沒有COC7th的角色卡'
       } else return ''
     },
     DND5eFound() {
-      if (!this.DND5eExist) {
+      if (!this.sheetInfos.DND5eExist) {
         return '你沒有DND5e的角色卡'
       } else return ''
     }

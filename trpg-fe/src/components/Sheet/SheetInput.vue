@@ -6,6 +6,7 @@
            :value="value"
            :min="min"
            :max="max"
+           :readonly="view"
            @input="emitInput"
     >
   </label>
@@ -31,6 +32,10 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    view:{
+      type:Boolean,
+      default:false
     }
   },
   methods:{

@@ -1,5 +1,5 @@
 <template>
-  <Load v-show="success.all">
+  <Load v-if="success.all">
     <div>
       <Title>
         <span>{{ info.name || '無名' }}</span>
@@ -8,11 +8,18 @@
       </Title>
 
       <Tab class="tab" :page="['一般','背景','技能','選項']">
-        <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story" :mytho="getMytho"
+        <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
+                    :mytho="getMytho"
                     slot="一般"></COC7thInfo>
         <COC7thBackground :story="story" slot="背景"></COC7thBackground>
         <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="技能"></COC7thSkill>
-        <div slot="選項" v-if="$store.getters.getUser._id === info.author">
+        <div slot="選項">
+          檢視權限
+          <select v-model="info.permission">
+            <option>限團務GM</option>
+            <option>團務所有人</option>
+            <option>所有人</option>
+          </select><br>
           <button class="btn btn-danger" @click="deleteSheet">刪除</button>
         </div>
       </Tab>
@@ -37,7 +44,8 @@ export default {
     return {
       info: {
         author: "",
-        name: ""
+        name: "",
+        permission: "限團務GM"
       },
       stat: {
         hp: 0,
@@ -94,15 +102,36 @@ export default {
         all: false,
         not_init: false,
         upload: true
-      }
+      },
     }
   },
   methods: {
+    loadSheet() {
+      api.getSheetData(this.$route.params.id)
+          .then(data => {
+            this.info = data.info
+            this.success.info = true
+            this.stat = data.stat
+            this.success.stat = true
+            this.equip = data.equip
+            this.success.equip = true
+            this.story = data.story
+            this.success.story = true
+            this.skills = data.skill
+            this.success.skill = true
+            this.success.all = true
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$router.replace('/sheet')
+          })
+    },
     deleteSheet() {
       api.deleteSheet(this.$route.params.id)
           .then(res => {
             this.$store.dispatch('setSheet')
                 .then(() => {
+                  this.$socket.emit('clientDelete', this.$route.params.id)
                   alert(res)
                   this.$router.replace('/sheet')
                 })
@@ -116,11 +145,26 @@ export default {
           .then(res => {
             console.log(res)
             this.success.upload = true
+            this.$store.dispatch('setSheet')
+                .then()
           })
           .catch(err => {
             console.log(err)
           })
-    }, 3000)
+    }, 3000),
+    socketInput: debounce(function (data, key) {
+      this.$socket.emit('clientInput', data, key, this.$route.params.id)
+    }, 1000),
+    $withoutWatchers(cb) {
+      const watchers = this._watchers.map((watcher) => ({cb: watcher.cb, sync: watcher.sync}))
+      for (let index in this._watchers) {
+        this._watchers[index] = Object.assign(this._watchers[index], {cb: () => null, sync: true})
+      }
+      cb()
+      for (let index in this._watchers) {
+        this._watchers[index] = Object.assign(this._watchers[index], watchers[index])
+      }
+    }
   },
   computed: {
     getSheet() {
@@ -155,29 +199,89 @@ export default {
         if (this.success.not_init) {
           this.success.upload = false
           this.updateSheet(sheet)
-          this.$socket.emit('input',sheet)
-        } else this.success.not_init = true
+        } else {
+          this.$nextTick(() => {
+            this.success.not_init = true
+          })
+        }
+      },
+      deep: true
+    },
+    info: {
+      async handler(newValue) {
+        if (this.success.not_init) {
+          this.socketInput(newValue, 'info')
+        }
+      },
+      deep: true
+    },
+    stat: {
+      handler(newValue) {
+        if (this.success.not_init) {
+          this.socketInput(newValue, 'stat')
+        }
+      },
+      deep: true
+    },
+    equip: {
+      handler(newValue) {
+        if (this.success.not_init) {
+          this.socketInput(newValue, 'equip')
+        }
+      },
+      deep: true
+    },
+    skills: {
+      handler(newValue) {
+        if (this.success.not_init) {
+          this.socketInput(newValue, 'skills')
+        }
+      },
+      deep: true
+    },
+    story: {
+      handler(newValue) {
+        if (this.success.not_init) {
+          this.socketInput(newValue, 'story')
+        }
       },
       deep: true
     }
+
   },
-  beforeCreate() {
-    api.getSheetData(this.$route.params.id)
-        .then(data => {
-          this.info = data.info
-          this.success.info = true
-          this.stat = data.stat
-          this.success.stat = true
-          this.equip = data.equip
-          this.success.equip = true
-          this.story = data.story
-          this.success.story = true
-          this.skills = data.skill
-          this.success.skill = true
-          this.success.all = true
-        })
-        .catch(() => {
-          this.$router.replace('/404')
+  mounted() {
+    this.loadSheet()
+    this.$socket.emit('joinSheet', this.$route.params.id)
+  },
+  sockets: {
+    syncInput(data) {
+      this.$withoutWatchers(() => {
+        this[data[1]] = data[0]
+      })
+    },
+    deleteSheet() {
+      this.$store.dispatch('setSheet')
+      this.$router.replace('/sheet')
+    },
+    reconnect() {
+      Object.assign(this.$data.success, this.$options.data().success)
+      this.loadSheet()
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    api.checkSheetAccess(to.params.id)
+        .then(res => {
+          switch (res) {
+            case "author":
+              next()
+              break
+            case "view":
+              next({name: "COC7thView", params: {id: to.params.id}})
+              break
+            case "noPerm":
+              next('/sheet')
+              break
+          }
         })
   }
 }

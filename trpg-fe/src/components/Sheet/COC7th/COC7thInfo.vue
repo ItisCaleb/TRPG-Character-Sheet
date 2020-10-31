@@ -7,7 +7,7 @@
             <tr>
               <td class="td-font">{{ key }}</td>
               <td class="td-input">
-                <SheetGridInput type="number" @input="calStat(key)"
+                <SheetGridInput :view="view" type="number" @input="calStat(key)"
                                 v-model.number="stat.characteristic[key]"></SheetGridInput>
               </td>
               <td class="td-cal">
@@ -26,38 +26,38 @@
       </tr>
     </table>
     <COC7thSection title="調查員基本資料：">
-      <SheetInput name="姓名" v-model="info.name"/>
-      <SheetInput :max="64" name="玩家" v-model="info.player_name"/>
-      <SheetInput :max="64" name="職業" v-model="story.class"/>
+      <SheetInput :view="view" :max="100" name="姓名" v-model="info.name"/>
+      <SheetInput :view="view" :max="64" name="玩家" v-model="info.player_name"/>
+      <SheetInput :view="view" :max="64" name="職業" v-model="story.class"/>
       <div class="two">
-        <SheetInput :max="64" name="年齡" v-model="story.age"/>
-        <SheetInput :max="64" name="性別" v-model="story.sex"/>
+        <SheetInput :view="view" :max="64" name="年齡" v-model="story.age"/>
+        <SheetInput :view="view" :max="64" name="性別" v-model="story.sex"/>
       </div>
-      <SheetInput :max="64" name="出生地" v-model="story.birthplace"/>
-      <SheetInput :max="64" name="現居地" v-model="story.residence"/>
+      <SheetInput :view="view" :max="64" name="出生地" v-model="story.birthplace"/>
+      <SheetInput :view="view" :max="64" name="現居地" v-model="story.residence"/>
     </COC7thSection>
     <COC7thSection title="調查員狀態：">
       <div style="display: flex">
         <div class="status">
           <div class="two">
-            <SheetInput :min="0" :max="getHpMax" name="HP" type="number"
+            <SheetInput :view="view" :min="0" :max="getHpMax" name="HP" type="number"
                         v-model.number="stat.hp"></SheetInput>
             <div class="max">/{{ getHpMax }}</div>
-            <SheetInput :min="0" :max="getSanMax" name="SAN" type="number"
+            <SheetInput :view="view" :min="0" :max="getSanMax" name="SAN" type="number"
                         v-model.number="stat.san"></SheetInput>
             <div class="max">/{{ getSanMax }}</div>
           </div>
           <div class="two">
-            <SheetInput :min="0" :max="getMpMax" name="MP" type="number"
+            <SheetInput :view="view" :min="0" :max="getMpMax" name="MP" type="number"
                         v-model.number="stat.mp"></SheetInput>
             <div class="max">/{{ getMpMax }}</div>
-            <SheetInput name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
+            <SheetInput :view="view" name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
           </div>
           <div>傷害加成與體格(DB & Build)：{{ getDb }}</div>
           <div>機動力(MOV)：{{ calMov }}</div>
           <label>
             負傷狀態
-            <select v-model="stat.injured_status">
+            <select :disabled="view" v-model="stat.injured_status">
               <option selected="">無</option>
               <option>重傷</option>
               <option>瀕死</option>
@@ -66,7 +66,7 @@
           </label>
           <label>
             瘋狂狀態
-            <select v-model="stat.injured_status">
+            <select :disabled="view" v-model="stat.injured_status">
               <option selected="">無</option>
               <option>臨時瘋狂</option>
               <option>不定性瘋狂</option>
@@ -77,9 +77,9 @@
       </div>
       <div>
         <h4 style="font-weight: bold">調查員裝備：</h4>
-        <SheetInput :max="128" name="金錢" v-model="equip.money"></SheetInput>
-        <SheetInput :max="256" name="武器" v-model="equip.weapon"></SheetInput>
-        <SheetTextArea name="攜帶物品" :max="512" v-model="equip.equip" :height="110"></SheetTextArea>
+        <SheetInput :view="view" :max="128" name="金錢" v-model="equip.money"></SheetInput>
+        <SheetInput :view="view" :max="256" name="武器" v-model="equip.weapon"></SheetInput>
+        <SheetTextArea :view="view" name="攜帶物品" :max="512" v-model="equip.equip" :height="110"></SheetTextArea>
       </div>
     </COC7thSection>
     <COC7thSection title="調查員形象：">
@@ -87,11 +87,11 @@
            style="margin-bottom: 5%;width: 100%;height: 100%"
            :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
       <div :style="{'color':image_success.color}" v-if="image_success.msg">{{ image_success.msg }}</div>
-      <div style="margin-bottom: 5%" class="custom-file">
+      <div v-if="!view" style="margin-bottom: 5%" class="custom-file">
         <input ref="image" @change="previewImage" type="file" accept="image/*" class="custom-file-input">
         <label class="custom-file-label">{{ image_name }}</label>
       </div>
-      <div style="display: flex;justify-content: space-around">
+      <div v-if="!view" style="display: flex;justify-content: space-around">
         <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
         <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
       </div>
@@ -131,6 +131,10 @@ export default {
     },
     mytho: {
       type: Number
+    },
+    view:{
+      type:Boolean,
+      default:false
     }
   },
 

@@ -1,8 +1,8 @@
 <template>
   <label>
     {{ name }}
-    <textarea class="sheet-textarea"
-              @input="emitInput" @change="socketInput"> </textarea>
+    <textarea :readonly="view" class="sheet-textarea form-control"
+              @input="emitInput"> </textarea>
   </label>
 </template>
 
@@ -14,6 +14,10 @@ export default {
     max:{
       type:Number,
       default:null
+    },
+    view:{
+      type:Boolean,
+      default: false
     }
   },
   methods: {

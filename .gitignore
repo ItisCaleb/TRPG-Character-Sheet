@@ -7,3 +7,4 @@ dist
 node_modules
 views/index.html
 python/test.py
+/mongo/

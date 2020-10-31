@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "start npm run dev && start npm run serve --prefix trpg-fe",
-    "start": "node app.js",
+    "test": "start npm run serve --prefix trpg-fe && npm run dev",
     "dev": "nodemon app.js",
-    "build": "npm run build --prefix trpg-fe"
+    "build": "npm run build --prefix trpg-fe",
+    "installFront": "npm install --prefix trpg-fe"
   },
   "author": "ItisCaleb",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.6",
     "nodemon": "^2.0.3",
+    "npm": "^7.0.7",
     "socket.io": "^2.3.0"
   }
 }

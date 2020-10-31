@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+  trpg-web:
+    image: trpg
+    container_name: trpg-web
+    restart: always
+    ports:
+      - 2100:2100
+    environment:
+      DB_CONNECT: "${DB_CONNECT}"
+      JWT_SECRET: "${JWT_SECRET}"
+      VBOT: "${VBOT}"
+      VPASS: "${VPASS}"
+      PORT: "${PORT}"
+    volumes:
+      - ./dist:/dist
+    depends_on:
+      - trpg-db
+  trpg-db:
+    image: mongo
+    container_name: trpg-db
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:  "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD:  "${MONGO_INITDB_ROOT_PASSWORD}"
+    volumes:
+      - ./mongo/data:/data/db

@@ -4,14 +4,15 @@ const InfoSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        min: 1
+        default: "無名",
+        max: 100
     },
     player_name:{
         type: String,
         max: 64
     },
     author:{
-        type: String,
+        type: mongoose.ObjectId,
         required:true
     },
     system:{
@@ -29,5 +30,5 @@ const InfoSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model("Info",InfoSchema,'infos');
+module.exports = mongoose.model("sheetInfo",InfoSchema,'sheetInfos');
 

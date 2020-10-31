@@ -4,7 +4,7 @@
     <Form @submit="createSession" btn="加入">
       <Input
           v-model="data.name"
-          :input="data.password"
+          :input="data.name"
           id="name"
           type="text" ph="輸入團務名稱"
       ></Input>

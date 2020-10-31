@@ -1,14 +1,5 @@
 const router = require('express').Router();
 const tempUser = require('../model/tempUser');
-const COC7thStory = require('../model/COC7th/Story')
-
-router.get('/', async (req, res) => {
-    const sheets = await COC7thStory.find()
-    for (let i in sheets) {
-        sheets[i].set('avatar',undefined, {strict: false})
-    }
-    res.send('test')
-})
 
 router.get('/find_password/:email', async function (req, res) {
     const findExpire = await tempUser.findOne({email: req.params.email});

@@ -69,7 +69,17 @@ const routes = [
     },
     {
         path: '/sheet/COC7th/:id',
-        component: () => import('../views/Sheet/COC7th')
+        name: 'COC7th',
+        component: () => import('../views/Sheet/COC7th'),
+    },
+    {
+        path: '/sheet/COC7th/:id',
+        name: 'COC7thView',
+        component: () => import('../views/Sheet/COC7thView')
+    },
+    {
+        path: '/sheet/COC7th/:id',
+        component: () => import('../views/Sheet/COC7th'),
     },
     {
         path: '/sheet/DND5e/:id',

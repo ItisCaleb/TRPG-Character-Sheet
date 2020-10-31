@@ -35,9 +35,17 @@
         </div>
         <div slot="角色卡">
           <div v-for="sheet in Session.sheetInfos" :key="sheet._id">
-            {{ sheet.name }}
-            {{ sheet.system }}
-            {{ sheet.player_name }}
+            <router-link v-if="sheet.access" :to="`/sheet/${sheet.system}/${sheet.id}`">
+              {{ sheet.name }}
+              {{ sheet.system }}
+              {{ sheet.player_name }}
+            </router-link>
+            <div style="color: #de510f;" v-else>
+              {{ sheet.name }}
+              {{ sheet.system }}
+              {{ sheet.player_name }}
+            </div>
+
           </div>
         </div>
         <div slot="選項">
@@ -112,8 +120,8 @@ export default {
             return
           }
           for (let i in this.Session.sheet) {
-            this.sheets= this.sheets.filter((s) =>{
-              return  s.url !== this.Session.sheet[i]
+            this.sheets = this.sheets.filter((s) => {
+              return s.url !== this.Session.sheet[i]
             })
           }
           if (this.sheets.length === 0) this.noSheet = "你的角色卡已經全部上傳了"
@@ -125,7 +133,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .players {
   display: block;
 }
@@ -137,6 +145,17 @@ export default {
 td {
   font-size: 20px;
   padding: 1%
+}
+
+a {
+  color: #46A3FF;
+  &:hover{
+    color: #42b983;
+  }
+  &:-webkit-any-link {
+    text-decoration: none;
+  }
+
 }
 
 input::-webkit-outer-spin-button,
