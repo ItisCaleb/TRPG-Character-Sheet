@@ -3,11 +3,11 @@ const Session = require('../model/Session');
 const User = require("../model/User");
 const Info = require('../model/sheetInfo');
 const jwt = require('jsonwebtoken');
-const verify = require('./module/verifyToken');
-const {sessionValidation} = require("./module/validation");
+const verify = require('../utils/verifyToken');
+const {sessionValidation} = require("../utils/validation");
 
 
-router.get('/getSessions', async function (req, res) {
+router.get('/getSessions', verify, async function (req, res) {
     const userName = jwt.decode(req.cookies['auth_token']).name;
     const SessionFind = await Session.findOne({player: userName});
     const cursor = await Session.find({player: {$in: [userName]}});
@@ -25,34 +25,42 @@ router.get('/getSessions', async function (req, res) {
         res.status(200).send(session)
     }
 });
-router.get('/getInfo/:id', async function (req, res) {
+router.get('/getInfo/:id', verify, async function (req, res) {
     const id = req.params.id
-    const info = await Session.findOne({_id: id}).lean()
-    if (!info) return res.sendStatus(404)
-    const sheets = []
-    const userName = jwt.decode(req.cookies['auth_token']).name;
-    for (let sheet_id of info.sheet) {
-        let sheet = await Info.findOne({_id: sheet_id})
-        let access
-        switch (sheet.permission) {
-            case "限團務GM":
-                access = (userName === info.gm)
-                break
-            default :
-                access = true
+    try {
+        const info = await Session.findOne({_id: id}).lean()
+        if (!info) return res.sendStatus(404)
+        const sheets = []
+        const userName = jwt.decode(req.cookies['auth_token']).name;
+        for (let sheet_id of info.sheet) {
+            let sheet = await Info.findOne({_id: sheet_id})
+            let access
+            switch (sheet.permission) {
+                case "限團務GM":
+                    access = (userName === info.gm)
+                    break
+                default :
+                    access = true
+            }
+            let user = await User.findOne({_id: sheet.author})
+            sheets.push({
+                id: sheet._id,
+                name: sheet.name,
+                system: sheet.system,
+                player_name: sheet.player_name,
+                author: user.name,
+                access: access
+            })
         }
-        sheets.push({
-            id:sheet._id,
-            name:sheet.name,
-            system:sheet.system,
-            player_name:sheet.player_name,
-            access:access
-        })
+        const data = Object.assign({}, info)
+        data.sheetInfos = sheets
+        if (userName !== data.gm) delete data.password
+        res.status(200).send(data)
+    } catch (err) {
+        res.sendStatus(404)
     }
-    const data = Object.assign({}, info)
-    data.sheetInfos = sheets
-    if (userName !== data.gm) delete data.password
-    res.status(200).send(data)
+
+
 })
 
 //create a session

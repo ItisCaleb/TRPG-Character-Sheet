@@ -2,33 +2,35 @@
   <div>
     <Title>登入</Title>
     <Form @submit="UserLogin" btn="登入">
-      <Input
+      <FormInput
           v-model="userData.email"
           :input="userData.email"
           @input="emailVerify"
           type="email" id="email" ph="輸入電子郵件"
           :msg="msg.mail"
-      ></Input>
-      <Input
+      ></FormInput>
+      <FormInput
           v-model="userData.password"
           :input="userData.password"
           @input="pwdVerify"
           type="password" id="password" ph="輸入密碼"
           :msg="msg.pwd"
-      ></Input>
+      ></FormInput>
       <div class="form-check form-group" style="text-align: left;margin-bottom: 1%">
         <input v-model="userData.check" type="checkbox" class="form-check-input" id="remember">
         <label class="form-check-label">記住我</label><br>
       </div>
-      <div class="form-group" style="font-size: 15px;margin-bottom: 2%">
+      <div id="smalltext" class="form-group">
         <router-link to="/signup">還沒註冊嗎?點擊這裡註冊</router-link>
+        <br>
+        <router-link to="/forget_password">忘記密碼?</router-link>
       </div>
     </Form>
   </div>
 </template>
 
 <script>
-import Input from "@/components/User/Input";
+import FormInput from "@/components/User/FormInput";
 import Title from "@/components/Title";
 import api from "@/api";
 import {mapActions} from 'vuex'
@@ -36,7 +38,7 @@ import Form from "@/components/User/Form";
 
 export default {
   name: "Login",
-  components: {Form, Title, Input},
+  components: {Form, Title, FormInput},
   data() {
     return {
       userData: {
@@ -106,6 +108,11 @@ export default {
 </script>
 
 <style scoped>
-
+#smalltext {
+  font-size: 15px;
+  margin-bottom: 2%;
+  display: flex;
+  justify-content: space-between
+}
 
 </style>

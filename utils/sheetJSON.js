@@ -1,12 +1,12 @@
-const Info = require('../../model/sheetInfo')
-const DND5eStat = require('../../model/DND5e/Stat');
-const DND5eStory = require('../../model/DND5e/Story');
-const DND5eEquip = require('../../model/DND5e/Equip');
-const DND5eSpell = require('../../model/DND5e/Spell');
-const COC7thStat = require('../../model/COC7th/Stat');
-const COC7thStory = require('../../model/COC7th/Story');
-const COC7thEquip = require('../../model/COC7th/Equip');
-const COC7thSkill = require('../../model/COC7th/Skill');
+const Info = require('../model/sheetInfo')
+const DND5eStat = require('../model/DND5e/Stat');
+const DND5eStory = require('../model/DND5e/Story');
+const DND5eEquip = require('../model/DND5e/Equip');
+const DND5eSpell = require('../model/DND5e/Spell');
+const COC7thStat = require('../model/COC7th/Stat');
+const COC7thStory = require('../model/COC7th/Story');
+const COC7thEquip = require('../model/COC7th/Equip');
+const COC7thSkill = require('../model/COC7th/Skill');
 
 
 module.exports = function (id) {

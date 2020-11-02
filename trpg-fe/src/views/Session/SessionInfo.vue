@@ -34,19 +34,29 @@
           玩家:<span class="players" v-for="player in Session.player" :key="player">{{ player }}</span>
         </div>
         <div slot="角色卡">
-          <div v-for="sheet in Session.sheetInfos" :key="sheet._id">
-            <router-link v-if="sheet.access" :to="`/sheet/${sheet.system}/${sheet.id}`">
-              {{ sheet.name }}
-              {{ sheet.system }}
-              {{ sheet.player_name }}
-            </router-link>
-            <div style="color: #de510f;" v-else>
-              {{ sheet.name }}
-              {{ sheet.system }}
-              {{ sheet.player_name }}
-            </div>
+          <table style="width: 100%">
+            <tr>
+              <td>角色卡</td>
+              <td>系統</td>
+              <td>玩家名稱</td>
+              <td>用戶</td>
+            </tr>
+            <tbody v-for="sheet in Session.sheetInfos" :key="sheet._id">
+            <tr class="link" @click="toSheet(sheet.system,sheet.id)" v-if="sheet.access">
+              <td>{{ sheet.name }}</td>
+              <td> {{ sheet.system }}</td>
+              <td> {{ sheet.player_name }}</td>
+              <td>{{ sheet.author }}</td>
+            </tr>
+            <tr style="color: lightgray" v-else>
+              <td>{{ sheet.name }}</td>
+              <td> {{ sheet.system }}</td>
+              <td> {{ sheet.player_name }}</td>
+              <td>{{ sheet.author }}</td>
+            </tr>
+            </tbody>
 
-          </div>
+          </table>
         </div>
         <div slot="選項">
           <button class="btn btn-danger" @click="deleteSession">{{ leaveOption }}</button>
@@ -99,7 +109,10 @@ export default {
           .catch(err => {
             console.log(err)
           })
-    }
+    },
+    toSheet(system, url) {
+      this.$router.push(`/sheet/${system}/${url}`)
+    },
   },
   computed: {
     leaveOption() {
@@ -127,7 +140,7 @@ export default {
           if (this.sheets.length === 0) this.noSheet = "你的角色卡已經全部上傳了"
         })
         .catch(() => {
-          this.$router.replace('/404')
+          this.$router.replace({name: 'NotFound', params: {'0': this.$route.fullPath}})
         })
   }
 }
@@ -147,14 +160,14 @@ td {
   padding: 1%
 }
 
-a {
+.link {
   color: #46A3FF;
-  &:hover{
+  cursor: pointer;
+
+  &:hover {
     color: #42b983;
   }
-  &:-webkit-any-link {
-    text-decoration: none;
-  }
+
 
 }
 

@@ -250,6 +250,7 @@ export default {
 
   },
   mounted() {
+    console.log(this.$data)
     this.loadSheet()
     this.$socket.emit('joinSheet', this.$route.params.id)
   },

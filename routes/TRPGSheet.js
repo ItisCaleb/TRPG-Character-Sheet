@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const verify = require('./module/verifyToken');
+const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/sheetInfo');
 const Session = require('../model/Session');
 const Sheet = require('../model/sheetInfo');
 const Image = require('../model/Avatar')
-const getTRPGSheet = require('./module/sheetJSON')
+const getTRPGSheet = require('../utils/sheetJSON')
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
@@ -37,23 +37,24 @@ router.get('/getSheets', async function (req, res) {
     }
 
 });
-router.get('/checkAccess/:id',async function (req,res){
+router.get('/checkAccess/:id', async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])
-    const sheet =await Info.findOne({_id:req.params.id})
-    if(user._id===sheet.author.toString()) return res.send('author')
-    else if(sheet.session.length===0) {
-        if(sheet.permission==='所有人') return res.send('view')
+    const sheet = await Info.findOne({_id: req.params.id})
+    if (user && user._id === sheet.author.toString()) return res.send('author')
+    else if (sheet.session.length === 0) {
+        if (sheet.permission === '所有人') return res.send('view')
         return res.send('noPerm')
-    }
-    else {
-        for (let id in sheet.session){
-            const session = await Session.findOne({_id:sheet.session[id]})
-            switch (sheet.permission){
-                case "限團務GM":{
-                    if(user.name === session.gm) return res.send('view')
+    } else {
+        if (sheet.permission === '所有人') return res.send('view')
+        if (!user) return res.sendStatus(401)
+        for (let id in sheet.session) {
+            const session = await Session.findOne({_id: sheet.session[id]})
+            switch (sheet.permission) {
+                case "限團務GM": {
+                    if (user.name === session.gm) return res.send('view')
                     break;
                 }
-                case "團務所有人":{
+                case "團務所有人": {
                     if (session.player.includes(user.name)) return res.send('view')
                     break;
                 }
@@ -65,9 +66,8 @@ router.get('/checkAccess/:id',async function (req,res){
 
 router.get('/getSheetData/:id', function (req, res) {
     const id = req.params.id
-    const user = jwt.decode(req.cookies['auth_token'])
     try {
-        getTRPGSheet(id, user._id)
+        getTRPGSheet(id)
             .then(data => {
                 res.send(data)
             })

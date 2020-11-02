@@ -17,6 +17,10 @@ const tempUserSchema = new mongoose.Schema({
         min: 6,
         max: 15
     },
+    type:{
+        type:String,
+        required:true
+    },
     createdAt: {
         type: Date,
         index: {expires: 600},

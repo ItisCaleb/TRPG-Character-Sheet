@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
-const verify = require('./module/verifyToken');
+const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/sheetInfo');
 const dotenv = require('dotenv');

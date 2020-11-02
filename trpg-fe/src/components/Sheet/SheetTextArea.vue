@@ -1,8 +1,8 @@
 <template>
   <label>
     {{ name }}
-    <textarea :readonly="view" class="sheet-textarea form-control"
-              @input="emitInput"> </textarea>
+    <textarea :readonly="view" :value="val" class="sheet-textarea form-control"
+              @input="emitInput"></textarea>
   </label>
 </template>
 
@@ -18,6 +18,10 @@ export default {
     view:{
       type:Boolean,
       default: false
+    },
+    val:{
+      type:String,
+      default:""
     }
   },
   methods: {
@@ -52,5 +56,6 @@ export default {
 
 label {
   width: 100%;
+  height: 100%;
 }
 </style>

@@ -1,17 +1,15 @@
 const multer = require("multer");
 const router = require('express').Router();
 const Avatar = require('../model/Avatar');
-const verify = require('./module/verifyToken');
+const verify = require('../utils/verifyToken');
 // image filter middleware
 const upload = multer({
-    limit:{
-        fileSize:500000
-    },
-    fileFilter(req,file,cb){
-        console.log(file.originalname);
-        cb(null,true);
+    limits:{
+        fileSize:1000000
     }
 });
+
+
 
 router.get('/getImage/:type/:id',async (req,res)=>{
     const type = req.params.type;
@@ -25,7 +23,7 @@ router.get('/getImage/:type/:id',async (req,res)=>{
     }
 
 })
-router.post('/uploadImage/:type/:id',upload.single('file'),verify,async function (req,res) {
+router.post('/uploadImage/:type/:id',verify,upload.single('file'),verify,async function (req,res) {
     const type = req.params.type;
     const image = (req.file) ?req.file.buffer:'';
     await Avatar.updateOne({_id:req.params.id,type:type},{
@@ -33,12 +31,20 @@ router.post('/uploadImage/:type/:id',upload.single('file'),verify,async function
     })
     res.sendStatus(200);
 });
-router.get('/removeImage/:type/:id',async (req, res) => {
+
+
+
+router.get('/removeImage/:type/:id',verify,async (req, res) => {
     const type = req.params.type;
     await Avatar.updateOne({_id:req.params.id,type:type},{
         image:""
     })
     res.sendStatus(200);
+})
+router.use((err,req,res,next)=>{
+    if(err.code === 'LIMIT_FILE_SIZE'){
+        return res.status(400).send('你的圖片太大了!上限是800kb')
+    }
 })
 
 module.exports=router

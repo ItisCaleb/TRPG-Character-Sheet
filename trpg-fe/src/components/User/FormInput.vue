@@ -1,7 +1,6 @@
 <template>
   <div :id="id" class="input">
     <input
-        :value="input"
         @input="$emit('input',$event.target.value)"
         class="form-control input-group-sm"
         style="box-shadow: none"

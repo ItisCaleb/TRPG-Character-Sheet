@@ -33,13 +33,25 @@ export default {
       this.user = user
     }
   },
-  created() {
-    api.getUser(this.$route.params.name)
-        .then((user) => {
+  beforeRouteEnter(to,from,next){
+    api.getUser(to.params.name)
+    .then(user=>{
+      next(vm=>{
+        vm.setUser(user)
+      })
+    })
+    .catch(()=>{
+      next({name:"NotFound",params:{'0':to.fullPath}})
+    })
+  },
+  beforeRouteUpdate(to,from,next){
+    api.getUser(to.params.name)
+        .then(user=>{
           this.setUser(user)
+          next()
         })
-        .catch(() => {
-          this.$router.replace('/404')
+        .catch(()=>{
+          next({name:"NotFound",params:{'0':to.fullPath}})
         })
   }
 }

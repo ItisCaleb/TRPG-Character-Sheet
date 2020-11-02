@@ -12,37 +12,53 @@
         </div>
       </div>
     </div>
-    <div style="display: inline-block;text-align: center;padding: 4px">
-      <Title>選擇系統</Title>
-      <div v-show="isCurrent('COC7th')" class="systems-info">
-        <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
-        <div class="system-text">使用克蘇魯的召喚7版的系統<br>創建屬於你的調查員</div>
+    <div style="display: inline-block;text-align: center;padding: 4px;width: 100%">
+      <Title>匯入角色卡</Title>
+      <div class="systems-info">
+        <Tab ref="tab" :page="getOption" style="width: 80%">
+          <div slot="roll20">
+            請輸入roll20的json角色卡
+            <SheetTextArea v-model="json" style="height: 350px"></SheetTextArea>
+          </div>
+        </Tab>
       </div>
-      <div v-show="isCurrent('DND5e')" class="systems-info">
-        <img class="systems-picture" src="../../../static/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
-        <div class="system-text">使用龍與地下城5版的系統(施工中)<br>創建屬於你的冒險者</div>
-      </div>
-      <FormInput v-model="name" type="text" id="name" ph="角色名稱"></FormInput>
-      <button :disabled="isCurrent('DND5e')" @click="createSheet" class="btn btn-primary">創建</button><br>
-      <small style="color: red" v-if="small">{{small}}</small>
+
+      <button :disabled="isCurrent('DND5e')" @click="importSheet" class="btn btn-primary">匯入</button>
+      <br>
+      <small style="color: red" v-if="small">{{ small }}</small>
     </div>
   </div>
 </template>
 
 <script>
-import FormInput from "@/components/User/FormInput";
-import api from "@/api";
+
 import Title from "@/components/Title";
+import SheetTextArea from "@/components/Sheet/SheetTextArea";
+import Tab from "@/components/Tab";
+import api from "@/api";
 
 export default {
-  name: "ChooseSystem",
-  components: {Title, FormInput},
+  name: "ImportSheet",
+  components: {Tab, SheetTextArea, Title},
   data() {
     return {
       choose: "COC7th",
-      name: "",
+      json: "",
+      txt: "",
       created: false,
-      small:""
+      small: ""
+    }
+  },
+  computed: {
+    getOption() {
+      switch (this.choose) {
+        case "COC7th":
+          return ["roll20"]
+        case "DND5e":
+          return ["roll20"]
+        default :
+          return ["roll20"]
+      }
     }
   },
   methods: {
@@ -52,26 +68,46 @@ export default {
     isCurrent(name) {
       return this.choose === name
     },
-    createSheet() {
-      this.small=""
+    importSheet: function () {
+      this.small = ""
       if (this.created) return
-      if(this.name.length===0) {
-        this.small ="請輸入角色名稱"
-        return
-      }
       this.created = true
-      api.createSheet(this.choose, this.name)
-          .then((id) => {
-            this.$store.dispatch('setSheet')
-                .then(() => {
-                  this.created = false
-                  this.$router.replace(`/sheet/${this.choose}/${id}`)
-                })
-          })
-          .catch(err => {
-            this.small=err
+      if (this.$refs.tab.currentPage === "roll20") {
+        if (this.json.length === 0) {
+          this.small = "請輸入角色卡"
+          return
+        }
+        try {
+          let json = JSON.parse(this.json)[0]
+          console.log(json)
+          if (json == undefined) {
             this.created = false
-          })
+            this.small = "請輸入有效的json格式"
+            return
+          }
+          api.importSheet('COC7th', 'roll20', json)
+              .then(id => {
+                console.log(id)
+                this.$store.dispatch('setSheet')
+                    .then(() => {
+                      this.created = false
+                      this.$router.replace(`/sheet/${this.choose}/${id}`)
+                    })
+                    .catch(err => {
+                      this.small = err
+                      this.created = false
+                    })
+              })
+        } catch (err) {
+          this.created = false
+          this.small = "請輸入有效的json格式"
+        }
+      } else if (this.$refs.tab.currentPage === "悠子") {
+        if (this.txt.length === 0) {
+          this.small = "請輸入角色卡"
+          return
+        }
+      }
     }
   }
 }

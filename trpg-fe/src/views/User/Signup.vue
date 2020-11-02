@@ -2,26 +2,22 @@
   <div>
     <Title>註冊</Title>
     <Form btn="註冊" @submit="UserSignup">
-      <Input v-model="userData.name"
+      <FormInput v-model="userData.name"
              :input="userData.name"
-             @input="nameVerify"
              type="text" id="name" ph="輸入暱稱"
-             :msg="msg.name"></Input>
-      <Input v-model="userData.email"
+             :msg="msg.name"></FormInput>
+      <FormInput v-model="userData.email"
              :input="userData.email"
-             @input="emailVerify"
              type="email" id="email" ph="輸入電子郵件"
-             :msg="msg.mail"></Input>
-      <Input v-model="userData.password"
+             :msg="msg.mail"></FormInput>
+      <FormInput v-model="userData.password"
              :input="userData.password"
-             @input="pwdVerify"
              type="password" id="pwd" ph="輸入密碼"
-             :msg="msg.pwd"></Input>
-      <Input v-model="userData.repassword"
+             :msg="msg.pwd"></FormInput>
+      <FormInput v-model="userData.repassword"
              :input="userData.repassword"
-             @input="repwdVerify"
              type="password" id="repwd" ph="重複輸入密碼"
-             :msg="msg.repwd" style="margin-bottom: 3%"></Input>
+             :msg="msg.repwd" style="margin-bottom: 3%"></FormInput>
       <div class="form-group" style="font-size: 15px;margin-bottom: 2%">
         <router-link to="/login">已經有帳號了嗎?點擊這裡登入</router-link>
       </div>
@@ -31,13 +27,13 @@
 
 <script>
 import Form from "@/components/User/Form";
-import Input from "@/components/User/Input";
+import FormInput from "@/components/User/FormInput";
 import Title from "@/components/Title";
 import api from "@/api";
 
 export default {
   name: "Signup",
-  components: {Title, Input, Form},
+  components: {Title, FormInput, Form},
   data() {
     return {
       userData: {
@@ -102,10 +98,6 @@ export default {
       }
     },
     UserSignup() {
-      this.nameVerify()
-      this.emailVerify()
-      this.pwdVerify()
-      this.repwdVerify()
       for (let verify in this.verified) {
         if (!this.verified[verify]) {
           alert('註冊資料有誤')
@@ -122,6 +114,17 @@ export default {
           .catch(err => {
             alert(err)
           })
+    }
+  },
+  watch:{
+    userData:{
+      handler(){
+        this.nameVerify()
+        this.emailVerify()
+        this.pwdVerify()
+        this.repwdVerify()
+      },
+      deep:true
     }
   }
 }

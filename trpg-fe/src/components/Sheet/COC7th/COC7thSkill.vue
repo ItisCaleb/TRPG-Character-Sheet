@@ -164,7 +164,9 @@
           {{ skill.name }}<br>
           ({{ key }})
         </td>
-        <td class="base-skill"><input :readonly="view" class="form-control input-group" placeholder="自定義"></td>
+        <td class="base-skill"><input @input="setCustom($event,key)" v-model="page3[key].custom" :readonly="view"
+                                      class="form-control input-group"
+                                      placeholder="自定義"></td>
         <td>{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page3[key].interest" type="number"
                                  @input="incSkill($event,'interest',key,'page3')" class="form-control input-group"></td>
@@ -206,84 +208,84 @@ export default {
       type: Object,
       required: true
     },
-    view:{
-      type:Boolean,
-      default:false
+    view: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       page1: {
-        "Accounting": {default: 5, name: "會計", interest:0, class: 0, grow: 0},
-        "Anthropology": {default: 1, name: "人類學", interest:0, class: 0, grow: 0},
-        "Appraise": {default: 5, name: "估價", interest:0, class: 0, grow: 0},
-        "Archaeology": {default: 1, name: "考古學", interest:0, class: 0, grow: 0},
-        "Charm": {default: 15, name: "魅惑", interest:0, class: 0, grow: 0},
-        "Climb": {default: 20, name: "攀爬", interest:0, class: 0, grow: 0},
-        "Computer Use": {default: 5, name: "電腦使用", interest:0, class: 0, grow: 0},
-        "Credit Rating": {default: 0, name: "信用評級", interest:0, class: 0, grow: 0},
-        "Cthulhu Mythos": {default: 0, name: "克蘇魯神話", interest:0, class: 0, grow: 0},
-        "Disguise": {default: 5, name: "喬裝", interest:0, class: 0, grow: 0},
-        "Dodge": {default: 0, name: "閃避", interest:0, class: 0, grow: 0},
-        "Drive Auto": {default: 20, name: "自動車駕駛", interest:0, class: 0, grow: 0},
-        "Electrical Repair": {default: 1, name: "電器維修", interest:0, class: 0, grow: 0},
-        "Electronics": {default: 10, name: "電子學", interest:0, class: 0, grow: 0},
-        "Fast-Talk": {default: 5, name: "話術", interest:0, class: 0, grow: 0},
-        "First Aid": {default: 30, name: "急救", interest:0, class: 0, grow: 0},
-        "History": {default: 5, name: "歷史", interest:0, class: 0, grow: 0},
-        "Intimidate": {default: 15, name: "威嚇", interest:0, class: 0, grow: 0},
-        "Jump": {default: 20, name: "跳躍", interest:0, class: 0, grow: 0},
-        "Law": {default: 5, name: "法律", interest:0, class: 0, grow: 0},
-        "Library Use": {default: 20, name: "圖書館使用", interest:0, class: 0, grow: 0},
-        "Listen": {default: 20, name: "聆聽", interest:0, class: 0, grow: 0},
-        "Locksmith": {default: 1, name: "鎖匠", interest:0, class: 0, grow: 0}
+        "Accounting": {default: 5, name: "會計", interest: 0, class: 0, grow: 0},
+        "Anthropology": {default: 1, name: "人類學", interest: 0, class: 0, grow: 0},
+        "Appraise": {default: 5, name: "估價", interest: 0, class: 0, grow: 0},
+        "Archaeology": {default: 1, name: "考古學", interest: 0, class: 0, grow: 0},
+        "Charm": {default: 15, name: "魅惑", interest: 0, class: 0, grow: 0},
+        "Climb": {default: 20, name: "攀爬", interest: 0, class: 0, grow: 0},
+        "Computer Use": {default: 5, name: "電腦使用", interest: 0, class: 0, grow: 0},
+        "Credit Rating": {default: 0, name: "信用評級", interest: 0, class: 0, grow: 0},
+        "Cthulhu Mythos": {default: 0, name: "克蘇魯神話", interest: 0, class: 0, grow: 0},
+        "Disguise": {default: 5, name: "喬裝", interest: 0, class: 0, grow: 0},
+        "Dodge": {default: 0, name: "閃避", interest: 0, class: 0, grow: 0},
+        "Drive Auto": {default: 20, name: "自動車駕駛", interest: 0, class: 0, grow: 0},
+        "Electrical Repair": {default: 1, name: "電器維修", interest: 0, class: 0, grow: 0},
+        "Electronics": {default: 10, name: "電子學", interest: 0, class: 0, grow: 0},
+        "Fast-Talk": {default: 5, name: "話術", interest: 0, class: 0, grow: 0},
+        "First Aid": {default: 30, name: "急救", interest: 0, class: 0, grow: 0},
+        "History": {default: 5, name: "歷史", interest: 0, class: 0, grow: 0},
+        "Intimidate": {default: 15, name: "威嚇", interest: 0, class: 0, grow: 0},
+        "Jump": {default: 20, name: "跳躍", interest: 0, class: 0, grow: 0},
+        "Law": {default: 5, name: "法律", interest: 0, class: 0, grow: 0},
+        "Library Use": {default: 20, name: "圖書館使用", interest: 0, class: 0, grow: 0},
+        "Listen": {default: 20, name: "聆聽", interest: 0, class: 0, grow: 0},
+        "Locksmith": {default: 1, name: "鎖匠", interest: 0, class: 0, grow: 0}
       },
       page2: {
-        "Mechanical Repair": {default: 10, name: "機器維修", interest:0, class: 0, grow: 0},
-        "Medicine": {default: 1, name: "醫學", interest:0, class: 0, grow: 0},
-        "Natural World": {default: 10, name: "自然學", interest:0, class: 0, grow: 0},
-        "Navigate": {default: 10, name: "導航", interest:0, class: 0, grow: 0},
-        "Occult": {default: 5, name: "神祕學", interest:0, class: 0, grow: 0},
-        "Operate Heavy Machinery": {default: 1, name: "操縱重型機器", interest:0, class: 0, grow: 0},
-        "Persuade": {default: 10, name: "說服", interest:0, class: 0, grow: 0},
-        "Psychoanalysis": {default: 1, name: "心理分析", interest:0, class: 0, grow: 0},
-        "Psychology": {default: 10, name: "心理學", interest:0, class: 0, grow: 0},
-        "Ride": {default: 5, name: "騎術", interest:0, class: 0, grow: 0},
-        "Sleight of Hand": {default: 10, name: "巧手", interest:0, class: 0, grow: 0},
-        "Spot Hidden": {default: 25, name: "偵查", interest:0, class: 0, grow: 0},
-        "Stealth": {default: 20, name: "隱密行動", interest:0, class: 0, grow: 0},
-        "Swim": {default: 20, name: "游泳", interest:0, class: 0, grow: 0},
-        "Throw": {default: 20, name: "投擲", interest:0, class: 0, grow: 0},
-        "Track": {default: 10, name: "追蹤", interest:0, class: 0, grow: 0},
-        "Animal Handling": {default: 5, name: "動物馴養", interest:0, class: 0, grow: 0},
-        "Artillery": {default: 1, name: "炮術", interest:0, class: 0, grow: 0},
-        "Demolitions": {default: 1, name: "爆破", interest:0, class: 0, grow: 0},
-        "Diving": {default: 1, name: "潛水", interest:0, class: 0, grow: 0},
-        "Hypnosis": {default: 1, name: "催眠", interest:0, class: 0, grow: 0},
-        "Read Lips": {default: 1, name: "讀唇", interest:0, class: 0, grow: 0}
+        "Mechanical Repair": {default: 10, name: "機器維修", interest: 0, class: 0, grow: 0},
+        "Medicine": {default: 1, name: "醫學", interest: 0, class: 0, grow: 0},
+        "Natural World": {default: 10, name: "自然學", interest: 0, class: 0, grow: 0},
+        "Navigate": {default: 10, name: "導航", interest: 0, class: 0, grow: 0},
+        "Occult": {default: 5, name: "神祕學", interest: 0, class: 0, grow: 0},
+        "Operate Heavy Machinery": {default: 1, name: "操縱重型機器", interest: 0, class: 0, grow: 0},
+        "Persuade": {default: 10, name: "說服", interest: 0, class: 0, grow: 0},
+        "Psychoanalysis": {default: 1, name: "心理分析", interest: 0, class: 0, grow: 0},
+        "Psychology": {default: 10, name: "心理學", interest: 0, class: 0, grow: 0},
+        "Ride": {default: 5, name: "騎術", interest: 0, class: 0, grow: 0},
+        "Sleight of Hand": {default: 10, name: "巧手", interest: 0, class: 0, grow: 0},
+        "Spot Hidden": {default: 25, name: "偵查", interest: 0, class: 0, grow: 0},
+        "Stealth": {default: 20, name: "隱密行動", interest: 0, class: 0, grow: 0},
+        "Swim": {default: 20, name: "游泳", interest: 0, class: 0, grow: 0},
+        "Throw": {default: 20, name: "投擲", interest: 0, class: 0, grow: 0},
+        "Track": {default: 10, name: "追蹤", interest: 0, class: 0, grow: 0},
+        "Animal Handling": {default: 5, name: "動物馴養", interest: 0, class: 0, grow: 0},
+        "Artillery": {default: 1, name: "炮術", interest: 0, class: 0, grow: 0},
+        "Demolitions": {default: 1, name: "爆破", interest: 0, class: 0, grow: 0},
+        "Diving": {default: 1, name: "潛水", interest: 0, class: 0, grow: 0},
+        "Hypnosis": {default: 1, name: "催眠", interest: 0, class: 0, grow: 0},
+        "Read Lips": {default: 1, name: "讀唇", interest: 0, class: 0, grow: 0}
       },
       page3: {
-        "Pilot": {default: 0, name: "專業駕駛", interest:0, class: 0, grow: 0},
-        "Survival": {default: 10, name: "求生", interest:0, class: 0, grow: 0},
-        "Art and Craft": {default: 5, name: "藝術與工藝", rows: 3, interest:0, class: 0, grow: 0},
-        "ac1": {default: 5, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "ac2": {default: 5, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "Fighting": {default: 25, name: "鬥毆", rows: 3, interest:0, class: 0, grow: 0},
-        "f1": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "f2": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "Firearms": {default: 0, name: "火器", rows: 3, interest:0, class: 0, grow: 0},
-        "fire1": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "fire2": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "Language (Other)": {default: 1, name: "他國語言", rows: 3, interest:0, class: 0, grow: 0},
-        "l1": {default: 1, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "l2": {default: 1, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "Language (Own)": {default: 0, name: "母語", interest:0, class: 0, grow: 0},
-        "Science": {default: 0, name: "科學", rows: 3, interest:0, class: 0, grow: 0},
-        "s1": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "s2": {default: 0, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "Lore": {default: 1, name: "偏門學問", rows: 3, interest:0, class: 0, grow: 0},
-        "lore1": {default: 1, name: "", dep: true, interest:0, class: 0, grow: 0},
-        "lore2": {default: 1, name: "", dep: true, interest:0, class: 0, grow: 0}
+        "Pilot": {default: 0, name: "專業駕駛", custom: "", interest: 0, class: 0, grow: 0},
+        "Survival": {default: 10, name: "求生", custom: "", interest: 0, class: 0, grow: 0},
+        "Art and Craft": {default: 5, name: "藝術與工藝", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "ac1": {default: 5, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "ac2": {default: 5, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Fighting": {default: 25, name: "鬥毆", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "f1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Firearms": {default: 0, name: "火器", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "fire1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "fire2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Language (Other)": {default: 1, custom: "", name: "他國語言", rows: 3, interest: 0, class: 0, grow: 0},
+        "l1": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "l2": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Language (Own)": {default: 0, custom: "", name: "母語", interest: 0, class: 0, grow: 0},
+        "Science": {default: 0, name: "科學", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "s1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "s2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Lore": {default: 1, name: "偏門學問", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "lore1": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "lore2": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0}
       }
     }
   },
@@ -291,25 +293,39 @@ export default {
     incSkill(event, type, key, page) {
       let value = event.currentTarget.value
       if (value < 0 || !value) {
-        this[page][key][type]=0
+        this[page][key][type] = 0
       } else if (value > 100) {
         this[page][key][type] = 100
       }
       if (!this.skills.skill[key]) this.$set(this.skills.skill, key, {})
       this.$set(this.skills.skill[key], type, this[page][key][type])
-      if (this[page][key][type]== 0) {
+      if (this[page][key][type] == 0) {
         this.$delete(this.skills.skill[key], type)
         if (Object.keys(this.skills.skill[key]).length == 0) {
           this.$delete(this.skills.skill, key)
         }
       }
     },
-    getSkill(type, key) {
-      if (!this.skills.skill || !this.skills.skill[key] || !this.skills.skill[type]) return 0
-      return this.skills.skill[type]
+    setCustom(event, key) {
+      let value = event.currentTarget.value
+      console.log(value.length)
+      if (value.length > 10) {
+        this.page3[key].custom = value.slice(0, 10)
+      }
+      if (!this.skills.skill[key]) this.$set(this.skills.skill, key, {})
+      this.$set(this.skills.skill[key], 'custom', this.page3[key].custom)
+      if (this.page3[key].custom.length === 0) {
+        this.$delete(this.skills.skill[key], 'custom')
+        if (Object.keys(this.skills.skill[key]).length == 0) {
+          this.$delete(this.skills.skill, key)
+        }
+      }
     },
     getTotal(key, page) {
-      return parseInt(this[page][key].interest) + parseInt(this[page][key].class) + parseInt(this[page][key].grow)
+      return parseInt(this[page][key].interest) +
+          parseInt(this[page][key].class) +
+          parseInt(this[page][key].grow) +
+          this[page][key].default
     }
   },
   mounted() {
@@ -324,6 +340,7 @@ export default {
         this.page2[key].class = this.skills.skill[key].class || 0
         this.page2[key].grow = this.skills.skill[key].grow || 0
       } else if (key in this.page3) {
+        this.page3[key].custom = this.skills.skill[key].custom || ""
         this.page3[key].interest = this.skills.skill[key].interest || 0
         this.page3[key].class = this.skills.skill[key].class || 0
         this.page3[key].grow = this.skills.skill[key].grow || 0
@@ -334,17 +351,17 @@ export default {
     if (!this.skills.skill) return
     for (let key in this.skills.skill) {
       if (key in this.page1) {
-        this.page1[key].interest = this.skills.skill[key].interest || 0
-        this.page1[key].class = this.skills.skill[key].class || 0
-        this.page1[key].grow = this.skills.skill[key].grow || 0
+        this.page1[key].interest = parseInt(this.skills.skill[key].interest) || 0
+        this.page1[key].class = parseInt(this.skills.skill[key].class) || 0
+        this.page1[key].grow = parseInt(this.skills.skill[key].grow) || 0
       } else if (key in this.page2) {
-        this.page2[key].interest = this.skills.skill[key].interest || 0
-        this.page2[key].class = this.skills.skill[key].class || 0
-        this.page2[key].grow = this.skills.skill[key].grow || 0
+        this.page2[key].interest = parseInt(this.skills.skill[key].interest) || 0
+        this.page2[key].class = parseInt(this.skills.skill[key].class) || 0
+        this.page2[key].grow = parseInt(this.skills.skill[key].grow) || 0
       } else if (key in this.page3) {
-        this.page3[key].interest = this.skills.skill[key].interest || 0
-        this.page3[key].class = this.skills.skill[key].class || 0
-        this.page3[key].grow = this.skills.skill[key].grow || 0
+        this.page3[key].interest = parseInt(this.skills.skill[key].interest) || 0
+        this.page3[key].class = parseInt(this.skills.skill[key].class) || 0
+        this.page3[key].grow = parseInt(this.skills.skill[key].grow) || 0
       }
     }
   },
@@ -384,19 +401,21 @@ export default {
         if (!this.skills.skill[key]['interest']) continue
         total += parseInt(this.skills.skill[key]['interest'])
       }
-      return this.stat.characteristic.int * 2 - total
+      return parseInt( this.stat.characteristic.int )* 2 - total
     }
   },
   watch: {
     setDodge: {
-      handler() {
-        this.page1.Dodge.default = this.setDodge
-      }
+      handler(value) {
+        this.page1.Dodge.default = value
+      },
+      immediate:true
     },
     setMotherLanguage: {
-      handler() {
-        this.page3["Language (Own)"].default = this.setMotherLanguage
-      }
+      handler(value) {
+        this.page3["Language (Own)"].default = value
+      },
+      immediate:true
     }
   }
 }

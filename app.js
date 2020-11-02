@@ -24,7 +24,7 @@ app.set('view engine', 'ejs');
 
 // connect Database
 mongoose.connect(process.env.DB_CONNECT || " mongodb://127.0.0.1:27017/test?retryWrites=true&w=majority",
-    {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+    {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
     .then(function (res) {
         console.log('DB started');
     })
@@ -38,15 +38,15 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const corsOptions ={
-    origin:[
+const corsOptions = {
+    origin: [
         'http://localhost:8080',
         'http://localhost:2100',
         'https://trpgtoaster.com',
         'https://dev.trpgtoaster.com'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials:true,
+    credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
@@ -55,13 +55,13 @@ app.use(cors(corsOptions))
 const history = require('connect-history-api-fallback');
 
 app.use(history())
-app.use(express.static(path.join(__dirname,'dist')))
+app.use(express.static(path.join(__dirname, 'dist')))
 app.use("/api/user", authRoute);
 app.use('/api/session', TRPGSessionRoute);
-app.use('/api/sheet',TRPGSheetRoute);
-app.use('/api/sheet',COC7thSheetRoute);
-app.use('/api/sheet',DND5eSheetRoute);
-app.use('/api/image',ImageRoute);
+app.use('/api/sheet', TRPGSheetRoute);
+app.use('/api/sheet', COC7thSheetRoute);
+app.use('/api/sheet', DND5eSheetRoute);
+app.use('/api/image', ImageRoute);
 
 
 // start server
@@ -69,9 +69,9 @@ const port = process.env.PORT || 3000;
 const server = http.createServer(app)
 const io = require('socket.io')(server);
 
-io.on('connection',(socket)=>{
-    require('./routes/module/sheetSocket')(socket)
+io.on('connection', (socket) => {
+    require('./utils/sheetSocket')(socket)
 })
 
-server.listen(port,() => console.log('HTTP start on port:' + port));
+server.listen(port, () => console.log('HTTP start on port:' + port));
 

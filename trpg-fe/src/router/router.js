@@ -35,6 +35,14 @@ const routes = [
         component: () => import('../views/User/Logout')
     },
     {
+        path: '/forget_password',
+        component: () => import('../views/User/SendFindPassword')
+    },
+    {
+        path: '/change_password/:id',
+        component: () => import('../views/User/ChangePassword')
+    },
+    {
         path: '/verify/:id',
         name: 'MailVerify',
         component: () => import('../views/User/MailVerify')

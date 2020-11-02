@@ -2,10 +2,14 @@
   <div style="text-align: center">
     <Title>角色卡</Title>
     <div>
-      <button class="btn btn-primary" @click="$refs.boxShow.$data.show=true">創建角色卡</button>
+      <button class="btn btn-primary box-btn" @click="$refs.createBox.$data.show=true">創建角色卡</button>
+      <button class="btn btn-primary box-btn" @click="$refs.importBox.$data.show=true">匯入角色卡</button>
     </div>
-    <Msgbox ref="boxShow">
+    <Msgbox ref="createBox">
       <ChooseSystem></ChooseSystem>
+    </Msgbox>
+    <Msgbox ref="importBox">
+      <ImportSheet></ImportSheet>
     </Msgbox>
     <Tab :page="['COC7th','DND5e']" style="text-align: center">
       <div slot="COC7th">
@@ -43,11 +47,12 @@ import Tab from "@/components/Tab";
 import Title from "@/components/Title";
 import Msgbox from "@/components/Msgbox";
 import ChooseSystem from "@/components/Sheet/ChooseSystem";
+import ImportSheet from "@/components/Sheet/ImportSheet";
 
 
 export default {
   name: "Sheet",
-  components: {ChooseSystem, Msgbox, Title, Tab},
+  components: {ImportSheet, ChooseSystem, Msgbox, Title, Tab},
   data() {
     return {
       sheet: "",
@@ -62,10 +67,10 @@ export default {
   },
   methods: {
     toCOC7th(url) {
-      this.$router.replace(`/sheet/COC7th/${url}`)
+      this.$router.push(`/sheet/COC7th/${url}`)
     },
     toDND5e(url) {
-      this.$router.replace(`/sheet/DND5e/${url}`)
+      this.$router.push(`/sheet/DND5e/${url}`)
     },
     showSheet(){
       Object.assign(this.$data.sheetInfos , this.$options.data().sheetInfos)
@@ -122,6 +127,9 @@ export default {
   &:hover{
     border-left: #42b983 solid 5px;
   }
+}
+.box-btn{
+  margin: auto 2% auto 2%;
 }
 
 table {

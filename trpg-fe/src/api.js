@@ -16,6 +16,15 @@ export default {
     mailVerify(id) {
         return ajax(`user/register/${id}`, 'get')
     },
+    passwordMail(data){
+        return ajax('user/forgetPassword','post',data)
+    },
+    checkChangePasswordExist(id){
+        return ajax(`user/verifyChangePwd/${id}`,'get')
+    },
+    changePassword(id,data){
+        return ajax(`user/changePassword/${id}`,'post',data)
+    },
     authVerify() {
         return ajax('user/authVerify', 'get')
     },
@@ -51,6 +60,9 @@ export default {
     },
     createSheet(system, name) {
         return ajax(`sheet/${system}/create/${name}`, 'get')
+    },
+    importSheet(system,type,data){
+        return ajax(`sheet/${system}/import/${type}`,'post',data)
     },
     editSheet(system,id,data){
         return ajax(`sheet/${system}/edit/${id}`,"post",data)

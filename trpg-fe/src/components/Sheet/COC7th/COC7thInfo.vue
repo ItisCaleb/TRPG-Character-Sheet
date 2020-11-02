@@ -77,9 +77,10 @@
       </div>
       <div>
         <h4 style="font-weight: bold">調查員裝備：</h4>
-        <SheetInput :view="view" :max="128" name="金錢" v-model="equip.money"></SheetInput>
-        <SheetInput :view="view" :max="256" name="武器" v-model="equip.weapon"></SheetInput>
-        <SheetTextArea :view="view" name="攜帶物品" :max="512" v-model="equip.equip" :height="110"></SheetTextArea>
+        <SheetInput :view="view" :max="128" name="金錢" :val="equip.cash" v-model="equip.cash"></SheetInput>
+        <SheetInput :view="view" :max="256" name="武器" :val="equip.weapon" v-model="equip.weapon"></SheetInput>
+        <SheetTextArea :view="view" name="攜帶物品" :max="512" :val="equip.equip" v-model="equip.equip"
+                       style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
     </COC7thSection>
     <COC7thSection title="調查員形象：">
@@ -132,9 +133,9 @@ export default {
     mytho: {
       type: Number
     },
-    view:{
-      type:Boolean,
-      default:false
+    view: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -169,11 +170,17 @@ export default {
       } else if (val < 0) this.stat.characteristic[key] = 0;
     },
     previewImage(event) {
+      this.image_success.msg = ""
+      this.image_success.color = ""
       const image = event.target.files[0];
       var reader = new FileReader();
       reader.readAsDataURL(image);
       const size = (image.size / 1024);
-      console.log(size + "kb");
+      if (size > 1000) {
+        this.image_success.msg = "你的圖片太大了!上限是800kb"
+        this.image_success.color = "red"
+        return
+      }
       reader.onload = (e) => {
         this.image_name = image.name;
         this.avatar = e.target.result.split(',').pop();
@@ -194,21 +201,33 @@ export default {
     },
     uploadImage() {
       const data = new FormData();
-      data.append("file", this.$refs.image.files[0])
-      api.uploadImage("COC7th", this.$route.params.id, data)
-          .then(() => {
-            this.image_success.msg = "上傳成功"
-            this.image_success.color = "#10a36a"
-          })
-          .catch(err => {
-            this.image_success.msg = err
-            this.image_success.color = "red"
-          })
+      var reader = new FileReader();
+      try {
+        reader.readAsDataURL(this.$refs.image.files[0]);
+        reader.onload = (e) => {
+          this.image_name = this.$refs.image.files[0].name;
+          this.avatar = e.target.result.split(',').pop();
+        }
+        data.append("file", this.$refs.image.files[0])
+        api.uploadImage("COC7th", this.$route.params.id, data)
+            .then(() => {
+              this.image_success.msg = "上傳成功"
+              this.image_success.color = "#10a36a"
+            })
+            .catch(err => {
+              this.image_success.msg = err
+              this.image_success.color = "red"
+            })
+      } catch (err) {
+        this.image_success.msg = '請先選取圖片'
+        this.image_success.color = "red"
+      }
+
     }
   },
   computed: {
     getHpMax() {
-      return Math.floor((this.stat.characteristic.siz + this.stat.characteristic.con) / 10)
+      return Math.floor((parseInt(this.stat.characteristic.siz) + parseInt(this.stat.characteristic.con)) / 10)
     },
     getMpMax() {
       return Math.floor(this.stat.characteristic.pow / 5)
