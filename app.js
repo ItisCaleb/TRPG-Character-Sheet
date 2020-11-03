@@ -38,6 +38,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.all('*',function (req,res,next){
+    res.setHeader('Cache-Control','public, max-age=604800')
+    next()
+})
+
 const corsOptions = {
     origin: [
         'http://localhost:8080',
@@ -49,6 +54,8 @@ const corsOptions = {
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
 }
+
+
 
 app.use(cors(corsOptions))
 // route middleware
