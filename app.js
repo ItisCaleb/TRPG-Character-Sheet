@@ -38,10 +38,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.all('*',function (req,res,next){
-    res.setHeader('Cache-Control','public, max-age=604800')
-    next()
-})
+
 
 const corsOptions = {
     origin: [
@@ -59,16 +56,23 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 // route middleware
-const history = require('connect-history-api-fallback');
 
-app.use(history())
-app.use(express.static(path.join(__dirname, 'dist')))
+
 app.use("/api/user", authRoute);
 app.use('/api/session', TRPGSessionRoute);
 app.use('/api/sheet', TRPGSheetRoute);
 app.use('/api/sheet', COC7thSheetRoute);
 app.use('/api/sheet', DND5eSheetRoute);
 app.use('/api/image', ImageRoute);
+
+app.all('*',function (req,res,next){
+    res.setHeader('Cache-Control','public, max-age=604800')
+    next()
+})
+const history = require('connect-history-api-fallback');
+app.use(history())
+app.use(express.static(path.join(__dirname, 'dist')))
+
 
 
 // start server
