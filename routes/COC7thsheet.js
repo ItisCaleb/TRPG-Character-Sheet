@@ -17,9 +17,8 @@ router.get('/COC7th/create/:name', verify, async function (req, res) {
     const user = await User.findOne({_id: creator._id});
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
     //save new sheet
-    const name = req.params.name;
     const sheet = new Info({
-        name: name,
+        name: req.params.name,
         player_name: creator.name,
         system: "COC7th",
         author: creator._id

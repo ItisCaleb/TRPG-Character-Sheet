@@ -1,85 +1,92 @@
 const mongoose = require("mongoose");
 
-const  DND5eStatSchema = new mongoose.Schema({
+const DND5eStatSchema = new mongoose.Schema({
     stat: {
-        type:Array,
-        default:[10,10,10,10,10,10]
+        type: Object,
+        default: {
+            str:10,
+            dex:10,
+            con:10,
+            int:10,
+            wis:10,
+            cha:10
+        }
     },
-    inspiration:{
+    inspiration: {
         type: Number,
         max: 50,
-        default:0
+        default: 0
     },
-    passive_wisdom:{
+    passive_wisdom: {
         type: Number,
         max: 50,
-        default:0
+        default: 0
     },
-    pro:{
+    pro: {
         type: Number,
         max: 50,
-        default:0
+        default: 0
     },
-    armorValue:{
+    armorValue: {
         type: Number,
         max: 128,
-        default:0
+        default: 0
     },
-    initiative:{
+    initiative: {
         type: Number,
         max: 50,
-        default:0
+        default: 0
     },
-    speed:{
+    speed: {
         type: Number,
         max: 100,
-        default:0
+        default: 0
     },
-    max_hp:{
+    max_hp: {
         type: Number,
         max: 256,
-        default:0
+        default: 0
     },
-    hp:{
+    hp: {
         type: Number,
         max: 256,
-        default:0
+        default: 0
     },
-    temp_hp:{
+    temp_hp: {
         type: Number,
         max: 100,
-        default:0
+        default: 0
     },
-    hit_dice_total:{
+    hit_dice_total: {
         type: Number,
         max: 50,
-        default:0
+        default: 0
     },
-    hit_dice:{
+    hit_dice: {
         type: String,
         max: 20,
-        default:0
+        default: 0
     },
-    spell_class:{
+    spell_class: {
         type: String,
         max: 30,
-        default:0
+        default: 0
     },
-    spell_ability:{
+    spell_ability: {
         type: String,
         max: 20,
-        default:0
+        default: 0
     },
-    spell_save:{
+    spell_save: {
         type: String,
         max: 20,
-        default:0
+        default: 0
     },
-    spell_bonus:{
+    spell_bonus: {
         type: String,
         max: 20,
-        default:0
+        default: 0
     },
 });
 
-module.exports = mongoose.model("DND5e_Stat",DND5eStatSchema);
+module.exports = mongoose.model("DND5e_Stat", DND5eStatSchema);

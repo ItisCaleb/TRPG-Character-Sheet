@@ -3,22 +3,20 @@ const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/sheetInfo');
-const dotenv = require('dotenv');
-const multer = require('multer');
-const Session = require('../model/Session');
+
 
 const DND5eStat = require('../model/DND5e/Stat');
 const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
+const Avatar = require('../model/Avatar');
 
-dotenv.config();
+
 
 
 
 router.get('/DND5e/create/:name',verify,async function (req,res) {
-    res.status(400).send('還在施工中')
-    /*const creator = jwt.decode(req.cookies['auth_token']);
+    const creator = jwt.decode(req.cookies['auth_token']);
     const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     const sheet = new Info({
@@ -40,18 +38,23 @@ router.get('/DND5e/create/:name',verify,async function (req,res) {
     const equip =new DND5eEquip({
         _id:sheet._id,
     });
+    const avatar = new Avatar({
+        _id: sheet._id,
+        type: "DND5e"
+    })
     try{
         await sheet.save();
         await stat.save();
         await story.save();
         await spell.save();
         await equip.save();
+        await avatar.save;
         await User.updateOne({_id:creator._id},{$inc:{sheet_number:1}});
         res.send(sheet._id);
     }catch (err) {
         console.log(err);
         res.status(400).send(err);
-    }*/
+    }
 
 });
 
