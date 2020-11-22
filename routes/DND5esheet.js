@@ -16,7 +16,8 @@ const Avatar = require('../model/Avatar');
 
 
 router.get('/DND5e/create/:name',verify,async function (req,res) {
-    const creator = jwt.decode(req.cookies['auth_token']);
+    res.status(500).send("施工中")
+    /*const creator = jwt.decode(req.cookies['auth_token']);
     const user = await User.findOne({_id:creator._id});
     if (user.sheet_number >= 20 ) return res.send('角色卡已達上限');
     const sheet = new Info({
@@ -54,7 +55,7 @@ router.get('/DND5e/create/:name',verify,async function (req,res) {
     }catch (err) {
         console.log(err);
         res.status(400).send(err);
-    }
+    }*/
 
 });
 

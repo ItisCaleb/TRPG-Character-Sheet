@@ -23,7 +23,7 @@
         <div class="system-text">使用龍與地下城5版的系統(施工中)<br>創建屬於你的冒險者</div>
       </div>
       <FormInput v-model="name" type="text" id="name" ph="角色名稱"></FormInput>
-      <button @click="createSheet" class="btn btn-primary">創建</button><br>
+      <button :disabled="isCurrent('DND5e')" @click="createSheet" class="btn btn-primary">創建</button><br>
       <small style="color: red" v-if="small">{{small}}</small>
     </div>
   </div>
