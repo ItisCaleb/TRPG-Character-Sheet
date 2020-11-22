@@ -1,0 +1,88 @@
+#systems{
+    vertical-align: top;
+    width:30%;
+    text-align: center;
+    display: table-cell;
+    border-right:1px solid lightgray;
+    border-collapse: collapse;
+}
+.green-dot {
+    height: 7px;
+    width: 7px;
+    background-color: rgb(76, 175, 80);
+    border-radius: 50%;
+    margin-right:5px ;
+    vertical-align: middle;
+    display: inline-block;
+}
+.systems-title{
+    text-align: center;
+    font-size: 23px;
+    padding:0;
+    margin: 0;
+    border-bottom: 1px solid lightgray;
+}
+.systems-title-tile{
+    padding: 3px;
+    cursor:pointer;
+
+}
+
+
+.systems-title-tile:hover{
+    background: #46A3FF;
+    color: white;
+}
+
+
+.sheet:hover{
+    background:#e8e2d5;
+    cursor: pointer;
+}
+
+.systems-picture{
+    width: 100%;
+}
+#systems-info{
+    height: 80%;
+    width: 70%;
+    text-align: right;
+}
+.systems-choose{
+    border-left:3px solid  #4CAF50;
+}
+
+.systems-title-tile:hover{
+    animation-name: choose-mouse-hover;
+    animation-iteration-count: 1;
+    animation-duration: 0.1s;
+}
+
+.systems-title-tile:not(:hover){
+    animation-name: choose-mouse-leave;
+    animation-iteration-count: 1;
+    animation-duration: 0.1s;
+}
+
+
+@keyframes choose-mouse-hover {
+    0% {
+        background: #ffffff;
+        color: #000000;
+    }
+    100% {
+        background: #46A3FF;
+        color: white;
+    }
+}
+
+@keyframes choose-mouse-leave {
+    0% {
+        background: #46A3FF;
+        color: white;
+    }
+    100% {
+        background: #ffffff;
+        color: #000000;
+    }
+}
