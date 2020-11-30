@@ -53,7 +53,7 @@ import api from "@/api";
 export default {
   components: {Footer, Navbar},
   beforeCreate() {
-    if (this.$store.getters.getLogin)
+    if (this.$store.getters.getLogin) {
       api.authVerify()
           .then(() => {
             this.$store.dispatch('setSheet')
@@ -62,6 +62,7 @@ export default {
           .catch(() => {
             this.$store.dispatch('logoutActions')
           })
+    }
   }
 }
 </script>

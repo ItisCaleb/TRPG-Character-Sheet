@@ -33,27 +33,15 @@ export default {
       this.user = user
     }
   },
-  beforeRouteEnter(to,from,next){
-    api.getUser(to.params.name)
+  beforeCreate(){
+    api.getUser(this.$route.params.name)
     .then(user=>{
-      next(vm=>{
-        vm.setUser(user)
-      })
+        this.setUser(user)
     })
     .catch(()=>{
-      next({name:"NotFound",params:{'0':to.fullPath}})
+      this.$router.replace({name: 'NotFound', params: {'0': this.$route.fullPath}})
     })
   },
-  beforeRouteUpdate(to,from,next){
-    api.getUser(to.params.name)
-        .then(user=>{
-          this.setUser(user)
-          next()
-        })
-        .catch(()=>{
-          next({name:"NotFound",params:{'0':to.fullPath}})
-        })
-  }
 }
 </script>
 

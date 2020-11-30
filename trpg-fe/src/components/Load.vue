@@ -10,11 +10,15 @@ name: "Load"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .load-enter {
   opacity: 0;
   transform: translateY(-30%);
+  @include phone-width(){
+    transform: translateY(-10%);
+  }
+
 }
 .load-enter-active {
   transition: all 0.6s;

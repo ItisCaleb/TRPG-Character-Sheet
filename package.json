@@ -17,6 +17,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "ejs-locals": "^1.0.2",

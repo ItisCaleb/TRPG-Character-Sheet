@@ -1,7 +1,10 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const host = process.env.VUE_APP_BACKEND_URL || ''
 axios.defaults.baseURL = `${host}/api`
+axios.defaults.xsrfHeaderName='X-CSRF-Token'
+axios.defaults.xsrfCookieName='csrfToken'
 
 export default {
     login(data) {
@@ -83,12 +86,15 @@ export default {
 }
 
 function ajax(url, method, data, type) {
+    console.log(Cookies.get('_csrf'))
     return new Promise((resolve, reject) => {
         axios({
             url: url,
             method: method,
             data: data,
-            'Content-Type': type || 'application/json',
+            headers:{
+                'Content-Type': type || 'application/json',
+            },
             withCredentials: true
         }).then(res => {
             resolve(res.data)

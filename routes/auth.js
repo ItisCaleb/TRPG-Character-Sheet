@@ -14,7 +14,7 @@ const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—�
 router.get("/register/:id", async (req, res) => {
     //create new user
     const id = req.params.id;
-    const user = await tempUser.findOne({_id: id,type:"email"});
+    const user = await tempUser.findOne({_id: id, type: "email"});
     if (!user) return res.sendStatus(404);
     const newUser = new User({
         name: user.name,
@@ -50,7 +50,7 @@ router.post('/authed', async (req, res) => {
     //check if user is already register
     const userExist = await User.findOne({name: req.body.name});
     const emailExist = await User.findOne({email: req.body.email});
-    const tempExist = await tempUser.findOne({email: req.body.email,type:"email"});
+    const tempExist = await tempUser.findOne({email: req.body.email, type: "email"});
     if (userExist) return res.status(400).send('暱稱已存在');
     if (emailExist) return res.status(400).send('電子郵件已存在');
     if (req.body.password !== req.body.repassword) return res.status(400).send('重新輸入密碼有誤')
@@ -63,7 +63,7 @@ router.post('/authed', async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: hashPassword,
-        type:"email",
+        type: "email",
         createdAt: Date.now()
     });
     try {
@@ -112,7 +112,9 @@ router.post('/userlogin', async (req, res) => {
     if (req.body.check) {
         res.cookie('auth_token', token, {
             expires: new Date(Date.now() + (7 * day)),
-            sameSite: 'lax'
+            sameSite: 'lax',
+            httpOnly: true,
+            secure: false
         }).send(jwt.decode(token));
     } else {
         res.cookie('auth_token', token, {
@@ -128,7 +130,6 @@ router.get('/authVerify', (req, res) => {
     if (!token) return res.sendStatus(401)
     try {
         jwt.verify(token, process.env.JWT_SECRET);
-        res.sendStatus(200)
     } catch (err) {
         res.clearCookie('auth_token').clearCookie('admin').status(403).send('cookie不合規格')
     }
@@ -137,7 +138,7 @@ router.get('/authVerify', (req, res) => {
 router.get('/getUser/:name', async (req, res) => {
     const user = await User.findOne({name: req.params.name}).lean()
     if (user) {
-        const data = Object.assign({},user)
+        const data = Object.assign({}, user)
         delete data.password
         return res.status(200).send(data)
     } else return res.sendStatus(404)
@@ -159,7 +160,7 @@ router.post('/forgetPassword', async function (req, res) {
         name: email,
         email: email,
         password: email,
-        type:"password",
+        type: "password",
         createdAt: Date.now()
     });
     const mailTransport = nodeMailer.createTransport({
@@ -193,12 +194,12 @@ router.post('/forgetPassword', async function (req, res) {
 
 //check tempUser exist
 
-router.get('/verifyChangePwd/:id',async function (req,res){
-    try{
-        const tempExist = await tempUser.findOne({_id:req.params.id,type:"password"})
-        if(!tempExist) return res.sendStatus(400)
+router.get('/verifyChangePwd/:id', async function (req, res) {
+    try {
+        const tempExist = await tempUser.findOne({_id: req.params.id, type: "password"})
+        if (!tempExist) return res.sendStatus(400)
         res.sendStatus(200)
-    }catch {
+    } catch {
         res.sendStatus(400)
     }
 
@@ -218,8 +219,8 @@ router.post('/changePassword/:id', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    await User.findOneAndUpdate({email: check.email},{$set:{password:hashPassword}});
-    await tempUser.deleteOne({_id: req.params.id,type:"password"})
+    await User.findOneAndUpdate({email: check.email}, {$set: {password: hashPassword}});
+    await tempUser.deleteOne({_id: req.params.id, type: "password"})
     res.send('你成功修改了密碼!');
 });
 
