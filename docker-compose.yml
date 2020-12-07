@@ -12,7 +12,6 @@ services:
       VBOT: "${VBOT}"
       VPASS: "${VPASS}"
       PORT: "${PORT}"
-      VUE_APP_RECAPTCHA: "${CLIENT_RECAPTCHA}"
       SERVER_RECAPTCHA: "${SERVER_RECAPTCHA}"
     volumes:
       - ./dist:/dist

@@ -64,7 +64,7 @@ export default {
       .then(()=>{
         setTimeout(()=>{
           window.grecaptcha.render("recaptcha", {
-            sitekey: process.env.VUE_APP_RECAPTCHA
+            sitekey: "6LcXK_sZAAAAAAikEOURxVi6SDdtCYqCpYjW-BMN"
           })
         },20)
 
