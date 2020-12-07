@@ -17,7 +17,8 @@ const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
 
-router.get('/getSheets', async function (req, res) {
+
+router.get('/getSheets', verify, async function (req, res) {
     const id = jwt.decode(req.cookies['auth_token'])._id;
     const SheetFind = await Sheet.findOne({author: id});
     const cursor = await Sheet.find({author: {$in: [id]}});
@@ -37,7 +38,7 @@ router.get('/getSheets', async function (req, res) {
     }
 
 });
-router.get('/checkAccess/:id', async function (req, res) {
+router.get('/checkAccess/:id',verify, async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])
     const sheet = await Info.findOne({_id: req.params.id})
     if (user && user._id === sheet.author.toString()) return res.send('author')

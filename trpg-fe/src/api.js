@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
 
 const host = process.env.VUE_APP_BACKEND_URL || ''
 axios.defaults.baseURL = `${host}/api`
@@ -49,6 +48,9 @@ export default {
     uploadSheet(data,id){
         return ajax(`session/uploadSheet/${id}`,'post',data)
     },
+    removeSheet(id,session){
+        return ajax(`session/removeSheet/${id}?session=${session}`,'delete')
+    },
     deleteSession(id) {
         return ajax(`session/deleteSession/${id}`, 'delete')
     },
@@ -86,7 +88,6 @@ export default {
 }
 
 function ajax(url, method, data, type) {
-    console.log(Cookies.get('_csrf'))
     return new Promise((resolve, reject) => {
         axios({
             url: url,

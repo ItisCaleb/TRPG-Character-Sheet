@@ -141,13 +141,13 @@ router.post('/uploadSheet/:id', verify, async function (req, res) {
         res.status(400).send('上傳角卡失敗');
     }
 });
-router.delete('/sheetdelete/:id', verify, async function (req, res) {
+router.delete('/removeSheet/:id', verify, async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token']);
     const sheet = req.params.id;
     const session = req.query.session;
+    if (!session) return res.status(400).send('URL的值無效')
     const sheetOwn = await Info.findOne({_id: sheet, author: user._id});
     if (!sheetOwn) return res.status(400).send('這不是你的角色卡!');
-    if (!session) return res.status(400).send('URL的值無效')
     try {
         await Session.updateOne({_id: session}, {$pull: {sheet: sheetOwn._id}});
         await Info.updateOne({_id: sheet, author: user._id}, {$pull: {session: session}});

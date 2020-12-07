@@ -67,20 +67,20 @@ td, th {
   border: 1px solid lightgray;
   height: 100%;
   border-collapse:collapse;
-  padding: .75rem;
+  padding: .45rem;
 
 }
 
 td{
   @include phone-width{
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
 th {
   font-size: 25px;
   @include phone-width{
-    font-size: 20px;
+    font-size: 15px;
   }
 }
 </style>

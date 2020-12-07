@@ -5,7 +5,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodeMailer = require('nodemailer');
 const ejs = require('ejs');
-const {registerValidation, loginValidation, passwordValidation, findPasswordValidation} = require("../utils/validation");
+const axios = require('axios')
+const {
+    registerValidation,
+    loginValidation,
+    passwordValidation,
+    findPasswordValidation
+} = require("../utils/validation");
 
 const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—【】‘”“。、%]");
 
@@ -90,6 +96,10 @@ router.post('/userlogin', async (req, res) => {
     //validate login infomation
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
+    const recaptcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SERVER_RECAPTCHA}&response=${req.body.recaptcha}`)
+    if (!recaptcha.data.success){
+        return res.status(400).send("請先通過驗證")
+    }
     //check if user exist
     const user = await User.findOne({email: req.body.email});
     if (!user) return res.status(400).send('電子郵件不存在');
@@ -106,23 +116,28 @@ router.post('/userlogin', async (req, res) => {
             name: user.name,
             email: user.email,
         }, process.env.JWT_SECRET);
-    (user.admin === true && req.body.check)
-        ? res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
-        : res.cookie('admin', 'True', {sameSite: 'lax'});
     if (req.body.check) {
         res.cookie('auth_token', token, {
             expires: new Date(Date.now() + (7 * day)),
             sameSite: 'lax',
             httpOnly: true,
             secure: false
-        }).send(jwt.decode(token));
+        })
+        if (user.admin === true) {
+            res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
+        }
+
     } else {
         res.cookie('auth_token', token, {
             sameSite: 'lax',
             httpOnly: true,
             secure: false
-        }).send(jwt.decode(token))
+        })
+        if (user.admin === true) {
+            res.cookie('admin', 'True', {sameSite: 'lax'});
+        }
     }
+    res.send(jwt.decode(token));
 });
 
 router.get('/authVerify', (req, res) => {

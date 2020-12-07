@@ -54,7 +54,14 @@ const loginValidation = data => {
                     message:"密碼長度為6到15個字元"
                 }
             }),
-        check:Joi.boolean()
+        check:Joi.boolean(),
+        recaptcha: Joi.string()
+            .required()
+            .error(()=>{
+                return{
+                    message:"請先通過驗證"
+                }
+            })
     };
     return Joi.validate(data,schema);
 };

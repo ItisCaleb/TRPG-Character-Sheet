@@ -34,24 +34,26 @@
           玩家:<span class="players" v-for="player in Session.player" :key="player">{{ player }}</span>
         </div>
         <div slot="角色卡">
-          <table style="width: 100%">
+          <table>
             <tr>
               <td>角色卡</td>
               <td>系統</td>
               <td>玩家名稱</td>
               <td>用戶</td>
+              <td>操作</td>
             </tr>
             <tbody v-for="sheet in Session.sheetInfos" :key="sheet._id">
-            <tr class="link" @click="toSheet(sheet.system,sheet.id)" v-if="sheet.access">
-              <td>{{ sheet.name }}</td>
-              <td> {{ sheet.system }}</td>
-              <td> {{ sheet.player_name }}</td>
-              <td>{{ sheet.author }}</td>
+            <tr class="link" v-if="sheet.access">
+              <td @click="toSheet(sheet.system,sheet.id)">{{ sheet.name }}</td>
+              <td @click="toSheet(sheet.system,sheet.id)">{{ sheet.system }}</td>
+              <td @click="toSheet(sheet.system,sheet.id)">{{ sheet.player_name }}</td>
+              <td @click="toSheet(sheet.system,sheet.id)">{{ sheet.author }}</td>
+              <td><button class="btn btn-danger" @click.prevent="removeSheet(sheet.id)">移除</button></td>
             </tr>
             <tr style="color: lightgray" v-else>
               <td>{{ sheet.name }}</td>
-              <td> {{ sheet.system }}</td>
-              <td> {{ sheet.player_name }}</td>
+              <td>{{ sheet.system }}</td>
+              <td>{{ sheet.player_name }}</td>
               <td>{{ sheet.author }}</td>
             </tr>
             </tbody>
@@ -94,7 +96,6 @@ export default {
                 .then(() => {
                   this.$router.replace('/session')
                 })
-
           })
           .catch(err => {
             console.log(err)
@@ -102,13 +103,18 @@ export default {
     },
     uploadSheet() {
       api.uploadSheet(this.selectSheet, this.$route.params.id)
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.$router.go(0)
           })
           .catch(err => {
             console.log(err)
           })
+    },
+    removeSheet(id){
+      api.removeSheet(id,this.$route.params.id)
+        .then(()=>{
+          this.$router.go(0)
+        })
     },
     toSheet(system, url) {
       this.$router.push(`/sheet/${system}/${url}`)
@@ -154,10 +160,16 @@ export default {
 #box-content {
   margin: 5%;
 }
+table{
+  width: 100%;
 
+}
 td {
   font-size: 20px;
-  padding: 1%
+  padding: 1%;
+  @include phone-width{
+    font-size: 12px;
+  }
 }
 
 .link {

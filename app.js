@@ -42,7 +42,6 @@ const corsOptions = {
         'http://localhost:8080',
         'http://localhost:2100',
         'https://trpgtoaster.com',
-        'https://dev.trpgtoaster.com'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
@@ -72,7 +71,9 @@ app.use('/api/image', ImageRoute);
 
 app.all('*',function (req,res,next){
     res.setHeader('Cache-Control','public, max-age=604800')
-    res.cookie('csrfToken',req.csrfToken())
+    if(process.env.MODE!=='dev'){
+        res.cookie('csrfToken',req.csrfToken())
+    }
     next()
 })
 const history = require('connect-history-api-fallback');

@@ -20,6 +20,7 @@
         <input v-model="userData.check" type="checkbox" class="form-check-input" id="remember">
         <label class="form-check-label">記住我</label><br>
       </div>
+      <div id="recaptcha"></div>
       <div id="smalltext" class="form-group">
         <router-link to="/signup">還沒註冊嗎?點擊這裡註冊</router-link>
         <br>
@@ -35,7 +36,7 @@ import Title from "@/components/Title";
 import api from "@/api";
 import {mapActions} from 'vuex'
 import Form from "@/components/User/Form";
-
+// eslint-disable-next-line no-unused-vars
 export default {
   name: "Login",
   components: {Form, Title, FormInput},
@@ -44,7 +45,8 @@ export default {
       userData: {
         email: "",
         password: "",
-        check: false
+        check: false,
+        recaptcha: ""
       },
       msg: {
         mail: "",
@@ -52,8 +54,21 @@ export default {
       },
       mailVerified: false,
       pwdVerified: false,
-      formSend: false
+      formSend: false,
+      sitekey: process.env.VUE_APP_RECAPTCHA
     }
+  },
+  mounted() {
+    // eslint-disable-next-line no-undef
+    this.$loadScript("https://www.google.com/recaptcha/api.js")
+      .then(()=>{
+        setTimeout(()=>{
+          window.grecaptcha.render("recaptcha", {
+            sitekey: process.env.VUE_APP_RECAPTCHA
+          })
+        },20)
+
+      })
   },
   methods: {
     emailVerify() {
@@ -82,6 +97,14 @@ export default {
       this.pwdVerify()
       if (this.mailVerified && this.pwdVerified) {
         this.formSend = true
+        // eslint-disable-next-line no-undef
+        if (!grecaptcha.getResponse) {
+          this.formSend = false
+          alert("請勾選驗證!")
+          return;
+        }
+        // eslint-disable-next-line no-undef
+        this.userData.recaptcha = grecaptcha.getResponse()
         api.login(this.userData)
             .then((user) => {
               Promise.all([
@@ -101,18 +124,27 @@ export default {
       } else {
         alert("你的帳號或密碼有誤")
       }
-    },
+    }
 
-  }
+  },
 }
+
+
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #smalltext {
   font-size: 15px;
   margin-bottom: 2%;
   display: flex;
   justify-content: space-between
+}
+#recaptcha{
+  margin: auto;
+  width: 60%;
+  @include phone-width{
+    width: 80%;
+  }
 }
 
 </style>

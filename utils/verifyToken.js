@@ -6,6 +6,6 @@ module.exports = function (req, res, next) {
         jwt.verify(token, process.env.JWT_SECRET);
         next();
     } catch (err) {
-        res.send(401).send('請先登入')
+        res.status(401).send('請先登入')
     }
 };
