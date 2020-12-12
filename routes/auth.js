@@ -145,6 +145,7 @@ router.get('/authVerify', (req, res) => {
     if (!token) return res.sendStatus(401)
     try {
         jwt.verify(token, process.env.JWT_SECRET);
+        res.sendStatus(200);
     } catch (err) {
         res.clearCookie('auth_token').clearCookie('admin').status(403).send('cookie不合規格')
     }

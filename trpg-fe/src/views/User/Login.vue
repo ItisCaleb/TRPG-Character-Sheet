@@ -20,7 +20,7 @@
         <input v-model="userData.check" type="checkbox" class="form-check-input" id="remember">
         <label class="form-check-label">記住我</label><br>
       </div>
-      <div id="recaptcha"></div>
+      <vue-recaptcha id="recaptcha" sitekey="6LcXK_sZAAAAAAikEOURxVi6SDdtCYqCpYjW-BMN"></vue-recaptcha>
       <div id="smalltext" class="form-group">
         <router-link to="/signup">還沒註冊嗎?點擊這裡註冊</router-link>
         <br>
@@ -36,10 +36,11 @@ import Title from "@/components/Title";
 import api from "@/api";
 import {mapActions} from 'vuex'
 import Form from "@/components/User/Form";
+import VueRecaptcha from 'vue-recaptcha'
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "Login",
-  components: {Form, Title, FormInput},
+  components: {Form, Title, FormInput,VueRecaptcha},
   data() {
     return {
       userData: {
@@ -55,20 +56,7 @@ export default {
       mailVerified: false,
       pwdVerified: false,
       formSend: false,
-      sitekey: process.env.VUE_APP_RECAPTCHA
     }
-  },
-  mounted() {
-    // eslint-disable-next-line no-undef
-    this.$loadScript("https://www.google.com/recaptcha/api.js")
-      .then(()=>{
-        setTimeout(()=>{
-          window.grecaptcha.render("recaptcha", {
-            sitekey: "6LcXK_sZAAAAAAikEOURxVi6SDdtCYqCpYjW-BMN"
-          })
-        },20)
-
-      })
   },
   methods: {
     emailVerify() {
@@ -139,10 +127,11 @@ export default {
   display: flex;
   justify-content: space-between
 }
-#recaptcha{
+
+#recaptcha {
   margin: auto;
   width: 60%;
-  @include phone-width{
+  @include phone-width {
     width: 80%;
   }
 }
