@@ -70,9 +70,7 @@ app.all('*', function (req, res, next) {
     res.setHeader('Cache-Control', 'public, max-age=604800')
     if (process.env.MODE !== 'dev') {
         res.cookie('csrfToken', req.csrfToken(),{
-            sameSite: 'lax',
-            httpOnly: true,
-            secure: true
+            sameSite: 'lax'
         })
     }
     next()
