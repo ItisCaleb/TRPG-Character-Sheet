@@ -7,21 +7,12 @@ const  TRPGSessionSchema = new mongoose.Schema({
         min:3,
         max:30
     },
-    password:{
-        type:String,
-        required: true,
-        min:3,
-        max:15
-    },
     gm:{
         type:String,
         required:true,
     },
-    player:{
-        type:Array,
-    },
-    invite:String,
-    sheet:[mongoose.ObjectId],
+    player:[String],
+    sheet:Object,
     date:{
         type:Date,
         default:Date.now()

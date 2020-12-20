@@ -2,9 +2,9 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
-const Info = require('../model/sheetInfo');
+const Info = require('../model/SheetInfo');
 const Session = require('../model/Session');
-const Sheet = require('../model/sheetInfo');
+const Sheet = require('../model/SheetInfo');
 const Image = require('../model/Avatar')
 const getTRPGSheet = require('../utils/sheetJSON')
 //import sheet schema

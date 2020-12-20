@@ -142,11 +142,8 @@ export default {
     },
     updateSheet: debounce(function (sheet) {
       api.editSheet("COC7th", this.$route.params.id, sheet)
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.success.upload = true
-            this.$store.dispatch('setSheet')
-                .then()
           })
           .catch(err => {
             console.log(err)

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require("../model/User");
-const tempUser = require('../model/tempUser')
+const tempUser = require('../model/TempUser')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodeMailer = require('nodemailer');

@@ -26,15 +26,14 @@ app.set('view engine', 'ejs');
 // connect Database
 mongoose.connect(process.env.DB_CONNECT || " mongodb://127.0.0.1:27017/test?retryWrites=true&w=majority",
     {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false})
-    .then(function (res) {
+    .then(() => {
         console.log('DB started');
     })
-    .catch(function (err) {
+    .catch((err) => {
         console.log(err)
     });
 
 // middleware
-
 
 
 const corsOptions = {
@@ -45,21 +44,19 @@ const corsOptions = {
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization','X-CSRF-TOKEN'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-TOKEN'],
 }
-
 
 
 app.use(cors(corsOptions));
 // route middleware
 app.use(express.json());
 app.use(cookieParser());
-if(process.env.MODE!=='dev'){
-    app.use(csrf({cookie:true}))
+if (process.env.MODE !== 'dev') {
+    app.use(csrf({cookie: true}))
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
 
 
 app.use("/api/user", authRoute);
@@ -69,17 +66,20 @@ app.use('/api/sheet', COC7thSheetRoute);
 app.use('/api/sheet', DND5eSheetRoute);
 app.use('/api/image', ImageRoute);
 
-app.all('*',function (req,res,next){
-    res.setHeader('Cache-Control','public, max-age=604800')
-    if(process.env.MODE!=='dev'){
-        res.cookie('csrfToken',req.csrfToken())
+app.all('*', function (req, res, next) {
+    res.setHeader('Cache-Control', 'public, max-age=604800')
+    if (process.env.MODE !== 'dev') {
+        res.cookie('csrfToken', req.csrfToken(),{
+            sameSite: 'lax',
+            httpOnly: true,
+            secure: true
+        })
     }
     next()
 })
 const history = require('connect-history-api-fallback');
 app.use(history())
 app.use(express.static(path.join(__dirname, 'dist')))
-
 
 
 // start server
@@ -89,6 +89,7 @@ const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
     require('./utils/sheetSocket')(socket)
+    require('./utils/sessionSocket')(socket)
 })
 
 server.listen(port, () => console.log('HTTP start on port:' + port));

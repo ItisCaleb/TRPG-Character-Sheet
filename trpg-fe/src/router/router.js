@@ -71,6 +71,10 @@ const routes = [
         component: () => import('../views/Session/SessionInfo')
     },
     {
+        path: '/session/link/:code',
+        component: () => import('../views/Session/SessionLinkJoin')
+    },
+    {
         path: '/sheet',
         name: 'Sheet',
         component: () => import('../views/Sheet')

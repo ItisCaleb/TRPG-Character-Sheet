@@ -2,7 +2,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
-const Info = require('../model/sheetInfo');
+const Info = require('../model/SheetInfo');
 const Roll20Translate = require('../utils/Roll20COC7thMap')
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');

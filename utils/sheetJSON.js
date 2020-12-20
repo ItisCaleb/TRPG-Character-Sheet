@@ -1,4 +1,4 @@
-const Info = require('../model/sheetInfo')
+const Info = require('../model/SheetInfo')
 const DND5eStat = require('../model/DND5e/Stat');
 const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');

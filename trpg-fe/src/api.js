@@ -42,8 +42,8 @@ export default {
     createSession(data) {
         return ajax('session/TRPGCreateSession', 'post', data)
     },
-    joinSession(data) {
-        return ajax('session/TRPGJoinSession', 'post', data)
+    joinSession(code) {
+        return ajax(`session/TRPGJoinSession/${code}`, 'get')
     },
     uploadSheet(data,id){
         return ajax(`session/uploadSheet/${id}`,'post',data)
@@ -53,6 +53,9 @@ export default {
     },
     deleteSession(id) {
         return ajax(`session/deleteSession/${id}`, 'delete')
+    },
+    createInviteLink(id){
+        return ajax(`session/createInvite/${id}`,'get')
     },
     getSheets() {
         return ajax('sheet/getSheets', 'get')

@@ -53,7 +53,8 @@ export default {
         email: false,
         pwd: false,
         repwd: false
-      }
+      },
+      send:false
     }
   },
   methods: {
@@ -98,9 +99,14 @@ export default {
       }
     },
     UserSignup() {
+      if (this.send) return
+      this.send=true
       for (let verify in this.verified) {
         if (!this.verified[verify]) {
           alert('註冊資料有誤')
+          setTimeout(()=>{
+            this.send=false
+          },1000)
           return
         }
       }
@@ -113,6 +119,9 @@ export default {
           })
           .catch(err => {
             alert(err)
+            setTimeout(()=>{
+              this.send=false
+            },1000)
           })
     }
   },

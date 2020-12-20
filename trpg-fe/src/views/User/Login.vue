@@ -55,7 +55,7 @@ export default {
       },
       mailVerified: false,
       pwdVerified: false,
-      formSend: false,
+      send: false,
     }
   },
   methods: {
@@ -80,15 +80,17 @@ export default {
     },
     ...mapActions(['loginActions']),
     UserLogin() {
-      if (this.formSend) return
+      if (this.send) return
       this.emailVerify()
       this.pwdVerify()
       if (this.mailVerified && this.pwdVerified) {
-        this.formSend = true
+        this.send = true
         // eslint-disable-next-line no-undef
         if (!grecaptcha.getResponse) {
-          this.formSend = false
           alert("請勾選驗證!")
+          setTimeout(()=>{
+            this.send=false
+          },1000)
           return;
         }
         // eslint-disable-next-line no-undef
@@ -106,8 +108,10 @@ export default {
               })
             })
             .catch(err => {
-              this.formSend = false
               alert(err)
+              setTimeout(()=>{
+                this.send=false
+              },1000)
             })
       } else {
         alert("你的帳號或密碼有誤")

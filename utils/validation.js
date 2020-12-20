@@ -76,16 +76,7 @@ const sessionValidation = data=>{
                 return{
                     message:"名字長度為3到30個字元"
                 }
-            }),
-        password: Joi.string()
-            .min(3)
-            .max(15)
-            .required()
-            .error(()=>{
-                return{
-                    message:"密碼長度為3到15個字元"
-                }
-            }),
+            })
     };
     return Joi.validate(data, schema);
 };

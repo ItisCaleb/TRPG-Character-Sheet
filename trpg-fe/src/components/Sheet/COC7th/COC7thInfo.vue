@@ -314,7 +314,7 @@ export default {
   border: 1px lightgray solid;
   border-right: none;
   padding: 0;
-  height: 5px;
+  height: 50px;
   width: 30%;
 
   input {
