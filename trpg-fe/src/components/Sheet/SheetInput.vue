@@ -1,6 +1,6 @@
 <template>
   <label>
-    {{ name }}
+    <span style="font-weight: bold">{{ name }}</span>
     <input class="form-control input-group"
            :type="type"
            :value="value"

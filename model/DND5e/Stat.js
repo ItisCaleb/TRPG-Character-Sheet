@@ -4,12 +4,12 @@ const DND5eStatSchema = new mongoose.Schema({
     stat: {
         type: Object,
         default: {
-            str:10,
-            dex:10,
-            con:10,
-            int:10,
-            wis:10,
-            cha:10
+            str: 10,
+            dex: 10,
+            con: 10,
+            int: 10,
+            wis: 10,
+            cha: 10
         }
     },
     inspiration: {
@@ -38,7 +38,7 @@ const DND5eStatSchema = new mongoose.Schema({
         default: 0
     },
     speed: {
-        type: Number,
+        type: String,
         max: 100,
         default: 0
     },
@@ -67,26 +67,16 @@ const DND5eStatSchema = new mongoose.Schema({
         max: 20,
         default: 0
     },
-    spell_class: {
+    death_save: {
         type: String,
-        max: 30,
-        default: 0
+        default: "00"
     },
-    spell_ability: {
-        type: String,
-        max: 20,
-        default: 0
+    savings:{
+        type: [String]
     },
-    spell_save: {
-        type: String,
-        max: 20,
-        default: 0
-    },
-    spell_bonus: {
-        type: String,
-        max: 20,
-        default: 0
-    },
+    skills: {
+        type: [String]
+    }
 });
 
 module.exports = mongoose.model("DND5e_Stat", DND5eStatSchema);

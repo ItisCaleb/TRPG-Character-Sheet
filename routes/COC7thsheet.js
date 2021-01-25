@@ -61,7 +61,6 @@ router.post('/COC7th/import/:type', verify, async function (req, res) {
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
     if (req.params.type === 'roll20') {
         const sheet = Roll20Translate(req.body)
-
         sheet.info.author = creator._id
         sheet.info.system = "COC7th"
         const info = new Info(sheet.info);

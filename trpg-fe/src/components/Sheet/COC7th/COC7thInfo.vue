@@ -1,45 +1,36 @@
 <template>
   <div class="sheet-info">
-    <table class="stat ta" style="width: 100%">
-      <tr class="tr">
-        <td class="td" v-for="(value,key) in stat.characteristic" :key="key">
-          <table>
-            <tr>
-              <td class="td-font">{{ key }}</td>
-              <td class="td-input">
-                <SheetGridInput :view="view" type="number" @input="calStat(key)"
-                                v-model.number="stat.characteristic[key]"></SheetGridInput>
-              </td>
-              <td class="td-cal">
-                <table>
-                  <tr>
-                    <td>{{ Math.floor(value / 2) }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ Math.floor(value / 5) }}</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <COC7thSection title="調查員基本資料：">
+    <div class="stat">
+        <div class="stat-block" v-for="(value,key) in stat.characteristic" :key="key">
+          <SheetGridInput :top="true" :right="true" :view="view" type="number" @input="calStat(key)"
+                          v-model.number="stat.characteristic[key]">
+            <span slot="top">{{key}}</span>
+            <table class="td-cal" slot="right">
+              <tr>
+                <td style="border-bottom: 1px lightgray solid">{{ Math.floor(value / 2) }}</td>
+              </tr>
+              <tr>
+                <td>{{ Math.floor(value / 5) }}</td>
+              </tr>
+            </table>
+          </SheetGridInput>
+        </div>
+    </div>
+    <SheetSection title="調查員基本資料：">
       <SheetInput :view="view" :max="100" name="姓名" v-model="info.name"/>
       <SheetInput :view="view" :max="64" name="玩家" v-model="info.player_name"/>
       <SheetInput :view="view" :max="64" name="職業" v-model="story.class"/>
-      <div class="two">
+      <div class="inline">
         <SheetInput :view="view" :max="64" name="年齡" v-model="story.age"/>
         <SheetInput :view="view" :max="64" name="性別" v-model="story.sex"/>
       </div>
       <SheetInput :view="view" :max="64" name="出生地" v-model="story.birthplace"/>
       <SheetInput :view="view" :max="64" name="現居地" v-model="story.residence"/>
-    </COC7thSection>
-    <COC7thSection title="調查員狀態：">
+    </SheetSection>
+    <SheetSection title="調查員狀態：">
       <div style="display: flex">
         <div class="status">
-          <div class="two">
+          <div class="inline">
             <SheetInput :view="view" :min="0" :max="getHpMax" name="HP" type="number"
                         v-model.number="stat.hp"></SheetInput>
             <div class="max">/{{ getHpMax }}</div>
@@ -47,7 +38,7 @@
                         v-model.number="stat.san"></SheetInput>
             <div class="max">/{{ getSanMax }}</div>
           </div>
-          <div class="two">
+          <div class="inline">
             <SheetInput :view="view" :min="0" :max="getMpMax" name="MP" type="number"
                         v-model.number="stat.mp"></SheetInput>
             <div class="max">/{{ getMpMax }}</div>
@@ -82,8 +73,8 @@
         <SheetTextArea :view="view" name="攜帶物品" :max="512" :val="equip.equip" v-model="equip.equip"
                        style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
-    </COC7thSection>
-    <COC7thSection title="調查員形象：">
+    </SheetSection>
+    <SheetSection title="調查員形象：">
       <img v-if="avatar"
            style="margin-bottom: 5%;width: 100%;height: 100%"
            :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
@@ -97,7 +88,7 @@
         <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
       </div>
       <div></div>
-    </COC7thSection>
+    </SheetSection>
 
   </div>
 
@@ -106,13 +97,13 @@
 <script>
 import SheetInput from "@/components/Sheet/SheetInput";
 import api from "@/api";
-import COC7thSection from "@/components/Sheet/COC7th/COC7thSection";
+import SheetSection from "@/components/Sheet/SheetSection";
 import SheetGridInput from "@/components/Sheet/SheetGridInput";
 import SheetTextArea from "@/components/Sheet/SheetTextArea";
 
 export default {
   name: "COC7thInfo",
-  components: {SheetTextArea, SheetGridInput, COC7thSection, SheetInput},
+  components: {SheetTextArea, SheetGridInput, SheetSection, SheetInput},
   props: {
     info: {
       type: Object,
@@ -177,7 +168,7 @@ export default {
       reader.readAsDataURL(image);
       const size = (image.size / 1024);
       if (size > 1000) {
-        this.image_success.msg = "你的圖片太大了!上限是800kb"
+        this.image_success.msg = "你的圖片太大了!上限是1mb"
         this.image_success.color = "red"
         return
       }
@@ -261,7 +252,7 @@ export default {
 
 <style scoped lang="scss">
 
-.two {
+.inline {
   display: flex;
   align-items: center;
 }
@@ -273,59 +264,30 @@ export default {
   margin-right: 8px;
 }
 
-.ta .tr .td {
-  width: 12.5%;
+.stat-block {
+  width: 10%;
   @include phone-width {
-    width: 50%;
+    width: 40%;
   }
 
   @include pad-width {
-    width: 25%;
+    width: 10%;
   }
   @include small-pad-width {
-    width: 25%;
+    width: 10%;
   }
   word-wrap: break-word;
   display: inline-block;
-  margin-top: 2px;
+  margin: 2px 1px 0 1px ;
 }
 
 .stat {
-  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 2%;
+  justify-content: space-around;
 }
 
-.td-font {
-
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  width: 30%;
-  @include pc-width {
-    width: 50%;
-  }
-  @include big-pc-width {
-    width: 50%;
-
-  }
-}
-
-.td-input {
-  border: 1px lightgray solid;
-  border-right: none;
-  padding: 0;
-  height: 50px;
-  width: 30%;
-
-  input {
-    border: none;
-    padding: 0;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    box-shadow: none !important;
-  }
-}
 
 .td-cal {
   padding: 0;
@@ -336,12 +298,10 @@ export default {
   tr {
     width: 100%;
   }
-
   td {
     margin: 0;
     border-collapse: collapse;
     padding: 0;
-    border: 1px lightgray solid;
     width: 30px;
     text-align: center;
   }

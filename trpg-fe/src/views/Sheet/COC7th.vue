@@ -4,7 +4,7 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
         <i :style="{color:getSuccessColor}" class="fa"
-           :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
+        :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
       </Title>
 
       <Tab class="tab" :page="['一般','背景','技能','選項']">
@@ -162,6 +162,7 @@ export default {
         this._watchers[index] = Object.assign(this._watchers[index], watchers[index])
       }
     }
+
   },
   computed: {
     getSheet() {
@@ -205,7 +206,7 @@ export default {
       deep: true
     },
     info: {
-      async handler(newValue) {
+      handler(newValue) {
         if (this.success.not_init) {
           this.socketInput(newValue, 'info')
         }
@@ -284,7 +285,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .tab {
   width: 90% !important;
 

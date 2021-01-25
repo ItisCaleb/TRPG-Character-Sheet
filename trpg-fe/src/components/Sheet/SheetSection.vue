@@ -7,7 +7,7 @@
 
 <script>
 export default {
-name: "COC7thSection",
+name: "SheetSection",
   props:{
   title:String
   }

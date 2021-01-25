@@ -1,6 +1,6 @@
 <template>
   <label>
-    {{ name }}
+    <span style="font-weight: bold">{{ name }}</span>
     <textarea :readonly="view" :value="val" class="sheet-textarea form-control"
               @input="emitInput"></textarea>
   </label>
@@ -56,6 +56,7 @@ export default {
 
 label {
   width: 100%;
-  height: 100%;
+  height: 120px;
+  margin-bottom: 10%;
 }
 </style>

@@ -40,7 +40,7 @@ import VueRecaptcha from 'vue-recaptcha'
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "Login",
-  components: {Form, Title, FormInput,VueRecaptcha},
+  components: {Form, Title, FormInput, VueRecaptcha},
   data() {
     return {
       userData: {
@@ -88,9 +88,9 @@ export default {
         // eslint-disable-next-line no-undef
         if (!grecaptcha.getResponse) {
           alert("請勾選驗證!")
-          setTimeout(()=>{
-            this.send=false
-          },1000)
+          setTimeout(() => {
+            this.send = false
+          }, 1000)
           return;
         }
         // eslint-disable-next-line no-undef
@@ -109,9 +109,9 @@ export default {
             })
             .catch(err => {
               alert(err)
-              setTimeout(()=>{
-                this.send=false
-              },1000)
+              setTimeout(() => {
+                this.send = false
+              }, 1000)
             })
       } else {
         alert("你的帳號或密碼有誤")

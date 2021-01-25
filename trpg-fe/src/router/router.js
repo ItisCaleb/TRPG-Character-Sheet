@@ -90,10 +90,6 @@ const routes = [
         component: () => import('../views/Sheet/COC7thView')
     },
     {
-        path: '/sheet/COC7th/:id',
-        component: () => import('../views/Sheet/COC7th'),
-    },
-    {
         path: '/sheet/DND5e/:id',
         component: () => import('../views/Sheet/DND5e')
     },
