@@ -35,6 +35,11 @@ export default {
     joinSession() {
       if(this.send) return
       this.send=true
+      if(this.invite=="") {
+        alert("請輸入邀請碼")
+        this.send=false
+        return;
+      }
       api.joinSession(this.invite)
           .then(res => {
             this.$store.dispatch('setSession')

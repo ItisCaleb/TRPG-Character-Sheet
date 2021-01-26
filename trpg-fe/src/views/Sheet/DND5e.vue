@@ -19,7 +19,14 @@
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
-          <button class="btn btn-danger" @click="deleteSheet">刪除</button>
+          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">刪除</button>
+          <Msgbox ref="deleteBox">
+            <div style="text-align: center;margin: 10% auto">
+              你確定要刪除嗎?<br>
+              <button style="margin: 10% 2%;" class="btn btn-primary" @click="$refs.deleteBox.show=false">沒有</button>
+              <button style="margin: 10% 2%;" class="btn btn-danger" @click="deleteSheet">刪除</button>
+            </div>
+          </Msgbox>
         </div>
       </Tab>
     </div>
@@ -36,10 +43,11 @@ import DND5eEquip from "@/components/Sheet/DND5e/DND5eEquip";
 import DND5eStory from "@/components/Sheet/DND5e/DND5eStory";
 import DND5eSpell from "@/components/Sheet/DND5e/DND5eSpell";
 import debounce from "lodash.debounce";
+import Msgbox from "@/components/Msgbox";
 
 export default {
   name: "DND5e",
-  components: {DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   data() {
     return {
       info: {
@@ -178,7 +186,7 @@ export default {
     spell: {
       handler(newValue) {
         if (this.success.not_init) {
-          this.socketInput(newValue, 'skills')
+          this.socketInput(newValue, 'spell')
         }
       },
       deep: true

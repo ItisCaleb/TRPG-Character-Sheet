@@ -2,25 +2,25 @@
   <div>
     <SheetSection title="冒險者技能：">
       <div class="inline">
-        <SheetGridInput :down="true" type="number" v-model.number="stat.passive_wisdom">
+        <SheetGridInput :view="view" down type="number" v-model.number="stat.passive_wisdom">
           <span slot="down">被動感知</span>
         </SheetGridInput>
-        <SheetGridInput :down="true" type="number" v-model.number="stat.inspiration">
+        <SheetGridInput :view="view" down type="number" v-model.number="stat.inspiration">
           <span slot="down">激勵值</span>
         </SheetGridInput>
-        <SheetGridInput :down="true" type="number" v-model.number="stat.pro">
+        <SheetGridInput :view="view" down type="number" v-model.number="stat.pro">
           <span slot="down">熟練加成</span>
         </SheetGridInput>
       </div>
       <ul style="font-size: 14px;list-style-type: none;border: 1px lightgray solid;padding: 0;text-align: center">
         <li v-for="(obj,key) in savings" :key="key" class="skills">
-          <input type="checkbox" v-model="savings[key].check" style="margin: 1%">{{ calSkill(obj) }} {{ key }}
+          <input :disabled="view" type="checkbox" v-model="savings[key].check" style="margin: 1%">{{ calSkill(obj) }} {{ key }}
         </li>
         <li style="font-weight: bold;border-top: 1px lightgray solid">豁免檢定</li>
       </ul>
       <ul style="font-size: 14px;list-style-type: none;border: 1px lightgray solid;padding: 0;text-align: center">
         <li v-for="(obj,key) in skills" :key="key" class="skills">
-          <input type="checkbox" v-model="skills[key].check" style="margin: 1%">{{ calSkill(obj) }}
+          <input :disabled="view" type="checkbox" v-model="skills[key].check" style="margin: 1%">{{ calSkill(obj) }}
           {{ key }}({{ obj.type }})
         </li>
         <li style="font-weight: bold;border-top: 1px lightgray solid">技能</li>
@@ -28,19 +28,19 @@
     </SheetSection>
     <SheetSection title="冒險者裝備：">
       <div class="inline">
-        <SheetGridInput v-model.number="equip.money.cp" type="number" :down="true">
+        <SheetGridInput :view="view" v-model.number="equip.money.cp" type="number" down>
           <span slot="down">CP</span>
         </SheetGridInput>
-        <SheetGridInput v-model.number="equip.money.sp" type="number" :down="true">
+        <SheetGridInput :view="view" v-model.number="equip.money.sp" type="number" down>
           <span slot="down">SP</span>
         </SheetGridInput>
-        <SheetGridInput v-model.number="equip.money.ep" type="number" :down="true">
+        <SheetGridInput :view="view" v-model.number="equip.money.ep" type="number" down>
           <span slot="down">EP</span>
         </SheetGridInput>
-        <SheetGridInput v-model.number="equip.money.gp" type="number" :down="true">
+        <SheetGridInput :view="view" v-model.number="equip.money.gp" type="number" down>
           <span slot="down">GP</span>
         </SheetGridInput>
-        <SheetGridInput v-model.number="equip.money.pp" type="number" :down="true">
+        <SheetGridInput :view="view" v-model.number="equip.money.pp" type="number" down>
           <span slot="down">PP</span>
         </SheetGridInput>
       </div>

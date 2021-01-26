@@ -116,11 +116,11 @@ router.post('/TRPGCreateSession', verify, async function (req, res) {
     }
 });
 //join a session
-router.get('/TRPGJoinSession/:code', verify, async function (req, res) {
+router.get('/TRPGJoinSession', verify, async function (req, res) {
 
     //decode
     const user = jwt.decode(req.cookies['auth_token']).name;
-    const invite = await SessionLink.findOne({code: req.params.code})
+    const invite = await SessionLink.findOne({code: req.query.code})
     if (!invite) return res.status(400).send("此邀請碼無效或是過時");
     const session = await Session.findOne({_id: invite._id});
     //check if the player is already in the session

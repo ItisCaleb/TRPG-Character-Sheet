@@ -113,15 +113,6 @@ export default {
     }
   },
   computed: {
-    getSheet() {
-      return {
-        info: this.info,
-        stat: this.stat,
-        story: this.story,
-        equip: this.equip,
-        skill: this.skills
-      }
-    },
     getMytho() {
       if (!this.skills.skill) return 0
       if (!this.skills.skill["Cthulhu Mythos"]) return 0

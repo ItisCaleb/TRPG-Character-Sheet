@@ -20,7 +20,14 @@
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
-          <button class="btn btn-danger" @click="deleteSheet">刪除</button>
+          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">刪除</button>
+          <Msgbox ref="deleteBox">
+            <div style="text-align: center;margin: 10% auto">
+              你確定要刪除嗎?<br>
+              <button style="margin: 10% 2%;" class="btn btn-primary" @click="$refs.deleteBox.show=false">沒有</button>
+              <button style="margin: 10% 2%;" class="btn btn-danger" @click="deleteSheet">刪除</button>
+            </div>
+          </Msgbox>
         </div>
       </Tab>
     </div>
@@ -36,10 +43,11 @@ import Load from "@/components/Load";
 import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
 import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
 import debounce from "lodash.debounce"
+import Msgbox from "@/components/Msgbox";
 
 export default {
   name: "COC7th",
-  components: {COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
+  components: {Msgbox, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   data() {
     return {
       info: {
@@ -162,7 +170,6 @@ export default {
         this._watchers[index] = Object.assign(this._watchers[index], watchers[index])
       }
     }
-
   },
   computed: {
     getSheet() {

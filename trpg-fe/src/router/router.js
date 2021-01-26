@@ -94,6 +94,11 @@ const routes = [
         component: () => import('../views/Sheet/DND5e')
     },
     {
+        path: '/sheet/DND5e/:id',
+        name: 'DND5eView',
+        component: () => import('../views/Sheet/DND5eView')
+    },
+    {
         path: '/help',
         name: 'Help',
         component: () => import('../views/About')

@@ -2,7 +2,7 @@
   <div>
     <div class="stat">
       <div class="stat-block" v-for="(value,key) in stat.stat" :key="key">
-        <SheetGridInput :top="true" :down="true" :view="view" type="number"
+        <SheetGridInput :top="true" down :view="view" type="number"
                         v-model.number="stat.stat[key]">
           <span slot="top">{{ key }}</span>
           <span slot="down">{{ Math.floor((value - 10) / 2) }}</span>
@@ -23,17 +23,17 @@
     </SheetSection>
     <SheetSection title="冒險者狀態：">
       <div class="inline">
-        <SheetGridInput :down="true" style="margin: 2%" :view="view" type="number" v-model="stat.armorValue">
+        <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model="stat.armorValue">
           <span slot="down">護甲值</span>
         </SheetGridInput>
-        <SheetGridInput :down="true" style="margin: 2%" :view="view" type="number" v-model.number="stat.initiative">
+        <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model.number="stat.initiative">
           <span slot="down">先攻值</span>
         </SheetGridInput>
-        <SheetGridInput :down="true" style="margin: 2%" :view="view" type="number" v-model="stat.speed">
+        <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model="stat.speed">
           <span slot="down">速度</span>
         </SheetGridInput>
       </div>
-      <SheetGridInput :down="true" :right="true" :left="true" style="margin: 2%" :view="view" type="number"
+      <SheetGridInput down :right="true" :left="true" style="margin: 2%" :view="view" type="number"
                       v-model.number="stat.hp">
         <input :readonly="view" @input="calMinMax('temp_hp',0,256)" type="number" slot="left"
                v-model.number="stat.temp_hp">
@@ -42,21 +42,21 @@
         <span slot="down">臨時生命/生命值/最大生命</span>
       </SheetGridInput>
       <div class="inline">
-        <SheetGridInput :down="true" :right="true" style="margin: 2%" :view="view" type="number"
+        <SheetGridInput down :right="true" style="margin: 2%" :view="view" type="number"
                         v-model.number="stat.hit_dice">
-          <input type="number" slot="right" v-model.number="stat.hit_dice_total">
+          <input :readonly="view" type="number" slot="right" v-model.number="stat.hit_dice_total">
           <span slot="down">生命骰/總生命骰</span>
         </SheetGridInput>
         <div style="text-align: center;width: 100%">
           成功
-          <select :readonly="view" v-model="death_save.success">
+          <select :disabled="view" v-model="death_save.success">
             <option>0</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
           </select><br>
           失敗
-          <select :readonly="view" v-model="death_save.fail">
+          <select :disabled="view" v-model="death_save.fail">
             <option>0</option>
             <option>1</option>
             <option>2</option>
@@ -71,19 +71,19 @@
         </tr>
         <tr style="border: 1px lightgray solid">
           <td><input class="attack" @input="calLength('first',30)" placeholder="攻擊" v-model="equip.attack.first"
-                     type="text"></td>
+                     type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
           <td><input class="attack" @input="calLength('second',30)" placeholder="攻擊" v-model="equip.attack.second"
-                     type="text"></td>
+                     type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
           <td><input class="attack" @input="calLength('third',30)" placeholder="攻擊" v-model="equip.attack.third"
-                     type="text"></td>
+                     type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
           <td><textarea placeholder="法術" @input="calLength('spells',150)" v-model="equip.attack.spell"
-                        style="border: none;outline: none;width: 100%;height: 120px;resize: none"></textarea></td>
+                        style="border: none;outline: none;width: 100%;height: 120px;resize: none" :readonly="view"></textarea></td>
         </tr>
       </table>
     </SheetSection>

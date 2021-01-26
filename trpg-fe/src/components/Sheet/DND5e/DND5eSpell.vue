@@ -4,26 +4,26 @@
       <SheetInput style="margin-right: 2%" name="法術職業" :view="view" v-model="spell.spell_class"></SheetInput>
       <label>
         法術施展能力
-        <select v-model="spell.spell_ability">
+        <select :disabled="view" v-model="spell.spell_ability">
           <option>cha</option>
           <option>int</option>
           <option>wis</option>
         </select>
       </label>
       <div class="inline">
-        <SheetGridInput :down="true" type="number" :view="view" v-model.number="spell.spell_save">
+        <SheetGridInput down type="number" :view="view" v-model.number="spell.spell_save">
           <span slot="down">法術豁免值</span>
         </SheetGridInput>
-        <SheetGridInput :down="true" type="number" :view="view" v-model.number="spell.spell_bonus">
+        <SheetGridInput down type="number" :view="view" v-model.number="spell.spell_bonus">
           <span slot="down">法術攻擊加值</span>
         </SheetGridInput>
       </div>
       <table class="spell-list">
         <tr style="width: 100%">
           <td class="spell-text" style="text-align: center;border-bottom: 1px lightgray solid">
-            <span @click="showSpell(0)">0</span>
+            <span @click="showSpell(0)">0<i class="fa fa-angle-down"></i></span>
             <span @click="showSpell(0)">小法術</span>
-            <span><i @click="addSpell(0)" class="fa fa-plus"></i></span>
+            <span><i v-if="!view" @click="addSpell(0)" class="fa fa-plus"></i></span>
           </td>
         </tr>
         <tr>
@@ -31,37 +31,37 @@
         </tr>
         <tr v-show="show['0']" v-for="i in spell.spell['0'].list.length" :key="i">
           <td class="spell-input">
-            <input type="checkbox" v-model="spell.spell['0'].list[i-1].check">
-            <input type="text" v-model="spell.spell['0'].list[i-1].text"
+            <input :disabled="view" type="checkbox" v-model="spell.spell['0'].list[i-1].check">
+            <input :readonly="view" type="text" v-model="spell.spell['0'].list[i-1].text"
                    style="width: 100%;border-bottom:1px gray solid">
-            <i @click="removeSpell(0,i-1)" class="fa fa-minus"></i>
+            <i v-if="!view" @click="removeSpell(0,i-1)" class="fa fa-minus"></i>
           </td>
         </tr>
       </table>
       <table class="spell-list" v-for="k in range(1,1)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
-            <span @click="showSpell(k)">{{ k }}</span>
-            <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
+            <span @click="showSpell(k)">{{ k }}<i class="fa fa-angle-down"></i></span>
+            <input :readonly="view" v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
+            <input :readonly="view" v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
+            <span><i v-if="!view" @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
         <tr>
-          <td style="font-size: 8px;color: darkgrey;text-align: center;display: flex;">
+          <td class="spell-hint">
             <span>等級</span>
             <span style="flex: 2">總數</span>
             <span style="flex: 2">用量</span>
-            <span>增加</span>
+            <span v-if="!view">增加</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">
           <td class="spell-input">
-            <input type="checkbox" v-model="spell.spell[k].list[i-1].check">
-            <input type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
-            <i @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
+            <input :disabled="view" type="checkbox" v-model="spell.spell[k].list[i-1].check">
+            <input :readonly="view" type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
+            <i v-if="!view" @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
           </td>
         </tr>
       </table>
@@ -70,27 +70,27 @@
       <table class="spell-list" v-for="k in range(2,5)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
-            <span @click="showSpell(k)">{{ k }}</span>
-            <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
+            <span @click="showSpell(k)">{{ k }}<i class="fa fa-angle-down"></i></span>
+            <input :readonly="view" v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
+            <input :readonly="view" v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
+            <span><i v-if="!view" @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
         <tr>
-          <td style="font-size: 8px;color: darkgrey;text-align: center;display: flex;">
+          <td class="spell-hint">
             <span>等級</span>
             <span style="flex: 2">總數</span>
             <span style="flex: 2">用量</span>
-            <span>增加</span>
+            <span v-if="!view">增加</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">
           <td class="spell-input">
-            <input type="checkbox" v-model="spell.spell[k].list[i-1].check">
-            <input type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
-            <i @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
+            <input :disabled="view" type="checkbox" v-model="spell.spell[k].list[i-1].check">
+            <input :readonly="view" type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
+            <i v-if="!view" @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
           </td>
         </tr>
       </table>
@@ -99,27 +99,27 @@
       <table class="spell-list" v-for="k in range(6,9)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
-            <span @click="showSpell(k)">{{ k }}</span>
-            <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
+            <span @click="showSpell(k)">{{ k }}<i class="fa fa-angle-down"></i></span>
+            <input :readonly="view" v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
+            <input :readonly="view" v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
                    class="spell-number" @click="showSpell(k)">
-            <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
+            <span><i v-if="!view" @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
         <tr>
-          <td style="font-size: 8px;color: darkgrey;text-align: center;display: flex;">
+          <td class="spell-hint">
             <span>等級</span>
             <span style="flex: 2">總數</span>
             <span style="flex: 2">用量</span>
-            <span>增加</span>
+            <span v-if="!view">增加</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">
           <td class="spell-input">
-            <input type="checkbox" v-model="spell.spell[k].list[i-1].check">
-            <input type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
-            <i @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
+            <input :disabled="view" type="checkbox" v-model="spell.spell[k].list[i-1].check">
+            <input :readonly="view" type="text" v-model="spell.spell[k].list[i-1].text" style="width: 100%;border-bottom:1px gray solid">
+            <i v-if="!view" @click="removeSpell(k,i-1)" class="fa fa-minus"></i>
           </td>
         </tr>
       </table>
@@ -227,6 +227,16 @@ input[type=text] {
   align-items: center;
   text-align: center;
 }
+.spell-hint {
+  font-size: 8px;
+  color: darkgrey;
+  text-align: center;
+  display: flex;
+  @include big-pc-width{
+    font-size: 14px;
+  }
+}
+
 
 .spell-list {
   text-align: center;

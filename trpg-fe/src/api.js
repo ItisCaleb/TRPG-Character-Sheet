@@ -43,7 +43,7 @@ export default {
         return ajax('session/TRPGCreateSession', 'post', data)
     },
     joinSession(code) {
-        return ajax(`session/TRPGJoinSession/${code}`, 'get')
+        return ajax(`session/TRPGJoinSession?code=${code}`, 'get')
     },
     uploadSheet(data,id){
         return ajax(`session/uploadSheet/${id}`,'post',data)
