@@ -18,7 +18,7 @@
           <span slot="down">法術攻擊加值</span>
         </SheetGridInput>
       </div>
-      <table>
+      <table class="spell-list">
         <tr style="width: 100%">
           <td class="spell-text" style="text-align: center;border-bottom: 1px lightgray solid">
             <span @click="showSpell(0)">0</span>
@@ -38,14 +38,14 @@
           </td>
         </tr>
       </table>
-      <table v-for="k in range(1,1)" :key="k">
+      <table class="spell-list" v-for="k in range(1,1)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
             <span @click="showSpell(k)">{{ k }}</span>
             <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
@@ -67,14 +67,14 @@
       </table>
     </SheetSection>
     <SheetSection>
-      <table v-for="k in range(2,5)" :key="k">
+      <table class="spell-list" v-for="k in range(2,5)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
             <span @click="showSpell(k)">{{ k }}</span>
             <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
@@ -96,14 +96,14 @@
       </table>
     </SheetSection>
     <SheetSection>
-      <table v-for="k in range(6,9)" :key="k">
+      <table class="spell-list" v-for="k in range(6,9)" :key="k">
         <tr style="width: 100%">
           <td class="spell-text">
             <span @click="showSpell(k)">{{ k }}</span>
             <input v-model.number="spell.spell[k].total" @input="calMinMax(k,'total')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <input v-model.number="spell.spell[k].usage" @input="calMinMax(k,'usage')" type="number"
-                   style="width: 100%;margin: 0 1%" @click="showSpell(k)">
+                   class="spell-number" @click="showSpell(k)">
             <span><i @click="addSpell(k)" class="fa fa-plus"></i></span>
           </td>
         </tr>
@@ -228,11 +228,16 @@ input[type=text] {
   text-align: center;
 }
 
-table {
+.spell-list {
   text-align: center;
   width: 100%;
   margin: 10% 0;
 
+}
+.spell-number{
+  width: 40%;
+  box-shadow: none !important;
+  -moz-appearance: none;
 }
 
 </style>

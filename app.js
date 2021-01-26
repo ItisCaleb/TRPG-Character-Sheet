@@ -83,7 +83,7 @@ app.use(express.static(path.join(__dirname, 'dist')))
 // start server
 const port = process.env.PORT || 3000;
 const server = http.createServer(app)
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{ origins: '*:*'});
 
 io.on('connection', (socket) => {
     require('./utils/sheetSocket')(socket)

@@ -35,8 +35,10 @@
       </div>
       <SheetGridInput :down="true" :right="true" :left="true" style="margin: 2%" :view="view" type="number"
                       v-model.number="stat.hp">
-        <input :readonly="view" @input="calMinMax('temp_hp',0,256)" type="number" slot="left" v-model.number="stat.temp_hp">
-        <input :readonly="view" @input="calMinMax('max_hp',0,256)" type="number" slot="right" v-model.number="stat.max_hp">
+        <input :readonly="view" @input="calMinMax('temp_hp',0,256)" type="number" slot="left"
+               v-model.number="stat.temp_hp">
+        <input :readonly="view" @input="calMinMax('max_hp',0,256)" type="number" slot="right"
+               v-model.number="stat.max_hp">
         <span slot="down">臨時生命/生命值/最大生命</span>
       </SheetGridInput>
       <div class="inline">
@@ -137,9 +139,9 @@ export default {
 
   data() {
     return {
-      death_save:{
-        success:"0",
-        fail:"0"
+      death_save: {
+        success: "0",
+        fail: "0"
       },
       avatar: "",
       image_name: "選擇圖片",
@@ -153,8 +155,8 @@ export default {
     api.getImage('DND5e', this.$route.params.id)
         .then(res => {
           this.avatar = res
-          this.death_save.success=this.stat.death_save[0]
-          this.death_save.fail=this.stat.death_save[1]
+          this.death_save.success = this.stat.death_save[0]
+          this.death_save.fail = this.stat.death_save[1]
         })
         .catch(err => {
           console.log(err)
@@ -225,11 +227,11 @@ export default {
       }
     }
   },
-  watch:{
-    death_save:{
-      deep:true,
-      handler(){
-        this.stat.death_save=this.death_save.success+this.death_save.fail
+  watch: {
+    death_save: {
+      deep: true,
+      handler() {
+        this.stat.death_save = this.death_save.success + this.death_save.fail
       }
     }
   }
@@ -246,6 +248,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+
 }
 
 .td-font {

@@ -92,8 +92,9 @@ export default {
 <style scoped lang="scss">
 
 table{
-  width: 96%;
+  width: auto;
   margin: 2%;
+  min-width: 0;
 }
 
 .td-left {
@@ -142,6 +143,7 @@ table{
     text-align: center;
     height: 100%;
     width: 100%;
+
     box-shadow: none !important;
   }
 }
