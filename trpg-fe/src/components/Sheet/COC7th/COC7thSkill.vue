@@ -404,12 +404,12 @@ td {
   border: 1px solid lightgray;
   border-collapse: collapse;
   @include phone-width {
-    font-size: 6px;
+    font-size: 12px;
   }
 }
 .skill{
   input{
-    font-size: 6px;
+    font-size: 12px;
   }
 }
 .skill-max {

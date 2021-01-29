@@ -94,7 +94,7 @@ export default {
 table{
   width: auto;
   margin: 2%;
-  min-width: 29%;
+  min-width: 0;
 }
 
 .td-left {
@@ -143,7 +143,7 @@ table{
     text-align: center;
     height: 100%;
     width: 100%;
-
+    min-width: 0;
     box-shadow: none !important;
   }
 }

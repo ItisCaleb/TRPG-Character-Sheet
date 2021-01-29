@@ -169,6 +169,9 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  @include phone-width{
+    min-width: 0;
+  }
 }
 
 .skills {
