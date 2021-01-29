@@ -1,32 +1,33 @@
 <template>
   <div>
-    <SheetSection title="冒險者技能：">
+    <SheetSection :title="$t('dnd5e.char_skill')">
       <div class="inline">
         <SheetGridInput :view="view" down type="number" v-model.number="stat.passive_wisdom">
-          <span slot="down">被動感知</span>
+          <span slot="down">{{ $t('dnd5e.passive_wisdom') }}</span>
         </SheetGridInput>
         <SheetGridInput :view="view" down type="number" v-model.number="stat.inspiration">
-          <span slot="down">激勵值</span>
+          <span slot="down">{{ $t('dnd5e.inspiration') }}</span>
         </SheetGridInput>
         <SheetGridInput :view="view" down type="number" v-model.number="stat.pro">
-          <span slot="down">熟練加成</span>
+          <span slot="down">{{ $t('dnd5e.pro') }}</span>
         </SheetGridInput>
       </div>
       <ul style="font-size: 14px;list-style-type: none;border: 1px lightgray solid;padding: 0;text-align: center">
         <li v-for="(obj,key) in savings" :key="key" class="skills">
-          <input :disabled="view" type="checkbox" v-model="savings[key].check" style="margin: 1%">{{ calSkill(obj) }} {{ key }}
+          <input :disabled="view" type="checkbox" v-model="savings[key].check" style="margin: 1%">
+          {{ calSkill(obj) }} {{ $t(`dnd5e.${key}`) }}
         </li>
-        <li style="font-weight: bold;border-top: 1px lightgray solid">豁免檢定</li>
+        <li style="font-weight: bold;border-top: 1px lightgray solid">{{ $t('dnd5e.savings') }}</li>
       </ul>
       <ul style="font-size: 14px;list-style-type: none;border: 1px lightgray solid;padding: 0;text-align: center">
         <li v-for="(obj,key) in skills" :key="key" class="skills">
-          <input :disabled="view" type="checkbox" v-model="skills[key].check" style="margin: 1%">{{ calSkill(obj) }}
-          {{ key }}({{ obj.type }})
+          <input :disabled="view" type="checkbox" v-model="skills[key].check" style="margin: 1%">
+          {{ calSkill(obj) }} {{ $t(`dnd5e.${key}`) }}({{ obj.type }})
         </li>
-        <li style="font-weight: bold;border-top: 1px lightgray solid">技能</li>
+        <li style="font-weight: bold;border-top: 1px lightgray solid">{{ $t('dnd5e.skills') }}</li>
       </ul>
     </SheetSection>
-    <SheetSection title="冒險者裝備：">
+    <SheetSection :title="$t('dnd5e.char_equip')">
       <div class="inline">
         <SheetGridInput :view="view" v-model.number="equip.money.cp" type="number" down>
           <span slot="down">CP</span>
@@ -45,13 +46,13 @@
         </SheetGridInput>
       </div>
       <SheetTextArea v-model="equip.equipment"  :max="2048" style="height: 250px;margin-bottom: 10%" :view="view"
-                     name="裝備" :val="equip.equipment"></SheetTextArea>
+                     :name="$t('dnd5e.equipment')" :val="equip.equipment"></SheetTextArea>
       <SheetTextArea v-model="equip.treasure" :max="2048" style="height: 250px" :view="view"
-                     name="寶物" :val="equip.treasure"></SheetTextArea>
+                     :name="$t('dnd5e.treasure')" :val="equip.treasure"></SheetTextArea>
     </SheetSection>
     <SheetSection>
       <SheetTextArea v-model="equip.language" :max="1024" style="height: 250px;" :view="view"
-                     name="其他專長&語言" :val="equip.language"></SheetTextArea>
+                     :name="$t('dnd5e.language')" :val="equip.language"></SheetTextArea>
     </SheetSection>
   </div>
 </template>

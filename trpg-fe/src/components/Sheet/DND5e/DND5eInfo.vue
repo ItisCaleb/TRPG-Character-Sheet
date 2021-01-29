@@ -4,33 +4,33 @@
       <div class="stat-block" v-for="(value,key) in stat.stat" :key="key">
         <SheetGridInput :top="true" down :view="view" type="number"
                         v-model.number="stat.stat[key]">
-          <span slot="top">{{ key }}</span>
+          <span slot="top">{{ $t(`dnd5e.${key}`) }}</span>
           <span slot="down">{{ Math.floor((value - 10) / 2) }}</span>
         </SheetGridInput>
       </div>
     </div>
-    <SheetSection title="冒險者資料：">
-      <SheetInput :view="view" :max="100" name="姓名" v-model="info.name"/>
-      <SheetInput :view="view" :max="64" name="玩家" v-model="info.player_name"/>
-      <SheetInput :view="view" :max="20" name="職業" v-model="story.class"/>
+    <SheetSection :title="$t('dnd5e.char_info')">
+      <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
+      <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
+      <SheetInput :view="view" :max="20" :name="$t('class')" v-model="story.class"/>
       <div class="inline">
-        <SheetInput :view="view" :max="20" name="等級" v-model="story.level"/>
-        <SheetInput :view="view" :max="20" name="經驗" v-model="story.exp"/>
+        <SheetInput :view="view" :max="20" :name="$t('dnd5e.level')" v-model="story.level"/>
+        <SheetInput :view="view" :max="20" :name="$t('dnd5e.exp')" v-model="story.exp"/>
       </div>
-      <SheetInput :view="view" :max="20" name="陣營" v-model="story.faction"/>
-      <SheetInput :view="view" :max="20" name="種族" v-model="story.race"/>
-      <SheetInput :view="view" :max="20" name="背景" v-model="story.background"/>
+      <SheetInput :view="view" :max="20" :name="$t('dnd5e.faction')" v-model="story.faction"/>
+      <SheetInput :view="view" :max="20" :name="$t('dnd5e.race')" v-model="story.race"/>
+      <SheetInput :view="view" :max="20" :name="$t('dnd5e.background')" v-model="story.background"/>
     </SheetSection>
-    <SheetSection title="冒險者狀態：">
+    <SheetSection :title="$t('dnd5e.char_status')">
       <div class="inline">
         <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model="stat.armorValue">
-          <span slot="down">護甲值</span>
+          <span slot="down">{{ $t('dnd5e.armorValue') }}</span>
         </SheetGridInput>
         <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model.number="stat.initiative">
-          <span slot="down">先攻值</span>
+          <span slot="down">{{ $t('dnd5e.initiative') }}</span>
         </SheetGridInput>
         <SheetGridInput down style="margin: 2%" :view="view" type="number" v-model="stat.speed">
-          <span slot="down">速度</span>
+          <span slot="down">{{ $t('dnd5e.speed') }}</span>
         </SheetGridInput>
       </div>
       <SheetGridInput down :right="true" :left="true" style="margin: 2%" :view="view" type="number"
@@ -39,55 +39,55 @@
                v-model.number="stat.temp_hp">
         <input :readonly="view" @input="calMinMax('max_hp',0,256)" type="number" slot="right"
                v-model.number="stat.max_hp">
-        <span slot="down">臨時生命/生命值/最大生命</span>
+        <span slot="down">{{ $t('dnd5e.hp') }}</span>
       </SheetGridInput>
       <div class="inline">
         <SheetGridInput down :right="true" style="margin: 2%" :view="view" type="number"
                         v-model.number="stat.hit_dice">
           <input :readonly="view" type="number" slot="right" v-model.number="stat.hit_dice_total">
-          <span slot="down">生命骰/總生命骰</span>
+          <span slot="down">{{ $t('dnd5e.hit_dice') }}</span>
         </SheetGridInput>
         <div style="text-align: center;width: 100%">
-          成功
+          {{ $t('dnd5e.success') }}
           <select :disabled="view" v-model="death_save.success">
             <option>0</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
           </select><br>
-          失敗
+          {{ $t('dnd5e.fail') }}
           <select :disabled="view" v-model="death_save.fail">
             <option>0</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
           </select><br>
-          <span style="font-size: 14px;font-weight: bold">死亡豁免</span>
+          <span style="font-size: 14px;font-weight: bold">{{ $t('dnd5e.death_save') }}</span>
         </div>
       </div>
       <table style="width: 96%;margin: 2%">
         <tr style="border: 1px lightgray solid;text-align: center;font-size: 14px;font-weight: bold">
-          <td>攻擊&法術</td>
+          <td>{{ $t('dnd5e.attack_spellcast') }}</td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('first',30)" placeholder="攻擊" v-model="equip.attack.first"
+          <td><input class="attack" @input="calLength('first',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.first"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('second',30)" placeholder="攻擊" v-model="equip.attack.second"
+          <td><input class="attack" @input="calLength('second',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.second"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('third',30)" placeholder="攻擊" v-model="equip.attack.third"
+          <td><input class="attack" @input="calLength('third',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.third"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><textarea placeholder="法術" @input="calLength('spells',150)" v-model="equip.attack.spell"
+          <td><textarea :placeholder="$t('dnd5e.spellcast')" @input="calLength('spells',150)" v-model="equip.attack.spell"
                         style="border: none;outline: none;width: 100%;height: 120px;resize: none" :readonly="view"></textarea></td>
         </tr>
       </table>
     </SheetSection>
-    <SheetSection title="冒險者形象：">
+    <SheetSection :title="$t('dnd5e.char_image')">
       <img v-if="avatar"
            style="margin-bottom: 5%;width: 100%;height: 100%"
            :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
@@ -97,8 +97,8 @@
         <label class="custom-file-label">{{ image_name }}</label>
       </div>
       <div v-if="!view" style="display: flex;justify-content: space-around">
-        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
-        <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
+        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">{{ $t('upload_image') }}</button>
+        <button @click="cancelImage" class="btn btn-primary">{{ $t('cancel_image') }}</button>
       </div>
       <div></div>
     </SheetSection>
@@ -144,7 +144,7 @@ export default {
         fail: "0"
       },
       avatar: "",
-      image_name: "選擇圖片",
+      image_name: this.$t('select_image'),
       image_success: {
         color: "",
         msg: ""

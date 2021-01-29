@@ -1,33 +1,34 @@
 <template>
   <div>
     <SheetSection>
-      <SheetInput style="margin-right: 2%" name="法術職業" :view="view" v-model="spell.spell_class"></SheetInput>
+      <SheetInput style="margin-right: 2%" :name="$t('dnd5e.spell_class')"
+                  :view="view" v-model="spell.spell_class"></SheetInput>
       <label>
-        法術施展能力
+        {{ $t('dnd5e.spell_ability') }}
         <select :disabled="view" v-model="spell.spell_ability">
-          <option>cha</option>
-          <option>int</option>
-          <option>wis</option>
+          <option value="cha">{{ $t('dnd5e.cha') }}</option>
+          <option value="int">{{ $t('dnd5e.int') }}</option>
+          <option value="int">{{ $t('dnd5e.wis') }}</option>
         </select>
       </label>
       <div class="inline">
         <SheetGridInput down type="number" :view="view" v-model.number="spell.spell_save">
-          <span slot="down">法術豁免值</span>
+          <span slot="down">{{ $t('dnd5e.spell_save') }}</span>
         </SheetGridInput>
         <SheetGridInput down type="number" :view="view" v-model.number="spell.spell_bonus">
-          <span slot="down">法術攻擊加值</span>
+          <span slot="down">{{ $t('dnd5e.spell_bonus') }}</span>
         </SheetGridInput>
       </div>
       <table class="spell-list">
         <tr style="width: 100%">
           <td class="spell-text" style="text-align: center;border-bottom: 1px lightgray solid">
             <span @click="showSpell(0)">0<i class="fa fa-angle-down"></i></span>
-            <span @click="showSpell(0)">小法術</span>
+            <span @click="showSpell(0)">{{ $t('dnd5e.cantrips') }}</span>
             <span><i v-if="!view" @click="addSpell(0)" class="fa fa-plus"></i></span>
           </td>
         </tr>
         <tr>
-          <td style="font-size: 8px;color: darkgrey;text-align: left">等級</td>
+          <td style="font-size: 8px;color: darkgrey;text-align: left">{{ $t('dnd5e.level') }}</td>
         </tr>
         <tr v-show="show['0']" v-for="i in spell.spell['0'].list.length" :key="i">
           <td class="spell-input">
@@ -51,10 +52,10 @@
         </tr>
         <tr>
           <td class="spell-hint">
-            <span>等級</span>
-            <span style="flex: 2">總數</span>
-            <span style="flex: 2">用量</span>
-            <span v-if="!view">增加</span>
+            <span>{{ $t('dnd5e.level') }}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_total')}}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_expanded')}}</span>
+            <span v-if="!view">{{$t('dnd5e.list_append')}}</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">
@@ -80,10 +81,10 @@
         </tr>
         <tr>
           <td class="spell-hint">
-            <span>等級</span>
-            <span style="flex: 2">總數</span>
-            <span style="flex: 2">用量</span>
-            <span v-if="!view">增加</span>
+            <span>{{ $t('dnd5e.level') }}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_total')}}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_expanded')}}</span>
+            <span v-if="!view">{{$t('dnd5e.list_append')}}</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">
@@ -109,10 +110,10 @@
         </tr>
         <tr>
           <td class="spell-hint">
-            <span>等級</span>
-            <span style="flex: 2">總數</span>
-            <span style="flex: 2">用量</span>
-            <span v-if="!view">增加</span>
+            <span>{{ $t('dnd5e.level') }}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_total')}}</span>
+            <span style="flex: 2">{{$t('dnd5e.spell_expanded')}}</span>
+            <span v-if="!view">{{$t('dnd5e.list_append')}}</span>
           </td>
         </tr>
         <tr v-show="show[k]" v-for="i in spell.spell[k].list.length" :key="i">

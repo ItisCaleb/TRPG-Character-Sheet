@@ -4,7 +4,7 @@
         <div class="stat-block" v-for="(value,key) in stat.characteristic" :key="key">
           <SheetGridInput :top="true" :right="true" :view="view" type="number" @input="calStat(key)"
                           v-model.number="stat.characteristic[key]">
-            <span slot="top">{{key}}</span>
+            <span slot="top">{{key.toUpperCase()}}</span>
             <table class="td-cal" slot="right">
               <tr>
                 <td style="border-bottom: 1px lightgray solid">{{ Math.floor(value / 2) }}</td>
@@ -16,18 +16,18 @@
           </SheetGridInput>
         </div>
     </div>
-    <SheetSection title="調查員基本資料：">
-      <SheetInput :view="view" :max="100" name="姓名" v-model="info.name"/>
-      <SheetInput :view="view" :max="64" name="玩家" v-model="info.player_name"/>
-      <SheetInput :view="view" :max="64" name="職業" v-model="story.class"/>
+    <SheetSection :title="$t('coc7th.char_info')">
+      <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
+      <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
+      <SheetInput :view="view" :max="64" :name="$t('class')" v-model="story.class"/>
       <div class="inline">
-        <SheetInput :view="view" :max="64" name="年齡" v-model="story.age"/>
-        <SheetInput :view="view" :max="64" name="性別" v-model="story.sex"/>
+        <SheetInput :view="view" :max="64" :name="$t('age')" v-model="story.age"/>
+        <SheetInput :view="view" :max="64" :name="$t('sex')" v-model="story.sex"/>
       </div>
-      <SheetInput :view="view" :max="64" name="出生地" v-model="story.birthplace"/>
-      <SheetInput :view="view" :max="64" name="現居地" v-model="story.residence"/>
+      <SheetInput :view="view" :max="64" :name="$t('coc7th.birthplace')" v-model="story.birthplace"/>
+      <SheetInput :view="view" :max="64" :name="$t('coc7th.residence')" v-model="story.residence"/>
     </SheetSection>
-    <SheetSection title="調查員狀態：">
+    <SheetSection :title="$t('coc7th.char_status')">
       <div style="display: flex">
         <div class="status">
           <div class="inline">
@@ -44,37 +44,37 @@
             <div class="max">/{{ getMpMax }}</div>
             <SheetInput :view="view" name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
           </div>
-          <div>傷害加成與體格(DB & Build)：{{ getDb }}</div>
-          <div>機動力(MOV)：{{ calMov }}</div>
+          <div>{{ $t('coc7th.db_build') }}：{{ getDb }}</div>
+          <div>{{ $t('coc7th.mov') }}：{{ calMov }}</div>
           <label>
-            負傷狀態
+            {{ $t('coc7th.injured_status') }}
             <select :disabled="view" v-model="stat.injured_status">
-              <option selected="">無</option>
-              <option>重傷</option>
-              <option>瀕死</option>
-              <option>暫時穩定</option>
+              <option value="none" selected>{{$t('none')}}</option>
+              <option value="injured1">{{ $t('coc7th.injured1') }}</option>
+              <option value="injured2">{{ $t('coc7th.injured2') }}</option>
+              <option value="injured3">{{ $t('coc7th.injured3') }}</option>
             </select>
           </label>
           <label>
-            瘋狂狀態
-            <select :disabled="view" v-model="stat.injured_status">
-              <option selected="">無</option>
-              <option>臨時瘋狂</option>
-              <option>不定性瘋狂</option>
-              <option>潛在瘋狂</option>
+            {{ $t('coc7th.insane_status') }}
+            <select :disabled="view" v-model="stat.insane_status">
+              <option value="none" selected>{{$t('none')}}</option>
+              <option value="insane1">{{ $t('coc7th.insane1') }}</option>
+              <option value="insane2">{{ $t('coc7th.insane2') }}</option>
+              <option value="insane3">{{ $t('coc7th.insane3') }}</option>
             </select>
           </label>
         </div>
       </div>
       <div>
-        <h4 style="font-weight: bold">調查員裝備：</h4>
-        <SheetInput :view="view" :max="128" name="金錢" :val="equip.cash" v-model="equip.cash"></SheetInput>
-        <SheetInput :view="view" :max="256" name="武器" :val="equip.weapon" v-model="equip.weapon"></SheetInput>
-        <SheetTextArea :view="view" name="攜帶物品" :max="512" :val="equip.equip" v-model="equip.equip"
+        <h4 style="font-weight: bold">{{ $t('coc7th.char_equip') }}</h4>
+        <SheetInput :view="view" :max="128" :name="$t('coc7th.money')" :val="equip.cash" v-model="equip.cash"></SheetInput>
+        <SheetInput :view="view" :max="256" :name="$t('coc7th.weapon')" :val="equip.weapon" v-model="equip.weapon"></SheetInput>
+        <SheetTextArea :view="view" :name="$t('coc7th.equip')" :max="512" :val="equip.equip" v-model="equip.equip"
                        style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
     </SheetSection>
-    <SheetSection title="調查員形象：">
+    <SheetSection :title="$t('coc7th.char_image')">
       <img v-if="avatar"
            style="margin-bottom: 5%;width: 100%;height: 100%"
            :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
@@ -84,8 +84,8 @@
         <label class="custom-file-label">{{ image_name }}</label>
       </div>
       <div v-if="!view" style="display: flex;justify-content: space-around">
-        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">上傳圖片</button>
-        <button @click="cancelImage" class="btn btn-primary">取消圖片</button>
+        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">{{ $t('upload_image') }}</button>
+        <button @click="cancelImage" class="btn btn-primary">{{ $t('cancel_image') }}</button>
       </div>
       <div></div>
     </SheetSection>
@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       avatar: "",
-      image_name: "選擇圖片",
+      image_name: this.$t('select_image'),
       image_success: {
         color: "",
         msg: ""

@@ -7,13 +7,13 @@
         :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
       </Title>
 
-      <Tab class="tab" :page="['一般','背景','技能','選項']">
+      <Tab class="tab" :page="['info','background','skill','option']">
         <COC7thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
                     :mytho="getMytho"
-                    slot="一般"></COC7thInfo>
-        <COC7thBackground :story="story" slot="背景"></COC7thBackground>
-        <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="技能"></COC7thSkill>
-        <div slot="選項">
+                    slot="info"></COC7thInfo>
+        <COC7thBackground :story="story" slot="background"></COC7thBackground>
+        <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC7thSkill>
+        <div slot="option">
           檢視權限
           <select v-model="info.permission">
             <option>限團務GM</option>
@@ -21,6 +21,7 @@
             <option>所有人</option>
           </select><br>
           <button class="btn btn-danger" @click="$refs.deleteBox.show=true">刪除</button>
+          <ChangeLang/>
           <Msgbox ref="deleteBox">
             <div style="text-align: center;margin: 10% auto">
               你確定要刪除嗎?<br>
@@ -44,10 +45,11 @@ import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
 import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
 import debounce from "lodash.debounce"
 import Msgbox from "@/components/Msgbox";
+import ChangeLang from "@/components/Sheet/ChangeLang";
 
 export default {
   name: "COC7th",
-  components: {Msgbox, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
+  components: {ChangeLang, Msgbox, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   data() {
     return {
       info: {

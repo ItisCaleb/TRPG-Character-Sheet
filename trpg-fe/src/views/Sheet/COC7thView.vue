@@ -4,12 +4,15 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
       </Title>
-      <Tab class="tab" :page="['一般','背景','技能']">
+      <Tab class="tab" :page="['info','background','skill','option']">
         <COC7thInfo view v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
                     :mytho="getMytho"
-                    slot="一般"></COC7thInfo>
-        <COC7thBackground view :story="story" slot="背景"></COC7thBackground>
-        <COC7thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="技能"></COC7thSkill>
+                    slot="info"></COC7thInfo>
+        <COC7thBackground view :story="story" slot="background"></COC7thBackground>
+        <COC7thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC7thSkill>
+        <div slot="option">
+          <ChangeLang/>
+        </div>
       </Tab>
     </div>
   </Load>
@@ -23,9 +26,10 @@ import COC7thInfo from "@/components/Sheet/COC7th/COC7thInfo";
 import Load from "@/components/Load";
 import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
 import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
+import ChangeLang from "@/components/Sheet/ChangeLang";
 export default {
   name: "COC7thView",
-  components: {COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
+  components: {ChangeLang, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   data() {
     return {
       info: {

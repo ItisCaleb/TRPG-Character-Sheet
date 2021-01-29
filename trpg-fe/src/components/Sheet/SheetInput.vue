@@ -1,6 +1,6 @@
 <template>
   <label>
-    <span style="font-weight: bold">{{ name }}</span>
+    <span style="font-weight: bold;">{{ name }}</span>
     <input class="form-control input-group"
            :type="type"
            :value="value"
@@ -63,11 +63,13 @@ label {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-
   input {
-    min-width: 0;
     flex: 1;
+    min-width: 55%;
     width: 100%;
+  }
+  @include phone-width{
+    flex-wrap: wrap;
   }
 }
 input::-webkit-outer-spin-button,

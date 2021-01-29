@@ -4,12 +4,15 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
       </Title>
-      <Tab class="tab" :page="['一般','技能&裝備','背景','法術']">
-        <DND5eInfo view v-if="success.info && success.stat" slot="一般"
+      <Tab class="tab" :page="['info','skill_equip','background','spell','option']">
+        <DND5eInfo view v-if="success.info && success.stat" slot="info"
                    :info="info" :stat="stat" :equip="equip" :story="story"></DND5eInfo>
-        <DND5eEquip view v-if="success.equip" slot="技能&裝備" :stat="stat" :equip="equip"></DND5eEquip>
-        <DND5eStory view v-if="success.story" slot="背景" :story="story"></DND5eStory>
-        <DND5eSpell view v-if="success.spell" slot="法術" :spell="spell" :stat="stat"></DND5eSpell>
+        <DND5eEquip view v-if="success.equip" slot="skill_equip" :stat="stat" :equip="equip"></DND5eEquip>
+        <DND5eStory view v-if="success.story" slot="background" :story="story"></DND5eStory>
+        <DND5eSpell view v-if="success.spell" slot="spell" :spell="spell" :stat="stat"></DND5eSpell>
+        <div slot="option">
+          <ChangeLang/>
+        </div>
       </Tab>
     </div>
   </Load>
@@ -24,10 +27,11 @@ import DND5eInfo from "@/components/Sheet/DND5e/DND5eInfo";
 import DND5eEquip from "@/components/Sheet/DND5e/DND5eEquip";
 import DND5eStory from "@/components/Sheet/DND5e/DND5eStory";
 import DND5eSpell from "@/components/Sheet/DND5e/DND5eSpell";
+import ChangeLang from "@/components/Sheet/ChangeLang";
 
 export default {
   name: "DND5eView",
-  components: {DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {ChangeLang, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   data() {
     return {
       info: {

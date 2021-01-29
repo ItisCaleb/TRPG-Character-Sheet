@@ -2,14 +2,14 @@
   <div id="tab">
     <ul style="padding-left:3%">
       <li v-for="pageName in page" @click="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
-           :key="pageName" class="tab-name">{{ pageName }}
+           :key="pageName" class="tab-name">{{ $t(pageName) }}
       </li>
     </ul>
     <br>
     <div id="tab-container">
-      <Load v-for="pageName in page"  :key="pageName">
-        <div v-show="isCurrent(pageName)" class="tab-content">
-          <slot :name="pageName"></slot>
+      <Load v-for="(pageName,index) in page" :key="pageName">
+        <div v-show="isCurrent(pageName)" class="tab-content" :class="{'overflow':isOverflow(overflow[index])}">
+          <slot :name="pageName" ></slot>
         </div>
       </Load>
     </div>
@@ -25,6 +25,10 @@ export default {
     page: {
       type: Array,
       required: true
+    },
+    overflow:{
+      type:Array,
+      default:()=>[false,false,false,false,false,false,false]
     }
   },
   data() {
@@ -38,6 +42,9 @@ export default {
     },
     isCurrent(name){
       return this.currentPage===name
+    },
+    isOverflow(bool){
+      return bool || false
     }
   },
   mounted() {
@@ -82,9 +89,13 @@ export default {
 
 #tab-container {
   border-top: 1px lightgray solid;
-
   padding-top:2%;
   width: 100%;
   overflow: hidden;
+}
+.overflow{
+  @include phone-width{
+    overflow: auto !important;
+  }
 }
 </style>

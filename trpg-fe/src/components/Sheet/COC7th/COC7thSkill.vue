@@ -1,11 +1,11 @@
 <template>
-  <Tab :page="[1,2,3]" style="width: 90%;text-align: center">
+  <Tab :page="[1,2,3]" style="width: 100%;text-align: center;overflow: auto" :overflow="[true,true,true]">
     <table slot="1">
       <tr>
-        <th colspan="7">調查員技能</th>
+        <th colspan="7" style="font-size: 20px">{{ $t('coc7th.char_skill') }}</th>
       </tr>
       <tr>
-        <td colspan="1">職業特徵
+        <td colspan="1">{{ $t('coc7th.class_feature') }}
           <select :disabled="view" v-model="skills['class_feature']">
             <option>EDU</option>
             <option>EDU+STR</option>
@@ -14,31 +14,21 @@
             <option>EDU+POW</option>
           </select>
         </td>
-        <td colspan="3">職業點:{{ getClassPoint }}</td>
-        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.class_point') }}{{ getClassPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.interest_point') }}{{ getInterestPoint }}</td>
       </tr>
       <tr>
-        <td>技能名稱</td>
-        <td>初始</td>
-        <td>興趣</td>
-        <td>職業</td>
-        <td>成長</td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td rowspan="2">總值</td>
-              <td>困難</td>
-            </tr>
-            <tr>
-              <td>極限</td>
-            </tr>
-          </table>
-        </td>
+        <td>{{ $t('coc7th.skill_name') }}</td>
+        <td>{{ $t('coc7th.skill_default') }}</td>
+        <td>{{ $t('coc7th.skill_interest') }}</td>
+        <td>{{ $t('coc7th.skill_class') }}</td>
+        <td>{{ $t('coc7th.skill_grow') }}</td>
+        <td>{{ $t('coc7th.skill_total') }}</td>
       </tr>
       <tr v-for="(skill,key) in page1" :key="key">
         <td>
-          {{ skill.name }}<br>
-          ({{ key }})
+          {{ $t(`coc7th.${key}`) }}<br>
+          <span v-show="checkLang">({{ key }})</span>
         </td>
         <td>{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page1[key].interest" type="number"
@@ -63,10 +53,10 @@
     </table>
     <table slot="2">
       <tr>
-        <th colspan="7">調查員技能</th>
+        <th colspan="7" style="font-size: 20px">{{ $t('coc7th.char_skill') }}</th>
       </tr>
       <tr>
-        <td colspan="1">職業特徵
+        <td colspan="1">{{ $t('coc7th.class_feature') }}
           <select :disabled="view" v-model="skills['class_feature']">
             <option>EDU</option>
             <option>EDU+STR</option>
@@ -75,31 +65,21 @@
             <option>EDU+POW</option>
           </select>
         </td>
-        <td colspan="3">職業點:{{ getClassPoint }}</td>
-        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.class_point') }}{{ getClassPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.interest_point') }}{{ getInterestPoint }}</td>
       </tr>
       <tr>
-        <td>技能名稱</td>
-        <td>初始</td>
-        <td>興趣</td>
-        <td>職業</td>
-        <td>成長</td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td rowspan="2">總值</td>
-              <td>困難</td>
-            </tr>
-            <tr>
-              <td>極限</td>
-            </tr>
-          </table>
-        </td>
+        <td>{{ $t('coc7th.skill_name') }}</td>
+        <td>{{ $t('coc7th.skill_default') }}</td>
+        <td>{{ $t('coc7th.skill_interest') }}</td>
+        <td>{{ $t('coc7th.skill_class') }}</td>
+        <td>{{ $t('coc7th.skill_grow') }}</td>
+        <td>{{ $t('coc7th.skill_total') }}</td>
       </tr>
       <tr v-for="(skill,key) in page2" :key="key">
         <td>
-          {{ skill.name }}<br>
-          ({{ key }})
+          {{ $t(`coc7th.${key}`) }}<br>
+          <span v-show="checkLang">({{ key }})</span>
         </td>
         <td>{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page2[key].interest" type="number"
@@ -125,10 +105,10 @@
     </table>
     <table slot="3">
       <tr>
-        <th colspan="7">調查員技能</th>
+        <th colspan="7" style="font-size: 20px">{{ $t('coc7th.char_skill') }}</th>
       </tr>
       <tr>
-        <td colspan="2">職業特徵
+        <td colspan="1">{{ $t('coc7th.class_feature') }}
           <select :disabled="view" v-model="skills['class_feature']">
             <option>EDU</option>
             <option>EDU+STR</option>
@@ -137,36 +117,26 @@
             <option>EDU+POW</option>
           </select>
         </td>
-        <td colspan="3">職業點:{{ getClassPoint }}</td>
-        <td colspan="3">興趣點:{{ getInterestPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.class_point') }}{{ getClassPoint }}</td>
+        <td colspan="3">{{ $t('coc7th.interest_point') }}{{ getInterestPoint }}</td>
       </tr>
       <tr>
-        <td>技能名稱</td>
-        <td>自定義</td>
-        <td>初始</td>
-        <td>興趣</td>
-        <td>職業</td>
-        <td>成長</td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td rowspan="2">總值</td>
-              <td>困難</td>
-            </tr>
-            <tr>
-              <td>極限</td>
-            </tr>
-          </table>
-        </td>
+        <td>{{ $t('coc7th.skill_name') }}</td>
+        <td>{{ $t('coc7th.skill_custom')}}</td>
+        <td>{{ $t('coc7th.skill_default') }}</td>
+        <td>{{ $t('coc7th.skill_interest') }}</td>
+        <td>{{ $t('coc7th.skill_class') }}</td>
+        <td>{{ $t('coc7th.skill_grow') }}</td>
+        <td>{{ $t('coc7th.skill_total') }}</td>
       </tr>
       <tr v-for="(skill,key) in page3" :key="key">
         <td :rowspan="skill.rows ||1" v-if="!skill.dep">
-          {{ skill.name }}<br>
-          ({{ key }})
+          {{ $t(`coc7th.${key}`) }}<br>
+          <span v-show="checkLang">({{ key }})</span>
         </td>
         <td class="base-skill"><input @input="setCustom($event,key)" v-model="page3[key].custom" :readonly="view"
                                       class="form-control input-group"
-                                      placeholder="自定義"></td>
+                                      :placeholder="$t('coc7th.skill_custom')"></td>
         <td>{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page3[key].interest" type="number"
                                  @input="incSkill($event,'interest',key,'page3')" class="form-control input-group"></td>
@@ -216,76 +186,76 @@ export default {
   data() {
     return {
       page1: {
-        "Accounting": {default: 5, name: "會計", interest: 0, class: 0, grow: 0},
-        "Anthropology": {default: 1, name: "人類學", interest: 0, class: 0, grow: 0},
-        "Appraise": {default: 5, name: "估價", interest: 0, class: 0, grow: 0},
-        "Archaeology": {default: 1, name: "考古學", interest: 0, class: 0, grow: 0},
-        "Charm": {default: 15, name: "魅惑", interest: 0, class: 0, grow: 0},
-        "Climb": {default: 20, name: "攀爬", interest: 0, class: 0, grow: 0},
-        "Computer Use": {default: 5, name: "電腦使用", interest: 0, class: 0, grow: 0},
-        "Credit Rating": {default: 0, name: "信用評級", interest: 0, class: 0, grow: 0},
-        "Cthulhu Mythos": {default: 0, name: "克蘇魯神話", interest: 0, class: 0, grow: 0},
-        "Disguise": {default: 5, name: "喬裝", interest: 0, class: 0, grow: 0},
-        "Dodge": {default: 0, name: "閃避", interest: 0, class: 0, grow: 0},
-        "Drive Auto": {default: 20, name: "自動車駕駛", interest: 0, class: 0, grow: 0},
-        "Electrical Repair": {default: 1, name: "電器維修", interest: 0, class: 0, grow: 0},
-        "Electronics": {default: 10, name: "電子學", interest: 0, class: 0, grow: 0},
-        "Fast-Talk": {default: 5, name: "話術", interest: 0, class: 0, grow: 0},
-        "First Aid": {default: 30, name: "急救", interest: 0, class: 0, grow: 0},
-        "History": {default: 5, name: "歷史", interest: 0, class: 0, grow: 0},
-        "Intimidate": {default: 15, name: "威嚇", interest: 0, class: 0, grow: 0},
-        "Jump": {default: 20, name: "跳躍", interest: 0, class: 0, grow: 0},
-        "Law": {default: 5, name: "法律", interest: 0, class: 0, grow: 0},
-        "Library Use": {default: 20, name: "圖書館使用", interest: 0, class: 0, grow: 0},
-        "Listen": {default: 20, name: "聆聽", interest: 0, class: 0, grow: 0},
-        "Locksmith": {default: 1, name: "鎖匠", interest: 0, class: 0, grow: 0}
+        "Accounting": {default: 5, interest: 0, class: 0, grow: 0},
+        "Anthropology": {default: 1, interest: 0, class: 0, grow: 0},
+        "Appraise": {default: 5, interest: 0, class: 0, grow: 0},
+        "Archaeology": {default: 1, interest: 0, class: 0, grow: 0},
+        "Charm": {default: 15, interest: 0, class: 0, grow: 0},
+        "Climb": {default: 20, interest: 0, class: 0, grow: 0},
+        "Computer Use": {default: 5, interest: 0, class: 0, grow: 0},
+        "Credit Rating": {default: 0, interest: 0, class: 0, grow: 0},
+        "Cthulhu Mythos": {default: 0, interest: 0, class: 0, grow: 0},
+        "Disguise": {default: 5, interest: 0, class: 0, grow: 0},
+        "Dodge": {default: 0, interest: 0, class: 0, grow: 0},
+        "Drive Auto": {default: 20, interest: 0, class: 0, grow: 0},
+        "Electrical Repair": {default: 1, interest: 0, class: 0, grow: 0},
+        "Electronics": {default: 10, interest: 0, class: 0, grow: 0},
+        "Fast-Talk": {default: 5, interest: 0, class: 0, grow: 0},
+        "First Aid": {default: 30, interest: 0, class: 0, grow: 0},
+        "History": {default: 5, interest: 0, class: 0, grow: 0},
+        "Intimidate": {default: 15, interest: 0, class: 0, grow: 0},
+        "Jump": {default: 20, interest: 0, class: 0, grow: 0},
+        "Law": {default: 5, interest: 0, class: 0, grow: 0},
+        "Library Use": {default: 20, interest: 0, class: 0, grow: 0},
+        "Listen": {default: 20, interest: 0, class: 0, grow: 0},
+        "Locksmith": {default: 1, interest: 0, class: 0, grow: 0}
       },
       page2: {
-        "Mechanical Repair": {default: 10, name: "機器維修", interest: 0, class: 0, grow: 0},
-        "Medicine": {default: 1, name: "醫學", interest: 0, class: 0, grow: 0},
-        "Natural World": {default: 10, name: "自然學", interest: 0, class: 0, grow: 0},
-        "Navigate": {default: 10, name: "導航", interest: 0, class: 0, grow: 0},
-        "Occult": {default: 5, name: "神祕學", interest: 0, class: 0, grow: 0},
-        "Operate Heavy Machinery": {default: 1, name: "操縱重型機器", interest: 0, class: 0, grow: 0},
-        "Persuade": {default: 10, name: "說服", interest: 0, class: 0, grow: 0},
-        "Psychoanalysis": {default: 1, name: "心理分析", interest: 0, class: 0, grow: 0},
-        "Psychology": {default: 10, name: "心理學", interest: 0, class: 0, grow: 0},
-        "Ride": {default: 5, name: "騎術", interest: 0, class: 0, grow: 0},
-        "Sleight of Hand": {default: 10, name: "巧手", interest: 0, class: 0, grow: 0},
-        "Spot Hidden": {default: 25, name: "偵查", interest: 0, class: 0, grow: 0},
-        "Stealth": {default: 20, name: "隱密行動", interest: 0, class: 0, grow: 0},
-        "Swim": {default: 20, name: "游泳", interest: 0, class: 0, grow: 0},
-        "Throw": {default: 20, name: "投擲", interest: 0, class: 0, grow: 0},
-        "Track": {default: 10, name: "追蹤", interest: 0, class: 0, grow: 0},
-        "Animal Handling": {default: 5, name: "動物馴養", interest: 0, class: 0, grow: 0},
-        "Artillery": {default: 1, name: "炮術", interest: 0, class: 0, grow: 0},
-        "Demolitions": {default: 1, name: "爆破", interest: 0, class: 0, grow: 0},
-        "Diving": {default: 1, name: "潛水", interest: 0, class: 0, grow: 0},
-        "Hypnosis": {default: 1, name: "催眠", interest: 0, class: 0, grow: 0},
-        "Read Lips": {default: 1, name: "讀唇", interest: 0, class: 0, grow: 0}
+        "Mechanical Repair": {default: 10, interest: 0, class: 0, grow: 0},
+        "Medicine": {default: 1, interest: 0, class: 0, grow: 0},
+        "Natural World": {default: 10, interest: 0, class: 0, grow: 0},
+        "Navigate": {default: 10, interest: 0, class: 0, grow: 0},
+        "Occult": {default: 5, interest: 0, class: 0, grow: 0},
+        "Operate Heavy Machinery": {default: 1, interest: 0, class: 0, grow: 0},
+        "Persuade": {default: 10, interest: 0, class: 0, grow: 0},
+        "Psychoanalysis": {default: 1, interest: 0, class: 0, grow: 0},
+        "Psychology": {default: 10, interest: 0, class: 0, grow: 0},
+        "Ride": {default: 5, interest: 0, class: 0, grow: 0},
+        "Sleight of Hand": {default: 10, interest: 0, class: 0, grow: 0},
+        "Spot Hidden": {default: 25, interest: 0, class: 0, grow: 0},
+        "Stealth": {default: 20, interest: 0, class: 0, grow: 0},
+        "Swim": {default: 20, interest: 0, class: 0, grow: 0},
+        "Throw": {default: 20, interest: 0, class: 0, grow: 0},
+        "Track": {default: 10, interest: 0, class: 0, grow: 0},
+        "Animal Handling": {default: 5, interest: 0, class: 0, grow: 0},
+        "Artillery": {default: 1, interest: 0, class: 0, grow: 0},
+        "Demolitions": {default: 1, interest: 0, class: 0, grow: 0},
+        "Diving": {default: 1, interest: 0, class: 0, grow: 0},
+        "Hypnosis": {default: 1, interest: 0, class: 0, grow: 0},
+        "Read Lips": {default: 1, interest: 0, class: 0, grow: 0}
       },
       page3: {
-        "Pilot": {default: 0, name: "專業駕駛", custom: "", interest: 0, class: 0, grow: 0},
-        "Survival": {default: 10, name: "求生", custom: "", interest: 0, class: 0, grow: 0},
-        "Art and Craft": {default: 5, name: "藝術與工藝", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "ac1": {default: 5, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "ac2": {default: 5, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Fighting": {default: 25, name: "鬥毆", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "f1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "f2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Firearms": {default: 0, name: "火器", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "fire1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "fire2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Language (Other)": {default: 1, custom: "", name: "他國語言", rows: 3, interest: 0, class: 0, grow: 0},
-        "l1": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "l2": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Language (Own)": {default: 0, custom: "", name: "母語", interest: 0, class: 0, grow: 0},
-        "Science": {default: 0, name: "科學", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "s1": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "s2": {default: 0, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Lore": {default: 1, name: "偏門學問", custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "lore1": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "lore2": {default: 1, name: "", custom: "", dep: true, interest: 0, class: 0, grow: 0}
+        "Pilot": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
+        "Survival": {default: 10, custom: "", interest: 0, class: 0, grow: 0},
+        "Art and Craft": {default: 5, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "ac1": {default: 5, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "ac2": {default: 5, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Fighting": {default: 25, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "f1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Firearms": {default: 0, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "fire1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "fire2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Language (Other)": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "l1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "l2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Language (Own)": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
+        "Science": {default: 0, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "s1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "s2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Lore": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
+        "lore1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "lore2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0}
       }
     }
   },
@@ -366,6 +336,9 @@ export default {
     }
   },
   computed: {
+    checkLang(){
+      return this.$i18n.locale != 'en_us';
+    },
     setDodge() {
       if (!this.stat) return 0
       else return Math.floor(this.stat.characteristic.dex / 2)
@@ -401,21 +374,21 @@ export default {
         if (!this.skills.skill[key]['interest']) continue
         total += parseInt(this.skills.skill[key]['interest'])
       }
-      return parseInt( this.stat.characteristic.int )* 2 - total
-    }
+      return parseInt(this.stat.characteristic.int) * 2 - total
+    },
   },
   watch: {
     setDodge: {
       handler(value) {
         this.page1.Dodge.default = value
       },
-      immediate:true
+      immediate: true
     },
     setMotherLanguage: {
       handler(value) {
         this.page3["Language (Own)"].default = value
       },
-      immediate:true
+      immediate: true
     }
   }
 }
@@ -426,17 +399,19 @@ table {
   width: 99%;
   text-align: center;
   height: 100%;
-
 }
-
 td {
   border: 1px solid lightgray;
   border-collapse: collapse;
   @include phone-width {
-    font-size: 14px;
+    font-size: 6px;
   }
 }
-
+.skill{
+  input{
+    font-size: 6px;
+  }
+}
 .skill-max {
   padding: 0;
   height: 100%;
@@ -470,6 +445,9 @@ td {
   padding: 0;
   width: 20%;
   height: 50px;
+  input::placeholder{
+    font-size: 8px;
+  }
   @include phone-width {
     width: 35%;
   }

@@ -6,20 +6,21 @@
         <i :style="{color:getSuccessColor}" class="fa"
         :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
       </Title>
-      <Tab class="tab" :page="['一般','技能&裝備','背景','法術','選項']">
-        <DND5eInfo v-if="success.info && success.stat" slot="一般"
+      <Tab class="tab" :page="['info','skill_equip','background','spell','option']">
+        <DND5eInfo v-if="success.info && success.stat" slot="info"
                    :info="info" :stat="stat" :equip="equip" :story="story"></DND5eInfo>
-        <DND5eEquip v-if="success.equip" slot="技能&裝備" :stat="stat" :equip="equip"></DND5eEquip>
-        <DND5eStory v-if="success.story" slot="背景" :story="story"></DND5eStory>
-        <DND5eSpell v-if="success.spell" slot="法術" :spell="spell" :stat="stat"></DND5eSpell>
-        <div slot="選項">
+        <DND5eEquip v-if="success.equip" slot="skill_equip" :stat="stat" :equip="equip"></DND5eEquip>
+        <DND5eStory v-if="success.story" slot="background" :story="story"></DND5eStory>
+        <DND5eSpell v-if="success.spell" slot="spell" :spell="spell" :stat="stat"></DND5eSpell>
+        <div slot="option">
           檢視權限
           <select v-model="info.permission">
             <option>限團務GM</option>
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
-          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">刪除</button>
+          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
+          <ChangeLang/>
           <Msgbox ref="deleteBox">
             <div style="text-align: center;margin: 10% auto">
               你確定要刪除嗎?<br>
@@ -44,10 +45,11 @@ import DND5eStory from "@/components/Sheet/DND5e/DND5eStory";
 import DND5eSpell from "@/components/Sheet/DND5e/DND5eSpell";
 import debounce from "lodash.debounce";
 import Msgbox from "@/components/Msgbox";
+import ChangeLang from "@/components/Sheet/ChangeLang";
 
 export default {
   name: "DND5e",
-  components: {Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {ChangeLang, Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   data() {
     return {
       info: {
