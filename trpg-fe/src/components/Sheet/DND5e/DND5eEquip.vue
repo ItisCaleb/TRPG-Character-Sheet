@@ -169,8 +169,16 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: auto;
   @include phone-width{
+    text-align: center;
     min-width: 0;
+    table,div{
+      display: inline;
+    }
+    table{
+      width: 100%;
+    }
   }
 }
 

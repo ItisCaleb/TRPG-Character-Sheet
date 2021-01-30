@@ -196,6 +196,17 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: auto;
+  @include phone-width{
+    text-align: center;
+    min-width: 0;
+    table,div{
+      display: inline;
+    }
+    table{
+      width: 100%;
+    }
+  }
 }
 
 input[type=text] {
@@ -214,6 +225,7 @@ input[type=text] {
     box-shadow: none;
     border: none;
     border-bottom: 1px lightgray solid;
+    overflow: auto;
     text-align: center;
   }
 

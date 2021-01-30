@@ -94,7 +94,10 @@ export default {
 table{
   width: auto;
   margin: 2%;
-  min-width: 0;
+  min-width: auto;
+  @include phone-width{
+    margin: 1% 0;
+  }
 }
 
 .td-left {
