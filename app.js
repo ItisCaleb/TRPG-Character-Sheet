@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 const http = require('http');
 const cors = require('cors');
 const csrf = require('csurf');
-const path = require('path')
+const path = require('path');
 
 //import routes
 const authRoute = require("./routes/auth");
@@ -30,7 +30,7 @@ mongoose.connect(process.env.DB_CONNECT || " mongodb://127.0.0.1:27017/test?retr
         console.log('DB started');
     })
     .catch((err) => {
-        console.log(err)
+        console.log(err);;
     });
 
 // middleware
@@ -73,21 +73,29 @@ app.all('*', function (req, res, next) {
             sameSite: 'lax'
         })
     }
-    next()
+    next();
 })
 const history = require('connect-history-api-fallback');
-app.use(history())
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use(history());
+app.use(express.static(path.join(__dirname, 'dist')));
 
 
 // start server
 const port = process.env.PORT || 3000;
-const server = http.createServer(app)
+const server = http.createServer(app);
 const io = require('socket.io')(server,{ origins: '*:*'});
 
+var connect_num=0;
+
 io.on('connection', (socket) => {
-    require('./utils/sheetSocket')(socket)
-    require('./utils/sessionSocket')(socket)
+    connect_num++;
+    process.stdout.write(`\r${connect_num} people is now online.`)
+    require('./utils/sheetSocket')(socket);
+    require('./utils/sessionSocket')(socket);
+    socket.on('disconnect',()=>{
+        connect_num--;
+        process.stdout.write(`\r${connect_num} people is now online.`)
+    })
 })
 
 server.listen(port, () => console.log('HTTP start on port:' + port));

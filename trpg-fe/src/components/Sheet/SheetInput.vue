@@ -7,8 +7,11 @@
            :min="min"
            :max="max"
            :readonly="view"
+           :datalist="datalist"
+           :list="list"
            @input="emitInput"
     >
+    <slot v-if="datalist"></slot>
   </label>
 </template>
 
@@ -34,6 +37,13 @@ export default {
       default: "text"
     },
     view:{
+      type:Boolean,
+      default:false
+    },
+    list:{
+      type:String
+    },
+    datalist:{
       type:Boolean,
       default:false
     }

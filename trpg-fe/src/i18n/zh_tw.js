@@ -130,6 +130,33 @@ export default {
         char_appearance:"冒險者外觀：",
         char_trait:"冒險者特質：",
         char_background:"冒險者背景：",
+        hint:{
+          class:{
+              bard:"吟遊詩人(Bard)",
+              barbarian:"野蠻人(Barbarian)",
+              cleric:"牧師(Cleric)",
+              druid:"德魯伊(Druid)",
+              fighter:"戰士(Fighter)",
+              monk:"武僧(Monk)",
+              paladin:"聖騎士(Paladin)",
+              ranger:"遊俠(Ranger)",
+              rogue:"盜賊(Rogue)",
+              sorcerer:"術士(Sorcerer)",
+              warlock:"契術師(Warlock)",
+              wizard:"法師(Wizard)"
+          },
+          faction:{
+              lawful_good:"守序善良",
+              neutral_good:"中立善良",
+              chaotic_good:"混亂善良",
+              lawful_neutral:"守序中立",
+              true_neutral:"絕對中立",
+              chaotic_neutral:"混亂中立",
+              lawful_evil:"守序邪惡",
+              neutral_evil:"中立邪惡",
+              chaotic_evil:"混亂邪惡"
+          }
+        },
         str:"力量",
         dex:"敏捷",
         con:"體魄",

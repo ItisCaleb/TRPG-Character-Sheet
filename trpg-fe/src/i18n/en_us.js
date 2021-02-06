@@ -130,6 +130,33 @@ export default {
         char_appearance:"Character Appearance:",
         char_trait:"Character Trait:",
         char_background:"Character Background",
+        hint:{
+            class:{
+                bard:"Bard",
+                barbarian:"Barbarian",
+                cleric:"Cleric",
+                druid:"Druid",
+                fighter:"Fighter",
+                monk:"Monk",
+                paladin:"Paladin",
+                ranger:"Ranger",
+                rogue:"Rogue",
+                sorcerer:"Sorcerer",
+                warlock:"Warlock",
+                wizard:"Wizard"
+            },
+            faction:{
+                lawful_good:"Lawful Good",
+                neutral_good:"Neutral Good",
+                chaotic_good:"Chaotic Good",
+                lawful_neutral:"Lawful ",
+                true_neutral:"True Neutral",
+                chaotic_neutral:"Chaotic Neutral",
+                lawful_evil:"Lawful Evil",
+                neutral_evil:"Neutral Evil",
+                chaotic_evil:"Chaotic Evil"
+            }
+        },
         str:"Strength",
         dex:"Dexterity",
         con:"Constitution",

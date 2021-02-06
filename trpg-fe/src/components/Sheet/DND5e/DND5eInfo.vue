@@ -12,12 +12,40 @@
     <SheetSection :title="$t('dnd5e.char_info')">
       <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
       <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
-      <SheetInput :view="view" :max="20" :name="$t('class')" v-model="story.class"/>
+      <SheetInput :view="view" datalist list="data-class" :max="20" :name="$t('class')" v-model="story.class">
+        <datalist id="data-class">
+          <option>{{ $t('dnd5e.hint.class.bard') }}</option>
+          <option>{{ $t('dnd5e.hint.class.barbarian') }}</option>
+          <option>{{ $t('dnd5e.hint.class.cleric') }}</option>
+          <option>{{ $t('dnd5e.hint.class.druid') }}</option>
+          <option>{{ $t('dnd5e.hint.class.fighter') }}</option>
+          <option>{{ $t('dnd5e.hint.class.monk') }}</option>
+          <option>{{ $t('dnd5e.hint.class.paladin') }}</option>
+          <option>{{ $t('dnd5e.hint.class.ranger') }}</option>
+          <option>{{ $t('dnd5e.hint.class.rogue') }}</option>
+          <option>{{ $t('dnd5e.hint.class.sorcerer') }}</option>
+          <option>{{ $t('dnd5e.hint.class.warlock') }}</option>
+          <option>{{ $t('dnd5e.hint.class.wizard') }}</option>
+        </datalist>
+      </SheetInput>
       <div class="inline">
         <SheetInput :view="view" :max="20" :name="$t('dnd5e.level')" v-model="story.level"/>
         <SheetInput :view="view" :max="20" :name="$t('dnd5e.exp')" v-model="story.exp"/>
       </div>
-      <SheetInput :view="view" :max="20" :name="$t('dnd5e.faction')" v-model="story.faction"/>
+      <SheetInput :view="view" datalist list="data-faction" :max="20" :name="$t('dnd5e.faction')"
+                  v-model="story.faction">
+        <datalist id="data-faction">
+          <option>{{ $t('dnd5e.hint.faction.lawful_good') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.neutral_good') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.chaotic_good') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.lawful_neutral') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.true_neutral') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.chaotic_neutral') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.lawful_evil') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.neutral_evil') }}</option>
+          <option>{{ $t('dnd5e.hint.faction.chaotic_evil') }}</option>
+        </datalist>
+      </SheetInput>
       <SheetInput :view="view" :max="20" :name="$t('dnd5e.race')" v-model="story.race"/>
       <SheetInput :view="view" :max="20" :name="$t('dnd5e.background')" v-model="story.background"/>
     </SheetSection>
@@ -70,20 +98,25 @@
           <td>{{ $t('dnd5e.attack_spellcast') }}</td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('first',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.first"
+          <td><input class="attack" @input="calLength('first',30)" :placeholder="$t('dnd5e.attack')"
+                     v-model="equip.attack.first"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('second',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.second"
+          <td><input class="attack" @input="calLength('second',30)" :placeholder="$t('dnd5e.attack')"
+                     v-model="equip.attack.second"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><input class="attack" @input="calLength('third',30)" :placeholder="$t('dnd5e.attack')" v-model="equip.attack.third"
+          <td><input class="attack" @input="calLength('third',30)" :placeholder="$t('dnd5e.attack')"
+                     v-model="equip.attack.third"
                      type="text" :readonly="view"></td>
         </tr>
         <tr style="border: 1px lightgray solid">
-          <td><textarea :placeholder="$t('dnd5e.spellcast')" @input="calLength('spells',150)" v-model="equip.attack.spell"
-                        style="border: none;outline: none;width: 100%;height: 120px;resize: none" :readonly="view"></textarea></td>
+          <td><textarea :placeholder="$t('dnd5e.spellcast')" @input="calLength('spells',150)"
+                        v-model="equip.attack.spell"
+                        style="border: none;outline: none;width: 100%;height: 120px;resize: none"
+                        :readonly="view"></textarea></td>
         </tr>
       </table>
     </SheetSection>
@@ -249,13 +282,13 @@ export default {
   justify-content: space-around;
   align-items: center;
   width: auto;
-  @include phone-width{
+  @include phone-width {
     text-align: center;
     min-width: 0;
-    table,div{
+    table, div {
       display: inline;
     }
-    table{
+    table {
       width: 100%;
     }
   }
@@ -300,7 +333,7 @@ input[type=number] {
   width: 10%;
   @include phone-width {
     width: 40%;
-    table{
+    table {
       width: 100%;
     }
   }
