@@ -25,7 +25,7 @@
             <div style="text-align: center;margin: 10% auto">
               你確定要刪除嗎?<br>
               <button style="margin: 10% 2%;" class="btn btn-primary" @click="$refs.deleteBox.show=false">沒有</button>
-              <button style="margin: 10% 2%;" class="btn btn-danger" @click="deleteSheet">刪除</button>
+              <button style="margin: 10% 2%;" class="btn btn-danger" @click.once="deleteSheet">刪除</button>
             </div>
           </Msgbox>
         </div>

@@ -267,6 +267,7 @@ export default {
       } else if (value > 100) {
         this[page][key][type] = 100
       }
+      if(!this.skills.skill) this.$set(this.skills,"skill",{})
       if (!this.skills.skill[key]) this.$set(this.skills.skill, key, {})
       this.$set(this.skills.skill[key], type, this[page][key][type])
       if (this[page][key][type] == 0) {
