@@ -146,6 +146,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.tab {
+  width: 90% !important;
 
+input {
+  font-size: 15px;
+}
+}
 </style>

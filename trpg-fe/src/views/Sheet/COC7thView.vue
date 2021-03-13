@@ -4,12 +4,13 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
       </Title>
-      <Tab class="tab" :page="['info','background','skill','option']">
-        <COC7thInfo view v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
-                    :mytho="getMytho"
-                    slot="info"></COC7thInfo>
-        <COC7thBackground view :story="story" slot="background"></COC7thBackground>
-        <COC7thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC7thSkill>
+      <Tab :page="['info','background','skill','option']" class="tab">
+        <COC7thInfo v-if="success.info && success.stat" slot="info" :equip="equip" :info="info" :mytho="getMytho"
+                    :stat="stat"
+                    :story="story"
+                    view></COC7thInfo>
+        <COC7thBackground slot="background" :story="story" view></COC7thBackground>
+        <COC7thSkill v-if="success.skill" slot="skill" :skills="skills" :stat="stat" view></COC7thSkill>
         <div slot="option">
           <ChangeLang/>
         </div>
@@ -27,6 +28,7 @@ import Load from "@/components/Load";
 import COC7thBackground from "@/components/Sheet/COC7th/COC7thBackground";
 import COC7thSkill from "@/components/Sheet/COC7th/COC7thSkill";
 import ChangeLang from "@/components/Sheet/ChangeLang";
+
 export default {
   name: "COC7thView",
   components: {ChangeLang, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
@@ -148,6 +150,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.tab {
+  width: 90% !important;
 
+  input {
+    font-size: 15px;
+  }
+
+}
 </style>
