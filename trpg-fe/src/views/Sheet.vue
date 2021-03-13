@@ -11,7 +11,7 @@
     <Msgbox ref="importBox">
       <ImportSheet></ImportSheet>
     </Msgbox>
-    <Tab :page="['COC7th','DND5e']" style="text-align: center">
+    <Tab :page="['COC7th','COC6th','DND5e']" style="text-align: center">
       <div slot="COC7th">
         <div v-if="!sheetInfos.COC7thExist">{{ COC7thFound }}</div>
         <table v-else>
@@ -19,7 +19,20 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr class="sheets" v-for="sheet in sheetInfos.COC7th" @click="toCOC7th(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in sheetInfos.COC7th" @click="toSheet('COC7th',sheet.url)" :key="sheet.name">
+            <td>{{ sheet.name }}</td>
+            <td>{{ sheet.player }}</td>
+          </tr>
+        </table>
+      </div>
+      <div slot="COC6th">
+        <div v-if="!sheetInfos.COC6thExist">{{ COC6thFound }}</div>
+        <table v-else>
+          <tr>
+            <th>角色名稱</th>
+            <th>玩家名稱</th>
+          </tr>
+          <tr class="sheets" v-for="sheet in sheetInfos.COC6th" @click="toSheet('COC6th',sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -32,7 +45,7 @@
             <th>角色名稱</th>
             <th>玩家名稱</th>
           </tr>
-          <tr class="sheets" v-for="sheet in sheetInfos.DND5e" @click="toDND5e(sheet.url)" :key="sheet.name">
+          <tr class="sheets" v-for="sheet in sheetInfos.DND5e" @click="toSheet('DND5e',sheet.url)" :key="sheet.name">
             <td>{{ sheet.name }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
@@ -58,19 +71,18 @@ export default {
       sheet: "",
       sheetInfos:{
         COC7th: [],
+        COC6th: [],
         DND5e: [],
         COC7thExist: false,
+        COC6thExist: false,
         DND5eExist: false
       },
       createBoxShow: false
     }
   },
   methods: {
-    toCOC7th(url) {
-      this.$router.push(`/sheet/COC7th/${url}`)
-    },
-    toDND5e(url) {
-      this.$router.push(`/sheet/DND5e/${url}`)
+    toSheet(system,url) {
+      this.$router.push(`/sheet/${system}/${url}`)
     },
     showSheet(){
       Object.assign(this.$data.sheetInfos , this.$options.data().sheetInfos)
@@ -81,6 +93,10 @@ export default {
           case 'COC7th':
             this.sheetInfos.COC7th.push(item)
             this.sheetInfos.COC7thExist = true
+            break
+          case 'COC6th':
+            this.sheetInfos.COC6th.push(item)
+            this.sheetInfos.COC6thExist = true
             break
           case 'DND5e':
             this.sheetInfos.DND5e.push(item)
@@ -113,6 +129,11 @@ export default {
     DND5eFound() {
       if (!this.sheetInfos.DND5eExist) {
         return '你沒有DND5e的角色卡'
+      } else return ''
+    },
+    COC6thFound() {
+      if (!this.sheetInfos.COC6thExist) {
+        return '你沒有COC6th的角色卡'
       } else return ''
     }
   }

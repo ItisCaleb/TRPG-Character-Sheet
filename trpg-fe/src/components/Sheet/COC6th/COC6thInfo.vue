@@ -2,21 +2,13 @@
   <div class="sheet-info">
     <div class="stat">
         <div class="stat-block" v-for="(value,key) in stat.characteristic" :key="key">
-          <SheetGridInput :top="true" :right="true" :view="view" type="number" @input="calStat(key)"
-                          v-model.number="stat.characteristic[key]">
+          <SheetGridInput :top="true" :view="view" type="number" @input="calStat(key)"
+                        :max="20"  v-model.number="stat.characteristic[key]">
             <span slot="top">{{key.toUpperCase()}}</span>
-            <table class="td-cal" slot="right">
-              <tr>
-                <td style="border-bottom: 1px lightgray solid">{{ Math.floor(value / 2) }}</td>
-              </tr>
-              <tr>
-                <td>{{ Math.floor(value / 5) }}</td>
-              </tr>
-            </table>
           </SheetGridInput>
         </div>
     </div>
-    <SheetSection :title="$t('coc7th.char_info')">
+    <SheetSection :title="$t('coc6th.char_info')">
       <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
       <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
       <SheetInput :view="view" :max="64" :name="$t('class')" v-model="story.class"/>
@@ -24,10 +16,10 @@
         <SheetInput :view="view" :max="64" :name="$t('age')" v-model="story.age"/>
         <SheetInput :view="view" :max="64" :name="$t('sex')" v-model="story.sex"/>
       </div>
-      <SheetInput :view="view" :max="64" :name="$t('coc7th.birthplace')" v-model="story.birthplace"/>
-      <SheetInput :view="view" :max="64" :name="$t('coc7th.residence')" v-model="story.residence"/>
+      <SheetInput :view="view" :max="64" :name="$t('coc6th.birthplace')" v-model="story.birthplace"/>
+      <SheetInput :view="view" :max="64" :name="$t('coc6th.residence')" v-model="story.residence"/>
     </SheetSection>
-    <SheetSection :title="$t('coc7th.char_status')">
+    <SheetSection :title="$t('coc6th.char_status')">
       <div style="display: flex">
         <div class="status">
           <div class="inline">
@@ -39,43 +31,44 @@
             <div class="max">/{{ getSanMax }}</div>
           </div>
           <div class="inline">
-            <SheetInput :view="view" :min="0" :max="getMpMax" name="MP" type="number"
+            <SheetInput  :view="view" :min="0" :max="getMpMax" name="MP" type="number"
                         v-model.number="stat.mp"></SheetInput>
             <div class="max">/{{ getMpMax }}</div>
-            <SheetInput :view="view" name="LUK" type="number" v-model.number="stat.luk"></SheetInput>
           </div>
-          <div>{{ $t('coc7th.db_build') }}：{{ getDb }}</div>
-          <div>{{ $t('coc7th.mov') }}：{{ calMov }}</div>
+          <div>{{ $t('coc6th.db_build') }}：{{ getDb }}</div>
+          <div>{{ $t('coc6th.luk') }}: {{stat.characteristic.pow * 5}}</div>
+          <div>{{ $t('coc6th.idea') }}：{{ stat.characteristic.int*5 }}</div>
+          <div>{{ $t('coc6th.know') }}：{{ stat.characteristic.edu*5 }}</div>
           <label>
-            {{ $t('coc7th.injured_status') }}
+            {{ $t('coc6th.injured_status') }}
             <select :disabled="view" v-model="stat.injured_status">
               <option value="none" selected>{{$t('none')}}</option>
-              <option value="injured1">{{ $t('coc7th.injured1') }}</option>
-              <option value="injured2">{{ $t('coc7th.injured2') }}</option>
-              <option value="injured3">{{ $t('coc7th.injured3') }}</option>
+              <option value="injured1">{{ $t('coc6th.injured1') }}</option>
+              <option value="injured2">{{ $t('coc6th.injured2') }}</option>
+              <option value="injured3">{{ $t('coc6th.injured3') }}</option>
             </select>
           </label>
           <label>
-            {{ $t('coc7th.insane_status') }}
+            {{ $t('coc6th.insane_status') }}
             <select :disabled="view" v-model="stat.insane_status">
               <option value="none" selected>{{$t('none')}}</option>
-              <option value="insane1">{{ $t('coc7th.insane1') }}</option>
-              <option value="insane2">{{ $t('coc7th.insane2') }}</option>
-              <option value="insane3">{{ $t('coc7th.insane3') }}</option>
+              <option value="insane1">{{ $t('coc6th.insane1') }}</option>
+              <option value="insane2">{{ $t('coc6th.insane2') }}</option>
+              <option value="insane3">{{ $t('coc6th.insane3') }}</option>
             </select>
           </label>
         </div>
       </div>
       <div>
-        <h4 style="font-weight: bold">{{ $t('coc7th.char_equip') }}</h4>
-        <SheetInput :view="view" :max="128" :name="$t('coc7th.money')" :val="equip.cash" v-model="equip.cash"></SheetInput>
-        <SheetTextArea :view="view" :max="256" :name="$t('coc7th.weapon')" :val="equip.weapon" v-model="equip.weapon"
+        <h4 style="font-weight: bold">{{ $t('coc6th.char_equip') }}</h4>
+        <SheetInput :view="view" :max="128" :name="$t('coc6th.money')" :val="equip.cash" v-model="equip.cash"></SheetInput>
+        <SheetTextArea :view="view" :max="256" :name="$t('coc6th.weapon')" :val="equip.weapon" v-model="equip.weapon"
                        style="height: 170px;margin-bottom: 10%"></SheetTextArea>
-        <SheetTextArea :view="view" :name="$t('coc7th.equip')" :max="512" :val="equip.equip" v-model="equip.equip"
+        <SheetTextArea :view="view" :name="$t('coc6th.equip')" :max="512" :val="equip.equip" v-model="equip.equip"
                        style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
     </SheetSection>
-    <SheetSection :title="$t('coc7th.char_image')">
+    <SheetSection :title="$t('coc6th.char_image')">
       <img v-if="avatar"
            style="margin-bottom: 5%;width: 100%;height: 100%"
            :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
@@ -103,7 +96,7 @@ import SheetGridInput from "@/components/Sheet/SheetGridInput";
 import SheetTextArea from "@/components/Sheet/SheetTextArea";
 
 export default {
-  name: "COC7thInfo",
+  name: "COC6thInfo",
   components: {SheetTextArea, SheetGridInput, SheetSection, SheetInput},
   props: {
     info: {
@@ -142,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    api.getImage('COC7th', this.$route.params.id)
+    api.getImage('COC6th', this.$route.params.id)
         .then(res => {
           this.avatar = res
         })
@@ -219,29 +212,20 @@ export default {
   },
   computed: {
     getHpMax() {
-      return Math.floor((parseInt(this.stat.characteristic.siz) + parseInt(this.stat.characteristic.con)) / 10)
+      return Math.ceil((parseInt(this.stat.characteristic.siz) + parseInt(this.stat.characteristic.con)) / 2)
     },
     getMpMax() {
-      return Math.floor(this.stat.characteristic.pow / 5)
-    },
-    calMov() {
-      const dex = this.stat.characteristic.dex
-      const str = this.stat.characteristic.str
-      const siz = this.stat.characteristic.siz
-      if (dex < siz && str < siz) {
-        return 7
-      } else if (dex > siz && str > siz) {
-        return 9
-      } else return 8
+      return this.stat.characteristic.pow
     },
     getDb() {
       const total = this.stat.characteristic.str + this.stat.characteristic.siz
-      if (total >= 2 && total <= 64) return "-2 & -2"
-      else if (total >= 64 && total <= 84) return "-1 & -1"
-      else if (total >= 85 && total <= 124) return "0 & 0"
-      else if (total >= 125 && total <= 164) return "+1d4 & 1"
-      else if (total >= 165 && total <= 204) return "+1d6 & 2"
-      else if (total >= 205 && total <= 284) return "+2d6 & 3"
+      if (total >= 2 && total <= 12) return " -1d6"
+      else if (total >= 13 && total <= 16) return "-1d4"
+      else if (total >= 17 && total <= 24) return "0"
+      else if (total >= 25 && total <= 32) return "+1d4"
+      else if (total >= 33 && total <= 40) return "+1d6"
+      else if (total >= 41 && total <= 56) return "+2d6"
+      else if (total >= 57 && total <= 72) return "+3d6"
       else return "請先填入屬性"
     },
     getSanMax() {

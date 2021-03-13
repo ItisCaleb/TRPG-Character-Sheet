@@ -7,6 +7,10 @@ const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
+const COC6thStat = require('../model/COC6th/Stat');
+const COC6thStory = require('../model/COC6th/Story');
+const COC6thEquip = require('../model/COC6th/Equip');
+const COC6thSkill = require('../model/COC6th/Skill');
 
 
 module.exports = function (id) {
@@ -28,6 +32,16 @@ module.exports = function (id) {
                     story: await COC7thStory.findOne({_id: id}).lean(),
                     equip: await COC7thEquip.findOne({_id: id}).lean(),
                     skill: await COC7thSkill.findOne({_id: id}).lean()
+                }
+                resolve(sheet)
+                break;
+            case 'COC6th':
+                sheet = {
+                    info: info,
+                    stat: await COC6thStat.findOne({_id: id}).lean(),
+                    story: await COC6thStory.findOne({_id: id}).lean(),
+                    equip: await COC6thEquip.findOne({_id: id}).lean(),
+                    skill: await COC6thSkill.findOne({_id: id}).lean()
                 }
                 resolve(sheet)
                 break;

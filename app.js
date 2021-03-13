@@ -14,6 +14,7 @@ const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
 const TRPGSheetRoute = require('./routes/TRPGSheet');
 const COC7thSheetRoute = require('./routes/COC7thsheet');
+const COC6thSheetRoute = require('./routes/COC6thsheet');
 const DND5eSheetRoute = require('./routes/DND5esheet');
 const ImageRoute = require('./routes/Image');
 
@@ -63,6 +64,7 @@ app.use("/api/user", authRoute);
 app.use('/api/session', TRPGSessionRoute);
 app.use('/api/sheet', TRPGSheetRoute);
 app.use('/api/sheet', COC7thSheetRoute);
+app.use('/api/sheet', COC6thSheetRoute);
 app.use('/api/sheet', DND5eSheetRoute);
 app.use('/api/image', ImageRoute);
 

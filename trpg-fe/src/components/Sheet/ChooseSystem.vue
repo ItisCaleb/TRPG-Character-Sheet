@@ -1,14 +1,9 @@
 <template>
   <div class="system-content" style="display: table">
     <div id="systems">
-      <div @click="changeSystem('COC7th')" :class="{'systems-choose':isCurrent('COC7th')}" class="systems-title">
+      <div v-for="value in systems" @click="changeSystem(value)" :class="{'systems-choose':isCurrent(value)}" :key="value" class="systems-title">
         <div class="systems-title-tile">
-          COC7th
-        </div>
-      </div>
-      <div @click="changeSystem('DND5e')" :class="{'systems-choose':isCurrent('DND5e')}" class="systems-title">
-        <div class="systems-title-tile">
-          DND5e
+          {{ value }}
         </div>
       </div>
     </div>
@@ -17,6 +12,10 @@
       <div v-show="isCurrent('COC7th')" class="systems-info">
         <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
         <div class="system-text">使用克蘇魯的召喚7版的系統<br>創建屬於你的調查員</div>
+      </div>
+      <div v-show="isCurrent('COC6th')" class="systems-info">
+        <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
+        <div class="system-text">使用克蘇魯的召喚6版的系統<br>創建屬於你的調查員</div>
       </div>
       <div v-show="isCurrent('DND5e')" class="systems-info">
         <img class="systems-picture" src="../../../static/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
@@ -42,7 +41,8 @@ export default {
       choose: "COC7th",
       name: "",
       created: false,
-      small:""
+      small:"",
+      systems:["COC7th","COC6th","DND5e"]
     }
   },
   methods: {
@@ -64,7 +64,6 @@ export default {
           .then((id) => {
             this.$store.dispatch('setSheet')
                 .then(() => {
-                  this.created = false
                   this.$router.replace(`/sheet/${this.choose}/${id}`)
                 })
           })
