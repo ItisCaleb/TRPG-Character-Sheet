@@ -8,6 +8,7 @@ const ejs = require('ejs');
 const axios = require('axios')
 const {
     registerValidation,
+    oauthValidation,
     loginValidation,
     passwordValidation,
     findPasswordValidation
@@ -92,14 +93,10 @@ router.post('/authed', async (req, res) => {
     }
 });
 //Login
-router.post('/userlogin', async (req, res) => {
+router.post('/userLogin', async (req, res) => {
     //validate login infomation
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    const recaptcha = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SERVER_RECAPTCHA}&response=${req.body.recaptcha}`)
-    if (!recaptcha.data.success){
-        return res.status(400).send("請先通過驗證")
-    }
     //check if user exist
     const user = await User.findOne({email: req.body.email});
     if (!user) return res.status(400).send('電子郵件不存在');
@@ -116,29 +113,95 @@ router.post('/userlogin', async (req, res) => {
             name: user.name,
             email: user.email,
         }, process.env.JWT_SECRET);
-    if (req.body.check) {
-        res.cookie('auth_token', token, {
-            expires: new Date(Date.now() + (7 * day)),
-            sameSite: 'lax',
-            httpOnly: true,
-            secure: false
-        })
-        if (user.admin === true) {
-            res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
-        }
-
-    } else {
-        res.cookie('auth_token', token, {
-            sameSite: 'lax',
-            httpOnly: true,
-            secure: false
-        })
-        if (user.admin === true) {
-            res.cookie('admin', 'True', {sameSite: 'lax'});
-        }
+    res.cookie('auth_token', token, {
+        expires: new Date(Date.now() + (7 * day)),
+        sameSite: 'lax',
+        httpOnly: true,
+        secure: false
+    })
+    if (user.admin === true) {
+        res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
     }
     res.send(jwt.decode(token));
 });
+
+router.post('/googleLogin', (req, res) => {
+    if (!req.body.id) return res.sendStatus(400)
+    //google verify
+    axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${req.body.id}`)
+        .then(async info => {
+            const user = await User.findOne({email: info.data.email})
+            //if user exist
+            if (user) {
+                const day = 86409000;
+                const token = jwt.sign(
+                    {
+                        iss: 'trpgtoaster.com',
+                        exp: (Date.now() + (7 * day)) / 1000,
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email,
+                    }, process.env.JWT_SECRET);
+                res.cookie('auth_token', token, {
+                    expires: new Date(Date.now() + (7 * day)),
+                    sameSite: 'lax',
+                    httpOnly: true,
+                    secure: false
+                })
+                if (user.admin === true) {
+                    res.cookie('admin', 'True', {expires: new Date(Date.now() + (7 * day)), sameSite: 'lax'})
+                }
+                return res.status(200).send(jwt.decode(token))
+            } else {
+                //if user doesn't exist
+                const tempExist = await tempUser.findOne({email:info.data.email,type:"google"})
+                if(tempExist) return res.send("register")
+                const temp = new tempUser({
+                    name: info.data.name,
+                    email: info.data.email,
+                    password: "test",
+                    type: "oauth",
+                    createdAt: Date.now()
+                });
+                await temp.save()
+                res.send("signup")
+            }
+        })
+        .catch(err => {
+            return res.status(400).send(err)
+        })
+})
+
+router.post('/oauthSignup',async (req, res) => {
+    const {error} = oauthValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${req.body.token}`)
+        .then(async (info)=>{
+            const tempExist = await tempUser.findOne({email:info.data.email,type:"oauth"})
+            if(!tempExist) return res.status(400).send("你並沒有註冊過!")
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(req.body.password, salt);
+            const newUser = new User({
+                name: req.body.name,
+                email: info.data.email,
+                password: hashPassword,
+                sheet_number: 0,
+            });
+            try {
+                //await user.save();
+                await tempUser.deleteOne({_id: tempExist._id});
+                await newUser.save();
+                res.status(200).send("註冊成功!")
+            }catch (err){
+                res.send(err)
+            }
+        })
+        .catch(()=>{
+            res.status(400).send("OAuth憑證錯誤!")
+        })
+
+
+})
 
 router.get('/authVerify', (req, res) => {
     const token = req.cookies['auth_token'];

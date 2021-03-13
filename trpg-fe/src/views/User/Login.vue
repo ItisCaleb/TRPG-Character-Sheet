@@ -1,26 +1,24 @@
 <template>
   <div>
     <Title>登入</Title>
-    <Form @submit="UserLogin" btn="登入">
+    <Form btn="登入" @submit="UserLogin">
       <FormInput
+          id="email"
           v-model="userData.email"
           :input="userData.email"
+          :msg="msg.mail" ph="輸入電子郵件" type="email"
           @input="emailVerify"
-          type="email" id="email" ph="輸入電子郵件"
-          :msg="msg.mail"
       ></FormInput>
       <FormInput
+          id="password"
           v-model="userData.password"
           :input="userData.password"
+          :msg="msg.pwd" ph="輸入密碼" type="password"
           @input="pwdVerify"
-          type="password" id="password" ph="輸入密碼"
-          :msg="msg.pwd"
       ></FormInput>
-      <div class="form-check form-group" style="text-align: left;margin-bottom: 1%">
-        <input v-model="userData.check" type="checkbox" class="form-check-input" id="remember">
-        <label class="form-check-label">記住我</label><br>
-      </div>
-      <vue-recaptcha id="recaptcha" sitekey="6LcXK_sZAAAAAAikEOURxVi6SDdtCYqCpYjW-BMN"></vue-recaptcha>
+      <GoogleLogin :onSuccess="googleSuccess" :onFailure="googleFail" :params="google.params"
+                   :renderParams="google.renderParams"  class="form-group">Login
+      </GoogleLogin>
       <div id="smalltext" class="form-group">
         <router-link to="/signup">還沒註冊嗎?點擊這裡註冊</router-link>
         <br>
@@ -36,18 +34,16 @@ import Title from "@/components/Title";
 import api from "@/api";
 import {mapActions} from 'vuex'
 import Form from "@/components/User/Form";
-import VueRecaptcha from 'vue-recaptcha'
+import GoogleLogin from 'vue-google-login'
 // eslint-disable-next-line no-unused-vars
 export default {
   name: "Login",
-  components: {Form, Title, FormInput, VueRecaptcha},
+  components: {Form, Title, FormInput, GoogleLogin},
   data() {
     return {
       userData: {
         email: "",
         password: "",
-        check: false,
-        recaptcha: ""
       },
       msg: {
         mail: "",
@@ -56,6 +52,16 @@ export default {
       mailVerified: false,
       pwdVerified: false,
       send: false,
+      google: {
+        params: {
+          client_id: "396115014001-hbn5flthv9ua7lui7av79csfe31gd8o0.apps.googleusercontent.com"
+        },
+        renderParams: {
+          width: 280,
+          height: 50,
+          longtitle: true
+        }
+      }
     }
   },
   methods: {
@@ -70,12 +76,12 @@ export default {
     },
     pwdVerify() {
       const len = this.userData.password.length;
-      if (len >= 8 && len <= 20 || len === 0) {
+      if (len >= 6 && len <= 20 || len === 0) {
         this.pwdVerified = true
         this.msg.pwd = ""
       } else {
         this.pwdVerified = false
-        this.msg.pwd = "密碼長度為8到20個字元"
+        this.msg.pwd = "密碼長度為6到20個字元"
       }
     },
     ...mapActions(['loginActions']),
@@ -85,16 +91,6 @@ export default {
       this.pwdVerify()
       if (this.mailVerified && this.pwdVerified) {
         this.send = true
-        // eslint-disable-next-line no-undef
-        if (!grecaptcha.getResponse) {
-          alert("請勾選驗證!")
-          setTimeout(() => {
-            this.send = false
-          }, 1000)
-          return;
-        }
-        // eslint-disable-next-line no-undef
-        this.userData.recaptcha = grecaptcha.getResponse()
         api.login(this.userData)
             .then((user) => {
               Promise.all([
@@ -116,6 +112,33 @@ export default {
       } else {
         alert("你的帳號或密碼有誤")
       }
+    },
+    googleSuccess(googleUser) {
+      const data = {
+        gmail: googleUser.Is.ot,
+        token: googleUser.uc.access_token,
+        id: googleUser.uc.id_token
+      }
+      api.googleLogin(data).then(res => {
+        if (res == "signup") {
+          this.$router.push({path: `/oauth/${data.id}`, query: {name: googleUser.Is.sd}})
+        } else {
+          Promise.all([
+            this.$store.dispatch('setSession'),
+            this.$store.dispatch('setSheet')
+          ]).then(() => {
+            this.$store.dispatch('loginActions', res)
+            this.$router.replace({
+              path: '/'
+            })
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    googleFail(){
+      alert("Google登入失敗!")
     }
 
   },
@@ -124,7 +147,7 @@ export default {
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #smalltext {
   font-size: 15px;
   margin-bottom: 2%;

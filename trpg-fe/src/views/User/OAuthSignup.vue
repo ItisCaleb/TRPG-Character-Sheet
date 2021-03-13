@@ -1,15 +1,12 @@
 <template>
   <div>
-    <Title>註冊</Title>
-    <Form btn="註冊" @submit="UserSignup">
+    <Title>輸入資料</Title>
+    <Form btn="完成" @submit="UserSignup">
       <FormInput v-model="userData.name"
                  :input="userData.name"
+                 :value="userData.name"
                  type="text" id="name" ph="輸入暱稱"
                  :msg="msg.name"></FormInput>
-      <FormInput v-model="userData.email"
-                 :input="userData.email"
-                 type="email" id="email" ph="輸入電子郵件"
-                 :msg="msg.mail"></FormInput>
       <FormInput v-model="userData.password"
                  :input="userData.password"
                  type="password" id="pwd" ph="輸入密碼"
@@ -18,39 +15,35 @@
                  :input="userData.repassword"
                  type="password" id="repwd" ph="重複輸入密碼"
                  :msg="msg.repwd" style="margin-bottom: 3%"></FormInput>
-      <div class="form-group" style="font-size: 15px;margin-bottom: 2%">
-        <router-link to="/login">已經有帳號了嗎?點擊這裡登入</router-link>
-      </div>
     </Form>
   </div>
 </template>
 
 <script>
-import Form from "@/components/User/Form";
-import FormInput from "@/components/User/FormInput";
 import Title from "@/components/Title";
+import FormInput from "@/components/User/FormInput";
 import api from "@/api";
+import Form from "@/components/User/Form";
 
 export default {
-  name: "Signup",
-  components: {Title, FormInput, Form},
+  name: "OAuthSignup",
+  components: {Form, FormInput, Title},
   data() {
     return {
       userData: {
-        name: "",
-        email: "",
+        name: this.$route.query.name || "",
         password: "",
         repassword: "",
+        token: this.$route.params.token,
+        type: "oauth"
       },
       msg: {
         name: "",
-        email: "",
         pwd: "",
         repwd: ""
       },
       verified: {
         name: false,
-        email: false,
         pwd: false,
         repwd: false
       },
@@ -66,17 +59,6 @@ export default {
       } else {
         this.verified.name = false;
         this.msg.name = "暱稱長度為2到20個字"
-      }
-    },
-    emailVerify() {
-      const emailRule = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+(([.])[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-      this.msg.email = emailRule.test(this.userData.email)
-      if (this.msg.email || this.userData.email.length === 0) {
-        this.verified.email = true
-        this.msg.mail = ""
-      } else {
-        this.verified.email = false
-        this.msg.mail = "電子郵件格式錯誤"
       }
     },
     pwdVerify() {
@@ -110,11 +92,11 @@ export default {
           return
         }
       }
-      api.signup(this.userData)
+      api.oauthSignup(this.userData)
           .then(res => {
             alert(res)
             this.$router.replace({
-              path: '/'
+              path: '/login'
             })
           })
           .catch(err => {
@@ -129,13 +111,12 @@ export default {
     userData: {
       handler() {
         this.nameVerify()
-        this.emailVerify()
         this.pwdVerify()
         this.repwdVerify()
       },
       deep: true
     }
-  }
+  },
 }
 </script>
 

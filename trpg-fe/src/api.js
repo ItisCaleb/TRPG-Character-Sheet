@@ -7,7 +7,13 @@ axios.defaults.xsrfCookieName='csrfToken'
 
 export default {
     login(data) {
-        return ajax('user/userlogin', 'post', data)
+        return ajax('user/userLogin', 'post', data)
+    },
+    googleLogin(data){
+        return ajax('user/googleLogin','post',data)
+    },
+    oauthSignup(data){
+        return ajax('user/oauthSignup','post',data)
     },
     signup(data) {
         return ajax('user/authed', "post", data)

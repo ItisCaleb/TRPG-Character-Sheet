@@ -5,6 +5,7 @@
         class="form-control input-group-sm"
         style="box-shadow: none"
         :type="type"
+        :value="value"
          placeholder=" " autocomplete="chrome-off">
     <label :style="{'--bcolor':calColor}" id="label">
         <span id="label-content" >{{ph}}</span>
@@ -36,6 +37,10 @@ export default {
       type: String
     },
     msg: {
+      type: String,
+      default: ""
+    },
+    value:{
       type: String,
       default: ""
     }
