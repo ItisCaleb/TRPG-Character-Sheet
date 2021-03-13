@@ -179,6 +179,8 @@ router.post('/oauthSignup',async (req, res) => {
         .then(async (info)=>{
             const tempExist = await tempUser.findOne({email:info.data.email,type:"oauth"})
             if(!tempExist) return res.status(400).send("你並沒有註冊過!")
+            const userExist = await User.findOne({name:req.body.name})
+            if(userExist) return res.status(400).send("已經有人用過這名稱了!")
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(req.body.password, salt);
             const newUser = new User({
