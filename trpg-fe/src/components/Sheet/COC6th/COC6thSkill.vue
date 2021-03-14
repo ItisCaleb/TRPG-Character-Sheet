@@ -21,7 +21,7 @@
           {{ $t(`coc6th.${key}`) }}<br>
           <span v-show="checkLang">({{ key }})</span>
         </td>
-        <td>{{ skill.default }}</td>
+        <td class="skill-default">{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page1[key].interest" type="number"
                                  @input="incSkill($event,'interest',key,'page1')" class="form-control input-group"></td>
         <td class="skill"><input :readonly="view" v-model.number="page1[key].class" type="number"
@@ -63,7 +63,7 @@
           {{ $t(`coc6th.${key}`) }}<br>
           <span v-show="checkLang">({{ key }})</span>
         </td>
-        <td>{{ skill.default }}</td>
+        <td class="skill-default">{{ skill.default }}</td>
         <td class="skill"><input :readonly="view" v-model.number="page2[key].interest" type="number"
                                  @input="incSkill($event,'interest',key,'page2')" class="form-control input-group"></td>
         <td class="skill"><input :readonly="view" v-model.number="page2[key].class" type="number"
@@ -110,7 +110,8 @@
         <td class="base-skill"><input @input="setCustom($event,key)" v-model="page3[key].custom" :readonly="view"
                                       class="form-control input-group"
                                       :placeholder="$t('coc6th.skill_custom')"></td>
-        <td>{{ skill.default }}</td>
+        <td class="skill"><input :readonly="view" v-model.number="page3[key].default" type="number"
+                   @input="incSkill($event,'default',key,'page3')" class="form-control input-group"></td>
         <td class="skill"><input :readonly="view" v-model.number="page3[key].interest" type="number"
                                  @input="incSkill($event,'interest',key,'page3')" class="form-control input-group"></td>
         <td class="skill"><input :readonly="view" v-model.number="page3[key].class" type="number"
@@ -245,7 +246,6 @@ export default {
     },
     setCustom(event, key) {
       let value = event.currentTarget.value
-      console.log(value.length)
       if (value.length > 10) {
         this.page3[key].custom = value.slice(0, 10)
       }
@@ -278,6 +278,7 @@ export default {
         this.page2[key].grow = this.skills.skill[key].grow || 0
       } else if (key in this.page3) {
         this.page3[key].custom = this.skills.skill[key].custom || ""
+        this.page3[key].default = this.skills.skill[key].default || this.page3[key].default
         this.page3[key].interest = this.skills.skill[key].interest || 0
         this.page3[key].class = this.skills.skill[key].class || 0
         this.page3[key].grow = this.skills.skill[key].grow || 0
@@ -394,6 +395,10 @@ td {
   @include phone-width {
     width: 15%;
   }
+}
+
+.skill-default{
+  color: #10a36a;
 }
 
 .base-skill {

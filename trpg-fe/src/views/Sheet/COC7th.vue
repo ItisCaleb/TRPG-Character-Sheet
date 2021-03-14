@@ -158,7 +158,7 @@ export default {
           .catch(err => {
             console.log(err)
           })
-    }, 3000),
+    }, 2000),
     socketInput: debounce(function (data, key) {
       this.$socket.emit('clientInput', data, key, this.$route.params.id)
     }, 1000),

@@ -246,7 +246,7 @@ export default {
           .catch(err => {
             console.log(err)
           })
-    }, 3000),
+    }, 2000),
     calSpell(origin) {
       let spell = JSON.parse(JSON.stringify(origin))
       for (let i in spell.spell) {

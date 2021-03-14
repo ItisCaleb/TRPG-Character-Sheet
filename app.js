@@ -54,7 +54,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 if (process.env.MODE !== 'dev') {
-    app.use(csrf({cookie: true}))
+    app.use(csrf({cookie: {key:"csrf",sameSite:"lax",httpOnly:true}}))
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

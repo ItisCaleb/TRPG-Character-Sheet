@@ -1,48 +1,48 @@
 <template>
   <div class="sheet-info">
     <div class="stat">
-        <div class="stat-block" v-for="(value,key) in stat.characteristic" :key="key">
-          <SheetGridInput :top="true" :view="view" type="number" @input="calStat(key)"
-                        :max="20"  v-model.number="stat.characteristic[key]">
-            <span slot="top">{{key.toUpperCase()}}</span>
-          </SheetGridInput>
-        </div>
+      <div v-for="(value,key) in stat.characteristic" :key="key" class="stat-block">
+        <SheetGridInput v-model.number="stat.characteristic[key]" :max="20" :top="true" :view="view"
+                        type="number" @input="calStat(key)">
+          <span slot="top">{{ key.toUpperCase() }}</span>
+        </SheetGridInput>
+      </div>
     </div>
     <SheetSection :title="$t('coc6th.char_info')">
-      <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
-      <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
-      <SheetInput :view="view" :max="64" :name="$t('class')" v-model="story.class"/>
+      <SheetInput v-model="info.name" :max="100" :name="$t('name')" :view="view"/>
+      <SheetInput v-model="info.player_name" :max="64" :name="$t('player_name')" :view="view"/>
+      <SheetInput v-model="story.class" :max="64" :name="$t('class')" :view="view"/>
       <div class="inline">
-        <SheetInput :view="view" :max="64" :name="$t('age')" v-model="story.age"/>
-        <SheetInput :view="view" :max="64" :name="$t('sex')" v-model="story.sex"/>
+        <SheetInput v-model="story.age" :max="64" :name="$t('age')" :view="view"/>
+        <SheetInput v-model="story.sex" :max="64" :name="$t('sex')" :view="view"/>
       </div>
-      <SheetInput :view="view" :max="64" :name="$t('coc6th.birthplace')" v-model="story.birthplace"/>
-      <SheetInput :view="view" :max="64" :name="$t('coc6th.residence')" v-model="story.residence"/>
+      <SheetInput v-model="story.birthplace" :max="64" :name="$t('coc6th.birthplace')" :view="view"/>
+      <SheetInput v-model="story.residence" :max="64" :name="$t('coc6th.residence')" :view="view"/>
     </SheetSection>
     <SheetSection :title="$t('coc6th.char_status')">
       <div style="display: flex">
         <div class="status">
           <div class="inline">
-            <SheetInput :view="view" :min="0" :max="getHpMax" name="HP" type="number"
-                        v-model.number="stat.hp"></SheetInput>
+            <SheetInput v-model.number="stat.hp" :max="getHpMax" :min="0" :view="view" name="HP"
+                        type="number"></SheetInput>
             <div class="max">/{{ getHpMax }}</div>
-            <SheetInput :view="view" :min="0" :max="getSanMax" name="SAN" type="number"
-                        v-model.number="stat.san"></SheetInput>
+            <SheetInput v-model.number="stat.san" :max="getSanMax" :min="0" :view="view" name="SAN"
+                        type="number"></SheetInput>
             <div class="max">/{{ getSanMax }}</div>
           </div>
           <div class="inline">
-            <SheetInput  :view="view" :min="0" :max="getMpMax" name="MP" type="number"
-                        v-model.number="stat.mp"></SheetInput>
+            <SheetInput v-model.number="stat.mp" :max="getMpMax" :min="0" :view="view" name="MP"
+                        type="number"></SheetInput>
             <div class="max">/{{ getMpMax }}</div>
           </div>
           <div>{{ $t('coc6th.db_build') }}：{{ getDb }}</div>
-          <div>{{ $t('coc6th.luk') }}: {{stat.characteristic.pow * 5}}</div>
-          <div>{{ $t('coc6th.idea') }}：{{ stat.characteristic.int*5 }}</div>
-          <div>{{ $t('coc6th.know') }}：{{ stat.characteristic.edu*5 }}</div>
+          <div>{{ $t('coc6th.luk') }}: {{ getStats(stat.characteristic.pow) }}</div>
+          <div>{{ $t('coc6th.idea') }}：{{ getStats(stat.characteristic.int) }}</div>
+          <div>{{ $t('coc6th.know') }}：{{ getStats(stat.characteristic.edu) }}</div>
           <label>
             {{ $t('coc6th.injured_status') }}
-            <select :disabled="view" v-model="stat.injured_status">
-              <option value="none" selected>{{$t('none')}}</option>
+            <select v-model="stat.injured_status" :disabled="view">
+              <option selected value="none">{{ $t('none') }}</option>
               <option value="injured1">{{ $t('coc6th.injured1') }}</option>
               <option value="injured2">{{ $t('coc6th.injured2') }}</option>
               <option value="injured3">{{ $t('coc6th.injured3') }}</option>
@@ -50,8 +50,8 @@
           </label>
           <label>
             {{ $t('coc6th.insane_status') }}
-            <select :disabled="view" v-model="stat.insane_status">
-              <option value="none" selected>{{$t('none')}}</option>
+            <select v-model="stat.insane_status" :disabled="view">
+              <option selected value="none">{{ $t('none') }}</option>
               <option value="insane1">{{ $t('coc6th.insane1') }}</option>
               <option value="insane2">{{ $t('coc6th.insane2') }}</option>
               <option value="insane3">{{ $t('coc6th.insane3') }}</option>
@@ -61,25 +61,26 @@
       </div>
       <div>
         <h4 style="font-weight: bold">{{ $t('coc6th.char_equip') }}</h4>
-        <SheetInput :view="view" :max="128" :name="$t('coc6th.money')" :val="equip.cash" v-model="equip.cash"></SheetInput>
-        <SheetTextArea :view="view" :max="256" :name="$t('coc6th.weapon')" :val="equip.weapon" v-model="equip.weapon"
+        <SheetInput v-model="equip.cash" :max="128" :name="$t('coc6th.money')" :val="equip.cash"
+                    :view="view"></SheetInput>
+        <SheetTextArea v-model="equip.weapon" :max="256" :name="$t('coc6th.weapon')" :val="equip.weapon" :view="view"
                        style="height: 170px;margin-bottom: 10%"></SheetTextArea>
-        <SheetTextArea :view="view" :name="$t('coc6th.equip')" :max="512" :val="equip.equip" v-model="equip.equip"
+        <SheetTextArea v-model="equip.equip" :max="512" :name="$t('coc6th.equip')" :val="equip.equip" :view="view"
                        style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
     </SheetSection>
     <SheetSection :title="$t('coc6th.char_image')">
       <img v-if="avatar"
-           style="margin-bottom: 5%;width: 100%;height: 100%"
-           :src="`data:image/jpeg;base64,${avatar}`" alt="角色圖片"><br>
-      <div :style="{'color':image_success.color}" v-if="image_success.msg">{{ image_success.msg }}</div>
-      <div v-if="!view" style="margin-bottom: 5%" class="custom-file">
-        <input ref="image" @change="previewImage" type="file" accept="image/*" class="custom-file-input">
+           :src="`data:image/jpeg;base64,${avatar}`"
+           alt="角色圖片" style="margin-bottom: 5%;width: 100%;height: 100%"><br>
+      <div v-if="image_success.msg" :style="{'color':image_success.color}">{{ image_success.msg }}</div>
+      <div v-if="!view" class="custom-file" style="margin-bottom: 5%">
+        <input ref="image" accept="image/*" class="custom-file-input" type="file" @change="previewImage">
         <label class="custom-file-label">{{ image_name }}</label>
       </div>
       <div v-if="!view" style="display: flex;justify-content: space-around">
-        <button @click="uploadImage" style="margin-right: 5%" class="btn btn-primary">{{ $t('upload_image') }}</button>
-        <button @click="cancelImage" class="btn btn-primary">{{ $t('cancel_image') }}</button>
+        <button class="btn btn-primary" style="margin-right: 5%" @click="uploadImage">{{ $t('upload_image') }}</button>
+        <button class="btn btn-primary" @click="cancelImage">{{ $t('cancel_image') }}</button>
       </div>
       <div></div>
     </SheetSection>
@@ -207,7 +208,9 @@ export default {
         this.image_success.msg = '請先選取圖片'
         this.image_success.color = "red"
       }
-
+    },
+    getStats(stat) {
+      return (stat * 5 > 99) ? 99 : stat * 5
     }
   },
   computed: {
@@ -235,7 +238,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
 .inline {
   display: flex;
@@ -263,7 +266,7 @@ export default {
   }
   word-wrap: break-word;
   display: inline-block;
-  margin: 2px 1px 0 1px ;
+  margin: 2px 1px 0 1px;
 }
 
 .stat {
@@ -283,6 +286,7 @@ export default {
   tr {
     width: 100%;
   }
+
   td {
     margin: 0;
     border-collapse: collapse;
