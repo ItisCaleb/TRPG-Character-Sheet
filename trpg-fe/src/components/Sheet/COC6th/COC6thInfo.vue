@@ -195,7 +195,7 @@ export default {
           this.avatar = e.target.result.split(',').pop();
         }
         data.append("file", this.$refs.image.files[0])
-        api.uploadImage("COC7th", this.$route.params.id, data)
+        api.uploadImage("COC6th", this.$route.params.id, data)
             .then(() => {
               this.image_success.msg = "上傳成功"
               this.image_success.color = "#10a36a"
