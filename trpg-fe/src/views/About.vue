@@ -11,7 +11,8 @@
           <a href="https://github.com/ItisCaleb" target="_blank">https://github.com/ItisCaleb</a><br>
           <a href="https://github.com/Xialai-Kulimi" target="_blank"><i class="fa fa-github fa-2x"></i></a>
           <a href="https://github.com/Xialai-Kulimi" target="_blank">https://github.com/Xialai-Kulimi</a>
-        </div>
+        </div><br>
+        <router-link to="/privacy">隱私權政策</router-link>
       </div>
       <div slot="團務功能">
         <div>

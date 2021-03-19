@@ -22,9 +22,6 @@
         <li v-if="!this.$store.state.LoggedIn" class="nav-item">
           <router-link class="nav-link" to="/login">登入</router-link>
         </li>
-        <li v-if="!this.$store.state.LoggedIn" class="nav-item">
-          <router-link class="nav-link" to="/signup">註冊</router-link>
-        </li>
         <li v-if="this.$store.state.LoggedIn" class="nav-item">
           <router-link class="nav-link" :to="'/home/'+$store.state.user.name">{{$store.state.user.name}}</router-link>
         </li>
@@ -54,9 +51,6 @@
           </li>
           <li @click="SideBarOn" v-if="!this.$store.state.LoggedIn" class="nav-item sidebar-item">
             <router-link class="sidebar-link" to="/login"><i class="fa fa-sign-in"></i>登入</router-link>
-          </li>
-          <li @click="SideBarOn" v-if="!this.$store.state.LoggedIn" class="nav-item sidebar-item">
-            <router-link class="sidebar-link" to="/signup"><i class="fa fa-plus"></i>註冊</router-link>
           </li>
           <li @click="SideBarOn" v-if="this.$store.state.LoggedIn" class="nav-item sidebar-item">
             <router-link class="sidebar-link" :to="'/home/'+$store.state.user.name"><i class="fa fa-user"></i>{{$store.state.user.name}}</router-link>
