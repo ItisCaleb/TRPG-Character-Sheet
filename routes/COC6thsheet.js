@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/SheetInfo');
+const LLtrpgTranslate = require('../utils/converter/LLtrpgCOC6thMap')
 //import sheet schema
 const COC6thStat = require('../model/COC6th/Stat');
 const COC6thStory = require('../model/COC6th/Story');
@@ -54,44 +55,49 @@ router.get('/COC6th/create/:name', verify, async function (req, res) {
     }
 });
 
-/*router.post('/COC7th/import/:type', verify, async function (req, res) {
+router.post('/COC6th/import/:type', verify, async function (req, res) {
     const creator = jwt.decode(req.cookies['auth_token']);
     const user = await User.findOne({_id: creator._id});
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
-    if (req.params.type === 'roll20') {
-        const sheet = Roll20Translate(req.body)
-        sheet.info.author = creator._id
-        sheet.info.system = "COC7th"
-        const info = new Info(sheet.info);
-        sheet.skills._id = info._id
-        sheet.story._id = info._id
-        sheet.stat._id = info._id
-        sheet.equip._id = info._id
-        //save skill
-        const skill = new COC7thSkill(sheet.skills);
-        const stat = new COC7thStat(sheet.stat);
-        const story = new COC7thStory(sheet.story);
-        const equip = new COC7thEquip(sheet.equip);
-        const avatar = new Avatar({
-            _id: sheet._id,
-            type: "COC7th"
-        })
-        try {
-            await info.save();
-            await skill.save();
-            await stat.save();
-            await story.save();
-            await equip.save();
-            await avatar.save();
-            await User.updateOne({_id: creator._id}, {$inc: {sheet_number: 1}});
-            res.send(info._id);
-        } catch (err) {
-            console.log(err)
-            res.status(400).send(err);
-        }
+    if (req.params.type === 'lltrpg') {
+        LLtrpgTranslate(req.body.data)
+            .then(async (sheet) => {
+                sheet.info.author = creator._id
+                const info = new Info(sheet.info);
+                sheet.skills._id = info._id
+                sheet.story._id = info._id
+                sheet.stat._id = info._id
+                sheet.equip._id = info._id
+                //save skill
+                const skill = new COC6thSkill(sheet.skills);
+                const stat = new COC6thStat(sheet.stat);
+                const story = new COC6thStory(sheet.story);
+                const equip = new COC6thEquip(sheet.equip);
+                const avatar = new Avatar({
+                    _id: sheet._id,
+                    type: "COC6th"
+                })
+                try {
+                    await info.save();
+                    await skill.save();
+                    await stat.save();
+                    await story.save();
+                    await equip.save();
+                    await avatar.save();
+                    await User.updateOne({_id: creator._id}, {$inc: {sheet_number: 1}});
+                    res.send(info._id);
+                } catch (err) {
+                    console.log(err)
+                    res.status(400).send(err);
+                }
+            })
+            .catch(err => {
+                res.status(400).send(err)
+            })
+
     }
 
-})*/
+})
 
 router.post('/COC6th/edit/:id', verify, async function (req, res) {
     const cs = req.body;

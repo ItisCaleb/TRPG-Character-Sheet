@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/SheetInfo');
-const Roll20Translate = require('../utils/Roll20COC7thMap')
+const Roll20Translate = require('../utils/converter/Roll20COC7thMap')
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
@@ -60,7 +60,7 @@ router.post('/COC7th/import/:type', verify, async function (req, res) {
     const user = await User.findOne({_id: creator._id});
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
     if (req.params.type === 'roll20') {
-        const sheet = Roll20Translate(req.body)
+        const sheet = Roll20Translate(req.body.data)
         sheet.info.author = creator._id
         sheet.info.system = "COC7th"
         const info = new Info(sheet.info);

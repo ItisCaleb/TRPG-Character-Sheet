@@ -1,5 +1,5 @@
 <template>
-  <Tab :page="[1,2,3]" style="width: 100%;text-align: center;overflow: auto" :overflow="[true,true,true]">
+  <Tab :overflow="[true,true,true]" :page="[1,2,3]" style="width: 100%;text-align: center;overflow: auto">
     <table slot="1">
       <tr>
         <th colspan="7" style="font-size: 20px">{{ $t('coc6th.char_skill') }}</th>
@@ -22,24 +22,14 @@
           <span v-show="checkLang">({{ key }})</span>
         </td>
         <td class="skill-default">{{ skill.default }}</td>
-        <td class="skill"><input :readonly="view" v-model.number="page1[key].interest" type="number"
-                                 @input="incSkill($event,'interest',key,'page1')" class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page1[key].class" type="number"
-                                 @input="incSkill($event,'class',key,'page1')" class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page1[key].grow" type="number"
-                                 @input="incSkill($event,'grow',key,'page1')" class="form-control input-group">
+        <td class="skill"><input v-model.number="page1[key].interest" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'interest',key,'page1')"></td>
+        <td class="skill"><input v-model.number="page1[key].class" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'class',key,'page1')"></td>
+        <td class="skill"><input v-model.number="page1[key].grow" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'grow',key,'page1')">
         </td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td class="max" rowspan="2">{{ getTotal(key, 'page1') }}</td>
-              <td>{{ Math.floor(getTotal(key, 'page1') / 2) }}</td>
-            </tr>
-            <tr>
-              <td>{{ Math.floor(getTotal(key, 'page1') / 5) }}</td>
-            </tr>
-          </table>
-        </td>
+        <td class="max">{{ getTotal(key, 'page1') }}</td>
       </tr>
     </table>
     <table slot="2">
@@ -64,25 +54,15 @@
           <span v-show="checkLang">({{ key }})</span>
         </td>
         <td class="skill-default">{{ skill.default }}</td>
-        <td class="skill"><input :readonly="view" v-model.number="page2[key].interest" type="number"
-                                 @input="incSkill($event,'interest',key,'page2')" class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page2[key].class" type="number"
-                                 @input="incSkill($event,'class',key,'page2')"
-                                 class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page2[key].grow" type="number"
-                                 @input="incSkill($event,'grow',key,'page2')"
-                                 class="form-control input-group"></td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td class="max" rowspan="2">{{ getTotal(key, 'page2') }}</td>
-              <td>{{ Math.floor(getTotal(key, 'page2') / 2) }}</td>
-            </tr>
-            <tr>
-              <td>{{ Math.floor(getTotal(key, 'page2') / 5) }}</td>
-            </tr>
-          </table>
-        </td>
+        <td class="skill"><input v-model.number="page2[key].interest" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'interest',key,'page2')"></td>
+        <td class="skill"><input v-model.number="page2[key].class" :readonly="view" class="form-control input-group"
+                                 type="number"
+                                 @input="incSkill($event,'class',key,'page2')"></td>
+        <td class="skill"><input v-model.number="page2[key].grow" :readonly="view" class="form-control input-group"
+                                 type="number"
+                                 @input="incSkill($event,'grow',key,'page2')"></td>
+        <td class="max">{{ getTotal(key, 'page2') }}</td>
       </tr>
     </table>
     <table slot="3">
@@ -95,7 +75,7 @@
       </tr>
       <tr>
         <td>{{ $t('coc6th.skill_name') }}</td>
-        <td>{{ $t('coc6th.skill_custom')}}</td>
+        <td>{{ $t('coc6th.skill_custom') }}</td>
         <td>{{ $t('coc6th.skill_default') }}</td>
         <td>{{ $t('coc6th.skill_interest') }}</td>
         <td>{{ $t('coc6th.skill_class') }}</td>
@@ -103,34 +83,24 @@
         <td>{{ $t('coc6th.skill_total') }}</td>
       </tr>
       <tr v-for="(skill,key) in page3" :key="key">
-        <td :rowspan="skill.rows ||1" v-if="!skill.dep">
+        <td v-if="!skill.dep" :rowspan="skill.rows ||1">
           {{ $t(`coc6th.${key}`) }}<br>
           <span v-show="checkLang">({{ key }})</span>
         </td>
-        <td class="base-skill"><input @input="setCustom($event,key)" v-model="page3[key].custom" :readonly="view"
+        <td class="base-skill"><input v-model="page3[key].custom" :placeholder="$t('coc6th.skill_custom')" :readonly="view"
                                       class="form-control input-group"
-                                      :placeholder="$t('coc6th.skill_custom')"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page3[key].default" type="number"
-                   @input="incSkill($event,'default',key,'page3')" class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page3[key].interest" type="number"
-                                 @input="incSkill($event,'interest',key,'page3')" class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page3[key].class" type="number"
-                                 @input="incSkill($event,'class',key,'page3')"
-                                 class="form-control input-group"></td>
-        <td class="skill"><input :readonly="view" v-model.number="page3[key].grow" type="number"
-                                 @input="incSkill($event,'grow',key,'page3')"
-                                 class="form-control input-group"></td>
-        <td class="skill-max">
-          <table>
-            <tr>
-              <td class="max" rowspan="2">{{ getTotal(key, 'page3') }}</td>
-              <td>{{ Math.floor(getTotal(key, 'page3') / 2) }}</td>
-            </tr>
-            <tr>
-              <td>{{ Math.floor(getTotal(key, 'page3') / 5) }}</td>
-            </tr>
-          </table>
-        </td>
+                                      @input="setCustom($event,key)"></td>
+        <td class="skill"><input v-model.number="page3[key].default" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'default',key,'page3')"></td>
+        <td class="skill"><input v-model.number="page3[key].interest" :readonly="view" class="form-control input-group"
+                                 type="number" @input="incSkill($event,'interest',key,'page3')"></td>
+        <td class="skill"><input v-model.number="page3[key].class" :readonly="view" class="form-control input-group"
+                                 type="number"
+                                 @input="incSkill($event,'class',key,'page3')"></td>
+        <td class="skill"><input v-model.number="page3[key].grow" :readonly="view" class="form-control input-group"
+                                 type="number"
+                                 @input="incSkill($event,'grow',key,'page3')"></td>
+        <td class="max">{{ getTotal(key, 'page3') }}</td>
       </tr>
     </table>
   </Tab>
@@ -163,8 +133,13 @@ export default {
         "Accounting": {default: 10, interest: 0, class: 0, grow: 0},
         "Anthropology": {default: 1, interest: 0, class: 0, grow: 0},
         "Archaeology": {default: 1, interest: 0, class: 0, grow: 0},
+        "Astronomy": {default: 1, interest: 0, class: 0, grow: 0},
+        "Bargain": {default: 5, interest: 0, class: 0, grow: 0},
+        "Biology": {default: 1, interest: 0, class: 0, grow: 0},
+        "Chemistry": {default: 1, interest: 0, class: 0, grow: 0},
         "Climb": {default: 40, interest: 0, class: 0, grow: 0},
         "Computer Use": {default: 1, interest: 0, class: 0, grow: 0},
+        "Conceal": {default: 15, interest: 0, class: 0, grow: 0},
         "Credit Rating": {default: 15, interest: 0, class: 0, grow: 0},
         "Cthulhu Mythos": {default: 0, interest: 0, class: 0, grow: 0},
         "Disguise": {default: 5, interest: 0, class: 0, grow: 0},
@@ -174,6 +149,7 @@ export default {
         "Electronics": {default: 1, interest: 0, class: 0, grow: 0},
         "Fast-Talk": {default: 5, interest: 0, class: 0, grow: 0},
         "First Aid": {default: 30, interest: 0, class: 0, grow: 0},
+        "Geology": {default: 1, interest: 0, class: 0, grow: 0},
         "History": {default: 20, interest: 0, class: 0, grow: 0},
         "Jump": {default: 25, interest: 0, class: 0, grow: 0},
         "Law": {default: 5, interest: 0, class: 0, grow: 0},
@@ -189,7 +165,9 @@ export default {
         "Occult": {default: 5, interest: 0, class: 0, grow: 0},
         "Operate Heavy Machinery": {default: 1, interest: 0, class: 0, grow: 0},
         "Persuade": {default: 15, interest: 0, class: 0, grow: 0},
+        "Pharmacy": {default: 1, interest: 0, class: 0, grow: 0},
         "Photography": {default: 10, interest: 0, class: 0, grow: 0},
+        "Physics": {default: 1, interest: 0, class: 0, grow: 0},
         "Psychoanalysis": {default: 1, interest: 0, class: 0, grow: 0},
         "Psychology": {default: 5, interest: 0, class: 0, grow: 0},
         "Pilot(Car)": {default: 20, interest: 0, class: 0, grow: 0},
@@ -201,6 +179,11 @@ export default {
         "Swim": {default: 25, interest: 0, class: 0, grow: 0},
         "Throw": {default: 25, interest: 0, class: 0, grow: 0},
         "Track": {default: 10, interest: 0, class: 0, grow: 0},
+        "Handgun": {default: 20, interest: 0, class: 0, grow: 0},
+        "Machine Gun":{default: 15, interest: 0, class: 0, grow: 0},
+        "Rifle":{default: 25, interest: 0, class: 0, grow: 0},
+        "Shotgun":{default: 30, interest: 0, class: 0, grow: 0},
+        "SMG":{default: 15, interest: 0, class: 0, grow: 0},
       },
       page3: {
         "Pilot": {default: 20, custom: "", interest: 0, class: 0, grow: 0},
@@ -210,16 +193,11 @@ export default {
         "Fighting": {default: 25, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "f1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "f2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Weapon": {default: 0, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "weapon1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "weapon2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Weapon": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
         "Language (Other)": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "l1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "l2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "Language (Own)": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
-        "Science": {default: 0, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "s1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "s2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "Lore": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "lore1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "lore2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0}
@@ -234,7 +212,7 @@ export default {
       } else if (value > 100) {
         this[page][key][type] = 100
       }
-      if(!this.skills.skill) this.$set(this.skills,"skill",{})
+      if (!this.skills.skill) this.$set(this.skills, "skill", {})
       if (!this.skills.skill[key]) this.$set(this.skills.skill, key, {})
       this.$set(this.skills.skill[key], type, this[page][key][type])
       if (this[page][key][type] == 0) {
@@ -304,7 +282,7 @@ export default {
     }
   },
   computed: {
-    checkLang(){
+    checkLang() {
       return this.$i18n.locale != 'en_us';
     },
     setDodge() {
@@ -350,12 +328,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 table {
   width: 99%;
   text-align: center;
   height: 100%;
 }
+
 td {
   border: 1px solid lightgray;
   border-collapse: collapse;
@@ -363,11 +342,13 @@ td {
     font-size: 12px;
   }
 }
-.skill{
-  input{
+
+.skill {
+  input {
     font-size: 12px;
   }
 }
+
 .skill-max {
   padding: 0;
   height: 100%;
@@ -397,7 +378,7 @@ td {
   }
 }
 
-.skill-default{
+.skill-default {
   color: #10a36a;
 }
 
@@ -405,9 +386,11 @@ td {
   padding: 0;
   width: 20%;
   height: 50px;
-  input::placeholder{
+
+  input::placeholder {
     font-size: 8px;
   }
+
   @include phone-width {
     width: 35%;
   }

@@ -12,7 +12,7 @@
     <SheetSection :title="$t('dnd5e.char_info')">
       <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
       <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
-      <SheetInput :view="view" datalist list="data-class" :max="20" :name="$t('class')" v-model="story.class">
+      <SheetInput :view="view" datalist list="data-class" :max="20" :name="$t('dnd5e.class')" v-model="story.class">
         <datalist id="data-class">
           <option>{{ $t('dnd5e.hint.class.bard') }}</option>
           <option>{{ $t('dnd5e.hint.class.barbarian') }}</option>

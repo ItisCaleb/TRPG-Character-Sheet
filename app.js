@@ -31,7 +31,7 @@ mongoose.connect(process.env.DB_CONNECT || " mongodb://127.0.0.1:27017/test?retr
         console.log('DB started');
     })
     .catch((err) => {
-        console.log(err);;
+        console.log(err);
     });
 
 // middleware
@@ -54,7 +54,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 if (process.env.MODE !== 'dev') {
-    app.use(csrf({cookie: {key:"csrf",sameSite:"lax",httpOnly:true}}))
+    app.use(csrf({cookie: {key: "csrf", sameSite: "lax", httpOnly: true}}))
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -71,7 +71,7 @@ app.use('/api/image', ImageRoute);
 app.all('*', function (req, res, next) {
     res.setHeader('Cache-Control', 'public, max-age=604800')
     if (process.env.MODE !== 'dev') {
-        res.cookie('csrfToken', req.csrfToken(),{
+        res.cookie('csrfToken', req.csrfToken(), {
             sameSite: 'lax'
         })
     }
@@ -85,16 +85,16 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // start server
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
-const io = require('socket.io')(server,{ origins: '*:*'});
+const io = require('socket.io')(server, {origins: '*:*'});
 
-var connect_num=0;
+var connect_num = 0;
 
 io.on('connection', (socket) => {
     connect_num++;
     process.stdout.write(`\r${connect_num} people is now online.`)
     require('./utils/sheetSocket')(socket);
     require('./utils/sessionSocket')(socket);
-    socket.on('disconnect',()=>{
+    socket.on('disconnect', () => {
         connect_num--;
         process.stdout.write(`\r${connect_num} people is now online.`)
     })

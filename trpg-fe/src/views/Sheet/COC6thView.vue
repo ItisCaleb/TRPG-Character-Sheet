@@ -65,6 +65,7 @@ export default {
         class: "",
         age: "",
         sex: "",
+        degree:"",
         residence: "",
         birthplace: "",
         description: "",

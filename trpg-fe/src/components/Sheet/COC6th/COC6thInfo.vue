@@ -11,11 +11,12 @@
     <SheetSection :title="$t('coc6th.char_info')">
       <SheetInput v-model="info.name" :max="100" :name="$t('name')" :view="view"/>
       <SheetInput v-model="info.player_name" :max="64" :name="$t('player_name')" :view="view"/>
-      <SheetInput v-model="story.class" :max="64" :name="$t('class')" :view="view"/>
+      <SheetInput v-model="story.class" :max="64" :name="$t('coc6th.class')" :view="view"/>
       <div class="inline">
         <SheetInput v-model="story.age" :max="64" :name="$t('age')" :view="view"/>
         <SheetInput v-model="story.sex" :max="64" :name="$t('sex')" :view="view"/>
       </div>
+      <SheetInput v-model="story.degree" :max="64" :name="$t('coc6th.degree')" :view="view"/>
       <SheetInput v-model="story.birthplace" :max="64" :name="$t('coc6th.birthplace')" :view="view"/>
       <SheetInput v-model="story.residence" :max="64" :name="$t('coc6th.residence')" :view="view"/>
     </SheetSection>

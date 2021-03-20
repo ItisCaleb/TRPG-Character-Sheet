@@ -139,8 +139,6 @@ module.exports = (json)=>{
                 if(!data[arr[0]][arr[1]]) data[arr[0]][arr[1]]={}
                 if(arr[1]==='skill'){
                     let value= json[key]
-
-
                     if(['Survival','Pilot','Language (Other)'].includes(arr[2])){
                         data[arr[0]][arr[1]][arr[2]]={}
                         data[arr[0]][arr[1]][arr[2]].custom=value.split(':')[1]

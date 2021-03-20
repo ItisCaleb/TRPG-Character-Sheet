@@ -19,7 +19,7 @@
     <SheetSection :title="$t('coc7th.char_info')">
       <SheetInput :view="view" :max="100" :name="$t('name')" v-model="info.name"/>
       <SheetInput :view="view" :max="64" :name="$t('player_name')" v-model="info.player_name"/>
-      <SheetInput :view="view" :max="64" :name="$t('class')" v-model="story.class"/>
+      <SheetInput :view="view" :max="64" :name="$t('coc7th.class')" v-model="story.class"/>
       <div class="inline">
         <SheetInput :view="view" :max="64" :name="$t('age')" v-model="story.age"/>
         <SheetInput :view="view" :max="64" :name="$t('sex')" v-model="story.sex"/>

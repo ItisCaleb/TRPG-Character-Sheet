@@ -3,92 +3,97 @@ const COC6thStorySchema = new mongoose.Schema({
     class: {
         type: String,
         max: 64,
-        default:''
+        default: ''
     },
     age: {
         type: String,
         max: 64,
-        default:''
+        default: ''
+    },
+    degree: {
+        type: String,
+        max: 64,
+        default: ''
     },
     sex: {
         type: String,
         max: 64,
-        default:''
+        default: ''
     },
     residence: {
         type: String,
         max: 64,
-        default:''
+        default: ''
     },
     birthplace: {
         type: String,
         max: 64,
-        default:''
+        default: ''
     },
     description: {
         type: String,
         max: 2048,
-        default:''
+        default: ''
     },
     belief: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     role_description: {
         type: String,
         max: 1024,
-        default:''
+        default: ''
     },
     significant_people: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     meaningful_location: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     treasured_possession: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     trait: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     myth: {
         type: String,
         max: 5,
-        default:"否"
+        default: "否"
     },
     injuries: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     mania: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     magic: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     encounter: {
         type: String,
         max: 256,
-        default:''
+        default: ''
     },
     fellow_investigator: {
         type: String,
-        max:256,
-        default:''
+        max: 256,
+        default: ''
     }
 });
 
