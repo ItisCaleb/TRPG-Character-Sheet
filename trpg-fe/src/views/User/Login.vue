@@ -114,10 +114,10 @@ export default {
       }
     },
     googleSuccess(googleUser) {
+      console.log(googleUser.getBasicProfile())
       const data = {
-        gmail: googleUser.Is.ot,
-        token: googleUser.uc.access_token,
-        id: googleUser.uc.id_token
+        gmail: googleUser.getBasicProfile().At,
+        id: googleUser.getAuthResponse().id_token
       }
       api.googleLogin(data).then(res => {
         if (res == "signup") {
@@ -137,7 +137,8 @@ export default {
         console.log(err)
       })
     },
-    googleFail(){
+    googleFail(err){
+      console.log(err)
       alert("Google登入失敗!")
     }
 
