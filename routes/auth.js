@@ -112,6 +112,7 @@ router.post('/userLogin', async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            admin: user.admin
         }, process.env.JWT_SECRET);
     res.cookie('auth_token', token, {
         expires: new Date(Date.now() + (7 * day)),
@@ -141,6 +142,7 @@ router.post('/googleLogin', (req, res) => {
                         _id: user._id,
                         name: user.name,
                         email: user.email,
+                        admin: user.admin
                     }, process.env.JWT_SECRET);
                 res.cookie('auth_token', token, {
                     expires: new Date(Date.now() + (7 * day)),
