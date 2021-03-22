@@ -56,6 +56,15 @@ input::-webkit-inner-spin-button {
       }
     }
   }
+  #sidebar-nav{
+    background-color: #313340 !important;
+    .sidebar-link{
+      color: #dedede !important;
+    }
+    .router-link-exact-active{
+      color: #7885d2 !important;
+    }
+  }
   div,.box{
     color: #dedede !important;
   }
