@@ -19,7 +19,7 @@
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
-          <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/DND5/'+$route.params.id">
+          <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/DND5e/'+$route.params.id">
           <button class="btn-primary btn" @click="copyCode">複製角卡連結</button><br>
           <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
           <ChangeLang/>
