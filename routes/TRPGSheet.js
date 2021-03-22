@@ -41,9 +41,12 @@ router.get('/getSheets', verify, async function (req, res) {
 router.get('/checkAccess/:id', async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])
     const sheet = await Info.findOne({_id: req.params.id})
-    const admin = await User.findOne({_id: user._id})
+    if (user) {
+        const admin = await User.findOne({_id: user._id})
+        if (admin.admin) return res.send('view')
+    }
     if (user && user._id === sheet.author.toString()) res.send('author')
-    else if (sheet.permission === '所有人' || admin.admin) res.send('view')
+    else if (sheet.permission === '所有人') res.send('view')
     else if (sheet.session.length === 0) res.send('noPerm')
     else {
         if (!user) return res.sendStatus(401)
