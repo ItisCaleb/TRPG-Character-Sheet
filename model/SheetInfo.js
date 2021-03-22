@@ -22,7 +22,7 @@ const InfoSchema = new mongoose.Schema({
     permission:{
         type: String,
         required:true,
-        default:'限團務GM'
+        default:'所有人'
     },
     session:Array
 });

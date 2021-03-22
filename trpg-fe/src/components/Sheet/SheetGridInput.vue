@@ -100,7 +100,7 @@ table{
   }
 }
 
-.td-left {
+.td-left,.td-right, .td-top, .td-down {
   padding: 0;
   font-size: 14px;
   font-weight: bold;
@@ -108,30 +108,8 @@ table{
   border: 1px lightgray solid;
 }
 
-.td-right {
-  padding: 0;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  border: 1px lightgray solid;
-}
-
-.td-top {
-  padding: 0;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  border: 1px lightgray solid;
-
-}
-
-.td-down {
-  padding: 0;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  border: 1px lightgray solid;
-
+.td-right,.td-left{
+  height: 50px;
 }
 
 .td-input {

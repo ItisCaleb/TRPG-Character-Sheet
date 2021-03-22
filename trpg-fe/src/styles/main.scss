@@ -42,5 +42,52 @@ input::-webkit-inner-spin-button {
     @content;
   }
 }
+.dark{
+  background-color: #434a5c;
+  nav{
+    background-color: #313340 !important;
+    .navbar-brand{
+      color: white !important;
+    }
+    .nav-link{
+      color: #dedede !important;
+      &:hover{
+        color: #e3e3e3 !important;
+      }
+    }
+  }
+  div,.box{
+    color: #dedede !important;
+  }
+  .box{
+    background-color: #313340 !important ;
+    border-color: gray !important;
+    input,textarea{
+      background-color: #313340 !important;
+    }
+  }
+  input,textarea,select{
+    background-color: #5f6582 !important ;
+    color: lightgray;
+  }
+  .sheets:hover{
+    background-color: #656b8b;
+  }
+  .systems-title-tile:hover{
+    background-color: #757aa1 !important;
+  }
+  .tab-name:hover{
+    background-color: #757aa1 !important;
+  }
+  .active{
+    background-color: #5f6582 !important;
+  }
+
+  #footer{
+    background-color: #313340 !important;
+    color: #dedede !important;
+    border-top: #434a5c !important;
+  }
+}
 
 

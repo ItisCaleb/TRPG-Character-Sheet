@@ -3,7 +3,11 @@
     <Load>
       <div v-if="success" id="user">
         <Title>{{ user.name }}的頁面</Title>
-        <div></div>
+        <div class="custom-control custom-switch" style="text-align: center">
+          <input type="checkbox" class="custom-control-input" id="dark-btn"
+                 :checked="$store.state.darkMode" @click="$store.dispatch('changeDark')">
+          <label class="custom-control-label" for="dark-btn">闇黑模式</label>
+        </div>
       </div>
     </Load>
   </div>

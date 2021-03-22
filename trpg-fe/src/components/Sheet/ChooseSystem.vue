@@ -19,7 +19,7 @@
       </div>
       <div v-show="isCurrent('DND5e')" class="systems-info">
         <img class="systems-picture" src="../../../static/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
-        <div class="system-text">使用龍與地下城5版的系統(測試)<br>創建屬於你的冒險者</div>
+        <div class="system-text">使用龍與地下城5版的系統<br>創建屬於你的冒險者</div>
       </div>
       <FormInput v-model="name" type="text" id="name" ph="角色名稱"></FormInput>
       <button @click="createSheet" class="btn btn-primary">創建</button><br>
@@ -135,37 +135,6 @@ export default {
   border-left: 3px solid #4CAF50;
 }
 
-.systems-title-tile:hover {
-  animation-name: choose-mouse-hover;
-  animation-iteration-count: 1;
-  animation-duration: 0.1s;
-}
 
-.systems-title-tile:not(:hover) {
-  animation-name: choose-mouse-leave;
-  animation-iteration-count: 1;
-  animation-duration: 0.1s;
-}
 
-@keyframes choose-mouse-hover {
-  0% {
-    background: #ffffff;
-    color: #000000;
-  }
-  100% {
-    background: #46A3FF;
-    color: white;
-  }
-}
-
-@keyframes choose-mouse-leave {
-  0% {
-    background: #46A3FF;
-    color: white;
-  }
-  100% {
-    background: #ffffff;
-    color: #000000;
-  }
-}
 </style>

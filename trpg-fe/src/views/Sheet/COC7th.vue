@@ -20,8 +20,10 @@
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
-          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">刪除</button>
+          <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/COC7th/'+$route.params.id">
+          <button class="btn-primary btn" @click="copyCode">複製角卡連結</button><br>
           <ChangeLang/>
+          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
           <Msgbox ref="deleteBox">
             <div style="text-align: center;margin: 10% auto">
               你確定要刪除嗎?<br>
@@ -116,6 +118,15 @@ export default {
     }
   },
   methods: {
+    copyCode(){
+      const code = document.getElementById('code')
+      code.setAttribute('type','text')
+      code.select()
+      code.setSelectionRange(0,99999)
+      document.execCommand('copy')
+      code.setAttribute('type','hidden')
+      window.getSelection().removeAllRanges()
+    },
     loadSheet() {
       api.getSheetData(this.$route.params.id)
           .then(data => {

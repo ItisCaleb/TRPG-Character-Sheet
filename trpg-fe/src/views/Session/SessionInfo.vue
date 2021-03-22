@@ -32,7 +32,7 @@
       <Tab style="text-align: center" :page="['資訊','玩家','選項']">
         <div slot="資訊">
           GM:{{ Session.gm }}<br>
-          <p v-if="Session.code">邀請碼(有效期為一天)：{{ Session.code }}</p>
+          <p v-if="Session.code">邀請碼(有效期為七天)：{{ Session.code }}</p>
           <input id="code" type="hidden" :value="'https://trpgtoaster.com/session/link/'+Session.code">
           <button class="btn-primary btn" v-if="Session.code" @click="copyCode">複製邀請連結</button>
         </div>

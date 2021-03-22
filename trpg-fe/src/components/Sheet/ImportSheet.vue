@@ -187,37 +187,4 @@ export default {
   border-left: 3px solid #4CAF50;
 }
 
-.systems-title-tile:hover {
-  animation-name: choose-mouse-hover;
-  animation-iteration-count: 1;
-  animation-duration: 0.1s;
-}
-
-.systems-title-tile:not(:hover) {
-  animation-name: choose-mouse-leave;
-  animation-iteration-count: 1;
-  animation-duration: 0.1s;
-}
-
-@keyframes choose-mouse-hover {
-  0% {
-    background: #ffffff;
-    color: #000000;
-  }
-  100% {
-    background: #46A3FF;
-    color: white;
-  }
-}
-
-@keyframes choose-mouse-leave {
-  0% {
-    background: #46A3FF;
-    color: white;
-  }
-  100% {
-    background: #ffffff;
-    color: #000000;
-  }
-}
 </style>

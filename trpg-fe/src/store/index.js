@@ -11,7 +11,8 @@ const getDefaultState = () => {
         LoggedIn: false,
         user: {},
         session: "",
-        sheet: ""
+        sheet: "",
+        darkMode: false
     }
 }
 
@@ -30,7 +31,12 @@ export default new Vuex.Store({
             state.sheet = sheet
         },
         reset(state) {
+            const dark = state.darkMode
             Object.assign(state, getDefaultState())
+            state.darkMode = dark
+        },
+        dark(state){
+            state.darkMode = !state.darkMode
         }
     },
     actions: {
@@ -61,6 +67,17 @@ export default new Vuex.Store({
         },
         logoutActions({commit}) {
             commit('reset')
+        },
+        changeDark({commit,dispatch}){
+            commit('dark')
+            dispatch('setDark')
+        },
+        setDark({state}){
+            if(state.darkMode){
+                document.getElementsByTagName('html')[0].className="dark"
+            }else {
+                document.getElementsByTagName('html')[0].classList.remove('dark')
+            }
         }
     },
     getters: {

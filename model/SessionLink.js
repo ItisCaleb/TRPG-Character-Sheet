@@ -8,8 +8,8 @@ const SessionLinkSchema = new mongoose.Schema({
     },
     expireAt: {
         type: Date,
-        index: {expires: 86409000},
-        default: Date.now()+86409000
+        index: {expires: 604800},
+        default: Date.now()+604800
     }
 });
 

@@ -19,6 +19,8 @@
             <option>團務所有人</option>
             <option>所有人</option>
           </select><br>
+          <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/DND5/'+$route.params.id">
+          <button class="btn-primary btn" @click="copyCode">複製角卡連結</button><br>
           <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
           <ChangeLang/>
           <Msgbox ref="deleteBox">
@@ -204,6 +206,15 @@ export default {
 
   },
   methods: {
+    copyCode(){
+      const code = document.getElementById('code')
+      code.setAttribute('type','text')
+      code.select()
+      code.setSelectionRange(0,99999)
+      document.execCommand('copy')
+      code.setAttribute('type','hidden')
+      window.getSelection().removeAllRanges()
+    },
     loadSheet() {
       api.getSheetData(this.$route.params.id)
           .then(data => {

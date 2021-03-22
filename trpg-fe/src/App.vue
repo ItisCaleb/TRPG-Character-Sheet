@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{'dark':$store.state.darkMode}">
     <Navbar></Navbar>
     <div id="content">
       <router-view/>
@@ -62,6 +62,7 @@ import api from "@/api";
 export default {
   components: {Footer, Navbar},
   beforeCreate() {
+    this.$store.dispatch('setDark')
     if (this.$store.getters.getLogin) {
       api.authVerify()
           .then(() => {
