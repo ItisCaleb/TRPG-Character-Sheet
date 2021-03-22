@@ -114,14 +114,12 @@ export default {
       }
     },
     googleSuccess(googleUser) {
-      console.log(googleUser.getBasicProfile())
       const data = {
-        gmail: googleUser.getBasicProfile().At,
         id: googleUser.getAuthResponse().id_token
       }
       api.googleLogin(data).then(res => {
         if (res == "signup") {
-          this.$router.push({path: `/oauth/${data.id}`, query: {name: googleUser.Is.sd}})
+          this.$router.push({path: `/oauth/${data.id}`, query: {name: googleUser.getBasicProfile().sd}})
         } else {
           Promise.all([
             this.$store.dispatch('setSession'),
