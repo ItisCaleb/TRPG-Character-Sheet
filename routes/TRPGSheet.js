@@ -12,6 +12,10 @@ const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
+const COC6thStat = require('../model/COC6th/Stat');
+const COC6thStory= require('../model/COC6th/Story');
+const COC6thEquip = require('../model/COC6th/Equip');
+const COC6thSkill = require('../model/COC6th/Skill');
 const DND5eStat = require('../model/DND5e/Stat');
 const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
@@ -100,6 +104,11 @@ router.delete('/delete/:id', verify, async function (req, res) {
                     await DND5eSpell.deleteOne({_id: sheetId});
                     await DND5eEquip.deleteOne({_id: sheetId});
                     break;
+                case "COC6th":
+                    await COC6thStat.deleteOne({_id: sheetId});
+                    await COC6thStory.deleteOne({_id: sheetId});
+                    await COC6thSkill.deleteOne({_id: sheetId});
+                    await COC6thEquip.deleteOne({_id: sheetId})
             }
             await Image.deleteOne({_id: sheetId, type: info.system})
             await Info.deleteOne({_id: sheetId});
