@@ -18,20 +18,20 @@ const registerValidation = data => {
             .email(),
         password: Joi.string()
             .min(6)
-            .max(15)
+            .max(30)
             .required()
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
         repassword: Joi.string()
             .min(6)
-            .max(15)
+            .max(30)
             .required()
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
     };
@@ -52,20 +52,20 @@ const oauthValidation = data => {
             }),
         password: Joi.string()
             .min(6)
-            .max(15)
+            .max(30)
             .required()
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
         repassword: Joi.string()
             .min(6)
-            .max(15)
+            .max(30)
             .required()
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
         token: Joi.string()
@@ -94,11 +94,11 @@ const loginValidation = data => {
             .email(),
         password: Joi.string()
             .min(6)
-            .max(15)
+            .max(30)
             .required()
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
     };
@@ -125,19 +125,19 @@ const passwordValidation = data => {
         old_password: Joi.string()
             .required()
             .min(6)
-            .max(15)
+            .max(30)
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
         new_password: Joi.string()
             .required()
             .min(6)
-            .max(15)
+            .max(30)
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
     };
@@ -148,19 +148,19 @@ const findPasswordValidation = data => {
         password: Joi.string()
             .required()
             .min(6)
-            .max(15)
+            .max(30)
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
         repassword: Joi.string()
             .required()
             .min(6)
-            .max(15)
+            .max(30)
             .error(() => {
                 return {
-                    message: "密碼長度為6到15個字元"
+                    message: "密碼長度為6到30個字元"
                 }
             }),
     };

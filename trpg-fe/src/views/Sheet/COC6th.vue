@@ -7,11 +7,12 @@
         :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
       </Title>
 
-      <Tab class="tab" :page="['info','background','skill','option']">
-        <COC6thInfo v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
+      <Tab class="tab" :page="['info','background','weapon_equip','skill','option']">
+        <COC6thInfo v-if="success.info && success.stat" :stat="stat"  :info="info" :equip="equip" :story="story"
                     :mytho="getMytho"
                     slot="info"></COC6thInfo>
         <COC6thBackground :story="story" slot="background"></COC6thBackground>
+        <COC6thEquip :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
         <div slot="option">
           檢視權限
@@ -48,10 +49,12 @@ import ChangeLang from "@/components/Sheet/ChangeLang";
 import COC6thInfo from "@/components/Sheet/COC6th/COC6thInfo";
 import COC6thBackground from "@/components/Sheet/COC6th/COC6thBackground";
 import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
+import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
 
 export default {
   name: "COC6th",
   components: {
+    COC6thEquip,
     COC6thSkill,
     COC6thBackground,
     COC6thInfo, ChangeLang, Msgbox,  Load,  Tab, Title},
@@ -67,8 +70,6 @@ export default {
         san: 0,
         mp: 0,
         luk: 0,
-        insane_status: "無",
-        injured_status: "無",
         characteristic: {
           str: 0,
           con: 0,
@@ -93,17 +94,16 @@ export default {
         age: "",
         sex: "",
         degree:"",
+        mental:"",
+        insanity:"",
         residence: "",
         birthplace: "",
         description: "",
-        belief: "",
-        significant_people: "",
-        meaningful_location: "",
-        treasured_possession: "",
+        family: "",
         trait: "",
-        myth: "",
         injuries: "",
-        mania: "",
+        scars:"",
+        tomes:"",
         magic: "",
         encounter: "",
         fellow_investigator: ""

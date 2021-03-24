@@ -76,12 +76,12 @@ export default {
     },
     pwdVerify() {
       const len = this.userData.password.length;
-      if (len >= 6 && len <= 20 || len === 0) {
+      if (len >= 6 && len <= 30 || len === 0) {
         this.pwdVerified = true
         this.msg.pwd = ""
       } else {
         this.pwdVerified = false
-        this.msg.pwd = "密碼長度為6到20個字元"
+        this.msg.pwd = "密碼長度為6到30個字元"
       }
     },
     ...mapActions(['loginActions']),

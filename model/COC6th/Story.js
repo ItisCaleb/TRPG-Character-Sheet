@@ -15,6 +15,11 @@ const COC6thStorySchema = new mongoose.Schema({
         max: 64,
         default: ''
     },
+    mental: {
+        type: String,
+        max: 64,
+        default: ''
+    },
     sex: {
         type: String,
         max: 64,
@@ -35,27 +40,17 @@ const COC6thStorySchema = new mongoose.Schema({
         max: 2048,
         default: ''
     },
-    belief: {
-        type: String,
-        max: 256,
-        default: ''
-    },
     role_description: {
         type: String,
         max: 1024,
         default: ''
     },
-    significant_people: {
+    insanity:{
         type: String,
         max: 256,
         default: ''
     },
-    meaningful_location: {
-        type: String,
-        max: 256,
-        default: ''
-    },
-    treasured_possession: {
+    family: {
         type: String,
         max: 256,
         default: ''
@@ -65,17 +60,17 @@ const COC6thStorySchema = new mongoose.Schema({
         max: 256,
         default: ''
     },
-    myth: {
-        type: String,
-        max: 5,
-        default: "否"
-    },
     injuries: {
         type: String,
         max: 256,
         default: ''
     },
-    mania: {
+    scars: {
+        type: String,
+        max: 256,
+        default: ''
+    },
+    tomes: {
         type: String,
         max: 256,
         default: ''

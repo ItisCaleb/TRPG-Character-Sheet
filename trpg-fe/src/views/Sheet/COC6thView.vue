@@ -4,11 +4,12 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
       </Title>
-      <Tab class="tab" :page="['info','background','skill','option']">
+      <Tab class="tab" :page="['info','background','weapon_equip','skill','option']">
         <COC6thInfo view v-if="success.info && success.stat" :stat="stat" :info="info" :equip="equip" :story="story"
                     :mytho="getMytho"
                     slot="info"></COC6thInfo>
         <COC6thBackground view :story="story" slot="background"></COC6thBackground>
+        <COC6thEquip view :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
         <div slot="option">
           <ChangeLang/>
@@ -27,9 +28,10 @@ import Load from "@/components/Load";
 import COC6thBackground from "@/components/Sheet/COC6th/COC6thBackground";
 import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
 import ChangeLang from "@/components/Sheet/ChangeLang";
+import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
 export default {
   name: "COC6thView",
-  components: {ChangeLang, COC6thSkill, COC6thBackground, Load, COC6thInfo, Tab, Title},
+  components: {COC6thEquip, ChangeLang, COC6thSkill, COC6thBackground, Load, COC6thInfo, Tab, Title},
   data() {
     return {
       info: {
@@ -40,8 +42,6 @@ export default {
         hp: 0,
         san: 0,
         mp: 0,
-        insane_status: "無",
-        injured_status: "無",
         characteristic: {
           str: 0,
           con: 0,
@@ -66,17 +66,15 @@ export default {
         age: "",
         sex: "",
         degree:"",
+        mental:"",
+        insanity:"",
         residence: "",
         birthplace: "",
         description: "",
-        belief: "",
-        significant_people: "",
-        meaningful_location: "",
-        treasured_possession: "",
+        family: "",
         trait: "",
-        myth: "",
         injuries: "",
-        mania: "",
+        scars:"",
         magic: "",
         encounter: "",
         fellow_investigator: ""

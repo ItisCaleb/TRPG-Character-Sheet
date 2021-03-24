@@ -16,16 +16,6 @@ const COC6thStatSchema = new mongoose.Schema({
         max: 40,
         default: 0
     },
-    insane_status: {
-        type: String,
-        max: 20,
-        default: '無'
-    },
-    injured_status: {
-        type: String,
-        max: 20,
-        default: '無'
-    },
     characteristic: {
         type: Object,
         default: {

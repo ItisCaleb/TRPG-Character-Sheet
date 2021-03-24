@@ -19,6 +19,7 @@
       <SheetInput v-model="story.degree" :max="64" :name="$t('coc6th.degree')" :view="view"/>
       <SheetInput v-model="story.birthplace" :max="64" :name="$t('coc6th.birthplace')" :view="view"/>
       <SheetInput v-model="story.residence" :max="64" :name="$t('coc6th.residence')" :view="view"/>
+      <SheetInput v-model="story.mental" :max="64" :name="$t('coc6th.mental')" :view="view"/>
     </SheetSection>
     <SheetSection :title="$t('coc6th.char_status')">
       <div style="display: flex">
@@ -40,34 +41,7 @@
           <div>{{ $t('coc6th.luk') }}: {{ getStats(stat.characteristic.pow) }}</div>
           <div>{{ $t('coc6th.idea') }}：{{ getStats(stat.characteristic.int) }}</div>
           <div>{{ $t('coc6th.know') }}：{{ getStats(stat.characteristic.edu) }}</div>
-          <label>
-            {{ $t('coc6th.injured_status') }}
-            <select v-model="stat.injured_status" :disabled="view">
-              <option selected value="none">{{ $t('none') }}</option>
-              <option value="injured1">{{ $t('coc6th.injured1') }}</option>
-              <option value="injured2">{{ $t('coc6th.injured2') }}</option>
-              <option value="injured3">{{ $t('coc6th.injured3') }}</option>
-            </select>
-          </label>
-          <label>
-            {{ $t('coc6th.insane_status') }}
-            <select v-model="stat.insane_status" :disabled="view">
-              <option selected value="none">{{ $t('none') }}</option>
-              <option value="insane1">{{ $t('coc6th.insane1') }}</option>
-              <option value="insane2">{{ $t('coc6th.insane2') }}</option>
-              <option value="insane3">{{ $t('coc6th.insane3') }}</option>
-            </select>
-          </label>
         </div>
-      </div>
-      <div>
-        <h4 style="font-weight: bold">{{ $t('coc6th.char_equip') }}</h4>
-        <SheetInput v-model="equip.cash" :max="128" :name="$t('coc6th.money')" :val="equip.cash"
-                    :view="view"></SheetInput>
-        <SheetTextArea v-model="equip.weapon" :max="256" :name="$t('coc6th.weapon')" :val="equip.weapon" :view="view"
-                       style="height: 170px;margin-bottom: 10%"></SheetTextArea>
-        <SheetTextArea v-model="equip.equip" :max="512" :name="$t('coc6th.equip')" :val="equip.equip" :view="view"
-                       style="height: 170px;margin-bottom: 7%"></SheetTextArea>
       </div>
     </SheetSection>
     <SheetSection :title="$t('coc6th.char_image')">
@@ -95,11 +69,10 @@ import SheetInput from "@/components/Sheet/SheetInput";
 import api from "@/api";
 import SheetSection from "@/components/Sheet/SheetSection";
 import SheetGridInput from "@/components/Sheet/SheetGridInput";
-import SheetTextArea from "@/components/Sheet/SheetTextArea";
 
 export default {
   name: "COC6thInfo",
-  components: {SheetTextArea, SheetGridInput, SheetSection, SheetInput},
+  components: { SheetGridInput, SheetSection, SheetInput},
   props: {
     info: {
       type: Object,
@@ -110,10 +83,6 @@ export default {
       required: true
     },
     story: {
-      type: Object,
-      required: true
-    },
-    equip: {
       type: Object,
       required: true
     },

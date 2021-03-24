@@ -48,12 +48,12 @@ export default {
   methods: {
     pwdVerify() {
       const len = this.data.password.length;
-      if (len >= 8 && len <= 20 || len === 0) {
+      if (len >= 6 && len <= 30 || len === 0) {
         this.verified.pwd = true
         this.msg.pwd = ""
       } else {
         this.verified.pwd = false
-        this.msg.pwd = "密碼長度為8到20個字元"
+        this.msg.pwd = "密碼長度為6到30個字元"
       }
     },
     repwdVerify() {
