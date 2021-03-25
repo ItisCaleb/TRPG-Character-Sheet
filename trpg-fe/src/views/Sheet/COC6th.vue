@@ -11,8 +11,8 @@
         <COC6thInfo v-if="success.info && success.stat" :stat="stat"  :info="info" :equip="equip" :story="story"
                     :mytho="getMytho"
                     slot="info"></COC6thInfo>
-        <COC6thBackground :story="story" slot="background"></COC6thBackground>
-        <COC6thEquip :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
+        <COC6thBackground v-if="success.story" :story="story" slot="background"></COC6thBackground>
+        <COC6thEquip v-if="success.equip"   :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
         <div slot="option">
           檢視權限
@@ -135,6 +135,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
+            document.title = document.title + ` · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

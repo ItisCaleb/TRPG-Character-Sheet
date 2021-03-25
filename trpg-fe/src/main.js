@@ -28,6 +28,8 @@ const i18n = new VueI18n({
   silentTranslationWarn:true
 })
 
+
+
 new Vue({
   router,
   store,

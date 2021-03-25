@@ -3,7 +3,7 @@
     <Load>
       <div v-if="success" id="user">
         <Title>{{ user.name }}的頁面</Title>
-        <div class="custom-control custom-switch" style="text-align: center">
+        <div v-if="checkUser" class="custom-control custom-switch" style="text-align: center">
           <input type="checkbox" class="custom-control-input" id="dark-btn"
                  :checked="$store.state.darkMode" @click="$store.dispatch('changeDark')">
           <label class="custom-control-label" for="dark-btn">闇黑模式</label>
@@ -35,6 +35,12 @@ export default {
     setUser(user) {
       this.success = true
       this.user = user
+    },
+  },
+  computed:{
+    checkUser(){
+      if(!this.$store.getters.getUser.name) return false
+      return this.user.name === this.$store.getters.getUser.name
     }
   },
   beforeCreate(){

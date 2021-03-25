@@ -73,6 +73,15 @@ export default {
             this.$store.dispatch('logoutActions')
           })
     }
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to) {
+        if(!to.meta.title) return document.title = 'TRPG Toaster'
+        document.title = "TRPG Toaster · "+ to.meta.title
+      }
+    },
   }
 }
 </script>

@@ -220,6 +220,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
+            document.title = document.title + ` · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip
