@@ -18,7 +18,7 @@ export default {
     background: "Background",
     skill: "Skill",
     skill_equip: "Skill & Equipment",
-    weapon_equip:"Weapon & Equipment",
+    weapon_equip: "Weapon & Equipment",
     spell: "Spell",
     option: "Option",
     coc7th: {
@@ -173,7 +173,7 @@ export default {
         "Astronomy": "Astronomy",
         "Bargain": "Bargain",
         "Biology": "Biology",
-        "Chemistry":"Chemistry",
+        "Chemistry": "Chemistry",
         "Climb": "Climb",
         "Computer Use": "Computer Use",
         "Conceal": "Conceal",
@@ -186,6 +186,7 @@ export default {
         "Electronics": "Electronics",
         "Fast-Talk": "Fast-Talk",
         "First Aid": "First Aid",
+        "Firearm": "Firearm",
         "Geology": "Geology",
         "History": "History",
         "Jump": "Jump",
@@ -202,7 +203,7 @@ export default {
         "Persuade": "Persuade",
         "Pharmacy": "Pharmacy",
         "Photography": "Photography",
-        "Physics":"Physics",
+        "Physics": "Physics",
         "Psychoanalysis": "Psychoanalysis",
         "Psychology": "Psychology",
         "Ride": "Ride",
@@ -228,7 +229,11 @@ export default {
         "Language (Other)": "Language (Other)",
         "Language (Own)": "Language (Own)",
         "Science": "Science",
-        "Lore": "Lore"
+        "Lore": "Lore",
+        "Fist": "Fist",
+        "Kick": "Kick",
+        "Grapple": "Grapple",
+        "Head": "Head"
     },
     dnd5e: {
         char_info: "Character Info:",

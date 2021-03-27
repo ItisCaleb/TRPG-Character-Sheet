@@ -87,11 +87,19 @@
           {{ $t(`coc6th.${key}`) }}<br>
           <span v-show="checkLang">({{ key }})</span>
         </td>
-        <td class="base-skill"><input v-model="page3[key].custom" :placeholder="$t('coc6th.skill_custom')" :readonly="view"
-                                      class="form-control input-group"
-                                      @input="setCustom($event,key)"></td>
-        <td class="skill"><input v-model.number="page3[key].default" :readonly="view" class="form-control input-group"
-                                 type="number" @input="incSkill($event,'default',key,'page3')"></td>
+        <td class="base-skill">
+          <input v-if="!page3[key].nc" v-model="page3[key].custom" :placeholder="$t('coc6th.skill_custom')"
+                 :readonly="view"
+                 class="form-control input-group"
+                 @input="setCustom($event,key)">
+          <span v-else>{{ $t(`coc6th.${page3[key].custom}`) }}</span>
+        </td>
+        <td class="skill">
+          <input v-if="!page3[key].nd" v-model.number="page3[key].default" :readonly="view"
+                 class="form-control input-group"
+                 type="number" @input="incSkill($event,'default',key,'page3')">
+          <span v-else>{{ page3[key].default }}</span>
+        </td>
         <td class="skill"><input v-model.number="page3[key].interest" :readonly="view" class="form-control input-group"
                                  type="number" @input="incSkill($event,'interest',key,'page3')"></td>
         <td class="skill"><input v-model.number="page3[key].class" :readonly="view" class="form-control input-group"
@@ -180,27 +188,35 @@ export default {
         "Throw": {default: 25, interest: 0, class: 0, grow: 0},
         "Track": {default: 10, interest: 0, class: 0, grow: 0},
         "Handgun": {default: 20, interest: 0, class: 0, grow: 0},
-        "Machine Gun":{default: 15, interest: 0, class: 0, grow: 0},
-        "Rifle":{default: 25, interest: 0, class: 0, grow: 0},
-        "Shotgun":{default: 30, interest: 0, class: 0, grow: 0},
-        "SMG":{default: 15, interest: 0, class: 0, grow: 0},
+        "Machine Gun": {default: 15, interest: 0, class: 0, grow: 0},
+        "Rifle": {default: 25, interest: 0, class: 0, grow: 0},
+        "Shotgun": {default: 30, interest: 0, class: 0, grow: 0},
+        "SMG": {default: 15, interest: 0, class: 0, grow: 0},
       },
       page3: {
         "Pilot": {default: 20, custom: "", interest: 0, class: 0, grow: 0},
         "Art and Craft": {default: 5, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "ac1": {default: 5, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "ac2": {default: 5, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Fighting": {default: 25, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
-        "f1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "f2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Weapon": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
         "Language (Other)": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "l1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
         "l2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "Language (Own)": {default: 0, custom: "", interest: 0, class: 0, grow: 0},
+        "Language (Own)": {default: 0, custom: "", interest: 0, class: 0, grow: 0, nd: true},
         "Lore": {default: 1, custom: "", rows: 3, interest: 0, class: 0, grow: 0},
         "lore1": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
-        "lore2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0}
+        "lore2": {default: 1, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Weapon": {default: 50, custom: "Fist", rows: 6, interest: 0, class: 0, grow: 0,nc:true,nd:true},
+        "w1": {default: 25, custom: "Grapple", dep: true, interest: 0, class: 0, grow: 0,nc:true,nd:true},
+        "w2": {default: 10, custom: "Head", dep: true, interest: 0, class: 0, grow: 0,nc:true,nd:true},
+        "w3": {default: 25, custom: "Kick", dep: true, interest: 0, class: 0, grow: 0,nc:true,nd:true},
+        "w4": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "w5": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "Firearm": {default: 0, custom: "", rows: 6, interest: 0, class: 0, grow: 0},
+        "f1": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f2": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f3": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f4": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
+        "f5": {default: 0, custom: "", dep: true, interest: 0, class: 0, grow: 0},
       }
     }
   },
@@ -255,7 +271,7 @@ export default {
         this.page2[key].class = this.skills.skill[key].class || 0
         this.page2[key].grow = this.skills.skill[key].grow || 0
       } else if (key in this.page3) {
-        this.page3[key].custom = this.skills.skill[key].custom || ""
+        this.page3[key].custom = (this.page3[key].nc)?this.page3[key].custom:this.skills.skill[key].custom || ""
         this.page3[key].default = this.skills.skill[key].default || this.page3[key].default
         this.page3[key].interest = this.skills.skill[key].interest || 0
         this.page3[key].class = this.skills.skill[key].class || 0
@@ -333,6 +349,7 @@ table {
   width: 99%;
   text-align: center;
   height: 100%;
+  margin: auto;
 }
 
 td {

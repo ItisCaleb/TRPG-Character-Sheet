@@ -180,7 +180,11 @@ const skillMap = {
     "聆聽": "Listen",
     "圖書館使用": "Library Use",
     "偵查／觀察／調查": "Spot Hidden",
-    "克蘇魯神話": "Cthulhu Mythos"
+    "克蘇魯神話": "Cthulhu Mythos",
+    "拳頭":"Weapon",
+    "擒拿":"w1",
+    "踢擊":"w3",
+    "頭錘":"w2"
 }
 
 

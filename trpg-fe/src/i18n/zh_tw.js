@@ -290,6 +290,7 @@ export default {
         "Electronics": "電子學",
         "Fast-Talk": "話術",
         "First Aid": "急救",
+        "Firearm":"火器",
         "Geology": "地理學",
         "History": "歷史",
         "Jump": "跳躍",
@@ -333,6 +334,10 @@ export default {
         "Language (Own)": "母語",
         "Science": "科學",
         "Lore": "偏門學問",
+        "Fist": "拳頭",
+        "Kick": "踢擊",
+        "Grapple": "擒拿",
+        "Head": "頭槌"
     },
 
 }

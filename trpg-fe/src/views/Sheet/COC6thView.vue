@@ -9,7 +9,7 @@
                     :mytho="getMytho"
                     slot="info"></COC6thInfo>
         <COC6thBackground view :story="story" slot="background"></COC6thBackground>
-        <COC6thEquip view :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
+        <COC6thEquip view :equip="equip" :skills="skills" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
         <div slot="option">
           <ChangeLang/>
@@ -56,7 +56,10 @@ export default {
       equip: {
         equip: "",
         cash: "",
-        weapon: ""
+        weapon: {
+          weapon:[],
+          melee:[]
+        }
       },
       skills: {
         skill: {}

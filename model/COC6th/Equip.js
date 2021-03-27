@@ -12,9 +12,12 @@ const COC6thEquipSchema = new mongoose.Schema({
         default:''
     },
     weapon: {
-        type:String,
-        max:256,
-        default:''
+        type:Object,
+        default:{
+            melee:[],
+            firearm:[]
+        },
+        minimize:false
     },
 });
 

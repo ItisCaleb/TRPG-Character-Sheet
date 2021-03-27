@@ -12,7 +12,7 @@
                     :mytho="getMytho"
                     slot="info"></COC6thInfo>
         <COC6thBackground v-if="success.story" :story="story" slot="background"></COC6thBackground>
-        <COC6thEquip v-if="success.equip"   :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
+        <COC6thEquip v-if="success.equip" :skills="skills" :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
         <div slot="option">
           檢視權限
@@ -84,7 +84,10 @@ export default {
       equip: {
         equip: "",
         cash: "",
-        weapon: ""
+        weapon: {
+          melee:[],
+          firearm:[]
+        }
       },
       skills: {
         skill: {}

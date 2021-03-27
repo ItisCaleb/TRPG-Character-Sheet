@@ -400,6 +400,7 @@ table {
   width: 99%;
   text-align: center;
   height: 100%;
+  margin: auto;
 }
 td {
   border: 1px solid lightgray;
