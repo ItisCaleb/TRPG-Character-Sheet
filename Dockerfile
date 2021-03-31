@@ -11,7 +11,7 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-COPY /trpg/dist/index.ejs /trpg/views
+RUN mv ./dist/index.ejs ./views
 
 EXPOSE 2100
 CMD [ "node", "app.js" ]
