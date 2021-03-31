@@ -77,10 +77,13 @@ app.all('*', function (req, res, next) {
     }
     next();
 })
-const history = require('connect-history-api-fallback');
-app.use(history());
+const SSRRouter = require('./utils/SSRRouter')
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.get('*',SSRRouter,function (req,res,next){
+    console.log(req.title)
+    res.render('index',{title:req.title})
+    next()
+})
 
 // start server
 const port = process.env.PORT || 3000;
