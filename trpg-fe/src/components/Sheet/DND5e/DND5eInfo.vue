@@ -225,7 +225,7 @@ export default {
     cancelImage() {
       if (!this.avatar) return
       this.avatar = ""
-      api.removeImage('COC7th', this.$route.params.id)
+      api.removeImage('DND5e', this.$route.params.id)
           .then(() => {
             this.image_success.msg = "成功移除"
             this.image_success.color = "#10a36a"

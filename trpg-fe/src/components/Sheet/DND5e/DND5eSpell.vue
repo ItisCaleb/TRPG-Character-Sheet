@@ -8,7 +8,7 @@
         <select :disabled="view" v-model="spell.spell_ability">
           <option value="cha">{{ $t('dnd5e.cha') }}</option>
           <option value="int">{{ $t('dnd5e.int') }}</option>
-          <option value="int">{{ $t('dnd5e.wis') }}</option>
+          <option value="wis">{{ $t('dnd5e.wis') }}</option>
         </select>
       </label>
       <div class="inline">

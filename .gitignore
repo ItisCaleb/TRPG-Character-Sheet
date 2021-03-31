@@ -5,6 +5,6 @@
 .env
 dist
 node_modules
-views/index.html
+views/index.ejs
 python/test.py
 /mongo/
