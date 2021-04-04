@@ -52,12 +52,21 @@ const routes = [
         title: "團務詳情",
     },
     {
+        path:"/session/link/:code",
+        title: async params=>{
+            const info = await (require('../model/SessionLink').findOne({code:params.code}))
+            if(!info) return "此連結無效或已經過期"
+            const session = await (require('../model/Session').findOne({_id:info._id}))
+            return `加入團務-${session.name}`
+        }
+    },
+    {
         path: "/sheet",
         title: "角色卡",
     },
     {
         path: "/sheet/COC7th/:id",
-        title: async (params) => {
+        title: async params => {
             const info = await (require('../model/SheetInfo').findOne({_id: params.id, system: "COC7th"}))
             if (!info) return "此角色不存在"
             return `COC7th · ${info.name}`
@@ -65,7 +74,7 @@ const routes = [
     },
     {
         path: "/sheet/COC6th/:id",
-        title: async (params) => {
+        title: async params => {
             const info = await (require('../model/SheetInfo').findOne({_id: params.id, system: "COC6th"}))
             if (!info) return "此角色不存在"
             return `COC6th · ${info.name}`

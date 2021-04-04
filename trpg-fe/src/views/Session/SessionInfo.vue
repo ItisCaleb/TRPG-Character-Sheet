@@ -1,6 +1,6 @@
 <template>
   <div v-if="success" style="text-align: center">
-    <Title>團務{{ Session.name }}</Title>
+    <Title>團務-{{ Session.name }}</Title>
     <Msgbox ref="boxShow">
       <div id="box-content">
         <Title>
