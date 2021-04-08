@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:lts-alpine3.13
 
 WORKDIR /trpg/trpg-fe
 COPY /trpg-fe/package*.json ./

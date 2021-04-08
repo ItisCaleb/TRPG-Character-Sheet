@@ -80,7 +80,6 @@ app.all('*', function (req, res, next) {
 const SSRRouter = require('./utils/SSRRouter')
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*',SSRRouter,function (req,res,next){
-    console.log(req.title)
     res.render('index',{title:req.title})
     next()
 })

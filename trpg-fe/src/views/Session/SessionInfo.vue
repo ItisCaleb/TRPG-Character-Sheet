@@ -150,7 +150,6 @@ export default {
   beforeMount() {
     api.getSessionInfo(this.$route.params.id)
         .then(res => {
-          console.log(res)
           this.Session = res
           this.success = true
           const user = this.$store.getters.getUser
