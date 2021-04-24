@@ -129,9 +129,12 @@ export default {
       }
     }
   },
+  props:{
+    session:Object
+  },
   methods: {
     loadSheet() {
-      api.getSheetData(this.$route.params.id)
+      api.getSheetData('DND5e',this.$route.params.id)
           .then(data => {
             this.info = data.info
             this.success.info = true
@@ -168,6 +171,7 @@ export default {
   mounted() {
     this.loadSheet()
     this.$socket.emit('joinSheet', this.$route.params.id)
+    console.log(this.$route.params)
   }
 }
 </script>

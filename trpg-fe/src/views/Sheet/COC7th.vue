@@ -128,7 +128,7 @@ export default {
       window.getSelection().removeAllRanges()
     },
     loadSheet() {
-      api.getSheetData(this.$route.params.id)
+      api.getSheetData('COC7th',this.$route.params.id)
           .then(data => {
             this.info = data.info
             this.success.info = true
@@ -288,9 +288,9 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    api.checkSheetAccess(to.params.id)
+    api.checkSheetAccess(to.params.id,to.query.session)
         .then(res => {
-          switch (res) {
+          switch (res.perm) {
             case "author":
               next()
               break

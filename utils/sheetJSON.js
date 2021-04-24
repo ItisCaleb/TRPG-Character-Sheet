@@ -13,15 +13,17 @@ const COC6thEquip = require('../model/COC6th/Equip');
 const COC6thSkill = require('../model/COC6th/Skill');
 
 
-module.exports = function (id) {
+module.exports = function (req) {
     return new Promise(async (resolve, reject) => {
         let info;
+        let id = req.params.id
         try {
             info = await Info.findOne({_id:id}).lean()
         }catch(err) {
             reject(err)
         }
         if(!info) return reject("notFound")
+        if(req.params.system !== info.system) return  reject('wrong system')
         const system=info.system
         let sheet = {}
         switch (system) {

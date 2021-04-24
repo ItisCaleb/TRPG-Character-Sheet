@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     loadSheet() {
-      api.getSheetData(this.$route.params.id)
+      api.getSheetData('COC7th',this.$route.params.id)
           .then(data => {
             this.info = data.info
             this.success.info = true

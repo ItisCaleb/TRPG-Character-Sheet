@@ -145,6 +145,9 @@ const routes = [
         meta: {
             title: "COC7th"
         },
+        props:route=>({
+            session:route.params.session
+        })
     },
     {
         path: '/sheet/COC6th/:id',
@@ -176,6 +179,9 @@ const routes = [
         meta: {
             title: "DND5e"
         },
+        props:route=>({
+            session:route.params.session
+        })
     },
     {
         path: '*',

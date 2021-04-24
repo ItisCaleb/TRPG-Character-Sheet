@@ -20,8 +20,9 @@
             <option>所有人</option>
           </select><br>
           <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/DND5e/'+$route.params.id">
-          <button class="btn-primary btn" @click="copyCode">複製角卡連結</button><br>
-          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
+          <button class="btn-primary btn" @click="copyCode">複製角卡連結</button>
+          <br>
+          <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{ $t('delete') }}</button>
           <ChangeLang/>
           <Msgbox ref="deleteBox">
             <div style="text-align: center;margin: 10% auto">
@@ -146,7 +147,8 @@ export default {
         all: false,
         not_init: false,
         upload: true
-      }
+      },
+      session: {}
     }
   },
   watch: {
@@ -206,17 +208,17 @@ export default {
 
   },
   methods: {
-    copyCode(){
+    copyCode() {
       const code = document.getElementById('code')
-      code.setAttribute('type','text')
+      code.setAttribute('type', 'text')
       code.select()
-      code.setSelectionRange(0,99999)
+      code.setSelectionRange(0, 99999)
       document.execCommand('copy')
-      code.setAttribute('type','hidden')
+      code.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
     },
     loadSheet() {
-      api.getSheetData(this.$route.params.id)
+      api.getSheetData('DND5e', this.$route.params.id)
           .then(data => {
             this.info = data.info
             this.success.info = true
@@ -318,14 +320,18 @@ export default {
     this.$socket.emit('joinSheet', this.$route.params.id)
   },
   beforeRouteEnter(to, from, next) {
-    api.checkSheetAccess(to.params.id)
+    api.checkSheetAccess(to.params.id, to.query.session)
         .then(res => {
-          switch (res) {
+          switch (res.perm) {
             case "author":
-              next()
+              next(vm => vm.session = res.session)
               break
             case "view":
-              next({name: "DND5eView", params: {id: to.params.id}})
+              next({
+                name: "DND5eView",
+                params: {id: to.params.id, session: res.session},
+                query: {session: to.query.session}
+              })
               break
             case "noPerm":
               next('/sheet')

@@ -120,7 +120,8 @@ export default {
           })
     },
     toSheet(system, url) {
-      this.$router.push(`/sheet/${system}/${url}`)
+      let route = this.$router.resolve({path: `/sheet/${system}/${url}`,query:{session:this.$route.params.id}});
+      window.open(route.href, '_blank');
     },
     createInvite() {
       if (this.Session.code) return

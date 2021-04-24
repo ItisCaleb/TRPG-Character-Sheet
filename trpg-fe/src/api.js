@@ -66,8 +66,8 @@ export default {
     getSheets() {
         return ajax('sheet/getSheets', 'get')
     },
-    getSheetData(id) {
-        return ajax(`sheet/getSheetData/${id}`, 'get')
+    getSheetData(system,id) {
+        return ajax(`sheet/getSheetData/${system}/${id}`, 'get')
     },
     deleteSheet(id) {
         return ajax(`sheet/delete/${id}`, 'delete')
@@ -81,8 +81,9 @@ export default {
     editSheet(system,id,data){
         return ajax(`sheet/${system}/edit/${id}`,"post",data)
     },
-    checkSheetAccess(id){
-        return ajax(`sheet/checkAccess/${id}`,'get')
+    checkSheetAccess(id,session){
+        let query = (session)?`?session=${session}`:""
+        return ajax(`sheet/checkAccess/${id}${query}`,'get')
     },
     getImage(type,id){
         return ajax(`image/getImage/${type}/${id}`)

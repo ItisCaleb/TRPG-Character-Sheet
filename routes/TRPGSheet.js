@@ -13,7 +13,7 @@ const COC7thStory = require('../model/COC7th/Story');
 const COC7thEquip = require('../model/COC7th/Equip');
 const COC7thSkill = require('../model/COC7th/Skill');
 const COC6thStat = require('../model/COC6th/Stat');
-const COC6thStory= require('../model/COC6th/Story');
+const COC6thStory = require('../model/COC6th/Story');
 const COC6thEquip = require('../model/COC6th/Equip');
 const COC6thSkill = require('../model/COC6th/Skill');
 const DND5eStat = require('../model/DND5e/Stat');
@@ -45,43 +45,51 @@ router.get('/getSheets', verify, async function (req, res) {
 router.get('/checkAccess/:id', async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])
     const sheet = await Info.findOne({_id: req.params.id})
-    if (user && user._id === sheet.author.toString()) res.send('author')
-    else if (sheet.permission === '所有人' || user.admin) res.send('view')
-    else if (sheet.session.length === 0) res.send('noPerm')
+    let session,perm
+    if (user && user._id === sheet.author.toString()) perm='author'
+    else if (sheet.permission === '所有人' || user.admin) perm='view'
+    else if (sheet.session.length === 0) {
+        return res.send({
+            perm:'noPerm',
+        })
+    }
     else {
         if (!user) return res.sendStatus(401)
         for (let id in sheet.session) {
             const session = await Session.findOne({_id: sheet.session[id]})
             switch (sheet.permission) {
                 case "限團務GM": {
-                    if (user.name === session.gm) return res.send('view')
+                    if (user.name === session.gm) perm='view'
                     break;
                 }
                 case "團務所有人": {
-                    if (session.player.includes(user.name)) return res.send('view')
+                    if (session.player.includes(user.name)) perm='view'
                     break;
                 }
             }
+            if(perm) break
         }
-        return res.send('noPerm')
+        return res.send({
+            perm:'noPerm',
+        })
     }
+    if(sheet.session.includes(req.query.session)){
+        session= (await Session.findOne({_id:req.query.session})).sheet
+    }
+    res.send({
+        perm:perm,
+        session:session
+    })
 })
 
-router.get('/getSheetData/:id', function (req, res) {
-    const id = req.params.id
-    try {
-        getTRPGSheet(id)
-            .then(data => {
-                res.send(data)
-            })
-            .catch(err => {
-                res.status(400).send(err)
-            })
-    } catch (err) {
-        res.status(400).send(err)
-    }
-
-
+router.get('/getSheetData/:system/:id', function (req, res) {
+    getTRPGSheet(req)
+        .then(data => {
+            res.send(data)
+        })
+        .catch(err => {
+            res.status(400).send(err)
+        })
 })
 
 
