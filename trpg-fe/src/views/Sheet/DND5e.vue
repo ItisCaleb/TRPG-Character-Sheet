@@ -54,7 +54,7 @@ import SheetMixins from "@/components/Sheet/SheetMixins";
 
 export default {
   name: "DND5e",
-  components: {SessionSidebar, ChangeLang, Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {ChangeLang, Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   mixins:[SheetMixins],
   data() {
     return {
