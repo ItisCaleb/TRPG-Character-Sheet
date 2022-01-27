@@ -1,7 +1,6 @@
 <template>
   <Load v-if="success.all">
     <div>
-      <SessionSidebar v-if="session" :session="session"/>
       <Title>
         <span>{{ info.name || '無名' }}</span>
         <i :style="{color:getSuccessColor}" class="fa"
@@ -51,7 +50,7 @@ import debounce from "lodash.debounce";
 import Msgbox from "@/components/Msgbox";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import SheetMixins from "@/components/Sheet/SheetMixins";
-import SessionSidebar from "@/components/Sheet/SessionSidebar";
+//import SessionSidebar from "@/components/Sheet/SessionSidebar";
 
 export default {
   name: "DND5e",
