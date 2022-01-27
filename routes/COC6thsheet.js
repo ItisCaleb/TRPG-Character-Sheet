@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
 const Info = require('../model/SheetInfo');
-const LLtrpgTranslate = require('../utils/converter/LLtrpgCOC6thMap')
 //import sheet schema
 const COC6thStat = require('../model/COC6th/Stat');
 const COC6thStory = require('../model/COC6th/Story');
