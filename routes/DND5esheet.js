@@ -14,7 +14,7 @@ const Avatar = require('../model/Avatar');
 
 router.get('/DND5e/create/:name', verify, async function (req, res) {
     const creator = jwt.decode(req.cookies['auth_token']);
-    const user = await User.findOne({_id: creator._id});
+    const user = await User.findById({_id: creator._id});
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
     const sheet = new Info({
         name: req.params.name,
@@ -22,22 +22,11 @@ router.get('/DND5e/create/:name', verify, async function (req, res) {
         system: "DND5e",
         author: creator._id
     });
-    const stat = new DND5eStat({
-        _id: sheet._id,
-    });
-    const story = new DND5eStory({
-        _id: sheet._id,
-    });
-    const spell = new DND5eSpell({
-        _id: sheet._id,
-    });
-    const equip = new DND5eEquip({
-        _id: sheet._id,
-    });
-    const avatar = new Avatar({
-        _id: sheet._id,
-        type: "DND5e"
-    })
+    const stat = new DND5eStat({_id: sheet._id,});
+    const story = new DND5eStory({_id: sheet._id,});
+    const spell = new DND5eSpell({_id: sheet._id,});
+    const equip = new DND5eEquip({_id: sheet._id,});
+    const avatar = new Avatar({_id: sheet._id, type: "DND5e"})
     try {
         await sheet.save();
         await stat.save();

@@ -24,12 +24,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 18px;
-
   margin: auto;
 }
 
 #content {
-  width: 90%;
+  width: 100%;
   margin-top: 10%;
   margin-bottom: 5%;
 

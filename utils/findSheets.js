@@ -18,42 +18,42 @@ module.exports = function (req) {
         let info;
         let id = req.params.id
         try {
-            info = await Info.findOne({_id:id}).lean()
+            info = await Info.findById({_id:id}).lean()
         }catch(err) {
             reject(err)
         }
         if(!info) return reject("notFound")
-        if(req.params.system !== info.system) return  reject('wrong system')
+        if(req.params.system !== info.system) return reject('Wrong System')
         const system=info.system
         let sheet = {}
         switch (system) {
             case 'COC7th':
                 sheet = {
                     info: info,
-                    stat: await COC7thStat.findOne({_id: id}).lean(),
-                    story: await COC7thStory.findOne({_id: id}).lean(),
-                    equip: await COC7thEquip.findOne({_id: id}).lean(),
-                    skill: await COC7thSkill.findOne({_id: id}).lean()
+                    stat: await COC7thStat.findById({_id: id}).lean(),
+                    story: await COC7thStory.findById({_id: id}).lean(),
+                    equip: await COC7thEquip.findById({_id: id}).lean(),
+                    skill: await COC7thSkill.findById({_id: id}).lean()
                 }
                 resolve(sheet)
                 break;
             case 'COC6th':
                 sheet = {
                     info: info,
-                    stat: await COC6thStat.findOne({_id: id}).lean(),
-                    story: await COC6thStory.findOne({_id: id}).lean(),
-                    equip: await COC6thEquip.findOne({_id: id}).lean(),
-                    skill: await COC6thSkill.findOne({_id: id}).lean()
+                    stat: await COC6thStat.findById({_id: id}).lean(),
+                    story: await COC6thStory.findById({_id: id}).lean(),
+                    equip: await COC6thEquip.findById({_id: id}).lean(),
+                    skill: await COC6thSkill.findById({_id: id}).lean()
                 }
                 resolve(sheet)
                 break;
             case 'DND5e':
                 sheet = {
                     info: info,
-                    stat: await DND5eStat.findOne({_id: id}).lean(),
-                    story: await DND5eStory.findOne({_id: id}).lean(),
-                    equip: await DND5eEquip.findOne({_id: id}).lean(),
-                    spell: await DND5eSpell.findOne({_id: id}).lean()
+                    stat: await DND5eStat.findById({_id: id}).lean(),
+                    story: await DND5eStory.findById({_id: id}).lean(),
+                    equip: await DND5eEquip.findById({_id: id}).lean(),
+                    spell: await DND5eSpell.findById({_id: id}).lean()
                 }
                 resolve(sheet)
                 break;

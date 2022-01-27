@@ -15,7 +15,7 @@ router.get('/getImage/:type/:id',async (req,res)=>{
     const type = req.params.type;
     const id = req.params.id;
     try {
-        const avatar = await Avatar.findOne({_id:id,type:type}).lean()
+        const avatar = await Avatar.findById({_id:id,type:type}).lean()
         if(!avatar.image) return res.send("")
         res.send(Buffer.from(avatar.image.buffer.toString('base64')));
     }catch {

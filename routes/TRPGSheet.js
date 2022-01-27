@@ -6,7 +6,7 @@ const Info = require('../model/SheetInfo');
 const Session = require('../model/Session');
 const Sheet = require('../model/SheetInfo');
 const Image = require('../model/Avatar')
-const getTRPGSheet = require('../utils/sheetJSON')
+const getTRPGSheet = require('../utils/findSheets')
 //import sheet schema
 const COC7thStat = require('../model/COC7th/Stat');
 const COC7thStory = require('../model/COC7th/Story');
@@ -20,6 +20,7 @@ const DND5eStat = require('../model/DND5e/Stat');
 const DND5eStory = require('../model/DND5e/Story');
 const DND5eEquip = require('../model/DND5e/Equip');
 const DND5eSpell = require('../model/DND5e/Spell');
+const mongoose = require('mongoose')
 
 
 router.get('/getSheets', verify, async function (req, res) {
@@ -44,19 +45,18 @@ router.get('/getSheets', verify, async function (req, res) {
 });
 router.get('/checkAccess/:id', async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token'])
-    const sheet = await Info.findOne({_id: req.params.id})
-    let session,perm
+    const sheet = await Info.findById({_id: req.params.id})
+    let perm
     if (user && user._id === sheet.author.toString()) perm='author'
     else if (sheet.permission === '所有人' || user.admin) perm='view'
     else if (sheet.session.length === 0) {
-        return res.send({
-            perm:'noPerm',
-        })
+        return res.send('noPerm')
     }
     else {
         if (!user) return res.sendStatus(401)
-        for (let id in sheet.session) {
-            const session = await Session.findOne({_id: sheet.session[id]})
+        sheet.session=sheet.session.map(id=>mongoose.Types.ObjectId(id))
+        const sessions = await Session.findById({_id:{$in:sheet.session}})
+        for (let session in sessions) {
             switch (sheet.permission) {
                 case "限團務GM": {
                     if (user.name === session.gm) perm='view'
@@ -69,17 +69,9 @@ router.get('/checkAccess/:id', async function (req, res) {
             }
             if(perm) break
         }
-        return res.send({
-            perm:'noPerm',
-        })
+        return res.send('noPerm')
     }
-    if(sheet.session.includes(req.query.session)){
-        session= (await Session.findOne({_id:req.query.session})).sheet
-    }
-    res.send({
-        perm:perm,
-        session:session
-    })
+    res.send(perm)
 })
 
 router.get('/getSheetData/:system/:id', function (req, res) {
@@ -96,8 +88,8 @@ router.get('/getSheetData/:system/:id', function (req, res) {
 router.delete('/delete/:id', verify, async function (req, res) {
     const sheetId = req.params.id;
     const user = jwt.decode(req.cookies['auth_token'])._id;
-    const info = await Info.findOne({_id: sheetId});
-    if (info.author.toString() === user) {
+    const info = await Info.findOne({_id: sheetId,author:user});
+    if (info) {
         try {
             switch (info.system) {
                 case "COC7th":

@@ -50,6 +50,7 @@ import COC6thInfo from "@/components/Sheet/COC6th/COC6thInfo";
 import COC6thBackground from "@/components/Sheet/COC6th/COC6thBackground";
 import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
 import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
+import SheetMixins from "@/components/Sheet/SheetMixins";
 
 export default {
   name: "COC6th",
@@ -58,6 +59,7 @@ export default {
     COC6thSkill,
     COC6thBackground,
     COC6thInfo, ChangeLang, Msgbox,  Load,  Tab, Title},
+  mixins:[SheetMixins],
   data() {
     return {
       info: {
@@ -124,15 +126,6 @@ export default {
     }
   },
   methods: {
-    copyCode(){
-        const code = document.getElementById('code')
-        code.setAttribute('type','text')
-        code.select()
-        code.setSelectionRange(0,99999)
-        document.execCommand('copy')
-        code.setAttribute('type','hidden')
-        window.getSelection().removeAllRanges()
-    },
     loadSheet() {
       api.getSheetData('COC6th', this.$route.params.id)
           .then(data => {
@@ -154,20 +147,6 @@ export default {
             this.$router.replace('/sheet')
           })
     },
-    deleteSheet() {
-      api.deleteSheet(this.$route.params.id)
-          .then(res => {
-            this.$store.dispatch('setSheet')
-                .then(() => {
-                  this.$socket.emit('clientDelete', this.$route.params.id)
-                  alert(res)
-                  this.$router.replace('/sheet')
-                })
-          })
-          .catch(err => {
-            alert(err)
-          })
-    },
     updateSheet: debounce(function (sheet) {
       api.editSheet("COC6th", this.$route.params.id, sheet)
           .then(() => {
@@ -176,20 +155,7 @@ export default {
           .catch(err => {
             console.log(err)
           })
-    }, 2000),
-    socketInput: debounce(function (data, key) {
-      this.$socket.emit('clientInput', data, key, this.$route.params.id)
-    }, 1000),
-    $withoutWatchers(cb) {
-      const watchers = this._watchers.map((watcher) => ({cb: watcher.cb, sync: watcher.sync}))
-      for (let index in this._watchers) {
-        this._watchers[index] = Object.assign(this._watchers[index], {cb: () => null, sync: true})
-      }
-      cb()
-      for (let index in this._watchers) {
-        this._watchers[index] = Object.assign(this._watchers[index], watchers[index])
-      }
-    }
+    }, 2000)
   },
   computed: {
     getSheet() {
@@ -200,11 +166,6 @@ export default {
         equip: this.equip,
         skill: this.skills
       }
-    },
-    getSuccessColor() {
-      if (this.success.upload) {
-        return '#42b983'
-      } else return '#28a1dc'
     },
     getMytho() {
       if (!this.skills.skill) return 0
@@ -278,25 +239,10 @@ export default {
     this.loadSheet()
     this.$socket.emit('joinSheet', this.$route.params.id)
   },
-  sockets: {
-    syncInput(data) {
-      this.$withoutWatchers(() => {
-        this[data[1]] = data[0]
-      })
-    },
-    deleteSheet() {
-      this.$store.dispatch('setSheet')
-      this.$router.replace('/sheet')
-    },
-    reconnect() {
-      Object.assign(this.$data.success, this.$options.data().success)
-      this.loadSheet()
-    }
-  },
   beforeRouteEnter(to, from, next) {
     api.checkSheetAccess(to.params.id,to.query.session)
-        .then(res => {
-          switch (res.perm) {
+        .then(perm => {
+          switch (perm) {
             case "author":
               next()
               break

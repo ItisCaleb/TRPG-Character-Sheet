@@ -29,9 +29,12 @@ import COC6thBackground from "@/components/Sheet/COC6th/COC6thBackground";
 import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
+import SheetMixins from  "@/components/Sheet/SheetMixins"
+
 export default {
   name: "COC6thView",
   components: {COC6thEquip, ChangeLang, COC6thSkill, COC6thBackground, Load, COC6thInfo, Tab, Title},
+  mixins:[SheetMixins],
   data() {
     return {
       info: {
@@ -133,18 +136,6 @@ export default {
   mounted() {
     this.loadSheet()
     this.$socket.emit('joinSheet', this.$route.params.id)
-  },
-  sockets: {
-    syncInput(data) {
-      this[data[1]] = data[0]
-    },
-    deleteSheet() {
-      this.$router.replace('/sheet')
-    },
-    reconnect() {
-      Object.assign(this.$data.success, this.$options.data().success)
-      this.loadSheet()
-    }
   }
 }
 </script>

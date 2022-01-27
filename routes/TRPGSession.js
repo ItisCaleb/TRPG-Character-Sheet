@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Session = require('../model/Session');
+const mongoose = require('mongoose')
 const User = require("../model/User");
 const Info = require('../model/SheetInfo');
 const SessionLink = require('../model/SessionLink')
@@ -7,14 +8,14 @@ const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const {sessionValidation} = require("../utils/validation");
 
-
+// Get User's Sessions
 router.get('/getSessions', verify, async function (req, res) {
     const player = jwt.decode(req.cookies['auth_token']);
     const SessionFind = await Session.findOne({player: player.name});
-    const cursor = await Session.find({player: {$in: [player.name]}});
     if (!SessionFind) {
         res.send('你還沒創建團務')
     } else {
+        const cursor = await Session.find({player: {$in: [player.name]}});
         const session = [];
         cursor.forEach(function (Session) {
             session.push({
@@ -26,31 +27,37 @@ router.get('/getSessions', verify, async function (req, res) {
         res.status(200).send(session)
     }
 });
+
+
+//Get Session's Info
 router.get('/getInfo/:id', verify, async function (req, res) {
     const id = req.params.id
     try {
-        const info = await Session.findOne({_id: id}).lean()
+        const info = await Session.findById({_id: id}).lean()
         if (!info) return res.sendStatus(404)
         const sheets = {}
         const player = jwt.decode(req.cookies['auth_token']);
         if (!info.player.includes(player.name)) return res.status(403).send("你不是這團務的成員")
+        // Get member's sheets
         for (let user in info.sheet) {
             sheets[user] = []
-            for (let userSheet of info.sheet[user]) {
-                let sheet = await Info.findOne({_id: userSheet})
+            info.sheet[user] = info.sheet[user].map(id=>mongoose.Types.ObjectId(id))
+            // Check for every sheet's permission
+            const memberSheets = await Info.find({_id: {$in:info.sheet[user]}})
+            for (let userSheet of memberSheets) {
                 let access
-                switch (sheet.permission) {
+                switch (userSheet.permission) {
                     case "限團務GM":
-                        access = (player.name === info.gm || player._id === sheet.author.toString())
+                        access = (player.name === info.gm || player._id === userSheet.author.toString())
                         break
                     default :
                         access = true
                 }
                 sheets[user].push({
-                    id: sheet._id,
-                    name: sheet.name,
-                    system: sheet.system,
-                    player_name: sheet.player_name,
+                    id: userSheet._id,
+                    name: userSheet.name,
+                    system: userSheet.system,
+                    player_name: userSheet.player_name,
                     access: access
                 })
             }
@@ -59,7 +66,7 @@ router.get('/getInfo/:id', verify, async function (req, res) {
         const data = Object.assign({}, info)
         data.sheetInfos = sheets
         delete data.sheet
-        const link = await SessionLink.findOne({_id: info._id})
+        const link = await SessionLink.findById({_id: info._id})
         data.code = (link) ? link.code : ""
         res.status(200).send(data)
     } catch (err) {
@@ -70,7 +77,7 @@ router.get('/getInfo/:id', verify, async function (req, res) {
 
 //create invite link
 router.get('/createInvite/:id', async function (req, res) {
-    const codeExist = await SessionLink.findOne({_id: req.params.id})
+    const codeExist = await SessionLink.findById({_id: req.params.id})
     if (codeExist) return res.sendStatus(400)
     const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const code = Array(9).join().split(',').map(function () {
@@ -122,7 +129,7 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token']).name;
     const invite = await SessionLink.findOne({code: req.query.code})
     if (!invite) return res.status(400).send("此邀請碼無效或是過時");
-    const session = await Session.findOne({_id: invite._id});
+    const session = await Session.findById({_id: invite._id});
     //check if the player is already in the session
     if (session.player.includes(user)) return res.status(400).send('你已經加入此團務')
     //if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
@@ -184,9 +191,9 @@ router.get('/playerdelete/:id', verify, async function (req, res) {
     const player = req.params.id;
     //get current session
     const session = req.query.session;
+    if (!session) return res.status(400).send('URL的值無效')
     const gm = await Session.findOne({_id: session, gm: user.name});
     if (!gm) return res.status(400).send('你並無權限剔除人');
-    if (!session) return res.status(400).send('URL的值無效')
 
     //find player's information
     const player_user = await User.findOne({name: player})
@@ -207,7 +214,7 @@ router.get('/playerdelete/:id', verify, async function (req, res) {
 //leave or dismiss a session if you are the gm
 router.delete('/deleteSession/:id', verify, async function (req, res) {
     const user = jwt.decode(req.cookies['auth_token']);
-    const session = await Session.findOne({_id: req.params.id});
+    const session = await Session.findById({_id: req.params.id});
     const sheet = await Info.find({session: {$elemMatch: {$in: [req.params.id]}}});
     const user_sheet = await Info.find({session: {$elemMatch: {$in: [req.params.id]}}, author: user._id});
     if (session.gm === user.name) {

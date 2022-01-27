@@ -12,7 +12,7 @@ const InfoSchema = new mongoose.Schema({
         max: 64
     },
     author:{
-        type: mongoose.ObjectId,
+        type: mongoose.Types.ObjectId,
         required:true
     },
     system:{

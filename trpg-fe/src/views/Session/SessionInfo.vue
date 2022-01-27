@@ -9,7 +9,7 @@
         </Title>
         <h3 v-if="noSheet">{{ this.noSheet }}</h3>
         <div v-else>
-          <table class="table" style="width: 100%;height: 100%">
+          <table class="table" style="width: 100%;height: 100%;color: inherit">
             <tr>
               <td>角色卡</td>
               <td>系統</td>

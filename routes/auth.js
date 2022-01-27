@@ -21,7 +21,7 @@ const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—�
 router.get("/register/:id", async (req, res) => {
     //create new user
     const id = req.params.id;
-    const user = await tempUser.findOne({_id: id, type: "email"});
+    const user = await tempUser.findById({_id: id, type: "email"});
     if (!user) return res.sendStatus(404);
     const newUser = new User({
         name: user.name,
@@ -290,7 +290,7 @@ router.get('/verifyChangePwd/:id', async function (req, res) {
 
 //find password
 router.post('/changePassword/:id', async (req, res) => {
-    const check = await tempUser.findOne({_id: req.params.id});
+    const check = await tempUser.findById({_id: req.params.id});
     if (!check) return res.status(400).send('此連結已失效!');
     if (req.body.password !== req.body.repassword) return res.status(400).send('再次輸入密碼錯誤');
     const {error} = findPasswordValidation(req.body);

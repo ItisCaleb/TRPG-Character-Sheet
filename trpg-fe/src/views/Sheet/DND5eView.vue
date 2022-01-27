@@ -28,6 +28,7 @@ import DND5eEquip from "@/components/Sheet/DND5e/DND5eEquip";
 import DND5eStory from "@/components/Sheet/DND5e/DND5eStory";
 import DND5eSpell from "@/components/Sheet/DND5e/DND5eSpell";
 import ChangeLang from "@/components/Sheet/ChangeLang";
+import SheetMixins from  "@/components/Sheet/SheetMixins"
 
 export default {
   name: "DND5eView",
@@ -129,6 +130,7 @@ export default {
       }
     }
   },
+  mixins:[SheetMixins],
   props:{
     session:Object
   },
@@ -153,19 +155,6 @@ export default {
             console.log(err)
             this.$router.replace('/sheet')
           })
-    }
-  },
-  sockets: {
-    syncInput(data) {
-      this[data[1]] = data[0]
-    },
-    deleteSheet() {
-      this.$store.dispatch('setSheet')
-      this.$router.replace('/sheet')
-    },
-    reconnect() {
-      Object.assign(this.$data.success, this.$options.data().success)
-      this.loadSheet()
     }
   },
   mounted() {

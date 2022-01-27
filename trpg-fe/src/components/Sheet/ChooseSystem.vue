@@ -10,15 +10,15 @@
     <div style="display: inline-block;text-align: center;padding: 4px">
       <Title>選擇系統</Title>
       <div v-show="isCurrent('COC7th')" class="systems-info">
-        <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
+        <img class="systems-picture" src="../../assets/call-of-cthulhu-logo-black.jpg" alt="">
         <div class="system-text">使用克蘇魯的召喚7版的系統<br>創建屬於你的調查員</div>
       </div>
       <div v-show="isCurrent('COC6th')" class="systems-info">
-        <img class="systems-picture" src="../../../static/source/call-of-cthulhu-logo-black.jpg" alt="">
+        <img class="systems-picture" src="../../assets/call-of-cthulhu-logo-black.jpg" alt="">
         <div class="system-text">使用克蘇魯的召喚6版的系統<br>創建屬於你的調查員</div>
       </div>
       <div v-show="isCurrent('DND5e')" class="systems-info">
-        <img class="systems-picture" src="../../../static/source/dungeons-and-dragons-5th-edition-logo.png" alt="">
+        <img class="systems-picture" src="../../assets/dungeons-and-dragons-5th-edition-logo.png" alt="">
         <div class="system-text">使用龍與地下城5版的系統<br>創建屬於你的冒險者</div>
       </div>
       <FormInput v-model="name" type="text" id="name" ph="角色名稱"></FormInput>

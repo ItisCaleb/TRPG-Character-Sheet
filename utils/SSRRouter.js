@@ -56,7 +56,7 @@ const routes = [
         title: async params=>{
             const info = await (require('../model/SessionLink').findOne({code:params.code}))
             if(!info) return "此連結無效或已經過期"
-            const session = await (require('../model/Session').findOne({_id:info._id}))
+            const session = await (require('../model/Session').findById({_id:info._id}))
             return `加入團務-${session.name}`
         }
     },

@@ -60,12 +60,11 @@ import Tab from "@/components/Tab";
 import Title from "@/components/Title";
 import Msgbox from "@/components/Msgbox";
 import ChooseSystem from "@/components/Sheet/ChooseSystem";
-import ImportSheet from "@/components/Sheet/ImportSheet";
 
 
 export default {
   name: "Sheet",
-  components: {ImportSheet, ChooseSystem, Msgbox, Title, Tab},
+  components: {ChooseSystem, Msgbox, Title, Tab},
   data() {
     return {
       sheet: "",

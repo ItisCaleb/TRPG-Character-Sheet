@@ -14,7 +14,7 @@ const Avatar = require('../model/Avatar');
 
 router.get('/COC6th/create/:name', verify, async function (req, res) {
     const creator = jwt.decode(req.cookies['auth_token']);
-    const user = await User.findOne({_id: creator._id});
+    const user = await User.findById({_id: creator._id});
     if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
     //save new sheet
     const sheet = new Info({
@@ -54,50 +54,6 @@ router.get('/COC6th/create/:name', verify, async function (req, res) {
         res.status(400).send(err);
     }
 });
-
-router.post('/COC6th/import/:type', verify, async function (req, res) {
-    const creator = jwt.decode(req.cookies['auth_token']);
-    const user = await User.findOne({_id: creator._id});
-    if (user.sheet_number >= 20) return res.status(400).send('角色卡已達上限');
-    if (req.params.type === 'lltrpg') {
-        LLtrpgTranslate(req.body.data)
-            .then(async (sheet) => {
-                sheet.info.author = creator._id
-                const info = new Info(sheet.info);
-                sheet.skills._id = info._id
-                sheet.story._id = info._id
-                sheet.stat._id = info._id
-                sheet.equip._id = info._id
-                //save skill
-                const skill = new COC6thSkill(sheet.skills);
-                const stat = new COC6thStat(sheet.stat);
-                const story = new COC6thStory(sheet.story);
-                const equip = new COC6thEquip(sheet.equip);
-                const avatar = new Avatar({
-                    _id: sheet._id,
-                    type: "COC6th"
-                })
-                try {
-                    await info.save();
-                    await skill.save();
-                    await stat.save();
-                    await story.save();
-                    await equip.save();
-                    await avatar.save();
-                    await User.updateOne({_id: creator._id}, {$inc: {sheet_number: 1}});
-                    res.send(info._id);
-                } catch (err) {
-                    console.log(err)
-                    res.status(400).send(err);
-                }
-            })
-            .catch(err => {
-                res.status(400).send(err)
-            })
-
-    }
-
-})
 
 router.post('/COC6th/edit/:id', verify, async function (req, res) {
     const cs = req.body;

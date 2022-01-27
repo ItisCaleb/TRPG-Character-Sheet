@@ -7,7 +7,8 @@
     "test": "start npm run serve --prefix trpg-fe && npm run dev",
     "dev": "nodemon app.js",
     "build": "npm run build --prefix trpg-fe",
-    "installFront": "npm install --prefix trpg-fe"
+    "installFront": "npm install --prefix trpg-fe",
+    "mac": "npm run dev && npm run serve --prefix"
   },
   "author": "ItisCaleb",
   "license": "ISC",
@@ -21,7 +22,6 @@
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "ejs-locals": "^1.0.2",
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",

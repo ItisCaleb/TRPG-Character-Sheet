@@ -75,9 +75,6 @@ export default {
     createSheet(system, name) {
         return ajax(`sheet/${system}/create/${name}`, 'get')
     },
-    importSheet(system,type,data){
-        return ajax(`sheet/${system}/import/${type}`,'post',data)
-    },
     editSheet(system,id,data){
         return ajax(`sheet/${system}/edit/${id}`,"post",data)
     },
