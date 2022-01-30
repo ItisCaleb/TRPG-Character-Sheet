@@ -131,8 +131,10 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
     if (!invite) return res.status(400).send("此邀請碼無效或是過時");
     const session = await Session.findById({_id: invite._id});
     //check if the player is already in the session
-    if (session.player.includes(user)) return res.status(400).send('你已經加入此團務')
-    //if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
+    if (session.player.includes(user)) return res.send({
+        session: session._id,
+        player: user
+    })
     try {
         //add player and set it to map
         await Session.updateOne({_id: invite._id}, {$addToSet: {player: user}, $set:{["sheet."+user]:[]}});

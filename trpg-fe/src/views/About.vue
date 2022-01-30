@@ -6,11 +6,9 @@
         這是一個可以建置自動化TRPG角色卡的工具<br>
         你可以使用這個網站來幫助你快速建立角色卡<br>
         <div style="display: inline-block">
-          如果有任何疑惑，請回報admin@trpgtoater.com<br>
+          如果有任何疑惑或是建議，請直接私訊Discord:ItisCaleb#8775<br>
           <a href="https://github.com/ItisCaleb" target="_blank"><i class="fa fa-github fa-2x"></i></a>
           <a href="https://github.com/ItisCaleb" target="_blank">https://github.com/ItisCaleb</a><br>
-          <a href="https://github.com/Xialai-Kulimi" target="_blank"><i class="fa fa-github fa-2x"></i></a>
-          <a href="https://github.com/Xialai-Kulimi" target="_blank">https://github.com/Xialai-Kulimi</a>
         </div>
         <br>
         <router-link to="/privacy">隱私權政策</router-link>
