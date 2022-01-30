@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const http = require('http');
 const cors = require('cors');
-const csrf = require('csurf');
 const path = require('path');
 const rateLimit = require('express-rate-limit')
 //import routes
@@ -56,9 +55,6 @@ app.use(cors(corsOptions));
 // route middleware
 app.use(express.json());
 app.use(cookieParser());
-if (process.env.MODE !== 'dev') {
-    app.use(csrf({cookie: {key: "csrf", sameSite: "lax", httpOnly: true}}))
-}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -73,11 +69,6 @@ app.use('/api/image', ImageRoute);
 
 app.all('*', function (req, res, next) {
     res.setHeader('Cache-Control', 'public, max-age=604800')
-    if (process.env.MODE !== 'dev') {
-        res.cookie('csrfToken', req.csrfToken(), {
-            sameSite: 'lax'
-        })
-    }
     next();
 })
 const SSRRouter = require('./utils/SSRRouter')

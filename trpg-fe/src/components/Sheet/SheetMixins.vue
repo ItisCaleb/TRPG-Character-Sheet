@@ -71,7 +71,7 @@ export default {
       this.$router.replace('/sheet')
     },
     reconnect() {
-      Object.assign(this.$data.success, this.$options.data().success)
+      this.$data.success.not_init = false
       this.loadSheet()
     }
   },
