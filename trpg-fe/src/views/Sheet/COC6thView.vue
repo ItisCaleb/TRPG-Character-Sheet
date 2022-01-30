@@ -132,10 +132,6 @@ export default {
         return total
       }
     },
-  },
-  mounted() {
-    this.loadSheet()
-    this.$socket.emit('joinSheet', this.$route.params.id)
   }
 }
 </script>

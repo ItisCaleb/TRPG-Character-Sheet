@@ -4,13 +4,12 @@ const mongoose = require('mongoose')
 const User = require("../model/User");
 const Info = require('../model/SheetInfo');
 const SessionLink = require('../model/SessionLink')
-const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const {sessionValidation} = require("../utils/validation");
 
 // Get User's Sessions
 router.get('/getSessions', verify, async function (req, res) {
-    const player = jwt.decode(req.cookies['auth_token']);
+    const player = req.token;
     const SessionFind = await Session.findOne({player: player.name});
     if (!SessionFind) {
         res.send('你還沒創建團務')
@@ -36,7 +35,7 @@ router.get('/getInfo/:id', verify, async function (req, res) {
         const info = await Session.findById({_id: id}).lean()
         if (!info) return res.sendStatus(404)
         const sheets = {}
-        const player = jwt.decode(req.cookies['auth_token']);
+        const player = req.token;
         if (!info.player.includes(player.name)) return res.status(403).send("你不是這團務的成員")
         // Get member's sheets
         for (let user in info.sheet) {
@@ -80,6 +79,7 @@ router.get('/createInvite/:id', async function (req, res) {
     const codeExist = await SessionLink.findById({_id: req.params.id})
     if (codeExist) return res.sendStatus(400)
     const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //get random code
     const code = Array(9).join().split(',').map(function () {
         return charSet.charAt(Math.floor(Math.random() * charSet.length));
     }).join('');
@@ -101,7 +101,7 @@ router.post('/TRPGCreateSession', verify, async function (req, res) {
     if (sessionExist) return res.status(400).send('此名稱已存在');
 
     //decode auth_token to get user information
-    const user = jwt.decode(req.cookies['auth_token']).name;
+    const user = req.token.name;
     //get the user information in the database
     const gm = await User.findOne({name: user});
 
@@ -126,7 +126,7 @@ router.post('/TRPGCreateSession', verify, async function (req, res) {
 router.get('/TRPGJoinSession', verify, async function (req, res) {
 
     //decode
-    const user = jwt.decode(req.cookies['auth_token']).name;
+    const user = req.token.name;
     const invite = await SessionLink.findOne({code: req.query.code})
     if (!invite) return res.status(400).send("此邀請碼無效或是過時");
     const session = await Session.findById({_id: invite._id});
@@ -134,8 +134,8 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
     if (session.player.includes(user)) return res.status(400).send('你已經加入此團務')
     //if (playerExist.player.length>=16) return res.status(400).send('此團務已達15人的玩家上限')
     try {
-        const obj = Object.assign(session.sheet, {[user]: []})
-        await Session.updateOne({_id: invite._id}, {$addToSet: {player: user}, sheet: obj});
+        //add player and set it to map
+        await Session.updateOne({_id: invite._id}, {$addToSet: {player: user}, $set:{["sheet."+user]:[]}});
         res.send({
             session: session._id,
             player: user
@@ -147,8 +147,7 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
 
 router.post('/uploadSheet/:id', verify, async function (req, res) {
 
-    const user = jwt.decode(req.cookies['auth_token']);
-    const name = user.name
+    const name = req.token.name
     const session = await Session.findOne({_id: req.params.id, player: name})
     if (!session) return res.status(401).send('你無權限上傳角色卡')
     const sheet = req.body;
@@ -156,10 +155,10 @@ router.post('/uploadSheet/:id', verify, async function (req, res) {
         if (sheet === undefined) {
             return res.status(400).send('請選擇角卡上傳');
         }
-        const arr = [...new Set(session.sheet[name].concat(sheet))]
+        const arr = [...new Set(session.sheet.get(name).concat(sheet))]
         await Session.updateOne({_id: req.params.id}, {[`sheet.${[name]}`]: arr});
         for (let index in sheet) {
-            await Info.updateOne({_id: sheet[index], author: user._id}, {$addToSet: {session: req.params.id}});
+            await Info.updateOne({_id: sheet[index], author: req.token._id}, {$addToSet: {session: req.params.id}});
         }
         res.send('上傳成功');
     } catch (err) {
@@ -168,7 +167,7 @@ router.post('/uploadSheet/:id', verify, async function (req, res) {
     }
 });
 router.delete('/removeSheet/:id', verify, async function (req, res) {
-    const user = jwt.decode(req.cookies['auth_token']);
+    const user = req.token;
     const sheet = req.params.id;
     const session = req.query.session;
     if (!session) return res.status(400).send('URL的值無效')
@@ -185,7 +184,7 @@ router.delete('/removeSheet/:id', verify, async function (req, res) {
 })
 router.get('/playerdelete/:id', verify, async function (req, res) {
     //get current user
-    const user = jwt.decode(req.cookies['auth_token']);
+    const user = req.token;
     //check if the user is gm
     //get delete player
     const player = req.params.id;
@@ -213,7 +212,7 @@ router.get('/playerdelete/:id', verify, async function (req, res) {
 
 //leave or dismiss a session if you are the gm
 router.delete('/deleteSession/:id', verify, async function (req, res) {
-    const user = jwt.decode(req.cookies['auth_token']);
+    const user = req.token;
     const session = await Session.findById({_id: req.params.id});
     const sheet = await Info.find({session: {$elemMatch: {$in: [req.params.id]}}});
     const user_sheet = await Info.find({session: {$elemMatch: {$in: [req.params.id]}}, author: user._id});

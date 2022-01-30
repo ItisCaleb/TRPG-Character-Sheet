@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
-const  DND5eEquipSchema = new mongoose.Schema({
+const DND5eEquipSchema = new mongoose.Schema({
     attack:{
-        type:Object,
+        type:Map,
+        of:String,
         default: {
             first:"",
             second:"",
@@ -11,7 +12,8 @@ const  DND5eEquipSchema = new mongoose.Schema({
         }
     },
     money: {
-        type:Object,
+        type:Map,
+        of:Number,
         default:{
             cp:0,
             sp:0,

@@ -3,13 +3,9 @@
     <Title>角色卡</Title>
     <div>
       <button class="btn btn-primary box-btn" @click="$refs.createBox.$data.show=true">創建角色卡</button>
-      <button class="btn btn-primary box-btn" @click="$refs.importBox.$data.show=true">匯入角色卡</button>
     </div>
     <Msgbox ref="createBox">
       <ChooseSystem></ChooseSystem>
-    </Msgbox>
-    <Msgbox ref="importBox">
-      <ImportSheet></ImportSheet>
     </Msgbox>
     <Tab :page="['COC7th','COC6th','DND5e']" style="text-align: center">
       <div slot="COC7th">

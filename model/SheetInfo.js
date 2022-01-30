@@ -22,6 +22,7 @@ const InfoSchema = new mongoose.Schema({
     permission:{
         type: String,
         required:true,
+        enum: ['限團務GM', '團務所有人', '所有人'],
         default:'所有人'
     },
     session:Array

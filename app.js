@@ -8,7 +8,7 @@ const http = require('http');
 const cors = require('cors');
 const csrf = require('csurf');
 const path = require('path');
-
+const rateLimit = require('express-rate-limit')
 //import routes
 const authRoute = require("./routes/auth");
 const TRPGSessionRoute = require('./routes/TRPGSession');
@@ -48,7 +48,10 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-TOKEN'],
 }
 
-
+app.use(rateLimit({
+    windowMs: 60*1000,
+    max: 350
+}))
 app.use(cors(corsOptions));
 // route middleware
 app.use(express.json());

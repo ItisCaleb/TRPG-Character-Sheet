@@ -9,8 +9,6 @@ const upload = multer({
     }
 });
 
-
-
 router.get('/getImage/:type/:id',async (req,res)=>{
     const type = req.params.type;
     const id = req.params.id;
@@ -43,7 +41,7 @@ router.get('/removeImage/:type/:id',verify,async (req, res) => {
 })
 router.use((err,req,res,next)=>{
     if(err.code === 'LIMIT_FILE_SIZE'){
-        return res.status(400).send('你的圖片太大了!上限是800kb')
+        return res.status(400).send('你的圖片太大了!上限是1mb')
     }
 })
 

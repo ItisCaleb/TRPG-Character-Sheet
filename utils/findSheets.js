@@ -1,16 +1,5 @@
 const Info = require('../model/SheetInfo')
-const DND5eStat = require('../model/DND5e/Stat');
-const DND5eStory = require('../model/DND5e/Story');
-const DND5eEquip = require('../model/DND5e/Equip');
-const DND5eSpell = require('../model/DND5e/Spell');
-const COC7thStat = require('../model/COC7th/Stat');
-const COC7thStory = require('../model/COC7th/Story');
-const COC7thEquip = require('../model/COC7th/Equip');
-const COC7thSkill = require('../model/COC7th/Skill');
-const COC6thStat = require('../model/COC6th/Stat');
-const COC6thStory = require('../model/COC6th/Story');
-const COC6thEquip = require('../model/COC6th/Equip');
-const COC6thSkill = require('../model/COC6th/Skill');
+
 
 
 module.exports = function (req) {
@@ -48,13 +37,7 @@ module.exports = function (req) {
                 resolve(sheet)
                 break;
             case 'DND5e':
-                sheet = {
-                    info: info,
-                    stat: await DND5eStat.findById({_id: id}).lean(),
-                    story: await DND5eStory.findById({_id: id}).lean(),
-                    equip: await DND5eEquip.findById({_id: id}).lean(),
-                    spell: await DND5eSpell.findById({_id: id}).lean()
-                }
+                sheet = await new DND5e(id).exec()
                 resolve(sheet)
                 break;
         }

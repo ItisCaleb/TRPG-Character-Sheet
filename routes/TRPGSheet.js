@@ -6,25 +6,16 @@ const Info = require('../model/SheetInfo');
 const Session = require('../model/Session');
 const Sheet = require('../model/SheetInfo');
 const Image = require('../model/Avatar')
-const getTRPGSheet = require('../utils/findSheets')
 //import sheet schema
-const COC7thStat = require('../model/COC7th/Stat');
-const COC7thStory = require('../model/COC7th/Story');
-const COC7thEquip = require('../model/COC7th/Equip');
-const COC7thSkill = require('../model/COC7th/Skill');
-const COC6thStat = require('../model/COC6th/Stat');
-const COC6thStory = require('../model/COC6th/Story');
-const COC6thEquip = require('../model/COC6th/Equip');
-const COC6thSkill = require('../model/COC6th/Skill');
-const DND5eStat = require('../model/DND5e/Stat');
-const DND5eStory = require('../model/DND5e/Story');
-const DND5eEquip = require('../model/DND5e/Equip');
-const DND5eSpell = require('../model/DND5e/Spell');
+const DND5e = require('../model/DND5e/DND5e')
+const COC7th = require('../model/COC7th/COC7th')
+const COC6th = require('../model/COC6th/COC6th')
+
 const mongoose = require('mongoose')
 
 
 router.get('/getSheets', verify, async function (req, res) {
-    const id = jwt.decode(req.cookies['auth_token'])._id;
+    const id = req.token._id;
     const SheetFind = await Sheet.findOne({author: id});
     const cursor = await Sheet.find({author: {$in: [id]}});
     if (!SheetFind) {
@@ -44,76 +35,88 @@ router.get('/getSheets', verify, async function (req, res) {
 
 });
 router.get('/checkAccess/:id', async function (req, res) {
+    if(req.cookies['auth_token']){
+        try {
+            jwt.verify(req.cookies['auth_token'], process.env.JWT_SECRET);
+        }catch (err){
+            res.status(401).send('哈哈')
+        }
+    }
     const user = jwt.decode(req.cookies['auth_token'])
     const sheet = await Info.findById({_id: req.params.id})
     let perm
-    if (user && user._id === sheet.author.toString()) perm='author'
-    else if (sheet.permission === '所有人' || user.admin) perm='view'
-    else if (sheet.session.length === 0) {
-        return res.send('noPerm')
-    }
-    else {
-        if (!user) return res.sendStatus(401)
-        sheet.session=sheet.session.map(id=>mongoose.Types.ObjectId(id))
-        const sessions = await Session.findById({_id:{$in:sheet.session}})
-        for (let session in sessions) {
-            switch (sheet.permission) {
-                case "限團務GM": {
-                    if (user.name === session.gm) perm='view'
-                    break;
-                }
-                case "團務所有人": {
-                    if (session.player.includes(user.name)) perm='view'
-                    break;
-                }
-            }
-            if(perm) break
+    if(sheet != null){
+        if (user && user._id === sheet.author.toString()) perm='author'
+        else if (sheet.permission === '所有人' || user.admin) perm='view'
+        else if (sheet.session.length === 0) {
+            return res.send('noPerm')
         }
-        return res.send('noPerm')
-    }
-    res.send(perm)
+        else {
+            if (!user) return res.sendStatus(401)
+            sheet.session=sheet.session.map(id=>mongoose.Types.ObjectId(id))
+            const sessions = await Session.findById({_id:{$in:sheet.session}})
+            for (let session in sessions) {
+                switch (sheet.permission) {
+                    case "限團務GM": {
+                        if (user.name === session.gm) perm='view'
+                        break;
+                    }
+                    case "團務所有人": {
+                        if (session.player.includes(user.name)) perm='view'
+                        break;
+                    }
+                }
+                if(perm) break
+            }
+            return res.send('noPerm')
+        }
+        res.send(perm)
+    }else res.send("noPerm")
+
 })
 
-router.get('/getSheetData/:system/:id', function (req, res) {
-    getTRPGSheet(req)
-        .then(data => {
-            res.send(data)
-        })
-        .catch(err => {
-            res.status(400).send(err)
-        })
+router.get('/getSheetData/:system/:id', async function (req, res) {
+    let sheetId = req.params.id
+    let sheet
+    try{
+        switch (req.params.system) {
+            case "COC7th":
+                sheet = await new COC7th(sheetId).exec()
+                break
+            case "DND5e":
+                sheet = await new DND5e(sheetId).exec()
+                break
+            case "COC6th":
+                sheet = await new COC6th(sheetId).exec()
+                break
+        }
+        res.send(sheet)
+    }catch (err){
+        res.status(404).send("沒有這張角色卡")
+    }
 })
 
 
 router.delete('/delete/:id', verify, async function (req, res) {
     const sheetId = req.params.id;
-    const user = jwt.decode(req.cookies['auth_token'])._id;
+    const user = req.token._id;
     const info = await Info.findOne({_id: sheetId,author:user});
     if (info) {
         try {
             switch (info.system) {
                 case "COC7th":
-                    await COC7thStat.deleteOne({_id: sheetId});
-                    await COC7thStory.deleteOne({_id: sheetId});
-                    await COC7thSkill.deleteOne({_id: sheetId});
-                    await COC7thEquip.deleteOne({_id: sheetId});
-                    break;
+                    await new COC7th(sheetId).delete().exec()
+                    break
                 case "DND5e":
-                    await DND5eStat.deleteOne({_id: sheetId});
-                    await DND5eStory.deleteOne({_id: sheetId});
-                    await DND5eSpell.deleteOne({_id: sheetId});
-                    await DND5eEquip.deleteOne({_id: sheetId});
-                    break;
+                    await new DND5e(sheetId).delete().exec()
+                    break
                 case "COC6th":
-                    await COC6thStat.deleteOne({_id: sheetId});
-                    await COC6thStory.deleteOne({_id: sheetId});
-                    await COC6thSkill.deleteOne({_id: sheetId});
-                    await COC6thEquip.deleteOne({_id: sheetId})
+                    await new COC6th(sheetId).delete().exec()
+                    break
             }
             await Image.deleteOne({_id: sheetId, type: info.system})
-            await Info.deleteOne({_id: sheetId});
             await User.updateOne({_id: user}, {$inc: {sheet_number: -1}})
-            await Session.updateMany({sheet: req.params.id}, {$pull: {sheet: req.params.id}})
+            await Session.updateMany({sheet: user.name}, {$pull:{sheet:{[user.name]:req.params.id}}})
             res.send('已刪除角色卡')
         } catch (err) {
             console.log(err)

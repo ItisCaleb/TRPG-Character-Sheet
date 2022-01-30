@@ -1,7 +1,8 @@
 <template>
   <footer id="footer">
     <span>Copyright © 2020 trpgtoaster.com</span>
-    <span>All rights reserved.</span>
+    <!-- eslint-disable-next-line -->
+    <span>　All rights reserved.</span>
   </footer>
 </template>
 

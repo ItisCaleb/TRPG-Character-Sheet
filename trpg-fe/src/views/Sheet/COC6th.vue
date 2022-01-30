@@ -235,10 +235,6 @@ export default {
     }
 
   },
-  mounted() {
-    this.loadSheet()
-    this.$socket.emit('joinSheet', this.$route.params.id)
-  },
   beforeRouteEnter(to, from, next) {
     api.checkSheetAccess(to.params.id,to.query.session)
         .then(perm => {

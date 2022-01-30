@@ -21,7 +21,7 @@ name: "Load"
 
 }
 .load-enter-active {
-  transition: all 0.6s;
+  transition: all 0.5s;
 }
 .load-enter-to{
   opacity: 1;
