@@ -14,6 +14,7 @@
         <COC6thBackground v-if="success.story" :story="story" slot="background"></COC6thBackground>
         <COC6thEquip v-if="success.equip" :skills="skills" :equip="equip" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
+        <SheetNote v-if="success.story" slot="note" :story="story"></SheetNote>
         <div slot="option">
           檢視權限
           <select v-model="info.permission">
@@ -51,10 +52,12 @@ import COC6thBackground from "@/components/Sheet/COC6th/COC6thBackground";
 import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
 import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
 import SheetMixins from "@/components/Sheet/SheetMixins";
+import SheetNote from "@/components/Sheet/SheetNote";
 
 export default {
   name: "COC6th",
   components: {
+    SheetNote,
     COC6thEquip,
     COC6thSkill,
     COC6thBackground,
@@ -111,7 +114,8 @@ export default {
         tomes:"",
         magic: "",
         encounter: "",
-        fellow_investigator: ""
+        fellow_investigator: "",
+        note: ""
       },
       success: {
         info: false,
@@ -131,7 +135,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
-            document.title = document.title + ` · ${this.info.name}`
+            document.title = `TRPG Toaster · ${this.info.system} · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

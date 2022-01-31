@@ -4,12 +4,13 @@
       <Title>
         <span>{{ info.name || '無名' }}</span>
       </Title>
-      <Tab class="tab" :page="['info','skill_equip','background','spell','option']">
+      <Tab class="tab" :page="['info','skill_equip','background','spell','note','option']">
         <DND5eInfo view v-if="success.info && success.stat" slot="info"
                    :info="info" :stat="stat" :equip="equip" :story="story"></DND5eInfo>
         <DND5eEquip view v-if="success.equip" slot="skill_equip" :stat="stat" :equip="equip"></DND5eEquip>
         <DND5eStory view v-if="success.story" slot="background" :story="story"></DND5eStory>
         <DND5eSpell view v-if="success.spell" slot="spell" :spell="spell" :stat="stat"></DND5eSpell>
+        <SheetNote view v-if="success.story" slot="note" :story="story"></SheetNote>
         <div slot="option">
           <ChangeLang/>
         </div>
@@ -29,10 +30,11 @@ import DND5eStory from "@/components/Sheet/DND5e/DND5eStory";
 import DND5eSpell from "@/components/Sheet/DND5e/DND5eSpell";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import SheetMixins from  "@/components/Sheet/SheetMixins"
+import SheetNote from "@/components/Sheet/SheetNote";
 
 export default {
   name: "DND5eView",
-  components: {ChangeLang, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {SheetNote, ChangeLang, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   data() {
     return {
       info: {
@@ -79,7 +81,8 @@ export default {
         personality: "",
         ideals: "",
         bonds: "",
-        flaws: ""
+        flaws: "",
+        note: ""
       },
       equip: {
         attack: {
@@ -140,7 +143,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
-            document.title = document.title + ` · ${this.info.name}`
+            document.title = `TRPG Toaster · ${this.info.system} · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

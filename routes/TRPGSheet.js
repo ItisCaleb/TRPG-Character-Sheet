@@ -99,8 +99,8 @@ router.get('/getSheetData/:system/:id', async function (req, res) {
 
 router.delete('/delete/:id', verify, async function (req, res) {
     const sheetId = req.params.id;
-    const user = req.token._id;
-    const info = await Info.findOne({_id: sheetId,author:user});
+    const userID = req.token._id;
+    const info = await Info.findOne({_id: sheetId,author:userID});
     if (info) {
         try {
             switch (info.system) {
@@ -115,8 +115,9 @@ router.delete('/delete/:id', verify, async function (req, res) {
                     break
             }
             await Image.deleteOne({_id: sheetId, type: info.system})
-            await User.updateOne({_id: user}, {$inc: {sheet_number: -1}})
-            await Session.updateMany({sheet: user.name}, {$pull:{sheet:{[user.name]:req.params.id}}})
+            const user = await User.findByIdAndUpdate(userID, {$inc: {sheet_number: -1}})
+            let query = `sheet.${user.name}`
+            await Session.updateMany({player: user.name}, {$pull:{[query]:sheetId}})
             res.send('已刪除角色卡')
         } catch (err) {
             console.log(err)

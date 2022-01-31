@@ -148,21 +148,21 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
 });
 
 router.post('/uploadSheet/:id', verify, async function (req, res) {
-
+    //TODO: sheet own check
     const name = req.token.name
     const session = await Session.findOne({_id: req.params.id, player: name})
     if (!session) return res.status(401).send('你無權限上傳角色卡')
     const sheet = req.body;
     try {
-        if (sheet === undefined) {
+        if (sheet == undefined) {
             return res.status(400).send('請選擇角卡上傳');
         }
         const arr = [...new Set(session.sheet.get(name).concat(sheet))]
         await Session.updateOne({_id: req.params.id}, {[`sheet.${[name]}`]: arr});
+        res.send('上傳成功');
         for (let index in sheet) {
             await Info.updateOne({_id: sheet[index], author: req.token._id}, {$addToSet: {session: req.params.id}});
         }
-        res.send('上傳成功');
     } catch (err) {
         console.log(err)
         res.status(400).send('上傳角卡失敗');
@@ -177,8 +177,8 @@ router.delete('/removeSheet/:id', verify, async function (req, res) {
     if (!sheetOwn) return res.status(400).send('這不是你的角色卡!');
     try {
         await Session.updateOne({_id: session}, {$pull: {[`sheet.${user.name}`]: sheetOwn._id.toString()}})
-        await Info.updateOne({_id: sheet, author: user._id}, {$pull: {session: session}});
         res.send('已取消上傳的角色卡');
+        await Info.updateOne({_id: sheet, author: user._id}, {$pull: {session: session}});
     } catch (err) {
         console.log(err)
         res.status(400)
@@ -193,19 +193,15 @@ router.get('/playerdelete/:id', verify, async function (req, res) {
     //get current session
     const session = req.query.session;
     if (!session) return res.status(400).send('URL的值無效')
-    const gm = await Session.findOne({_id: session, gm: user.name});
-    if (!gm) return res.status(400).send('你並無權限剔除人');
+    //check if user is gm and player is in session
+    const check = await Session.findOne({_id: session, gm: user.name, player: player});
+    if (!check) return res.status(400).send('無效');
 
-    //find player's information
     const player_user = await User.findOne({name: player})
-    //find player's sheet in the session
-    const user_sheet = await Info.find({session: {$elemMatch: {$in: [session]}}, author: player_user._id});
     try {
-        for (const info of user_sheet) {
-            await Info.updateOne({_id: info._id, author: player_user._id}, {$pull: {session: session}});
-        }
         await Session.updateOne({_id: session}, {$pull: {player: player_user.name}, sheet: {$unset: player_user.name}});
         res.send('已將' + player + '剔除');
+        await Info.updateMany({session: {$elemMatch: {$in: [session]}}, author: player_user._id},{$pull:{session:session}});
     } catch (err) {
         res.status(400).send(err)
     }

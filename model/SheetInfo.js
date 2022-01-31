@@ -25,6 +25,11 @@ const InfoSchema = new mongoose.Schema({
         enum: ['限團務GM', '團務所有人', '所有人'],
         default:'所有人'
     },
+    updated:{
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
     session:Array
 });
 

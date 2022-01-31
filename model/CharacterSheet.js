@@ -35,7 +35,8 @@ class CharacterSheet {
         this.info.updateOne({},{
             name:name,
             player_name: pname,
-            permission: perm
+            permission: perm,
+            updated: Date.now()
         })
         for (let [key, model] of Object.entries(updated)){
             this.query[key].updateOne({},{$set:model})

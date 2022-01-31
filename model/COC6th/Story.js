@@ -89,6 +89,11 @@ const COC6thStorySchema = new mongoose.Schema({
         type: String,
         max: 256,
         default: ''
+    },
+    note: {
+        type: String,
+        max: 10240,
+        default: ''
     }
 });
 

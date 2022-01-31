@@ -13,6 +13,7 @@
                     slot="info"></COC7thInfo>
         <COC7thBackground :story="story" slot="background"></COC7thBackground>
         <COC7thSkill v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC7thSkill>
+        <SheetNote v-if="success.story" slot="note" :story="story"></SheetNote>
         <div slot="option">
           檢視權限
           <select v-model="info.permission">
@@ -49,10 +50,11 @@ import debounce from "lodash.debounce"
 import Msgbox from "@/components/Msgbox";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import SheetMixins from "@/components/Sheet/SheetMixins";
+import SheetNote from "@/components/Sheet/SheetNote";
 
 export default {
   name: "COC7th",
-  components: {ChangeLang, Msgbox, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
+  components: {SheetNote, ChangeLang, Msgbox, COC7thSkill, COC7thBackground, Load, COC7thInfo, Tab, Title},
   mixins:[SheetMixins],
   data() {
     return {
@@ -105,7 +107,8 @@ export default {
         mania: "",
         magic: "",
         encounter: "",
-        fellow_investigator: ""
+        fellow_investigator: "",
+        note: ""
       },
       success: {
         info: false,
@@ -125,7 +128,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
-            document.title = document.title + ` · ${this.info.name}`
+            document.title = `TRPG Toaster · ${this.info.system} · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

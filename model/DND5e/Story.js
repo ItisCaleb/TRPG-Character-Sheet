@@ -100,6 +100,11 @@ const DND5eStorySchema = new mongoose.Schema({
         type: String,
         max: 1024,
         default: ''
+    },
+    note: {
+        type: String,
+        max: 10240,
+        default: ''
     }
 });
 

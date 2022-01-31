@@ -11,6 +11,7 @@
         <COC6thBackground view :story="story" slot="background"></COC6thBackground>
         <COC6thEquip view :equip="equip" :skills="skills" :story="story" slot="weapon_equip"></COC6thEquip>
         <COC6thSkill view v-if="success.skill" :stat="stat" :skills="skills" slot="skill"></COC6thSkill>
+        <SheetNote view v-if="success.story" slot="note" :story="story"></SheetNote>
         <div slot="option">
           <ChangeLang/>
         </div>
@@ -30,10 +31,11 @@ import COC6thSkill from "@/components/Sheet/COC6th/COC6thSkill";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import COC6thEquip from "@/components/Sheet/COC6th/COC6thEquip";
 import SheetMixins from  "@/components/Sheet/SheetMixins"
+import SheetNote from "@/components/Sheet/SheetNote";
 
 export default {
   name: "COC6thView",
-  components: {COC6thEquip, ChangeLang, COC6thSkill, COC6thBackground, Load, COC6thInfo, Tab, Title},
+  components: {SheetNote, COC6thEquip, ChangeLang, COC6thSkill, COC6thBackground, Load, COC6thInfo, Tab, Title},
   mixins:[SheetMixins],
   data() {
     return {
@@ -83,7 +85,8 @@ export default {
         scars:"",
         magic: "",
         encounter: "",
-        fellow_investigator: ""
+        fellow_investigator: "",
+        note: ""
       },
       success: {
         info: false,
@@ -103,7 +106,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
-            document.title = document.title + ` · ${this.info.name}`
+            document.title = `TRPG Toaster · ${this.info.system} · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

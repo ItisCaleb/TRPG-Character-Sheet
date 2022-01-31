@@ -20,6 +20,7 @@ export default {
     skill_equip: "Skill & Equipment",
     weapon_equip: "Weapon & Equipment",
     spell: "Spell",
+    note: "Note",
     option: "Option",
     coc7th: {
         char_info: "Investigator Info:",

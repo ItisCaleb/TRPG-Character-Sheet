@@ -6,12 +6,13 @@
         <i :style="{color:getSuccessColor}" class="fa"
         :class="{'fa-check':success.upload,'fa-spinner fa-spin':!success.upload}"></i>
       </Title>
-      <Tab class="tab" :page="['info','skill_equip','background','spell','option']">
+      <Tab class="tab" :page="['info','skill_equip','background','spell','note','option']">
         <DND5eInfo v-if="success.info && success.stat" slot="info"
                    :info="info" :stat="stat" :equip="equip" :story="story"></DND5eInfo>
         <DND5eEquip v-if="success.equip" slot="skill_equip" :stat="stat" :equip="equip"></DND5eEquip>
         <DND5eStory v-if="success.story" slot="background" :story="story"></DND5eStory>
         <DND5eSpell v-if="success.spell" slot="spell" :spell="spell" :stat="stat"></DND5eSpell>
+        <SheetNote v-if="success.story" slot="note" :story="story"></SheetNote>
         <div slot="option">
           檢視權限
           <select v-model="info.permission">
@@ -50,11 +51,12 @@ import debounce from "lodash.debounce";
 import Msgbox from "@/components/Msgbox";
 import ChangeLang from "@/components/Sheet/ChangeLang";
 import SheetMixins from "@/components/Sheet/SheetMixins";
+import SheetNote from "@/components/Sheet/SheetNote";
 //import SessionSidebar from "@/components/Sheet/SessionSidebar";
 
 export default {
   name: "DND5e",
-  components: {ChangeLang, Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
+  components: {SheetNote, ChangeLang, Msgbox, DND5eSpell, DND5eStory, DND5eEquip, DND5eInfo, Tab, Load, Title},
   mixins:[SheetMixins],
   data() {
     return {
@@ -102,7 +104,8 @@ export default {
         personality: "",
         ideals: "",
         bonds: "",
-        flaws: ""
+        flaws: "",
+        note: ""
       },
       equip: {
         attack: {
@@ -215,7 +218,7 @@ export default {
           .then(data => {
             this.info = data.info
             this.success.info = true
-            document.title = document.title + ` · ${this.info.name}`
+            document.title = `TRPG Toaster · ${this.info.system} · ${this.info.name}`
             this.stat = data.stat
             this.success.stat = true
             this.equip = data.equip

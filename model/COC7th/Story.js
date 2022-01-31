@@ -89,7 +89,13 @@ const COC7thStorySchema = new mongoose.Schema({
         type: String,
         max:256,
         default:''
-    }
+    },
+    note: {
+        type: String,
+        max: 10240,
+        default: ''
+    },
+
 });
 
 module.exports = mongoose.model("COC7th_Story", COC7thStorySchema);

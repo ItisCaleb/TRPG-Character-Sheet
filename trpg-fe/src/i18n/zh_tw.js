@@ -20,6 +20,7 @@ export default {
     skill_equip: "技能與裝備",
     weapon_equip: "武器與裝備",
     spell: "法術",
+    note: "筆記",
     option: "選項",
     coc7th: {
         char_info: "調查員基本資料：",

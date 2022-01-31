@@ -72,6 +72,7 @@ export default {
     },
     reconnect() {
       this.$data.success.not_init = false
+      this.$socket.emit('joinSheet', this.$route.params.id)
       this.loadSheet()
     }
   },
