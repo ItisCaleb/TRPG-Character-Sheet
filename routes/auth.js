@@ -21,7 +21,7 @@ const pattern = new RegExp("[`~!#$^&*()=\\-|{}\':+;,\\\\\\[\\]<>\\n/?￥…—�
 router.get("/register/:id", async (req, res) => {
     //create new user
     const id = req.params.id;
-    const user = await tempUser.findById({_id: id, type: "email"});
+    const user = await tempUser.findOne({_id: id, type: "email"});
     if (!user) return res.sendStatus(404);
     const newUser = new User({
         name: user.name,
@@ -43,8 +43,9 @@ router.get("/register/:id", async (req, res) => {
 router.post('/authed', async (req, res) => {
 
     const mailTransport = nodeMailer.createTransport({
-        host: 'smtp.zoho.com',
+        host: process.env.MAILSERVER,
         port: 465,
+        secureConnection:true,
         auth: {
             user: process.env.VBOT,
             pass: process.env.VPASS,
