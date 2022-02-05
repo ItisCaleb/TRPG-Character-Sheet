@@ -248,7 +248,7 @@ router.post('/forgetPassword', async function (req, res) {
         createdAt: Date.now()
     });
     const mailTransport = nodeMailer.createTransport({
-        host: 'smtp.zoho.com',
+        host: process.env.MAILSERVER,
         port: 465,
         auth: {
             user: process.env.VBOT,
