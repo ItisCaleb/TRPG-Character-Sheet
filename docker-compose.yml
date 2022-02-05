@@ -13,6 +13,7 @@ services:
       VPASS: "${VPASS}"
       PORT: "${PORT}"
       SERVER_RECAPTCHA: "${SERVER_RECAPTCHA}"
+      MAILSERVER: "${MAILSERVER}"
     volumes:
       - ./dist:/dist
     depends_on:
