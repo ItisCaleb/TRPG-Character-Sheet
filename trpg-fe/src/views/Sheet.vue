@@ -82,7 +82,7 @@ export default {
     showSheet(){
       Object.assign(this.$data.sheetInfos , this.$options.data().sheetInfos)
       this.sheet = this.getSheet
-      if (this.sheet === 'NotFound') return
+      if (this.sheet.length === 0) return
       for (let item of this.sheet) {
         switch (item.system) {
           case 'COC7th':

@@ -46,10 +46,10 @@ export default {
         return ajax(`session/getInfo/${id}`, 'get')
     },
     createSession(data) {
-        return ajax('session/TRPGCreateSession', 'post', data)
+        return ajax('session/createSession', 'post', data)
     },
     joinSession(code) {
-        return ajax(`session/TRPGJoinSession?code=${code}`, 'get')
+        return ajax(`session/joinSession?code=${code}`, 'get')
     },
     uploadSheet(data,id){
         return ajax(`session/uploadSheet/${id}`,'post',data)
@@ -70,13 +70,13 @@ export default {
         return ajax(`sheet/getSheetData/${system}/${id}`, 'get')
     },
     deleteSheet(id) {
-        return ajax(`sheet/delete/${id}`, 'delete')
+        return ajax(`sheet/deleteSheet/${id}`, 'delete')
     },
     createSheet(system, name) {
-        return ajax(`sheet/${system}/create/${name}`, 'get')
+        return ajax(`sheet/createSheet/${system}`, 'post',{name:name})
     },
     editSheet(system,id,data){
-        return ajax(`sheet/${system}/edit/${id}`,"post",data)
+        return ajax(`sheet/editSheet/${id}`,"post",data)
     },
     checkSheetAccess(id,session){
         let query = (session)?`?session=${session}`:""

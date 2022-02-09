@@ -155,7 +155,7 @@ export default {
           this.success = true
           const user = this.$store.getters.getUser
           this.sheets = this.$store.getters.getSheet
-          if (this.sheets === "NotFound") {
+          if (this.sheets.length === 0) {
             this.noSheet = "你還未擁有角色卡"
             return
           }

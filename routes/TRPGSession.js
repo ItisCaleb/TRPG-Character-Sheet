@@ -91,7 +91,7 @@ router.get('/createInvite/:id', async function (req, res) {
     res.send(code)
 })
 //create a session
-router.post('/TRPGCreateSession', verify, async function (req, res) {
+router.post('/createSession', verify, async function (req, res) {
     //check if the format is correct
     const {error} = sessionValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -123,7 +123,7 @@ router.post('/TRPGCreateSession', verify, async function (req, res) {
     }
 });
 //join a session
-router.get('/TRPGJoinSession', verify, async function (req, res) {
+router.get('/joinSession', verify, async function (req, res) {
 
     //decode
     const user = req.token.name;
@@ -148,21 +148,22 @@ router.get('/TRPGJoinSession', verify, async function (req, res) {
 });
 
 router.post('/uploadSheet/:id', verify, async function (req, res) {
-    //TODO: sheet own check
     const name = req.token.name
     const session = await Session.findOne({_id: req.params.id, player: name})
     if (!session) return res.status(401).send('你無權限上傳角色卡')
     const sheet = req.body;
     try {
-        if (sheet == undefined) {
+        if (!Array.isArray(sheet)) {
             return res.status(400).send('請選擇角卡上傳');
         }
-        const arr = [...new Set(session.sheet.get(name).concat(sheet))]
-        await Session.updateOne({_id: req.params.id}, {[`sheet.${[name]}`]: arr});
-        res.send('上傳成功');
+        let set = new Set(session.sheet.get(name))
         for (let index in sheet) {
-            await Info.updateOne({_id: sheet[index], author: req.token._id}, {$addToSet: {session: req.params.id}});
+            const info = await Info.findOneAndUpdate({_id: sheet[index], author: req.token._id}, {$addToSet: {session: req.params.id}});
+            if(info) set.add(sheet[index])
         }
+        await Session.updateOne({_id: req.params.id}, {[`sheet.${[name]}`]: [...set]});
+        res.send('上傳成功');
+
     } catch (err) {
         console.log(err)
         res.status(400).send('上傳角卡失敗');
@@ -184,10 +185,9 @@ router.delete('/removeSheet/:id', verify, async function (req, res) {
         res.status(400)
     }
 })
-router.get('/playerdelete/:id', verify, async function (req, res) {
+router.get('/playerDelete/:id', verify, async function (req, res) {
     //get current user
     const user = req.token;
-    //check if the user is gm
     //get delete player
     const player = req.params.id;
     //get current session
