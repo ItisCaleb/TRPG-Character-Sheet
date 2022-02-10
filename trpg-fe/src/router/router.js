@@ -131,56 +131,16 @@ const routes = [
         beforeEnter:checkLogin
     },
     {
-        path: '/sheet/COC7th/:id',
-        name: 'COC7th',
-        component: () => import('../views/Sheet/COC7th'),
-        meta: {
-            title: "COC7th"
-        },
+        path: '/sheet/:system/:id',
+        name: 'SheetEdit',
+        component: () => import('../views/Sheet/SheetEdit'),
     },
     {
-        path: '/sheet/COC7th/:id',
-        name: 'COC7thView',
-        component: () => import('../views/Sheet/COC7thView'),
-        meta: {
-            title: "COC7th"
-        },
-        props:route=>({
-            session:route.params.session
-        })
-    },
-    {
-        path: '/sheet/COC6th/:id',
-        name: 'COC6th',
-        component: () => import('../views/Sheet/COC6th'),
-        meta: {
-            title: "COC6th"
-        },
-    },
-    {
-        path: '/sheet/COC6th/:id',
-        name: 'COC6thView',
-        component: () => import('../views/Sheet/COC6thView'),
-        meta: {
-            title: "COC6th"
-        },
-    },
-    {
-        path: '/sheet/DND5e/:id',
-        component: () => import('../views/Sheet/DND5e'),
-        meta: {
-            title: "DND5e"
-        },
-    },
-    {
-        path: '/sheet/DND5e/:id',
-        name: 'DND5eView',
-        component: () => import('../views/Sheet/DND5eView'),
-        meta: {
-            title: "DND5e"
-        },
-        props:route=>({
-            session:route.params.session
+        path: '/sheet/:system/:id',
+        name: 'SheetView',
+        component: () => import('../views/Sheet/SheetView'),
+        props: route => ({
+            session: route.params.session
         })
     },
     {

@@ -15,11 +15,11 @@ const COC6th = require('../model/COC6th/COC6th')
 const systems = {
     COC7th:{
         class: ()=>{return new COC7th()},
-        props: ["stat","story","equip","skill"]
+        props: ["stat","story","equip","skills"]
     },
     COC6th:{
         class: ()=>{return new COC6th()},
-        props: ["stat","story","equip","skill"]
+        props: ["stat","story","equip","skills"]
     },
     DND5e:{
         class: ()=>{return new DND5e()},
@@ -102,9 +102,11 @@ router.post('/editSheet/:id', verify, async function (req, res) {
         const newSheet = {}
         let props = systems[info.system].props
         for (let i=0;i<systems[info.system].props.length;i++){
-            newSheet[props[i]] = cs[props[i]]
+            if(cs[props[i]]!=null){
+                newSheet[props[i]] = cs[props[i]]
+            }
         }
-        sheet.update(cs.info.name, cs.info.player_name, cs.info.permission, newSheet)
+        sheet.update(cs.info, newSheet)
         await sheet.exec()
         res.send('success');
     } catch (err) {

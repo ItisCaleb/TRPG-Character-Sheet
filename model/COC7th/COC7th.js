@@ -9,7 +9,7 @@ class COC7th extends CharacterSheet{
             stat: COC7thStat,
             story: COC7thStory,
             equip: COC7thEquip,
-            skill: COC7thSkill
+            skills: COC7thSkill
         })
     }
     create(name, player, author_id) {

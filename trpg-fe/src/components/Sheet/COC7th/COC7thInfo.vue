@@ -122,8 +122,9 @@ export default {
       type: Object,
       required: true
     },
-    mytho: {
-      type: Number
+    skills:{
+      type: Object,
+      require: true
     },
     view: {
       type: Boolean,
@@ -246,6 +247,17 @@ export default {
     },
     getSanMax() {
       return 99 - this.mytho
+    },
+    mytho() {
+      if (!this.skills.skill) return 0
+      if (!this.skills.skill["Cthulhu Mythos"]) return 0
+      else {
+        let total = 0
+        for (let type in this.skills.skill["Cthulhu Mythos"]) {
+          total += parseInt(this.skills.skill["Cthulhu Mythos"][type])
+        }
+        return total
+      }
     }
   }
 }

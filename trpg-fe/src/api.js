@@ -2,8 +2,6 @@ import axios from 'axios'
 
 const host = process.env.VUE_APP_BACKEND_URL || ''
 axios.defaults.baseURL = `${host}/api`
-axios.defaults.xsrfHeaderName='X-CSRF-Token'
-axios.defaults.xsrfCookieName='csrfToken'
 
 export default {
     login(data) {

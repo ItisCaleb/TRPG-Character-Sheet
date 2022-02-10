@@ -38,12 +38,13 @@ class CharacterSheet {
         return this.info._id
     }
 
-     update(name, pname, perm , updated = {}){
-        if (!['限團務GM', '團務所有人', '所有人'].includes(perm)) perm = '所有人'
+     update(newInfo , updated = {}){
+        if (newInfo !=null && !['限團務GM', '團務所有人', '所有人'].includes(newInfo.permission)) newInfo.permission = '所有人'
+        if (newInfo == null) newInfo = {}
         Info.updateOne({_id:this.info._id},{
-            name:name,
-            player_name: pname,
-            permission: perm,
+            name:newInfo.name || this.info.name,
+            player_name: newInfo.player_name || this.info.player_name,
+            permission: newInfo.permission || this.info.permission,
             updated: Date.now()
         },()=>{})
         for (let [key, model] of Object.entries(updated)){
