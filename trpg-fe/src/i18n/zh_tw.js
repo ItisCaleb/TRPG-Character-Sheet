@@ -1,7 +1,8 @@
 export default {
     lang: {
         zh_tw: "繁體中文",
-        en_us: "英文"
+        zh_cn: "簡體中文",
+        en_us: "英文",
     },
     yes: "是",
     no: "否",
@@ -22,6 +23,12 @@ export default {
     spell: "法術",
     note: "筆記",
     option: "選項",
+    viewPermission:"檢視權限",
+    allPeople:"所有人",
+    sessionPlayer:"團務所有人",
+    sessionGM:"限團務GM",
+    copyLink:"複製角色卡連結",
+    downloadJSON:"下載為JSON",
     coc7th: {
         char_info: "調查員基本資料：",
         char_status: "調查員狀態：",

@@ -13,15 +13,16 @@
         </component>
         <SheetNote v-if="success.all" slot="note" :story="config.props.story"></SheetNote>
         <div slot="option">
-          檢視權限
+          {{$t('viewPermission')}}
           <select v-model="config.props.info.permission">
-            <option>限團務GM</option>
-            <option>團務所有人</option>
-            <option>所有人</option>
+            <option value="限團務GM">{{$t('sessionGM')}}</option>
+            <option value="團務所有人">{{$t('sessionPlayer')}}</option>
+            <option value="所有人">{{ $t('allPeople') }}</option>
           </select><br>
-          <input id="code" type="hidden" :value="'https://trpgtoaster.com/sheet/COC7th/'+$route.params.id">
-          <button class="btn-primary btn" @click="copyCode">複製角卡連結</button><br>
           <ChangeLang/>
+          <input id="code" type="hidden" :value="`https://trpgtoaster.com/sheet/${$route.params.system}/${$route.params.id}`">
+          <button class="btn-primary btn" @click="copyCode">{{$t('copyLink')}}</button>
+          <button class="btn-primary btn" style="margin-left: 1%" @click.prevent="downloadSheet">{{$t('downloadJSON')}}</button><br>
           <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>
           <Msgbox ref="deleteBox">
             <div style="text-align: center;margin: 10% auto">
@@ -102,6 +103,15 @@ export default {
             console.log(err)
             this.$router.replace('/sheet')
           })
+    },
+    downloadSheet(){
+      let json = JSON.stringify(this.config.props,null,2)
+      const blob = new Blob([json], { type: 'application/json' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = this.config.props.info.name+".json"
+      link.click()
+      URL.revokeObjectURL(link.href)
     },
     addWatcher(){
       for (let key of Object.keys(this.config.props)){

@@ -17,14 +17,15 @@ Vue.use(new VueSocketIO({
   connection: process.env.VUE_APP_BACKEND_URL || ''
 }))
 
-import zh_tw from './i18n/zh_tw'
+import zh_tw from '@/i18n/zh_tw'
+import zh_cn from "@/i18n/zh_cn";
 import en_us from "@/i18n/en_us";
 
 Vue.use(VueI18n)
 const locale = localStorage.getItem('locale') || 'zh_tw'
 const i18n = new VueI18n({
   locale,
-  messages:{zh_tw,en_us},
+  messages:{zh_tw,zh_cn,en_us},
   silentTranslationWarn:true
 })
 

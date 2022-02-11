@@ -16,7 +16,7 @@ class CharacterSheet {
             this.user = user
             this.info = await Info.findById(id)
             for (let [key, model] of Object.entries(this.schema)){
-                this.query[key] = model.findById(id)
+                this.query[key] = model.findById(id).select("-_id -__v")
             }
         }
         return this

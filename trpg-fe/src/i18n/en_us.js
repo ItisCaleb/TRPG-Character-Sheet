@@ -1,6 +1,7 @@
 export default {
     lang: {
         zh_tw: "Traditional Chinese",
+        zh_cn: "Simplified Chinese",
         en_us: "English"
     },
     yes: "yes",
@@ -22,6 +23,12 @@ export default {
     spell: "Spell",
     note: "Note",
     option: "Option",
+    viewPermission:"View Permission",
+    allPeople:"All",
+    sessionPlayer:"Session Players",
+    sessionGM:"GM only",
+    copyLink:"Copy URL",
+    downloadJSON:"Download as json",
     coc7th: {
         char_info: "Investigator Info:",
         char_status: "Investigator Status:",

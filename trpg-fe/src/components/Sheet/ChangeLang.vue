@@ -12,7 +12,7 @@ export default {
   name: "ChangeLang",
   data(){
     return{
-      langs:["zh_tw","en_us"]
+      langs:["zh_tw","zh_cn","en_us"]
     }
   },
   methods: {

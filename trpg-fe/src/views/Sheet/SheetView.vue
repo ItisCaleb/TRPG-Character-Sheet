@@ -10,6 +10,7 @@
         </component>
         <SheetNote v-if="success.all" slot="note" :story="config.props.story"></SheetNote>
         <div slot="option">
+          <button class="btn-primary btn" @click.prevent="downloadSheet">下載為JSON</button><br>
           <ChangeLang/>
         </div>
       </Tab>
@@ -67,10 +68,10 @@ export default {
     loadSheet() {
       api.getSheetData(this.$route.params.system, this.$route.params.id)
           .then(data => {
-            document.title = `TRPG Toaster · ${this.config.props.info.system} · ${this.config.props.info.name}`
             for(let key of Object.keys(this.config.props)){
               this.config.props[key] = data[key]
             }
+            document.title = `TRPG Toaster · ${this.config.props.info.system} · ${this.config.props.info.name}`
             this.success.all = true
           })
           .catch((err) => {
@@ -85,6 +86,15 @@ export default {
               console.log(session)
               this.session=session
             })
+    },
+    downloadSheet(){
+      let json = JSON.stringify(this.config.props,null,2)
+      const blob = new Blob([json], { type: 'application/json' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = this.config.props.info.name+".json"
+      link.click()
+      URL.revokeObjectURL(link.href)
     },
   },
   computed:{
