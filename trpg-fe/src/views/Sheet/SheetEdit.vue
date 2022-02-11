@@ -119,9 +119,7 @@ export default {
             if(this.success.not_init){
               this.socketInput(newValue, key)
               this.success.upload = false
-              this.updateSheet({
-                [key]:newValue
-              })
+              this.updateSheet(this.config.props)
             }
         },{deep:true})
       }
