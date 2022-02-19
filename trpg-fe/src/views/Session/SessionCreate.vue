@@ -46,7 +46,7 @@ export default {
                 })
           })
           .catch(err => {
-            alert(err)
+            alert(err.data)
             setTimeout(()=>{
               this.send=false
             },1000)

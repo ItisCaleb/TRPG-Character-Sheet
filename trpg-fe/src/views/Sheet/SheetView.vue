@@ -59,15 +59,18 @@ export default {
     }
   },
   mounted() {
-    this.$set(this,"config",systemConfig[this.$route.params.system])
     this.loadSheet()
     this.loadSession()
     this.$socket.emit('joinSheet', this.$route.params.id)
   },
   methods: {
     loadSheet() {
-      api.getSheetData(this.$route.params.system, this.$route.params.id)
+      api.getSheetData(this.$route.params.id)
           .then(data => {
+            this.$set(this,"config",systemConfig[this.$route.params.system])
+            if(this.$route.params.system!==data.info.system){
+              this.$router.replace(`/sheet/${data.info.system}/${this.$route.params.id}`)
+            }
             for(let key of Object.keys(this.config.props)){
               this.config.props[key] = data[key]
             }
@@ -75,7 +78,7 @@ export default {
             this.success.all = true
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err.data)
             this.$router.replace('/sheet')
           })
     },

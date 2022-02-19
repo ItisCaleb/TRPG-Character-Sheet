@@ -16,7 +16,7 @@ export default {
             this.$router.replace(`/session/info/${res.session}`)
           })
           .catch((err) => {
-            alert(err)
+            alert(err.data)
             this.$router.replace('/')
           })
     }

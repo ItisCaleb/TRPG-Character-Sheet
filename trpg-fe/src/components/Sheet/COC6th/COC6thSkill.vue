@@ -1,5 +1,5 @@
 <template>
-  <Tab :overflow="[true,true,true]" :page="[1,2,3]" style="width: 100%;text-align: center;overflow: auto">
+  <Tab overflow :page="[1,2,3]" style="width: 100%;text-align: center;overflow: auto">
     <table slot="1">
       <tr>
         <th colspan="7" style="font-size: 20px">{{ $t('coc6th.char_skill') }}</th>

@@ -64,8 +64,11 @@ export default {
     getSheets() {
         return ajax('sheet/getSheets', 'get')
     },
-    getSheetData(system,id) {
-        return ajax(`sheet/getSheetData/${system}/${id}`, 'get')
+    getSheetData(id) {
+        return ajax(`sheet/getSheetData/${id}`, 'get')
+    },
+    getOptionalSheetData(id,fields) {
+        return ajax(`sheet/getSheetData/${id}`, 'post',fields)
     },
     deleteSheet(id) {
         return ajax(`sheet/deleteSheet/${id}`, 'delete')
@@ -73,7 +76,7 @@ export default {
     createSheet(system, name) {
         return ajax(`sheet/createSheet/${system}`, 'post',{name:name})
     },
-    editSheet(system,id,data){
+    editSheet(id,data){
         return ajax(`sheet/editSheet/${id}`,"post",data)
     },
     checkSheetAccess(id,session){
@@ -105,7 +108,7 @@ function ajax(url, method, data, type) {
         }).then(res => {
             resolve(res.data)
         }).catch(err => {
-            reject(err.response.data)
+            reject(err.response)
         })
     })
 }

@@ -6,6 +6,7 @@ const Info = require('../model/SheetInfo');
 const SessionLink = require('../model/SessionLink')
 const verify = require('../utils/verifyToken');
 const {sessionValidation} = require("../utils/validation");
+const {CharacterSheet} = require("../model/CharacterSheet");
 
 // Get User's Sessions
 router.get('/getSessions', verify, async function (req, res) {
@@ -40,34 +41,26 @@ router.get('/getInfo/:id', verify, async function (req, res) {
         // Get member's sheets
         for (let user in info.sheet) {
             sheets[user] = []
-            info.sheet[user] = info.sheet[user].map(id=>mongoose.Types.ObjectId(id))
             // Check for every sheet's permission
-            const memberSheets = await Info.find({_id: {$in:info.sheet[user]}})
-            for (let userSheet of memberSheets) {
-                let access
-                switch (userSheet.permission) {
-                    case "限團務GM":
-                        access = (player.name === info.gm || player._id === userSheet.author.toString())
-                        break
-                    default :
-                        access = true
+            for(let id of info.sheet[user]){
+                const memberSheet = await new CharacterSheet().init(id,player)
+                if(memberSheet.checkOwn() || await memberSheet.checkView(info)){
+                    let sheet = await memberSheet.exec("stat")
+                    sheets[user].push(Object.assign({
+                        access:true
+                    },sheet))
+                }else {
+                    sheets[user].push({
+                        access: false,
+                        info: memberSheet.info
+                    })
                 }
-                sheets[user].push({
-                    id: userSheet._id,
-                    name: userSheet.name,
-                    system: userSheet.system,
-                    player_name: userSheet.player_name,
-                    access: access
-                })
             }
-
         }
-        const data = Object.assign({}, info)
-        data.sheetInfos = sheets
-        delete data.sheet
+        info.sheets = sheets
         const link = await SessionLink.findById({_id: info._id})
-        data.code = (link) ? link.code : ""
-        res.status(200).send(data)
+        info.code = (link) ? link.code : ""
+        res.status(200).send(info)
     } catch (err) {
         console.log(err)
         res.sendStatus(404)

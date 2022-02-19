@@ -80,10 +80,8 @@ export default {
     }
   },
   mounted() {
-    this.$set(this,"config",systemConfig[this.$route.params.system])
     this.loadSheet()
     this.loadSession()
-    this.addWatcher()
     this.$socket.emit('joinSheet', this.$route.params.id)
   },
   updated() {
@@ -91,22 +89,27 @@ export default {
   },
   methods: {
     loadSheet() {
-      api.getSheetData(this.$route.params.system, this.$route.params.id)
+      api.getSheetData(this.$route.params.id)
           .then(data => {
+            this.$set(this,"config",systemConfig[data.info.system])
+            if(this.$route.params.system!==data.info.system){
+              this.$router.replace(`/sheet/${data.info.system}/${this.$route.params.id}`)
+            }
             for(let key of Object.keys(this.config.props)){
               this.config.props[key] = data[key]
             }
             document.title = `TRPG Toaster · ${this.config.props.info.system} · ${this.config.props.info.name}`
+            this.addWatcher()
             this.success.all = true
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err.data)
             this.$router.replace('/sheet')
           })
     },
     downloadSheet(){
       let json = JSON.stringify(this.config.props,null,2)
-      const blob = new Blob([json], { type: 'application/json' })
+      const blob = new Blob([json], { type: 'application/json;charset=utf-8' })
       const link = document.createElement('a')
       link.href = URL.createObjectURL(blob)
       link.download = this.config.props.info.name+".json"
@@ -125,12 +128,12 @@ export default {
       }
     },
     updateSheet: debounce(function (sheet) {
-      api.editSheet(this.$route.params.system, this.$route.params.id, sheet)
+      api.editSheet(this.$route.params.id, sheet)
           .then(() => {
             this.success.upload = true
           })
           .catch(err => {
-            console.log(err)
+            console.log(err.data)
           })
     }, 2000),
     socketInput: debounce(function (data, key) {
@@ -166,7 +169,7 @@ export default {
                 })
           })
           .catch(err => {
-            alert(err)
+            alert(err.data)
           })
     },
     loadSession() {
@@ -208,7 +211,11 @@ export default {
               next('/sheet')
               break
           }
-        })
+        }).catch(err=>{
+          if(err.status === 404){
+            next({name: 'NotFound', params: {'0': to.fullPath}})
+          }
+    })
   },
   sockets: {
     syncInput(data) {

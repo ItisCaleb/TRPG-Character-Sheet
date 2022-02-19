@@ -1,14 +1,14 @@
 <template>
   <div id="tab">
     <ul style="padding-left:3%">
-      <li v-for="pageName in page" @click="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
+      <li v-for="pageName in page" @mouseover="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
            :key="pageName" class="tab-name">{{ $t(pageName) }}
       </li>
     </ul>
     <br>
     <div id="tab-container">
-      <Load v-for="(pageName,index) in page" :key="pageName">
-        <div v-show="isCurrent(pageName)" class="tab-content" :class="{'overflow':isOverflow(overflow[index])}">
+      <Load v-for="(pageName) in page" :key="pageName">
+        <div v-show="isCurrent(pageName)" class="tab-content" :class="{'overflow':true}">
           <slot :name="pageName" ></slot>
         </div>
       </Load>
@@ -27,8 +27,8 @@ export default {
       required: true
     },
     overflow:{
-      type:Array,
-      default:()=>[false,false,false,false,false,false,false]
+      type:Boolean,
+      default: false
     }
   },
   data() {
@@ -43,9 +43,6 @@ export default {
     isCurrent(name){
       return this.currentPage===name
     },
-    isOverflow(bool){
-      return bool || false
-    }
   },
   mounted() {
     this.currentPage=this.page[0]
@@ -78,8 +75,12 @@ export default {
   width: auto;
   padding: 0 3%;
   text-align: center;
+  margin: 0 1%;
   height: 40px;
   cursor: pointer;
+  @include phone-width{
+    margin: 0;
+  }
   &:hover {
     opacity: 1;
     background-color: lightgray;

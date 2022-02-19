@@ -112,7 +112,7 @@ export default {
           this.avatar = res
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.data)
         })
   },
   methods: {
@@ -152,7 +152,7 @@ export default {
             this.image_success.color = "#10a36a"
           })
           .catch(err => {
-            this.image_success.msg = err
+            this.image_success.msg = err.data
             this.image_success.color = "red"
           })
     },
@@ -172,7 +172,7 @@ export default {
               this.image_success.color = "#10a36a"
             })
             .catch(err => {
-              this.image_success.msg = err
+              this.image_success.msg = err.data
               this.image_success.color = "red"
             })
       } catch (err) {

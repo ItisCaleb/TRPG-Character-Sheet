@@ -16,7 +16,7 @@
             <th>玩家名稱</th>
           </tr>
           <tr class="sheets" v-for="sheet in sheetInfos.COC7th" @click="toSheet('COC7th',sheet.url)" :key="sheet.name">
-            <td>{{ sheet.name }}</td>
+            <td>{{ minimizeName(sheet.name) }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
         </table>
@@ -29,7 +29,7 @@
             <th>玩家名稱</th>
           </tr>
           <tr class="sheets" v-for="sheet in sheetInfos.COC6th" @click="toSheet('COC6th',sheet.url)" :key="sheet.name">
-            <td>{{ sheet.name }}</td>
+            <td>{{ minimizeName(sheet.name) }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
         </table>
@@ -42,7 +42,7 @@
             <th>玩家名稱</th>
           </tr>
           <tr class="sheets" v-for="sheet in sheetInfos.DND5e" @click="toSheet('DND5e',sheet.url)" :key="sheet.name">
-            <td>{{ sheet.name }}</td>
+            <td>{{ minimizeName(sheet.name) }}</td>
             <td>{{ sheet.player }}</td>
           </tr>
         </table>
@@ -99,6 +99,11 @@ export default {
             break
         }
       }
+    },
+    minimizeName(name){
+      if(name.length>10){
+        return name.slice(0,10)+"..."
+      }return name
     }
   },
   watch:{

@@ -80,7 +80,7 @@ export default {
             })
           })
           .catch(err => {
-            alert(err)
+            alert(err.data)
             this.$router.replace('/')
           })
     }

@@ -68,7 +68,7 @@ export default {
                 })
           })
           .catch(err => {
-            this.small=err
+            this.small=err.data
             this.created = false
           })
     }

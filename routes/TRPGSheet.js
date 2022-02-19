@@ -2,29 +2,22 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const verify = require('../utils/verifyToken');
 const User = require('../model/User');
-const Info = require('../model/SheetInfo');
 const Session = require('../model/Session');
 const Sheet = require('../model/SheetInfo');
 const Image = require('../model/Avatar')
 //import sheet schema
-const CharacterSheet = require("../model/CharacterSheet")
-const DND5e = require('../model/DND5e/DND5e')
-const COC7th = require('../model/COC7th/COC7th')
-const COC6th = require('../model/COC6th/COC6th')
+const {CharacterSheet,getSystem} = require("../model/CharacterSheet")
 
-const systems = {
-    COC7th:{
-        class: ()=>{return new COC7th()},
-        props: ["stat","story","equip","skills"]
-    },
-    COC6th:{
-        class: ()=>{return new COC6th()},
-        props: ["stat","story","equip","skills"]
-    },
-    DND5e:{
-        class: ()=>{return new DND5e()},
-        props: ["stat","story","equip","spell"]
+
+function getToken(token){
+    if(token){
+        try{
+            jwt.verify(token, process.env.JWT_SECRET);
+        }catch (e){
+            throw new Error("Verify fail")
+        }
     }
+    return jwt.decode(token)
 }
 
 router.get('/getSheets', verify, async function (req, res) {
@@ -43,37 +36,41 @@ router.get('/getSheets', verify, async function (req, res) {
 
 });
 router.get('/checkAccess/:id', async function (req, res) {
-    if(req.cookies['auth_token']){
-        try {
-            jwt.verify(req.cookies['auth_token'], process.env.JWT_SECRET);
-        }catch (err){
-            res.status(401).send('哈哈')
-        }
+    try{
+        const user = getToken(req.cookies['auth_token'])
+        const sheet = await new CharacterSheet().init(req.params.id,user)
+        if(sheet.checkOwn()) res.send("author")
+        else if(await sheet.checkView()) res.send("view")
+        else res.send("noPerm")
+    }catch (err){
+        if(err.message==="Verify fail")res.status(401).send("哈哈")
+        else res.status(404).send("沒有這張角色卡")
     }
-    const user = jwt.decode(req.cookies['auth_token'])
-    const sheet = await new CharacterSheet({}).init(req.params.id,user)
-    if(sheet.checkOwn()) res.send("author")
-    else if(await sheet.checkView()) res.send("view")
-    else res.send("noPerm")
 })
 
-router.get('/getSheetData/:system/:id', async function (req, res) {
+router.get('/getSheetData/:id', async function (req, res) {
     let sheetId = req.params.id
-    if(req.cookies['auth_token']){
-        try {
-            jwt.verify(req.cookies['auth_token'], process.env.JWT_SECRET);
-        }catch (err){
-            return  res.status(401).send('哈哈')
-        }
-    }
-    const user = jwt.decode(req.cookies['auth_token'])
     try{
-        let model = await systems[req.params.system].class().init(sheetId,user)
+        const user = getToken(req.cookies['auth_token'])
+        let model = await new CharacterSheet().init(sheetId,user)
         let sheet = await model.exec()
         res.send(sheet)
     }catch (err){
-        console.log(err)
-        res.status(404).send("沒有這張角色卡")
+        if(err.message==="Verify fail")res.status(401).send("哈哈")
+        else res.status(404).send("沒有這張角色卡")
+    }
+})
+router.post('/getSheetData/:id',async function(req,res){
+    let sheetId = req.params.id
+    try{
+        const fields = (Array.isArray(req.body))?req.body:[]
+        const user = getToken(req.cookies['auth_token'])
+        let model = await new CharacterSheet().init(sheetId,user)
+        let sheet = await model.exec(...fields)
+        res.send(sheet)
+    }catch (err){
+        if(err.message==="Verify fail")res.status(401).send("哈哈")
+        else res.status(404).send("沒有這張角色卡")
     }
 })
 
@@ -82,7 +79,8 @@ router.post('/createSheet/:system',verify,async function(req,res){
     const user = await User.findById({_id: creator._id});
     if (user.sheet_number >= 50) return res.status(400).send('角色卡已達上限');
     try {
-        const id = await (await systems[req.params.system].class().init()).create(req.body.name,creator.name,creator._id)
+        const sheet = await new CharacterSheet().init()
+        const id = await sheet.create(req.body.name,creator.name,req.params.system,creator._id)
         await User.updateOne({_id: creator._id}, {$inc: {sheet_number: 1}});
         res.send(id);
     } catch (err) {
@@ -95,24 +93,14 @@ router.post('/editSheet/:id', verify, async function (req, res) {
     const cs = req.body;
     const sheetId = req.params.id;
     const user = req.token;
-    const info = await Info.findOne({_id: sheetId,author:user._id});
-    if(!info) return res.status(400).send("沒有權限")
     try {
-        const sheet = await systems[info.system].class().init(sheetId,user)
-        const newSheet = {}
-        let props = systems[info.system].props
-        for (let i=0;i<systems[info.system].props.length;i++){
-            if(cs[props[i]]!=null){
-                newSheet[props[i]] = cs[props[i]]
-            }
-        }
-        sheet.update(cs.info, newSheet)
+        const sheet = await new CharacterSheet().init(sheetId,user)
+        sheet.update(cs.info, cs)
         await sheet.exec()
         res.send('success');
     } catch (err) {
         console.log(err);
-        //return res.status(403).send('這不是你的角色卡!')
-        res.status(400).send(err);
+        res.status(403).send('沒有權限')
     }
 });
 
@@ -120,18 +108,17 @@ router.post('/editSheet/:id', verify, async function (req, res) {
 router.delete('/deleteSheet/:id', verify, async function (req, res) {
     const sheetId = req.params.id;
     const user = req.token;
-    const info = await Info.findOne({_id: sheetId,author:user._id});
-    if(!info) return res.status(400).send("沒有權限")
     try {
-        await (await systems[info.system].class().init(req.params.id,req.token)).delete().exec()
+        const sheet = await new CharacterSheet().init(req.params.id,user)
+        await sheet.delete().exec()
         await Image.deleteOne({_id: sheetId})
         await User.updateOne({_id:user._id}, {$inc: {sheet_number: -1}})
         let query = `sheet.${user.name}`
         await Session.updateMany({player: user.name}, {$pull:{[query]:sheetId}})
         res.send('已刪除角色卡')
     } catch (err) {
-        console.log(err)
-        res.status(400).send(err)
+        console.log(err);
+        res.status(403).send('沒有權限')
     }
 })
 

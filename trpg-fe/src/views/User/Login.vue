@@ -104,7 +104,7 @@ export default {
               })
             })
             .catch(err => {
-              alert(err)
+              alert(err.data)
               setTimeout(() => {
                 this.send = false
               }, 1000)
@@ -132,7 +132,7 @@ export default {
           })
         }
       }).catch(err => {
-        console.log(err)
+        console.log(err.data)
       })
     },
     googleFail(err){

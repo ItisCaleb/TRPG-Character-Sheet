@@ -29,19 +29,19 @@
     </SheetSection>
     <SheetSection :title="$t('dnd5e.char_equip')">
       <div class="inline">
-        <SheetGridInput :view="view" v-model.number="equip.money.cp" type="number" down>
+        <SheetGridInput :view="view" v-model.number="equip.money.cp" type="number" :max="999" down>
           <span slot="down">CP</span>
         </SheetGridInput>
-        <SheetGridInput :view="view" v-model.number="equip.money.sp" type="number" down>
+        <SheetGridInput :view="view" v-model.number="equip.money.sp" type="number" :max="999" down>
           <span slot="down">SP</span>
         </SheetGridInput>
-        <SheetGridInput :view="view" v-model.number="equip.money.ep" type="number" down>
+        <SheetGridInput :view="view" v-model.number="equip.money.ep" type="number" :max="999" down>
           <span slot="down">EP</span>
         </SheetGridInput>
-        <SheetGridInput :view="view" v-model.number="equip.money.gp" type="number" down>
+        <SheetGridInput :view="view" v-model.number="equip.money.gp" type="number" :max="999" down>
           <span slot="down">GP</span>
         </SheetGridInput>
-        <SheetGridInput :view="view" v-model.number="equip.money.pp" type="number" down>
+        <SheetGridInput :view="view" v-model.number="equip.money.pp" type="number" :max="999" down>
           <span slot="down">PP</span>
         </SheetGridInput>
       </div>

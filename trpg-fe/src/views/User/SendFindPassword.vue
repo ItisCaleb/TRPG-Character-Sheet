@@ -46,7 +46,7 @@ export default {
           this.$router.push('/')
         })
         .catch(err=>{
-          alert(err)
+          alert(err.data)
           this.send=false
         })
     }

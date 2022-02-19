@@ -185,14 +185,14 @@ export default {
     }
   },
   mounted() {
+    this.death_save.success = this.stat.death_save[0]
+    this.death_save.fail = this.stat.death_save[1]
     api.getImage('DND5e', this.$route.params.id)
         .then(res => {
           this.avatar = res
-          this.death_save.success = this.stat.death_save[0]
-          this.death_save.fail = this.stat.death_save[1]
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.data)
         })
   },
   methods: {
@@ -231,7 +231,7 @@ export default {
             this.image_success.color = "#10a36a"
           })
           .catch(err => {
-            this.image_success.msg = err
+            this.image_success.msg = err.data
             this.image_success.color = "red"
           })
     },
@@ -251,7 +251,7 @@ export default {
               this.image_success.color = "#10a36a"
             })
             .catch(err => {
-              this.image_success.msg = err
+              this.image_success.msg = err.data
               this.image_success.color = "red"
             })
       } catch (err) {
