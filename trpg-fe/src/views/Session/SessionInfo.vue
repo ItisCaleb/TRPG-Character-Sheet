@@ -135,7 +135,6 @@ export default {
       this.sheets = this.$store.getters.getSheet
       if (this.sheets.length === 0) this.noSheet = "你還未擁有角色卡"
       for (let i in this.Session.sheets[user.name]) {
-        this.$set(this.Session.sheets[user.name][i],"showCard",false)
         this.sheets = this.sheets.filter((s) => {
           return s.url !== this.Session.sheets[user.name][i].info._id
         })
@@ -151,6 +150,13 @@ export default {
       code.setAttribute('type','hidden')
       window.getSelection().removeAllRanges()
     },
+    appendCardShow(){
+      for(let user in this.Session.sheets){
+        for(let sheet of this.Session.sheets[user]){
+          this.$set(sheet,"showCard",false)
+        }
+      }
+    },
     minimizeName(name){
       if(name.length>10){
         return name.slice(0,10)+"..."
@@ -162,6 +168,7 @@ export default {
             this.$set(this,"Session",res)
             this.success = true
             this.setUploadSheet()
+            this.appendCardShow()
           }).catch((err) => {
             console.log(err)
             this.$router.replace({name: 'NotFound', params: {'0': this.$route.fullPath}})
