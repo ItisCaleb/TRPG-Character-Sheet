@@ -1,0 +1,23 @@
+name: Deploy Website
+on: [push]
+jobs:
+  build:
+    name: Build Docker File
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build -t trpg .
+  deploy:
+    name: Deploy Docker Container
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - run: docker-compose up -d
+  prune:
+    name: Prune Unused Image
+    runs-on: self-hosted
+    needs: [deploy]
+    steps:
+      - run: docker prune
+
+

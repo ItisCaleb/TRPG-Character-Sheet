@@ -46,20 +46,17 @@
                 <td>操作</td>
               </tr>
               <tbody v-for="sheet in player" :key="sheet._id">
-              <tr @mouseover="sheet.showCard = true" @mouseleave="sheet.showCard=false" class="link" v-if="sheet.access">
+              <tr class="link" v-if="sheet.access">
                 <td @click="toSheet(sheet.info.system,sheet.info._id)">{{ minimizeName(sheet.info.name) }}</td>
                 <td @click="toSheet(sheet.info.system,sheet.info._id)">{{ sheet.info.system }}</td>
                 <td style="width: 20%" >
                   <button v-if="name===$store.getters.getUser.name" class="btn btn-danger" @click.prevent="removeSheet(sheet.info._id)">移除</button>
-                  <button v-if="sheet.info.system === 'DND5e'" class="btn btn-primary" @click="sheet.showCard=true">卡片</button>
+                  <button v-if="sheet.info.system === 'DND5e'" class="btn btn-primary" @mouseover="sheet.showCard = true" @mouseleave="sheet.showCard=false">卡片</button>
                 </td>
               </tr>
-              <tr @mouseover="sheet.showCard = true" @mouseleave="sheet.showCard=false" style="color: lightgray" v-else>
+              <tr style="color: lightgray" v-else>
                 <td>{{ minimizeName(sheet.info.name) }}</td>
                 <td>{{ sheet.info.system }}</td>
-                <td style="width: 20%">
-                  <button v-if="sheet.info.system === 'DND5e'" class="btn btn-primary" @click="sheet.showCard=true">卡片</button>
-                </td>
               </tr>
               <component v-if="sheet.info.system === 'DND5e'" v-show="sheet.showCard" class="card" :is="'DND5eCard'" v-bind="sheet"></component>
               <div v-show="sheet.showCard" @click="sheet.showCard=false"></div>

@@ -1,7 +1,7 @@
 <template>
   <div id="tab">
     <ul style="padding-left:3%">
-      <li v-for="pageName in page" @mouseover="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
+      <li v-for="pageName in page" @mouseover="changePage(pageName)" @click="changePage(pageName)" :class="{'active':isCurrent(pageName)}"
            :key="pageName" class="tab-name">{{ $t(pageName) }}
       </li>
     </ul>
