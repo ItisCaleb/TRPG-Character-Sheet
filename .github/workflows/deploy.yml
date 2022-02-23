@@ -5,6 +5,8 @@ jobs:
     name: Build Docker File
     runs-on: [self-hosted, linux]
     steps:
+      - run: sudo chown -R $USER:$USER /home/itiscaleb/actions-runner/_work/TRPG-Character-Sheet
+      - uses: actions/checkout@v2
       - run: sudo docker build -t trpg .
   deploy:
     name: Deploy Docker Container
