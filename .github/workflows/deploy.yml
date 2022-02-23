@@ -12,12 +12,14 @@ jobs:
     runs-on: [self-hosted, linux]
     needs: [build]
     steps:
+      - name: Dotenv Action
+        uses: falti/dotenv-action@v0.2.7
       - run: sudo docker-compose up -d
   prune:
     name: Prune Unused Image
     runs-on: [self-hosted, linux]
     needs: [deploy]
     steps:
-      - run: sudo docker prune
+      - run: sudo docker image prune
 
 
