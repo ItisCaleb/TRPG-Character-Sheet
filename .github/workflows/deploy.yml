@@ -8,21 +8,19 @@ jobs:
     runs-on: [self-hosted, linux]
     steps:
       - run: sudo docker build -t trpg .
-        working-directory: $BASE_DIR/TRPG-Character-Sheet
   deploy:
     name: Deploy Docker Container
     runs-on: [self-hosted, linux]
     needs: [build]
     steps:
-      - run: git pull
-        working-directory: $BASE_DIR/TRPG-Character-Sheet
+      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/.env
+      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/mongo
       - run: sudo docker-compose up -d
-        working-directory: $BASE_DIR/TRPG-Character-Sheet
   prune:
     name: Prune Unused Image
     runs-on: [self-hosted, linux]
     needs: [deploy]
     steps:
-      - run: sudo docker image prune
+      - run: sudo docker image prune -f
 
 
