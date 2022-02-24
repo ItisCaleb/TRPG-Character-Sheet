@@ -5,7 +5,7 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import BootstrapVue from "bootstrap-vue"
-import VueSocketIO from "vue-socket.io";
+import VueSocketIO from "@itiscaleb/vue-socket.io";
 import VueI18n from "vue-i18n";
 
 
@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(new VueSocketIO({
   debug:false,
-  connection: process.env.VUE_APP_BACKEND_URL || ''
+  connection: process.env.VUE_APP_BACKEND_URL || '',
 }))
 
 import zh_tw from '@/i18n/zh_tw'

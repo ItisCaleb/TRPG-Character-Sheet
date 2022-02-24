@@ -75,7 +75,9 @@ app.get('*',SSRRouter,function (req,res,next){
 // start server
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
-const io = require('socket.io')(server, {origins: '*:*'});
+const io = require('socket.io')(server, {
+    cors:corsOptions,
+});
 
 var connect_num = 0;
 

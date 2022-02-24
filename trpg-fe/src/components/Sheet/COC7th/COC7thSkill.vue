@@ -279,7 +279,6 @@ export default {
     },
     setCustom(event, key) {
       let value = event.currentTarget.value
-      console.log(value.length)
       if (value.length > 10) {
         this.page3[key].custom = value.slice(0, 10)
       }

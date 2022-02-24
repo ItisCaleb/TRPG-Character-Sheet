@@ -4,6 +4,7 @@
     <div>
       <div class="title">先攻:{{stat.initiative}}</div>
       <div class="title">AC:{{stat.armorValue}}</div>
+      <div class="title">臨時HP:{{stat.temp_hp}}</div>
       <div class="title">HP:{{stat.hp}}</div>
       <div class="title">速度:{{stat.speed}}</div>
       <div class="title">熟練:{{stat.pro}}</div>

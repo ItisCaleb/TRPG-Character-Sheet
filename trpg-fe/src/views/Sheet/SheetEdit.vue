@@ -176,7 +176,6 @@ export default {
       if (this.$route.query.session)
         api.getSessionInfo(this.$route.query.session)
             .then(session => {
-              console.log(session)
               this.session=session
             })
     },
