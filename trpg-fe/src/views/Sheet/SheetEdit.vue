@@ -91,14 +91,15 @@ export default {
     loadSheet() {
       api.getSheetData(this.$route.params.id)
           .then(data => {
-            this.$set(this,"config",systemConfig[data.info.system])
-            if(this.$route.params.system!==data.info.system){
-              this.$router.replace(`/sheet/${data.info.system}/${this.$route.params.id}`)
+            let system = data.info.system
+            this.$set(this,"config",systemConfig[system])
+            if(this.$route.params.system!==system){
+              this.$router.replace(`/sheet/${system}/${this.$route.params.id}`)
             }
             for(let key of Object.keys(this.config.props)){
-              this.config.props[key] = data[key]
+              this.config.props[key] = Object.assign({},data[key])
             }
-            document.title = `TRPG Toaster · ${this.config.props.info.system} · ${this.config.props.info.name}`
+            document.title = `TRPG Toaster · ${system} · ${this.config.props.info.name}`
             this.addWatcher()
             this.success.all = true
           })

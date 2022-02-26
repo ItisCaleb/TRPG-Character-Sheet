@@ -9,14 +9,14 @@ jobs:
     steps:
       - run: sudo chown -R $USER:$USER /home/itiscaleb/actions-runner/_work/TRPG-Character-Sheet
       - uses: actions/checkout@v2
+      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/.env
+      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/mongo
       - run: sudo docker build -t trpg .
   deploy:
     name: Deploy Docker Container
     runs-on: [self-hosted, linux]
     needs: [build]
     steps:
-      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/.env
-      - run: ln -s $BASE_DIR/TRPG-Character-Sheet/mongo
       - run: sudo docker-compose up -d
   prune:
     name: Prune Unused Image

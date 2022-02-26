@@ -76,6 +76,11 @@ const DND5eStatSchema = new mongoose.Schema({
     },
     skills: {
         type: [String]
+    },
+    skill_multiplier: {
+        type: Map,
+        of: Number,
+        default:{}
     }
 });
 

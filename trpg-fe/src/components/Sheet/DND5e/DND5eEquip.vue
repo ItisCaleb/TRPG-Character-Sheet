@@ -22,7 +22,9 @@
       <ul style="font-size: 14px;list-style-type: none;border: 1px lightgray solid;padding: 0;text-align: center">
         <li v-for="(obj,key) in skills" :key="key" class="skills">
           <input :disabled="view" type="checkbox" v-model="skills[key].check" style="margin: 1%">
-          {{ calSkill(obj) }} {{ $t(`dnd5e.${key}`) }}({{ obj.type }})
+          <span @click="changeMultiply(obj)" class="unselectable" :style="`color:${getMultiplyColor(obj)}`" style="cursor: pointer;">
+            {{ calSkill(obj) }} {{ $t(`dnd5e.${key}`) }}({{ obj.type }})
+          </span>
         </li>
         <li style="font-weight: bold;border-top: 1px lightgray solid">{{ $t('dnd5e.skills') }}</li>
       </ul>
@@ -82,42 +84,65 @@ export default {
   data() {
     return {
       savings: {
-        str: {check: false, type: "str"},
-        dex: {check: false, type: "dex"},
-        con: {check: false, type: "con"},
-        int: {check: false, type: "int"},
-        wis: {check: false, type: "wis"},
-        cha: {check: false, type: "cha"},
+        str: {check: false, type: "str", multiplier: 1},
+        dex: {check: false, type: "dex", multiplier: 1},
+        con: {check: false, type: "con", multiplier: 1},
+        int: {check: false, type: "int", multiplier: 1},
+        wis: {check: false, type: "wis", multiplier: 1},
+        cha: {check: false, type: "cha", multiplier: 1},
       },
       skills: {
-        Acrobatics: {check: false, type: "dex"},
-        "Animal Handling": {check: false, type: "wis"},
-        Arcana: {check: false, type: "int"},
-        Athletics: {check: false, type: "str"},
-        Deception: {check: false, type: "cha"},
-        History: {check: false, type: "int"},
-        Insight: {check: false, type: "wis"},
-        Intimidation: {check: false, type: "cha"},
-        Investigation: {check: false, type: "int"},
-        Medicine: {check: false, type: "wis"},
-        Nature: {check: false, type: "int"},
-        Perception: {check: false, type: "wis"},
-        Performance: {check: false, type: "cha"},
-        Persuasion: {check: false, type: "cha"},
-        Religion: {check: false, type: "int"},
-        "Sleight of Hand": {check: false, type: "dex"},
-        Stealth: {check: false, type: "dex"},
-        Survival: {check: false, type: "wis"},
+        Acrobatics: {check: false, type: "dex", multiplier: 1},
+        "Animal Handling": {check: false, type: "wis", multiplier: 1},
+        Arcana: {check: false, type: "int", multiplier: 1},
+        Athletics: {check: false, type: "str", multiplier: 1},
+        Deception: {check: false, type: "cha", multiplier: 1},
+        History: {check: false, type: "int", multiplier: 1},
+        Insight: {check: false, type: "wis", multiplier: 1},
+        Intimidation: {check: false, type: "cha", multiplier: 1},
+        Investigation: {check: false, type: "int", multiplier: 1},
+        Medicine: {check: false, type: "wis", multiplier: 1},
+        Nature: {check: false, type: "int", multiplier: 1},
+        Perception: {check: false, type: "wis", multiplier: 1},
+        Performance: {check: false, type: "cha", multiplier: 1},
+        Persuasion: {check: false, type: "cha", multiplier: 1},
+        Religion: {check: false, type: "int", multiplier: 1},
+        "Sleight of Hand": {check: false, type: "dex", multiplier: 1},
+        Stealth: {check: false, type: "dex", multiplier: 1},
+        Survival: {check: false, type: "wis", multiplier: 1},
       }
     }
   },
   methods: {
     calSkill(obj) {
       let value = Math.floor((this.stat.stat[obj.type] - 10) / 2)
-      if (obj.check) value += this.stat.pro
+      if (obj.check) value += Math.floor(this.stat.pro * obj.multiplier)
       if (value >= 0) value = "+" + value
       return value
     },
+    changeMultiply(obj){
+      switch (obj.multiplier){
+        case 1:
+          obj.multiplier = 2
+          break
+        case 2:
+          obj.multiplier = 0.5
+          break
+        case 0.5:
+          obj.multiplier = 1
+          break
+      }
+    },
+    getMultiplyColor(obj){
+      switch (obj.multiplier){
+        case 1:
+          return 'black'
+        case 2:
+          return 'green'
+        case 0.5:
+          return 'red'
+      }
+    }
   },
   computed:{
     getSkill(){
@@ -128,6 +153,15 @@ export default {
         }
       }
       return arr
+    },
+    getSkillMultiplier(){
+      let obj = {}
+      for (let key in this.skills){
+        if(this.skills[key].multiplier !== 1){
+          obj[key] = this.skills[key].multiplier
+        }
+      }
+      return obj
     },
     getSavings(){
       let arr = []
@@ -146,12 +180,16 @@ export default {
     for (let key of this.stat.skills){
       this.skills[key].check=true
     }
+    for (let key in this.stat.skill_multiplier){
+      this.skills[key].multiplier= this.stat.skill_multiplier[key]
+    }
   },
   watch:{
     skills:{
       deep:true,
       handler(){
         this.stat.skills=this.getSkill
+        this.stat.skill_multiplier=this.getSkillMultiplier
       }
     },
     savings:{
@@ -159,7 +197,7 @@ export default {
       handler(){
         this.stat.savings=this.getSavings
       }
-    }
+    },
   }
 }
 </script>
@@ -186,5 +224,12 @@ export default {
   align-items: center;
   display: flex;
   margin-left: 2%;
+}
+
+.unselectable{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

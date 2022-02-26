@@ -177,8 +177,8 @@ export default {
                 hit_dice: 0,
                 death_save: "00",
                 savings: [],
-                skills: []
-
+                skills: [],
+                skill_multiplier: {}
             },
             story: {
                 height: "",
