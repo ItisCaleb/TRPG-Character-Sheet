@@ -49,6 +49,9 @@ router.post('/authed', async (req, res) => {
         auth: {
             user: process.env.VBOT,
             pass: process.env.VPASS,
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
     //validate register infomation
@@ -250,6 +253,7 @@ router.post('/forgetPassword', async function (req, res) {
     const mailTransport = nodeMailer.createTransport({
         host: process.env.MAILSERVER,
         port: 465,
+        secureConnection: true,
         auth: {
             user: process.env.VBOT,
             pass: process.env.VPASS,
