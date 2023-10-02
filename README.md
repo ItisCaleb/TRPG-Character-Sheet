@@ -5,7 +5,7 @@ A project for the TRPG player and GM who suffering from managing character sheet
 
 use Vue.js to restruct frotend
 
-website:https://trpgtoaster.com
+website:https://trpgtoaster.net
 
 # Todo List
 

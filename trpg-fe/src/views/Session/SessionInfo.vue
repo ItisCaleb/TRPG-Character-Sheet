@@ -34,7 +34,7 @@
         <div slot="資訊">
           GM:{{ Session.gm }}<br>
           <p v-if="Session.code">邀請碼(有效期為七天)：{{ Session.code }}</p>
-          <input id="code" type="hidden" :value="'https://trpgtoaster.com/session/link/'+Session.code">
+          <input id="code" type="hidden" :value="'https://trpgtoaster.net/session/link/'+Session.code">
           <button class="btn-primary btn" v-if="Session.code" @click="copyCode">複製邀請連結</button>
         </div>
         <div slot="玩家">

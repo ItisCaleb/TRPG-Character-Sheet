@@ -1,6 +1,6 @@
 <template>
   <footer id="footer">
-    <span>Copyright © 2021 trpgtoaster.com</span>
+    <span>Copyright © 2021 trpgtoaster.net</span>
     <!-- eslint-disable-next-line -->
     <span>　All rights reserved.</span>
   </footer>

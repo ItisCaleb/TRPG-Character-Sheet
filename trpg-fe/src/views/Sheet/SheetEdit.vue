@@ -20,7 +20,7 @@
             <option value="所有人">{{ $t('allPeople') }}</option>
           </select><br>
           <ChangeLang/>
-          <input id="code" type="hidden" :value="`https://trpgtoaster.com/sheet/${$route.params.system}/${$route.params.id}`">
+          <input id="code" type="hidden" :value="`https://trpgtoaster.net/sheet/${$route.params.system}/${$route.params.id}`">
           <button class="btn-primary btn" @click="copyCode">{{$t('copyLink')}}</button>
           <button class="btn-primary btn" style="margin-left: 1%" @click.prevent="downloadSheet">{{$t('downloadJSON')}}</button><br>
           <button class="btn btn-danger" @click="$refs.deleteBox.show=true">{{$t('delete')}}</button>

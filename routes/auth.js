@@ -83,7 +83,7 @@ router.post('/authed', async (req, res) => {
                 id: temp._id,
             }, (err, html) => {
                 const mail = {
-                    from: 'TRPG Toaster <verifybot@trpgtoaster.com>',
+                    from: 'TRPG Toaster <verifybot@trpgtoaster.net>',
                     to: temp.email,
                     subject: '電子郵件驗證',
                     html: html
@@ -111,7 +111,7 @@ router.post('/userLogin', async (req, res) => {
     const day = 86409000;
     const token = jwt.sign(
         {
-            iss: 'trpgtoaster.com',
+            iss: 'trpgtoaster.net',
             exp: (Date.now() + (7 * day)) / 1000,
             _id: user._id,
             name: user.name,
@@ -141,7 +141,7 @@ router.post('/googleLogin', (req, res) => {
                 const day = 86409000;
                 const token = jwt.sign(
                     {
-                        iss: 'trpgtoaster.com',
+                        iss: 'trpgtoaster.net',
                         exp: (Date.now() + (7 * day)) / 1000,
                         _id: user._id,
                         name: user.name,
@@ -268,7 +268,7 @@ router.post('/forgetPassword', async function (req, res) {
                 id: temp._id,
             }, (err, html) => {
                 const mail = {
-                    from: 'TRPG Toaster <verifybot@trpgtoaster.com>',
+                    from: 'TRPG Toaster <verifybot@trpgtoaster.net>',
                     to: emailExist.email,
                     subject: '修改密碼',
                     html: html

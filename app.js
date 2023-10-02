@@ -37,7 +37,7 @@ const corsOptions = {
     origin: [
         'http://localhost:8080',
         'http://localhost:2100',
-        'https://trpgtoaster.com',
+        'https://trpgtoaster.net',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
