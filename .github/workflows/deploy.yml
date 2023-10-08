@@ -17,7 +17,7 @@ jobs:
     runs-on: [self-hosted, linux]
     needs: [build]
     steps:
-      - run: sudo docker-compose up -d
+      - run: sudo docker compose up -d
   prune:
     name: Prune Unused Image
     runs-on: [self-hosted, linux]
